@@ -1,0 +1,71 @@
+---
+- name: Set up webhosts
+  hosts: webhosts
+  become: true
+  tasks:
+  - name: Remove Ubuntu motd config 1/3
+    when: ansible_distribution == 'Ubuntu'
+    file:
+      path: /etc/update-motd.d/10-help-text
+      state: absent
+  - name: Remove Ubuntu motd config 2/3
+    when: ansible_distribution == 'Ubuntu'
+    file:
+      path: /etc/update-motd.d/50-motd-news
+      state: absent
+  - name: Remove Ubuntu motd config 3/3
+    when: ansible_distribution == 'Ubuntu'
+    file:
+      path: /etc/update-motd.d/51-cloudguest
+      state: absent
+  - name: Remove Ubuntu motd package
+    when: ansible_distribution == 'Ubuntu'
+    apt:
+      name: motd-news-config
+      state: absent
+      purge: yes
+  - name: Remove garbage packages
+    apt:
+      name: [joe, python, python-minimal, snapd, accountsservice, command-not-found, fwupd, lxcfs, 
+             open-iscsi, open-vm-tools, os-prober, packagekit, plymouth, software-properties-common, 
+             ssh-import-id, sosreport, telnet]
+      state: absent
+      autoremove: yes
+      purge: yes
+  - name: Upgrade system
+    apt:
+      update_cache: yes
+      upgrade: dist
+  - name: Install LNMP stack
+    apt:
+      name: [nginx, mariadb-server, php-fpm]
+      state: latest
+  - name: Clean up apt
+    apt:
+      autoclean: yes
+      autoremove: yes
+  - name: Configure vim
+    copy:
+      src: files/vimrc
+      dest: /etc/vim/vimrc
+  - name: Configure sysctl
+    copy:
+      src: files/sysctl.conf
+      dest: /etc/sysctl.conf
+  - name: Reload sysctl
+    command: sysctl -p /etc/sysctl.conf
+  - name: Configure OpenSSH client
+    copy:
+      src: files/ssh_config
+      dest: /etc/ssh/ssh_config
+  - name: Configure OpenSSH server
+    copy:
+      src: files/sshd_config
+      dest: /etc/ssh/sshd_config
+  - name: Restart OpenSSH server (sshd)
+    systemd:
+      name: sshd
+      state: restarted
+      daemon_reload: yes
+  - name: Reboot
+    reboot:
