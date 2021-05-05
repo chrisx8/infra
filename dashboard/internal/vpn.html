@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WireGuard VPN // TinyNET</title>
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma@0.9.2/css/bulma.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma-prefers-dark@0.1.0-beta.0/css/bulma-prefers-dark.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous">
+	</head>
+	<body>
+	<section class="section">
+	<div class="container">
+		<div class="columns">
+			<div class="column is-10">
+				<h1><a class="title is-1" href="./">TinyNET</a></h1>
+				<h2 class="subtitle">Internal Users</h2>
+			</div>
+			<div class="column is-2">
+				<a class="button is-link is-fullwidth" href="/logout">Log out</a>
+			</div>
+		</div>
+		<hr>
+		<article class="message is-danger">
+			<div class="message-header">
+				<p><i class="fas fa-exclamation-triangle"></i>&nbsp; Warning</p>
+			</div>
+			<div class="message-body">
+				1. VPN is required to access admin-only services and non-HTTPS services remotely. <br>
+				2. Make sure you're using a unique key for each device. <br>
+				3. <mark><strong>DO NOT share your VPN credentials with anyone!</strong></mark> <br>
+				4. <mark><strong>Contact an admin IMMEDIATELY if your key is lost or compromised!</strong></mark>
+			</div>
+		</article>
+		<h1 class="title">WireGuard VPN</h1>
+		<div class="content">
+			<ul>
+				<li>Generate a public/private key pair, and provide the public key to an admin.</li>
+				<li>Endpoint: <code><strong>tinynet.chrisx.xyz:55260</strong></code></li>
+				<li>Allowed IPs: <code><strong>10.69.0.1/24</strong></code></li>
+				<li>DNS Server: <code><strong>10.69.0.1</strong></code></li>
+				<li>Pre-shared Key: <code><strong>Generate This</strong></code></li>
+				<li>Peer's Public Key: <code><strong>provided by admin</strong></code></li>
+			</ul>
+		</div>
+		<div class="columns">
+			<div class="column is-half">
+				<div class="card-content">
+					<a href="https://www.wireguard.com/install/" rel="noopener noreferrer">
+						<div class="media">
+							<div class="media-left">
+								<i class="fa-2x fas fa-download"></i>
+							</div>
+							<div class="media-content">
+								<p class="title is-4">Download WireGuard</p>
+								<p class="subtitle is-6">Download & install WireGuard on each device.</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="column is-half">
+				<div class="card-content">
+					<a href="https://wireguard-admin." rel="noopener noreferrer">
+						<div class="media">
+							<div class="media-left">
+								<i class="fa-2x fas fa-server"></i>
+							</div>
+							<div class="media-content">
+								<p class="title is-4">Manage WireGuard Server &nbsp;<i class="fa-sm fas fa-lock"></i></p>
+								<p class="subtitle is-6">WireGuard client enrollment and server controls</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+	</body>
+</html>
