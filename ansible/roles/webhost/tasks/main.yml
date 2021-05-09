@@ -1,0 +1,58 @@
+- name: Install LNMP stack
+  apt:
+    name: [nginx, mariadb-server, php-fpm, php-xml]
+    state: latest
+- name: Generate new MariaDB root password
+  become: false
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: mysql_root_password
+- name: Update MariaDB root password
+  mysql_user: name=root host={{ item }} password={{ mysql_root_password.stdout }}
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+- name: Set my.cnf file for user
+  template:
+    src: files/my.cnf.j2
+    dest: /root/.my.cnf
+    mode: 0600
+- name: Delete anonymous MySQL user
+  mysql_user: name="" host={{ item }} state=absent
+  with_items:
+    - localhost
+    - "{{ ansible_nodename }}"
+- name: Delete Hostname based MySQL user
+  mysql_user: name=root host="{{ ansible_nodename }}" state=absent
+- name: Remove MySQL test database
+  mysql_db: name=test state=absent
+- name: Remove built-in Nginx sites (1/2)
+  file:
+    path: /etc/nginx/sites-available/default
+    state: absent
+- name: Remove built-in Nginx sites (2/2)
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+- name: Install Nginx configurations
+  copy:
+    src: files/nginx/conf.d
+    dest: /etc/nginx/
+    directory_mode: true
+- name: Download DokuWiki archive
+  command: "curl -o /var/www/html/dokuwiki.tgz {{ dokuwiki_download_url }}"
+- name: Extract DocuWiki archive
+  command: 
+    chdir: /var/www/html
+    cmd: tar -xf dokuwiki.tgz
+- name: Extract DocuWiki archive
+  command: 
+    chdir: /var/www/html
+    cmd: mv dokuwiki wiki
+- name: Delete DocuWiki archive
+  file:
+    path: /var/www/html/dokuwiki.tgz
+    state: absent
+- name: Prompt for DokuWiki setup
+  pause:
+    prompt: "Set up DokuWiki at /wiki/install.php"

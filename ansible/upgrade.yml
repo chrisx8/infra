@@ -1,0 +1,13 @@
+---
+- name: Upgrade systems
+  hosts: all
+  become: true
+  tasks:
+  - name: Run apt dist-upgrade
+    apt:
+      update_cache: yes
+      upgrade: dist
+  - name: Clean up apt
+    apt:
+      autoclean: yes
+      autoremove: yes

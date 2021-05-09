@@ -4,7 +4,6 @@ Include /etc/ssh/ssh_config.d/*.conf
 
 Host *
 	SendEnv LANG LC_*
-	HashKnownHosts yes
 	GSSAPIAuthentication yes
 	ForwardX11 no
 	IdentityFile ~/.ssh/id_rsa

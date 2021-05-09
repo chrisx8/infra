@@ -1,0 +1,15 @@
+---
+- name: Set up cloud systems (BASIC)
+  hosts: cloud
+  become: true
+  vars:
+    swap_size: 1G
+  tasks:
+  - name: Run cloud system setup (BASIC)
+    include_role:
+      name: basic
+  - name: Reboot
+    reboot:
+  - name: Run post setup
+    include_role:
+      name: post_setup
