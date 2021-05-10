@@ -61,6 +61,21 @@
     src: files/vimrc
     dest: /etc/vim/vimrc
     mode: 0644
+- name: Check configuration existence
+  stat:
+    path: /etc/ssh/ssh_host_dsa_key
+  register: configured
+- name: Configure bashrc
+  when: configured.stat.exists
+  lineinfile:
+    dest: "/etc/bash.bashrc"
+    line: "
+    # Installed by Ansible\n
+    export EDITOR=vim\n
+    alias dfh='df -h -x tmpfs -x overlay'\n
+    alias docker='sudo docker'\n
+    alias docker-compose='sudo -E docker-compose'
+    "
 - name: Configure OpenSSH client
   copy:
     src: files/ssh_config
@@ -72,20 +87,9 @@
     dest: /etc/ssh/sshd_config
     mode: 0644
 - name: Remove unsupported SSH host keys
-  command: "sh -c 'rm -f /etc/ssh/ssh_host_{dsa,ecdsa}_key*'"
+  shell: "rm -f /etc/ssh/ssh_host_*dsa_key*"
 - name: Restart OpenSSH server (sshd)
   systemd:
     name: sshd
     state: restarted
     daemon_reload: yes
-- name: Configure bashrc
-  become: false
-  lineinfile:
-    dest: "/etc/bash.bashrc"
-    line: "
-    # Installed by Ansible\n
-    export EDITOR=vim\n
-    alias dfh='df -h -x tmpfs -x overlay'\n
-    alias docker='sudo docker'\n
-    alias docker-compose='sudo -E docker-compose'
-    "

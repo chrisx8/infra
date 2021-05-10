@@ -1,0 +1,15 @@
+---
+- name: Set up storage systems
+  hosts: storage
+  become: true
+  vars:
+  vars_prompt:
+  tasks:
+  - name: Run basic setup
+    include_role:
+      name: basic
+  - name: Run storage setup
+    include_role:
+      name: storage
+  - name: Reboot
+    reboot:

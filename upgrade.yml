@@ -1,0 +1,29 @@
+---
+- name: Upgrade systems
+  hosts: all
+  become: true
+  tasks:
+  - name: Run apt dist-upgrade
+    apt:
+      update_cache: yes
+      upgrade: dist
+  - name: Clean up apt
+    apt:
+      autoclean: yes
+      autoremove: yes
+  - name: Download oauth2-proxy
+    shell: curl -s https://api.github.com/repos/oauth2-proxy/oauth2-proxy/releases/latest | 
+          grep 'linux-amd64.tar' | cut -d '"' -f 4 | tail -n1 | 
+          xargs curl -L -o /opt/oauth2-proxy/oauth2-proxy.tgz
+  - name: Extract oauth2-proxy
+    shell:
+      chdir: /opt/oauth2-proxy
+      cmd: tar -xf oauth2-proxy.tgz || true
+  - name: Move oauth2-proxy binary
+    shell: mv /opt/oauth2-proxy/oauth2-proxy-*/oauth2-proxy /opt/oauth2-proxy/
+  - name: Remove oauth2-proxy tarball
+    file:
+      path: /opt/oauth2-proxy/oauth2-proxy.tgz
+      state: absent
+  - name: Clean up oauth2-proxy download
+    shell: rm -r /opt/oauth2-proxy/oauth2-proxy-*

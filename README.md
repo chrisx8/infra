@@ -15,11 +15,11 @@ Core repo for TinyNET infrastructure config and docs.
 
 ### `tmmnode1`
 
-- HP EliteDesk 800 G2 Mini (?)
+- HP EliteDesk 800 G2 Mini
 - OS: Proxmox VE
-- CPU: Intel Core i5-6500T (?)
-- RAM: 8GB DDR4 (1 * 8GB SODIMM) (?)
-- Storage: 128GB SATA SSD (?)
+- CPU: Intel Core i5-6500T
+- RAM: 8GB DDR4 (1 * 8GB SODIMM)
+- Storage: 120GB SATA SSD
 - Networking: 1GbE
 
 ## Services
@@ -35,7 +35,6 @@ Core repo for TinyNET infrastructure config and docs.
 ### Storage
 
 - [Nextcloud](https://nextcloud.com/)
-- [Piwigo](https://piwigo.org/)
 - OpenSSH / SFTP
 
 ### Web Apps

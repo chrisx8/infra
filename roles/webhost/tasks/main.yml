@@ -1,0 +1,141 @@
+- name: Install LNMP stack
+  apt:
+    name: [nginx, mariadb-server, php-fpm, php-xml]
+    state: latest
+- name: Generate new MariaDB root password
+  become: false
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: mysql_root_password
+- name: Update MariaDB root password
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "{{ mysql_root_password.stdout }}"
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+- name: Set my.cnf file for user
+  template:
+    src: files/my.cnf.j2
+    dest: /root/.my.cnf
+    mode: 0600
+- name: Delete anonymous MySQL user
+  mysql_user:
+    name: ""
+    host: "{{ item }}"
+    state: absent
+  with_items:
+    - localhost
+    - "{{ ansible_nodename }}"
+- name: Delete Hostname based MySQL user
+  mysql_user:
+    name: root
+    host: "{{ ansible_nodename }}"
+    state: absent
+- name: Remove MySQL test database
+  mysql_db:
+    name: test
+    state: absent
+- name: Remove built-in Nginx sites (1/2)
+  file:
+    path: /etc/nginx/sites-available/default
+    state: absent
+- name: Remove built-in Nginx sites (2/2)
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+- name: Configure Nginx server (1/2)
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: server_tokens
+    line: server_tokens off;
+- name: Configure Nginx server (2/2)
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: ssl_protocols
+    line: ssl_protocols TLSv1.2 TLSv1.3;
+- name: Install Nginx configurations
+  copy:
+    src: nginx-webhosts/conf.d
+    dest: /etc/nginx/
+    directory_mode: true
+- name: Install Nginx snippets
+  copy:
+    src: nginx-webhosts/snippets
+    dest: /etc/nginx/
+    directory_mode: true
+- name: Restart Nginx
+  systemd:
+    name: nginx
+    state: restarted
+- name: Install Dashboard
+  copy:
+    src: dashboard/
+    dest: /var/www/html/
+- name: Install oauth2-proxy configurations
+  copy:
+    src: oauth2-proxy/
+    dest: /opt/oauth2-proxy/
+- name: Download oauth2-proxy
+  shell: curl -s https://api.github.com/repos/oauth2-proxy/oauth2-proxy/releases/latest | 
+         grep 'linux-amd64.tar' | cut -d '"' -f 4 | tail -n1 | 
+         xargs curl -L -o /opt/oauth2-proxy/oauth2-proxy.tgz
+- name: Extract oauth2-proxy
+  shell:
+    chdir: /opt/oauth2-proxy
+    cmd: tar -xf oauth2-proxy.tgz || true
+- name: Move oauth2-proxy binary
+  shell: mv /opt/oauth2-proxy/oauth2-proxy-*/oauth2-proxy /opt/oauth2-proxy/
+- name: Remove oauth2-proxy tarball
+  file:
+    path: /opt/oauth2-proxy/oauth2-proxy.tgz
+    state: absent
+- name: Clean up oauth2-proxy download
+  shell: rm -r /opt/oauth2-proxy/oauth2-proxy-*
+- name: Set up systemd service for oauth2-proxy (internal)
+  copy:
+    src: files/oauth2-proxy-internal.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+- name: Set up systemd service for oauth2-proxy (external)
+  copy:
+    src: files/oauth2-proxy-external.service
+    dest: /etc/systemd/system
+    owner: root
+    group: root
+- name: Start oauth2-proxy (internal)
+  systemd:
+    name: oauth2-proxy-internal
+    state: restarted
+    enabled: true
+    daemon-reload: true
+- name: Start oauth2-proxy (external)
+  systemd:
+    name: oauth2-proxy-external
+    state: restarted
+    enabled: true
+    daemon-reload: true
+- name: Download DokuWiki archive
+  when: dokuwiki_download_url
+  command: "curl -o /var/www/html/dokuwiki.tgz {{ dokuwiki_download_url }}"
+- name: Extract DocuWiki archive
+  when: dokuwiki_download_url
+  command: 
+    chdir: /var/www/html
+    cmd: tar -xf dokuwiki.tgz
+- name: Extract DocuWiki archive
+  when: dokuwiki_download_url
+  command: 
+    chdir: /var/www/html
+    cmd: mv dokuwiki wiki
+- name: Delete DocuWiki archive
+  when: dokuwiki_download_url
+  file:
+    path: /var/www/html/dokuwiki.tgz
+    state: absent
+- name: Prompt for DokuWiki setup
+  when: dokuwiki_download_url
+  pause:
+    prompt: "Set up DokuWiki at /wiki/install.php\n"
