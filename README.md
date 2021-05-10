@@ -16,6 +16,7 @@ Core repo for TinyNET infrastructure config and docs.
 ### `tmmnode1`
 
 - HP EliteDesk 800 G2 Mini
+- Has Intel vPro
 - OS: Proxmox VE
 - CPU: Intel Core i5-6500T
 - RAM: 8GB DDR4 (1 * 8GB SODIMM)
@@ -27,6 +28,7 @@ Core repo for TinyNET infrastructure config and docs.
 ### Networking
 
 - [OpenWrt](https://openwrt.org/)
+- [WireGuard](https://www.wireguard.com/)
 
 ### IAM
 
@@ -39,6 +41,7 @@ Core repo for TinyNET infrastructure config and docs.
 
 ### Web Apps
 
+- [BookStack](https://www.bookstackapp.com/)
 - [FreshRSS](https://freshrss.org/)
 
 ## Resources

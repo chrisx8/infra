@@ -1,9 +1,9 @@
 - name: Install LNMP stack
   apt:
-    name: [nginx, mariadb-server, php-fpm, php-xml]
+    name: [nginx, mariadb-server, php-fpm, php-curl, php-gd, php-mysql, php-xml, composer]
     state: latest
+
 - name: Generate new MariaDB root password
-  become: false
   command: "echo {{ lookup('password', '/dev/null length=64') }}"
   register: mysql_root_password
 - name: Update MariaDB root password
@@ -37,6 +37,7 @@
   mysql_db:
     name: test
     state: absent
+
 - name: Remove built-in Nginx sites (1/2)
   file:
     path: /etc/nginx/sites-available/default
@@ -65,15 +66,25 @@
     src: nginx-webhosts/snippets
     dest: /etc/nginx/
     directory_mode: true
-- name: Restart Nginx
+- name: Reload Nginx
   systemd:
     name: nginx
-    state: restarted
+    state: reloaded
+
 - name: Install Dashboard
   copy:
     src: dashboard/
     dest: /var/www/html/
+
+- name: Generate oauth2-proxy secret 1/2
+  command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
+  register: cookie_secret_1
+- name: Generate oauth2-proxy secret 2/2
+  command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
+  register: cookie_secret_2
 - name: Install oauth2-proxy configurations
+  when: external_client_id and external_client_secret and 
+        internal_client_id and internal_client_secret
   copy:
     src: oauth2-proxy/
     dest: /opt/oauth2-proxy/
@@ -117,25 +128,63 @@
     state: restarted
     enabled: true
     daemon-reload: true
-- name: Download DokuWiki archive
-  when: dokuwiki_download_url
-  command: "curl -o /var/www/html/dokuwiki.tgz {{ dokuwiki_download_url }}"
-- name: Extract DocuWiki archive
-  when: dokuwiki_download_url
-  command: 
-    chdir: /var/www/html
-    cmd: tar -xf dokuwiki.tgz
-- name: Extract DocuWiki archive
-  when: dokuwiki_download_url
-  command: 
-    chdir: /var/www/html
-    cmd: mv dokuwiki wiki
-- name: Delete DocuWiki archive
-  when: dokuwiki_download_url
+
+- name: Create BookStack database
+  mysql_db:
+    name: bookstack
+    state: present
+- name: Generate new password for bookstack user
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: mysql_bookstack_password
+- name: Create MySQL user - bookstack
+  mysql_user:
+    name: bookstack
+    host: localhost
+    password: "{{ mysql_bookstack_password.stdout }}"
+    priv:
+      'bookstack.*': 'ALL'
+    state: present
+
+- name: Download BookStack
+  git:
+    repo: https://github.com/BookStackApp/BookStack.git
+    dest: /var/www/bookstack
+    version: release
+    depth: 1
+- name: BookStack - Set permissions (1/3)
   file:
-    path: /var/www/html/dokuwiki.tgz
-    state: absent
-- name: Prompt for DokuWiki setup
-  when: dokuwiki_download_url
-  pause:
-    prompt: "Set up DokuWiki at /wiki/install.php\n"
+    path: /var/www/bookstack/storage
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+- name: BookStack - Set permissions (2/3)
+  file:
+    path: /var/www/bookstack/bootstrap/cache
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+- name: BookStack - Set permissions (3/3)
+  file:
+    path: /var/www/bookstack/public/uploads
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+- name: BookStack - Install config
+  template:
+    src: files/bookstack.env.j2
+    dest: /var/www/bookstack/.env
+- name: BookStack - Composer install
+  shell:
+    chdir: /var/www/bookstack
+    cmd: composer install --no-dev
+- name: BookStack - Generate new key
+  shell:
+    chdir: /var/www/bookstack  
+    cmd: "php artisan key:generate --force"
+- name: BookStack - Database migration
+  shell:
+    chdir: /var/www/bookstack
+    cmd: "php artisan migrate --force"

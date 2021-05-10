@@ -12,9 +12,6 @@
       prompt: "Internal AuthProxy - Enter OAuth Client ID"
     - name: internal_client_secret
       prompt: "Internal AuthProxy - Enter OAuth Client Secret"
-    - name: dokuwiki_download_url
-      prompt: "Go to https://download.dokuwiki.org and create your own DokuWiki archive.\n
-              Enter DokuWiki download URL"
   tasks:
   - name: Run basic setup
     include_role:

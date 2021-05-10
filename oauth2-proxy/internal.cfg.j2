@@ -20,7 +20,7 @@ client_secret = "{{ internal_client_secret }}"
 ## Cookie Settings
 cookie_name = "authproxy_internal"
 cookie_domains = ".tinynet.chrisx.xyz"
-cookie_secret = "uYWQb7fTUoZrtY5cWUWPFQ=="
+cookie_secret = "{{ cookie_secret_1.stdout }}"
 cookie_expire = "1h"
 cookie_samesite = "strict"
 cookie_secure = true
