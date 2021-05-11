@@ -82,12 +82,16 @@
 - name: Generate oauth2-proxy secret 2/2
   command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
   register: cookie_secret_2
-- name: Install oauth2-proxy configurations
-  when: external_client_id and external_client_secret and 
-        internal_client_id and internal_client_secret
-  copy:
-    src: oauth2-proxy/
-    dest: /opt/oauth2-proxy/
+- name: Install oauth2-proxy configurations 1/2
+  when: client_id and client_secret
+  template:
+    src: oauth2-proxy/internal.cfg.j2
+    dest: /opt/oauth2-proxy/internal.cfg
+- name: Install oauth2-proxy configurations 2/2
+  when: client_id and client_secret
+  template:
+    src: oauth2-proxy/external.cfg.j2
+    dest: /opt/oauth2-proxy/external.cfg
 - name: Download oauth2-proxy
   shell: curl -s https://api.github.com/repos/oauth2-proxy/oauth2-proxy/releases/latest | 
          grep 'linux-amd64.tar' | cut -d '"' -f 4 | tail -n1 | 
@@ -173,6 +177,7 @@
     owner: www-data
     group: www-data
 - name: BookStack - Install config
+  when: client_id and client_secret
   template:
     src: files/bookstack.env.j2
     dest: /var/www/bookstack/.env

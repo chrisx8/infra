@@ -4,14 +4,10 @@
   become: true
   vars:
   vars_prompt:
-    - name: external_client_id
-      prompt: "External AuthProxy - Enter OAuth Client ID"
-    - name: external_client_secret
-      prompt: "External AuthProxy - Enter OAuth Client Secret"
-    - name: internal_client_id
-      prompt: "Internal AuthProxy - Enter OAuth Client ID"
-    - name: internal_client_secret
-      prompt: "Internal AuthProxy - Enter OAuth Client Secret"
+    - name: client_id
+      prompt: "SSO - Enter OAuth Client ID"
+    - name: client_secret
+      prompt: "SSO - Enter OAuth Client Secret"
   tasks:
   - name: Run basic setup
     include_role:

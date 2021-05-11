@@ -85,15 +85,10 @@
     src: nginx-storage/conf.d
     dest: /etc/nginx/
     directory_mode: true
-- name: Install Nginx snippets
-  copy:
-    src: nginx-storage/snippets
-    dest: /etc/nginx/
-    directory_mode: true
-- name: Restart Nginx
+- name: Reload Nginx
   systemd:
     name: nginx
-    state: restarted
+    state: reloaded
 - name: Configure PHP-FPM (1/2)
   when: not nextcloud_stat.stat.exists
   lineinfile:
