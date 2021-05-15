@@ -11,6 +11,7 @@
     apt:
       autoclean: yes
       autoremove: yes
+
   - name: Check if oauth2-proxy exists
     stat:
       path: /opt/oauth2-proxy
@@ -36,3 +37,74 @@
   - name: Clean up oauth2-proxy download
     when: oauth2_proxy_check.stat.exists
     shell: rm -r /opt/oauth2-proxy/oauth2-proxy-*
+
+  - name: Check if FreshRSS exists
+    stat:
+      path: /var/www/html/freshrss
+    register: freshrss_stat
+  - name: Download FreshRSS
+    when: freshrss_stat.stat.exists
+    git:
+      repo: https://github.com/FreshRSS/FreshRSS.git
+      dest: /var/www/html/freshrss
+      version: master
+      depth: 1
+  - name: FreshRSS - Set permissions
+    when: freshrss_stat.stat.exists
+    file:
+      path: /var/www/html/freshrss/data
+      state: directory
+      recurse: true
+      owner: www-data
+      group: www-data
+
+  - name: Check if BookStack exists
+    stat:
+      path: /var/www/bookstack
+    register: bookstack_stat
+  - name: Download BookStack
+    when: bookstack_stat.stat.exists
+    git:
+      repo: https://github.com/BookStackApp/BookStack.git
+      dest: /var/www/bookstack
+      version: release
+      depth: 1
+  - name: BookStack - Set permissions (1/3)
+    when: bookstack_stat.stat.exists
+    file:
+      path: /var/www/bookstack/storage
+      state: directory
+      recurse: true
+      owner: www-data
+      group: www-data
+  - name: BookStack - Set permissions (2/3)
+    when: bookstack_stat.stat.exists
+    file:
+      path: /var/www/bookstack/bootstrap/cache
+      state: directory
+      recurse: true
+      owner: www-data
+      group: www-data
+  - name: BookStack - Set permissions (3/3)
+    when: bookstack_stat.stat.exists
+    file:
+      path: /var/www/bookstack/public/uploads
+      state: directory
+      recurse: true
+      owner: www-data
+      group: www-data
+  - name: BookStack - Composer install
+    when: bookstack_stat.stat.exists
+    shell:
+      chdir: /var/www/bookstack
+      cmd: composer install --no-dev
+  - name: BookStack - Generate new key
+    when: bookstack_stat.stat.exists
+    shell:
+      chdir: /var/www/bookstack  
+      cmd: "php artisan key:generate --force"
+  - name: BookStack - Database migration
+    when: bookstack_stat.stat.exists
+    shell:
+      chdir: /var/www/bookstack
+      cmd: "php artisan migrate --force"
