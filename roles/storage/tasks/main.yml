@@ -80,6 +80,11 @@
     path: /etc/nginx/nginx.conf
     regexp: ssl_protocols
     line: ssl_protocols TLSv1.2 TLSv1.3;
+- name: Install Nginx global configurations
+  copy:
+    src: nginx/_global/conf.d
+    dest: /etc/nginx/
+    directory_mode: true
 - name: Install Nginx configurations
   copy:
     src: nginx/storage/conf.d
