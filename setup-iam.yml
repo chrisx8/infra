@@ -1,15 +1,17 @@
 ---
-- name: Set up webhosts
-  hosts: webhosts
+- name: Set up IAM systems
+  hosts: iam
   become: true
   vars:
   vars_prompt:
+    - name: client_secret
+      prompt: "SSO - Enter OAuth Client Secret"
   tasks:
   - name: Run basic setup
     include_role:
       name: basic
-  - name: Run webhost setup
+  - name: Run IAM setup
     include_role:
-      name: webhost
+      name: iam
   - name: Reboot
     reboot:

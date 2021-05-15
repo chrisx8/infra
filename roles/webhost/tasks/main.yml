@@ -58,12 +58,12 @@
     line: ssl_protocols TLSv1.2 TLSv1.3;
 - name: Install Nginx configurations
   copy:
-    src: nginx-webhosts/conf.d
+    src: nginx/webhosts/conf.d
     dest: /etc/nginx/
     directory_mode: true
 - name: Install Nginx snippets
   copy:
-    src: nginx-webhosts/snippets
+    src: nginx/webhosts/snippets
     dest: /etc/nginx/
     directory_mode: true
 - name: Reload Nginx
@@ -75,63 +75,6 @@
   copy:
     src: dashboard/
     dest: /var/www/html/
-
-- name: Generate oauth2-proxy secret 1/2
-  command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
-  register: cookie_secret_1
-- name: Generate oauth2-proxy secret 2/2
-  command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
-  register: cookie_secret_2
-- name: Install oauth2-proxy configurations 1/2
-  when: client_id and client_secret
-  template:
-    src: oauth2-proxy/internal.cfg.j2
-    dest: /opt/oauth2-proxy/internal.cfg
-- name: Install oauth2-proxy configurations 2/2
-  when: client_id and client_secret
-  template:
-    src: oauth2-proxy/external.cfg.j2
-    dest: /opt/oauth2-proxy/external.cfg
-- name: Download oauth2-proxy
-  shell: curl -s https://api.github.com/repos/oauth2-proxy/oauth2-proxy/releases/latest | 
-         grep 'linux-amd64.tar' | cut -d '"' -f 4 | tail -n1 | 
-         xargs curl -L -o /opt/oauth2-proxy/oauth2-proxy.tgz
-- name: Extract oauth2-proxy
-  shell:
-    chdir: /opt/oauth2-proxy
-    cmd: tar -xf oauth2-proxy.tgz || true
-- name: Move oauth2-proxy binary
-  shell: mv /opt/oauth2-proxy/oauth2-proxy-*/oauth2-proxy /opt/oauth2-proxy/
-- name: Remove oauth2-proxy tarball
-  file:
-    path: /opt/oauth2-proxy/oauth2-proxy.tgz
-    state: absent
-- name: Clean up oauth2-proxy download
-  shell: rm -r /opt/oauth2-proxy/oauth2-proxy-*
-- name: Set up systemd service for oauth2-proxy (internal)
-  copy:
-    src: files/oauth2-proxy-internal.service
-    dest: /etc/systemd/system/
-    owner: root
-    group: root
-- name: Set up systemd service for oauth2-proxy (external)
-  copy:
-    src: files/oauth2-proxy-external.service
-    dest: /etc/systemd/system
-    owner: root
-    group: root
-- name: Start oauth2-proxy (internal)
-  systemd:
-    name: oauth2-proxy-internal
-    state: restarted
-    enabled: true
-    daemon-reload: true
-- name: Start oauth2-proxy (external)
-  systemd:
-    name: oauth2-proxy-external
-    state: restarted
-    enabled: true
-    daemon-reload: true
 
 - name: Create BookStack database
   mysql_db:
@@ -177,7 +120,6 @@
     owner: www-data
     group: www-data
 - name: BookStack - Install config
-  when: client_id and client_secret
   template:
     src: files/bookstack.env.j2
     dest: /var/www/bookstack/.env

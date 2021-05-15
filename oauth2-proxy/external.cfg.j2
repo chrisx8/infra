@@ -1,24 +1,23 @@
 ## OAuth2 Proxy Config File
 ## https://github.com/oauth2-proxy/oauth2-proxy
 
-http_address = ":34182"
+http_address = ":4182"
 proxy_prefix = "/authproxy/external"
 reverse_proxy = true
 set_xauthrequest = true
 
-#skip_provider_button = true
-custom_sign_in_logo = "-"
-banner = '<h1 class="title">TinyNET SSO</h1>'
+skip_provider_button = true
 footer = "&copy; 2021 TinyNET"
 
 whitelist_domains = ".tinynet.chrisx.xyz"
-email_domains = "chrisx.xyz"
-provider = "github"
-client_id = "{{ client_id }}"
+email_domains = "*"
+
+provider = "oidc"
+oidc_issuer_url = "https://iam.tinynet.chrisx.xyz/realms/master"
+client_id = "authproxy"
 client_secret = "{{ client_secret }}"
 
-## Cookie Settings
-cookie_name = "authproxy"
+cookie_name = "authproxy_ext"
 cookie_domains = ".tinynet.chrisx.xyz"
 cookie_secret = "{{ cookie_secret_2.stdout }}"
 cookie_expire = "1h"

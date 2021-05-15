@@ -82,7 +82,7 @@
     line: ssl_protocols TLSv1.2 TLSv1.3;
 - name: Install Nginx configurations
   copy:
-    src: nginx-storage/conf.d
+    src: nginx/storage/conf.d
     dest: /etc/nginx/
     directory_mode: true
 - name: Reload Nginx

@@ -1,0 +1,33 @@
+# bookstack
+location /wiki {
+	alias /var/www/bookstack/public;
+	index index.php;
+	try_files $uri $uri/ @bookstack;
+
+	location ~ \.php(?:$|/) {
+		include fastcgi_params;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_param SCRIPT_FILENAME $request_filename;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_param HTTPS on;
+		fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+	}
+
+	location ~* \.(?:jpg|jpeg|gif|bmp|ico|png|css|js|svg)$ {
+		expires 30d;
+		access_log off;
+	}
+}
+
+location @bookstack {
+	rewrite ^/wiki/(.*)$ /wiki/index.php?/$1 last;
+}
+
+location ~ ^/(?:\.htaccess|data|config|db_structure\.xml|README) {
+	internal;
+}
+
+# workaround for incorrect redirect after login
+location /wiki/wiki {
+	return 302 /wiki;
+}
