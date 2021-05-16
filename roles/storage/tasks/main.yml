@@ -70,17 +70,11 @@
   file:
     path: /var/www/html
     state: absent
-- name: Configure Nginx server (1/2)
-  lineinfile:
-    path: /etc/nginx/nginx.conf
-    regexp: server_tokens
-    line: server_tokens off;
-- name: Configure Nginx server (2/2)
-  lineinfile:
-    path: /etc/nginx/nginx.conf
-    regexp: ssl_protocols
-    line: ssl_protocols TLSv1.2 TLSv1.3;
-- name: Install Nginx global configurations
+- name: Install Nginx global configurations (1/2)
+  copy:
+    src: nginx/_global/nginx.conf
+    dest: /etc/nginx/nginx.conf
+- name: Install Nginx global configurations (2/2)
   copy:
     src: nginx/_global/conf.d
     dest: /etc/nginx/
