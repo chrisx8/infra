@@ -39,8 +39,8 @@
 - name: Remove garbage packages
   apt:
     name: [joe, python, python-minimal, snapd, accountsservice, command-not-found, fwupd, lxcfs, 
-            open-iscsi, open-vm-tools, os-prober, packagekit, plymouth, software-properties-common, 
-            ssh-import-id, sosreport, telnet, ufw]
+           open-iscsi, open-vm-tools, os-prober, packagekit, plymouth, postfix, 
+           software-properties-common, ssh-import-id, sosreport, telnet, ufw]
     state: absent
     autoremove: yes
     purge: yes

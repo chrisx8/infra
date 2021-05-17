@@ -1,0 +1,13 @@
+---
+- name: Set up access gateways
+  hosts: access_gateway
+  become: true
+  tasks:
+  - name: Run basic setup
+    include_role:
+      name: basic
+  - name: Run access gateway setup
+    include_role:
+      name: access-gateway
+  - name: Reboot
+    reboot:
