@@ -56,6 +56,11 @@
   apt:
     name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, gnupg, psmisc, vim]
     state: latest
+- name: Limit systemd-journald
+  lineinfile:
+    dest: "/etc/systemd/journald.conf"
+    regex: "SystemMaxUse="
+    line: "SystemMaxUse=10M"
 - name: Configure vim
   copy:
     src: files/sys/vimrc

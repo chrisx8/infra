@@ -1,6 +1,6 @@
 - name: Check if FreshRSS is installed
   stat:
-    path: /var/www/html/freshrss
+    path: /var/www/html/freshrss/app/actualize_script.php
   register: freshrss_stat
 
 - name: Create database
