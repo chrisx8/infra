@@ -1,6 +1,6 @@
 - name: Configure sysctl
   copy:
-    src: files/sysctl.conf
+    src: files/sys/sysctl.conf
     dest: /etc/sysctl.conf
     mode: 0644
 - name: Reload sysctl

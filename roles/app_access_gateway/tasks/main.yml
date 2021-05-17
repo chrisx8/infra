@@ -1,0 +1,54 @@
+- name: Install pip3
+  apt:
+    name: python3-pip
+    install_recommends: false
+    state: latest
+
+- name: Install Certbot
+  pip:
+    name: [certbot, certbot-dns-cloudflare]
+    executable: pip3
+
+- name: Install Cloudflare API credential
+  when: cloudflare_token
+  lineinfile:
+    path: /opt/cloudflare.ini
+    mode: 0600
+    regex: "^dns_cloudflare_api_token"
+    line: "dns_cloudflare_api_token = {{ cloudflare_token }}"
+
+- name: Install Nginx configurations
+  copy:
+    src: nginx/access-gateway/conf.d
+    dest: /etc/nginx/
+    directory_mode: true
+- name: Restart Nginx
+  systemd:
+    name: nginx
+    state: restarted
+
+- name: Install cron job
+  copy:
+    src: files/app/cronjobs_access.sh
+    dest: /opt/cronjobs.sh
+    mode: 0700
+- name: Configure cron job
+  cron:
+    name: "Daily maintenance"
+    minute: "0"
+    hour: "7"
+    job: "bash /opt/cronjobs.sh > /var/log/cronjobs.log"
+
+- name: Check if deploy key exists
+  stat:
+    path: "/root/.ssh/id_ed25519"
+  register: deploy_key_exists
+- name: Generate cert deploy key
+  when: not deploy_key_exists.stat.exists
+  command: "ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519"
+- name: Retrieve public deploy key
+  command: "cat ~/.ssh/id_ed25519.pub"
+  register: deploy_key
+- name: Display public deploy key
+  debug:
+    msg: "Add this key to all servers: '{{ deploy_key.stdout }}'"

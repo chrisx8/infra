@@ -1,12 +1,11 @@
 ---
-- name: Set up systems (BASIC)
+- name: Set up base systems
   hosts: basic
   become: true
   vars:
-    swap_size: 1G
   tasks:
-  - name: Run cloud system setup (BASIC)
-    include_role:
-      name: basic
+  - name: Basic setup
+    import_role:
+      name: sys_basic
   - name: Reboot
     reboot:

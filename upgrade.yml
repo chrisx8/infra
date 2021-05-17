@@ -38,6 +38,16 @@
     when: oauth2_proxy_check.stat.exists
     shell: rm -r /opt/oauth2-proxy/oauth2-proxy-*
 
+  - name: Check if Dashboard exists
+    stat:
+      path: /var/www/html/internal
+    register: dashboard_stat
+  - name: Install Dashboard
+    when: dashboard_stat.stat.exists
+    copy:
+      src: dashboard/
+      dest: /var/www/html/
+
   - name: Check if FreshRSS exists
     stat:
       path: /var/www/html/freshrss

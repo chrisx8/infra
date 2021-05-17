@@ -1,0 +1,54 @@
+- name: Check if FreshRSS is installed
+  stat:
+    path: /var/www/html/freshrss
+  register: freshrss_stat
+
+- name: Create database
+  mysql_db:
+    name: freshrss
+    state: present
+
+- name: Generate new password for MySQL freshrss user
+  when: not freshrss_stat.stat.exists
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: mysql_freshrss_password
+- name: Create MySQL freshrss user
+  when: not freshrss_stat.stat.exists
+  mysql_user:
+    name: freshrss
+    host: localhost
+    password: "{{ mysql_freshrss_password.stdout }}"
+    priv:
+      'freshrss.*': 'ALL'
+    state: present
+
+- name: Download FreshRSS
+  git:
+    repo: https://github.com/FreshRSS/FreshRSS.git
+    dest: /var/www/html/freshrss
+    version: master
+    depth: 1
+
+- name: Set permissions
+  file:
+    path: /var/www/html/freshrss/data
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+
+- name: Configure cron job (Refresh FreshRSS feeds hourly)
+  cron:
+    name: "Refresh FreshRSS feeds hourly"
+    minute: "1"
+    job: "php -f /var/www/html/freshrss/app/actualize_script.php"
+
+- name: Prompt for FreshRSS setup
+  when: not freshrss_stat.stat.exists
+  pause:
+    prompt: "Finish FreshRSS installation at /freshrss/p/i/ \n
+    Database: MySQL server on localhost \n
+    DB Name: freshrss \n
+    DB Username: freshrss \n
+    DB Password: {{ mysql_freshrss_password.stdout }} \n\n
+  "

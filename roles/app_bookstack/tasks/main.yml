@@ -1,0 +1,74 @@
+- name: Install PHP extensions
+  apt:
+    name: [php-curl, php-gd, php-mysql, php-xml, composer]
+    state: latest
+
+- name: Check if BookStack is installed
+  stat:
+    path: /var/www/bookstack
+  register: bookstack_stat
+
+- name: Create database
+  when: not bookstack_stat.stat.exists
+  mysql_db:
+    name: bookstack
+    state: present
+
+- name: Generate new password for MySQL bookstack user
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: mysql_bookstack_password
+- name: Create MySQL bookstack user
+  mysql_user:
+    name: bookstack
+    host: localhost
+    password: "{{ mysql_bookstack_password.stdout }}"
+    priv:
+      'bookstack.*': 'ALL'
+    state: present
+
+- name: Download BookStack
+  git:
+    repo: https://github.com/BookStackApp/BookStack.git
+    dest: /var/www/bookstack
+    version: release
+    depth: 1
+
+- name: Set permissions (1/3)
+  file:
+    path: /var/www/bookstack/storage
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+- name: Set permissions (2/3)
+  file:
+    path: /var/www/bookstack/bootstrap/cache
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+- name: Set permissions (3/3)
+  file:
+    path: /var/www/bookstack/public/uploads
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+
+- name: Install config
+  template:
+    src: files/app/bookstack.env.j2
+    dest: /var/www/bookstack/.env
+
+- name: Composer install
+  shell:
+    chdir: /var/www/bookstack
+    cmd: composer install --no-dev
+- name: Generate new key
+  shell:
+    chdir: /var/www/bookstack  
+    cmd: "php artisan key:generate --force"
+- name: Database migration
+  shell:
+    chdir: /var/www/bookstack
+    cmd: "php artisan migrate --force"

@@ -2,12 +2,18 @@
 - name: Set up access gateways
   hosts: access_gateway
   become: true
+  vars_prompt:
+    - name: cloudflare_token
+      prompt: "Certbot - Enter Cloudflare API token"
   tasks:
-  - name: Run basic setup
-    include_role:
-      name: basic
-  - name: Run access gateway setup
-    include_role:
-      name: access-gateway
+  - name: Basic setup
+    import_role:
+      name: sys_basic
+  - name: Install Nginx
+    import_role:
+      name: sys_nginx
+  - name: Install access gateway apps
+    import_role:
+      name: app_access_gateway
   - name: Reboot
     reboot:

@@ -5,11 +5,23 @@
   vars:
   vars_prompt:
   tasks:
-  - name: Run basic setup
-    include_role:
-      name: basic
-  - name: Run webhost setup
-    include_role:
-      name: webhost
+  - name: Basic setup
+    import_role:
+      name: sys_basic
+  - name: Install Nginx
+    import_role:
+      name: sys_nginx
+  - name: Install PHP + MySQL
+    import_role:
+      name: sys_php_mysql
+  - name: Install Dashboard
+    import_role:
+      name: app_dashboard
+  - name: Install BookStack
+    import_role:
+      name: app_bookstack
+  - name: Install FreshRSS
+    import_role:
+      name: app_freshrss
   - name: Reboot
     reboot:

@@ -1,51 +1,28 @@
-- name: Install Nginx
-  apt:
-    name: nginx
-    state: latest
 - name: Install OpenJRE 11 (Headless)
   apt:
     name: openjdk-11-jre-headless
     state: latest
+
 - name: Check if Keycloak is installed
   stat:
     path: /opt/keycloak
   register: keycloak_stat
-- name: Remove built-in Nginx sites (1/3)
-  file:
-    path: /etc/nginx/sites-available
-    state: absent
-- name: Remove built-in Nginx sites (2/3)
-  file:
-    path: /etc/nginx/sites-enabled
-    state: absent
-- name: Remove built-in Nginx sites (3/3)
-  file:
-    path: /var/www/html
-    state: absent
-- name: Install Nginx global configurations (1/2)
+
+- name: Install favicon
   copy:
-    src: nginx/_global/nginx.conf
-    dest: /etc/nginx/nginx.conf
-- name: Install Nginx global configurations (2/2)
-  copy:
-    src: nginx/_global/conf.d
-    dest: /etc/nginx/
-    directory_mode: true
+    src: dashboard/favicon.ico
+    dest: /var/www/favicon.ico
 - name: Install Nginx configurations
   copy:
     src: nginx/iam/conf.d
     dest: /etc/nginx/
     directory_mode: true
-- name: Install favicon
-  copy:
-    src: dashboard/favicon.ico
-    dest: /var/www/favicon.ico
-- name: Reload Nginx
+- name: Restart Nginx
   systemd:
     name: nginx
-    state: reloaded
+    state: restarted
 
-- name: Create IAM user
+- name: Create IAM app user
   user:
     name: iamapps
     shell: /bin/false
@@ -56,6 +33,7 @@
     state: directory
     owner: iamapps
     group: iamapps
+
 - name: Generate oauth2-proxy secret 1/2
   command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
   register: cookie_secret_1
@@ -72,6 +50,7 @@
   template:
     src: oauth2-proxy/external.cfg.j2
     dest: /opt/oauth2-proxy/external.cfg
+
 - name: Download oauth2-proxy
   shell: curl -s https://api.github.com/repos/oauth2-proxy/oauth2-proxy/releases/latest | 
          grep 'linux-amd64.tar' | cut -d '"' -f 4 | tail -n1 | 
@@ -82,12 +61,14 @@
     cmd: tar -xf oauth2-proxy.tgz || true
 - name: Move oauth2-proxy binary
   shell: mv /opt/oauth2-proxy/oauth2-proxy-*/oauth2-proxy /opt/oauth2-proxy/
+
 - name: Remove oauth2-proxy tarball
   file:
     path: /opt/oauth2-proxy/oauth2-proxy.tgz
     state: absent
 - name: Clean up oauth2-proxy download
   shell: rm -r /opt/oauth2-proxy/oauth2-proxy-*
+
 - name: Set permissions on oauth2-proxy direcory
   file:
     path: /opt/oauth2-proxy
@@ -95,15 +76,16 @@
     recurse: true
     owner: iamapps
     group: iamapps
+
 - name: Set up systemd service for oauth2-proxy (internal)
   copy:
-    src: files/oauth2-proxy-internal.service
+    src: files/app/oauth2-proxy-internal.service
     dest: /etc/systemd/system/
     owner: root
     group: root
 - name: Set up systemd service for oauth2-proxy (external)
   copy:
-    src: files/oauth2-proxy-external.service
+    src: files/app/oauth2-proxy-external.service
     dest: /etc/systemd/system
     owner: root
     group: root
@@ -121,11 +103,14 @@
     daemon-reload: true
 
 - name: Prompt for Keycloak installation
+  when: not keycloak_stat.stat.exists
   pause:
     prompt: "Install keycloak to /opt/keycloak, then come back here\n
              Press Enter to continue"
+
 - name: Configure Keycloak for use behind reverse proxy
   shell: "/opt/keycloak/bin/kc.sh config --proxy=edge"
+
 - name: Change permission on Keycloak directory
   file:
     path: /opt/keycloak
@@ -134,9 +119,10 @@
     owner: iamapps
     group: iamapps
     mode: 0755
+
 - name: Set up systemd service for Keycloak
   copy:
-    src: files/keycloak.service
+    src: files/app/keycloak.service
     dest: /etc/systemd/system
     owner: root
     group: root

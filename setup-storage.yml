@@ -5,11 +5,17 @@
   vars:
   vars_prompt:
   tasks:
-  - name: Run basic setup
-    include_role:
-      name: basic
-  - name: Run storage setup
-    include_role:
-      name: storage
+  - name: Basic setup
+    import_role:
+      name: sys_basic
+  - name: Install Nginx
+    import_role:
+      name: sys_nginx
+  - name: Install PHP + MySQL
+    import_role:
+      name: sys_php_mysql
+  - name: Install Nextcloud
+    import_role:
+      name: app_nextcloud
   - name: Reboot
     reboot:
