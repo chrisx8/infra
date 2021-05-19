@@ -14,6 +14,18 @@
   - name: Install PHP + MySQL
     import_role:
       name: sys_php_mysql
+  - name: Install Nginx config
+    copy:
+      src: nginx/webhosts/conf.d/
+      dest: /etc/nginx/conf.d/
+  - name: Install Nginx snippets
+    copy:
+      src: nginx/webhosts/snippets/
+      dest: /etc/nginx/snippets/
+  - name: Restart Nginx
+    systemd:
+      name: nginx
+      state: restarted
   - name: Install Dashboard
     import_role:
       name: app_dashboard

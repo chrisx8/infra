@@ -13,7 +13,7 @@
     state: absent
 - name: Remove built-in Nginx sites (3/3)
   file:
-    path: /var/www/html
+    path: /var/www/html/index.nginx-debian.html
     state: absent
 
 - name: Install Nginx global configurations (1/2)

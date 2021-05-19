@@ -12,6 +12,10 @@
   copy:
     src: dashboard/favicon.ico
     dest: /var/www/favicon.ico
+- name: Install 404 page
+  copy:
+    src: nginx/iam/404.html
+    dest: /var/www/404.html
 - name: Install Nginx configurations
   copy:
     src: nginx/iam/conf.d
