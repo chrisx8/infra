@@ -29,7 +29,7 @@
 
 - name: Install cron job
   copy:
-    src: files/app/cronjobs_access.sh
+    src: cronjobs_access.sh
     dest: /opt/cronjobs.sh
     mode: 0700
 - name: Configure cron job

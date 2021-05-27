@@ -2,7 +2,6 @@
 - name: Set up IAM systems
   hosts: iam
   become: true
-  vars:
   vars_prompt:
     - name: client_secret
       prompt: "SSO - Enter OAuth Client Secret"

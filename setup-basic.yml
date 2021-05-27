@@ -2,7 +2,6 @@
 - name: Set up base systems
   hosts: basic
   become: true
-  vars:
   tasks:
   - name: Basic setup
     import_role:

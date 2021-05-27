@@ -17,7 +17,7 @@
     - localhost
 - name: Set my.cnf file for user
   template:
-    src: files/sys/my.cnf.j2
+    src: my.cnf.j2
     dest: /root/.my.cnf
     mode: 0600
 - name: Delete anonymous MySQL user

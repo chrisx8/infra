@@ -63,7 +63,7 @@
     line: "SystemMaxUse=10M"
 - name: Configure vim
   copy:
-    src: files/sys/vimrc
+    src: vimrc
     dest: /etc/vim/vimrc
     mode: 0644
 - name: Check configuration existence
@@ -83,12 +83,12 @@
     "
 - name: Configure OpenSSH client
   copy:
-    src: files/sys/ssh_config
+    src: ssh_config
     dest: /etc/ssh/ssh_config
     mode: 0644
 - name: Configure OpenSSH server
   copy:
-    src: files/sys/sshd_config
+    src: sshd_config
     dest: /etc/ssh/sshd_config
     mode: 0644
 - name: Remove unsupported SSH host keys

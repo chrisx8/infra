@@ -1,8 +1,8 @@
 ## OAuth2 Proxy Config File
 ## https://github.com/oauth2-proxy/oauth2-proxy
 
-http_address = ":4182"
-proxy_prefix = "/authproxy/external"
+http_address = ":4181"
+proxy_prefix = "/authproxy/internal"
 reverse_proxy = true
 set_xauthrequest = true
 
@@ -11,16 +11,16 @@ footer = "&copy; 2021 TinyNET"
 
 whitelist_domains = ".tinynet.chrisx.xyz"
 email_domains = "*"
+allowed_groups = "admin,internal"
 
 provider = "oidc"
 oidc_issuer_url = "https://iam.tinynet.chrisx.xyz/realms/master"
 client_id = "authproxy"
 client_secret = "{{ client_secret }}"
 
-cookie_name = "authproxy_ext"
+cookie_name = "authproxy_internal"
 cookie_domains = ".tinynet.chrisx.xyz"
-cookie_secret = "{{ cookie_secret_2.stdout }}"
+cookie_secret = "{{ cookie_secret_1.stdout }}"
 cookie_expire = "1h"
-cookie_samesite = "strict"
 cookie_secure = true
 cookie_httponly = true

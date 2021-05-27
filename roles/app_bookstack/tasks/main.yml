@@ -57,7 +57,7 @@
 
 - name: Install config
   template:
-    src: files/app/bookstack.env.j2
+    src: bookstack.env.j2
     dest: /var/www/bookstack/.env
 
 - name: Composer install

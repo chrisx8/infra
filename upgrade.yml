@@ -5,6 +5,7 @@
   vars_prompt:
     - name: upgrade_oauth2_proxy
       prompt: "Upgrade oauth2-proxy? (y/n)"
+      private: no
   tasks:
   - name: Run apt dist-upgrade
     apt:

@@ -47,12 +47,12 @@
 - name: Install oauth2-proxy configurations 1/2
   when: client_secret
   template:
-    src: oauth2-proxy/internal.cfg.j2
+    src: internal.cfg.j2
     dest: /opt/oauth2-proxy/internal.cfg
 - name: Install oauth2-proxy configurations 2/2
   when: client_secret
   template:
-    src: oauth2-proxy/external.cfg.j2
+    src: external.cfg.j2
     dest: /opt/oauth2-proxy/external.cfg
 
 - name: Download oauth2-proxy
@@ -83,13 +83,13 @@
 
 - name: Set up systemd service for oauth2-proxy (internal)
   copy:
-    src: files/app/oauth2-proxy-internal.service
+    src: oauth2-proxy-internal.service
     dest: /etc/systemd/system/
     owner: root
     group: root
 - name: Set up systemd service for oauth2-proxy (external)
   copy:
-    src: files/app/oauth2-proxy-external.service
+    src: oauth2-proxy-external.service
     dest: /etc/systemd/system
     owner: root
     group: root
@@ -126,7 +126,7 @@
 
 - name: Set up systemd service for Keycloak
   copy:
-    src: files/app/keycloak.service
+    src: keycloak.service
     dest: /etc/systemd/system
     owner: root
     group: root
