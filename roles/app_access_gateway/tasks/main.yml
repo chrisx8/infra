@@ -1,21 +1,55 @@
-- name: Install pip3
+- name: Install WireGuard
   apt:
-    name: python3-pip
+    name: wireguard-tools
     install_recommends: false
     state: latest
-
-- name: Install Certbot
-  pip:
-    name: [certbot, certbot-dns-cloudflare]
-    executable: pip3
-
-- name: Install Cloudflare API credential
-  when: cloudflare_token
-  lineinfile:
-    path: /opt/cloudflare.ini
+- name: Configure WireGuard
+  when: wg_private_key
+  template:
+    src: wg0.conf.j2
+    dest: /etc/wireguard/wg0.conf
     mode: 0600
-    regex: "^dns_cloudflare_api_token"
-    line: "dns_cloudflare_api_token = {{ cloudflare_token }}"
+- name: Check if WireGuard config exists
+  stat:
+    path: /etc/wireguard/wg0.conf
+  register: wg_stat
+- name: Start WireGuard interface
+  when: wg_stat.stat.exists
+  systemd:
+    name: wg-quick@wg0.service
+    state: restarted
+    enabled: yes
+
+- name: Enable IPv4 forwarding
+  shell: "echo 'net.ipv4.ip_forward = 1' > /etc/sysctl.conf"
+- name: Load sysctl
+  command: "sysctl -f /etc/sysctl.conf"
+
+- name: Install acme.sh
+  when: acme_email
+  shell: "curl https://get.acme.sh | sh -s email={{ acme_email }}"
+- name: Install acme.sh post-renew script
+  copy:
+    src: distribute_cert.sh
+    dest: /opt/distribute_cert.sh
+    mode: 0700
+
+- name: Issue certificate with acme.sh
+  when: acme_email
+  pause:
+    prompt: "Issue a certificate with acme.sh, then come back here\n
+             =====================================================\n
+              export CF_Token='x' \n
+              export CF_Account_ID='x' \n
+              export CF_Zone_ID='x' \n
+              acme.sh --issue --dns dns_cf -d <domain> -d *.<domain> \\ \n
+                --renew-hook 'bash /opt/distribute_cert.sh' \n
+              acme.sh --install-cert -d <domain> \\ \n
+                --fullchain-file /etc/ssl/private/fullchain.pem \\ \n
+                --key-file /etc/ssl/private/privkey.pem \\ \n
+                --reloadcmd 'systemctl reload nginx.service' \n
+             =====================================================\n
+             Press Enter to continue"
 
 - name: Install Nginx configurations
   copy:
@@ -26,18 +60,6 @@
   systemd:
     name: nginx
     state: restarted
-
-- name: Install cron job
-  copy:
-    src: cronjobs_access.sh
-    dest: /opt/cronjobs.sh
-    mode: 0700
-- name: Configure cron job
-  cron:
-    name: "Daily maintenance"
-    minute: "0"
-    hour: "7"
-    job: "bash /opt/cronjobs.sh > /var/log/cronjobs.log"
 
 - name: Check if deploy key exists
   stat:

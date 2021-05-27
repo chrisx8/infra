@@ -16,6 +16,14 @@
       autoclean: yes
       autoremove: yes
 
+  - name: Check if acme.sh exists
+    stat:
+      path: /root/.acme.sh/acme.sh
+    register: acme_check
+  - name: Upgrade acme.sh
+    when: acme_check.stat.exists
+    command: "/root/.acme.sh/acme.sh --upgrade"
+
   - name: Check if oauth2-proxy exists
     stat:
       path: /opt/oauth2-proxy

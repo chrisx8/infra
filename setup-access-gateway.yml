@@ -3,8 +3,10 @@
   hosts: access_gateway
   become: true
   vars_prompt:
-    - name: cloudflare_token
-      prompt: "Certbot - Enter Cloudflare API token"
+    - name: wg_private_key
+      prompt: "WireGuard - Enter private key"
+    - name: acme_email
+      prompt: "acme.sh - Enter email address"
   tasks:
   - name: Basic setup
     import_role:
