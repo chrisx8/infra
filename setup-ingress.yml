@@ -1,6 +1,6 @@
 ---
 - name: Set up ingress systems
-  hosts: access_gateway
+  hosts: ingress_hosts
   become: true
   vars_prompt:
     - name: wg_private_key
@@ -17,5 +17,8 @@
   - name: Install ingress apps
     import_role:
       name: app_ingress
+  - name: Install Dashboard
+    import_role:
+      name: app_dashboard
   - name: Reboot
     reboot:

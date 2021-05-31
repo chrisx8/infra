@@ -28,12 +28,6 @@
 - name: Install acme.sh
   when: acme_email
   shell: "curl https://get.acme.sh | sh -s email={{ acme_email }}"
-- name: Install acme.sh post-renew script
-  copy:
-    src: distribute_cert.sh
-    dest: /opt/distribute_cert.sh
-    mode: 0700
-
 - name: Issue certificate with acme.sh
   when: acme_email
   pause:
@@ -42,8 +36,7 @@
               export CF_Token='x' \n
               export CF_Account_ID='x' \n
               export CF_Zone_ID='x' \n
-              acme.sh --issue --dns dns_cf -d <domain> -d *.<domain> \\ \n
-                --renew-hook 'bash /opt/distribute_cert.sh' \n
+              acme.sh --issue --dns dns_cf -d <domain> -d *.<domain> \n
               acme.sh --install-cert -d <domain> \\ \n
                 --fullchain-file /etc/ssl/private/fullchain.pem \\ \n
                 --key-file /etc/ssl/private/privkey.pem \\ \n
@@ -57,28 +50,24 @@
     dest: /var/www/favicon.ico
 - name: Install 404 page
   copy:
-    src: nginx/ingress/iam-404.html
+    src: nginx/iam-404.html
     dest: /var/www/iam-404.html
-- name: Install Nginx configurations
+- name: Install Nginx global configuration
   copy:
-    src: nginx/ingress/conf.d
+    src: nginx/nginx.conf
+    dest: /etc/nginx/nginx.conf
+    directory_mode: true
+- name: Install Nginx site configurations
+  copy:
+    src: nginx/conf.d
+    dest: /etc/nginx/
+    directory_mode: true
+- name: Install Nginx snippets
+  copy:
+    src: nginx/snippets
     dest: /etc/nginx/
     directory_mode: true
 - name: Restart Nginx
   systemd:
     name: nginx
     state: restarted
-
-- name: Check if deploy key exists
-  stat:
-    path: "/root/.ssh/id_ed25519"
-  register: deploy_key_exists
-- name: Generate cert deploy key
-  when: not deploy_key_exists.stat.exists
-  command: "ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519"
-- name: Retrieve public deploy key
-  command: "cat ~/.ssh/id_ed25519.pub"
-  register: deploy_key
-- name: Display public deploy key
-  debug:
-    msg: "Add this key to all servers: '{{ deploy_key.stdout }}'"

@@ -27,12 +27,10 @@
   command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
   register: cookie_secret_2
 - name: Install oauth2-proxy configurations 1/2
-  when: client_secret
   template:
     src: internal.cfg.j2
     dest: /opt/oauth2-proxy/internal.cfg
 - name: Install oauth2-proxy configurations 2/2
-  when: client_secret
   template:
     src: external.cfg.j2
     dest: /opt/oauth2-proxy/external.cfg

@@ -27,16 +27,6 @@
       'nextcloud.*': 'ALL'
     state: present
 
-- name: Install Nginx configurations
-  copy:
-    src: nginx/storage/conf.d
-    dest: /etc/nginx/
-    directory_mode: true
-- name: Restart Nginx
-  systemd:
-    name: nginx
-    state: restarted
-
 - name: Configure PHP-FPM (1/2)
   when: not nextcloud_stat.stat.exists
   lineinfile:
@@ -70,10 +60,34 @@
 - name: Prompt for Nextcloud setup
   when: not nextcloud_stat.stat.exists
   pause:
-    prompt: "Finish Nextcloud installation at /index.php \n
+    prompt: "Finish Nextcloud installation at /nextcloud/index.php \n
     Storage path: /data/nextcloud \n
     Database: MySQL server on localhost \n
     DB Name: nextcloud \n
     DB Username: nextcloud \n
     DB Password: {{ mysql_nextcloud_password.stdout }} \n\n
   "
+
+- name: Check if Nextcloud is configured by Ansible
+  stat:
+    path: /var/www/nextcloud/config/.ansible_configured
+  register: nextcloud_ansible
+- name: Inject extra Nextcloud config options
+  when: not nextcloud_ansible.stat.exists
+  lineinfile:
+    path: /var/www/nextcloud/config/config.php
+    regexp: 'installed'
+    line: "'installed' => 'true',\n
+    'overwrite.cli.url' => 'https://tinynet.chrisx.xyz/nextcloud',\n
+    'htaccess.RewriteBase' => '/nextcloud',\n
+    'trusted_proxies' => ['172.17.0.10'],\n
+    'auth.webauthn.enabled' => false,\n
+    'default_phone_region' => 'US',
+    "
+- name: Create ansible_configured flag
+  when: not nextcloud_ansible.stat.exists
+  file:
+    path: /var/www/nextcloud/config/.ansible_configured
+    state: touch
+- name: Update htaccess
+  shell: "runuser -u www-data php /var/www/nextcloud/occ maintenance:update:htaccess"

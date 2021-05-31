@@ -3,13 +3,7 @@
     name: [php-curl, php-gd, php-mysql, php-xml, composer]
     state: latest
 
-- name: Check if BookStack is installed
-  stat:
-    path: /var/www/bookstack
-  register: bookstack_stat
-
 - name: Create database
-  when: not bookstack_stat.stat.exists
   mysql_db:
     name: bookstack
     state: present

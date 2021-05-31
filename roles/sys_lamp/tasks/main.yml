@@ -1,7 +1,28 @@
-- name: Install PHP & MySQL stack
+- name: Install LAMP stack
   apt:
-    name: [mariadb-server, php-fpm, php-mysql]
+    name: [apache2, mariadb-server, libapache2-mod-fcgid, php-fpm, php-mysql, python3-mysqldb]
     state: latest
+- name: Remove built-in sites
+  file:
+    path: /var/www/html
+    state: absent
+
+- name: Switch to Event MPM
+  shell: "a2dismod mpm_prefork && a2enmod mpm_event"
+- name: Enable PHP-FPM handler
+  shell: "a2enconf php7.4-fpm && a2enmod proxy && a2enmod proxy_fcgi"
+- name: Enable Apache rewrite module
+  shell: "a2enmod rewrite"
+
+- name: Copy Apache configuration
+  copy:
+    src: 000-default.conf
+    dest: /etc/apache2/sites-available/000-default.conf
+
+- name: Restart Apache
+  systemd:
+    name: apache2
+    state: restarted
 
 - name: Generate new MariaDB root password
   command: "echo {{ lookup('password', '/dev/null length=64') }}"

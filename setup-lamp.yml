@@ -1,0 +1,19 @@
+---
+- name: Set up LAMP hosts
+  hosts: lamp_hosts
+  become: true
+  tasks:
+  - name: Basic setup
+    import_role:
+      name: sys_basic
+  - name: Install LAMP stack
+    import_role:
+      name: sys_lamp
+  - name: Install BookStack
+    import_role:
+      name: app_bookstack
+  - name: Install Nextcloud
+    import_role:
+      name: app_nextcloud
+  - name: Reboot
+    reboot:
