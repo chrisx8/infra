@@ -8,24 +8,6 @@
     path: /opt/keycloak
   register: keycloak_stat
 
-- name: Install favicon
-  copy:
-    src: dashboard/favicon.ico
-    dest: /var/www/favicon.ico
-- name: Install 404 page
-  copy:
-    src: nginx/iam/404.html
-    dest: /var/www/404.html
-- name: Install Nginx configurations
-  copy:
-    src: nginx/iam/conf.d
-    dest: /etc/nginx/
-    directory_mode: true
-- name: Restart Nginx
-  systemd:
-    name: nginx
-    state: restarted
-
 - name: Create IAM app user
   user:
     name: iamapps

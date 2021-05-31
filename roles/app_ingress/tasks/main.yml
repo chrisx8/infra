@@ -51,9 +51,17 @@
              =====================================================\n
              Press Enter to continue"
 
+- name: Install favicon
+  copy:
+    src: dashboard/favicon.ico
+    dest: /var/www/favicon.ico
+- name: Install 404 page
+  copy:
+    src: nginx/ingress/iam-404.html
+    dest: /var/www/iam-404.html
 - name: Install Nginx configurations
   copy:
-    src: nginx/access-gateway/conf.d
+    src: nginx/ingress/conf.d
     dest: /etc/nginx/
     directory_mode: true
 - name: Restart Nginx

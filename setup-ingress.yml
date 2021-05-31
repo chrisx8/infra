@@ -1,5 +1,5 @@
 ---
-- name: Set up access gateways
+- name: Set up ingress systems
   hosts: access_gateway
   become: true
   vars_prompt:
@@ -14,8 +14,8 @@
   - name: Install Nginx
     import_role:
       name: sys_nginx
-  - name: Install access gateway apps
+  - name: Install ingress apps
     import_role:
-      name: app_access_gateway
+      name: app_ingress
   - name: Reboot
     reboot:

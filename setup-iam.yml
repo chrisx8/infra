@@ -9,9 +9,6 @@
   - name: Basic setup
     import_role:
       name: sys_basic
-  - name: Install Nginx
-    import_role:
-      name: sys_nginx
   - name: Install IAM apps
     import_role:
       name: app_iam
