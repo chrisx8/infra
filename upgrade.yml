@@ -6,6 +6,9 @@
     - name: upgrade_oauth2_proxy
       prompt: "Upgrade oauth2-proxy? (y/n)"
       private: no
+    - name: upgrade_miniflux
+      prompt: "Upgrade Miniflux? (y/n)"
+      private: no
   tasks:
   - name: Run apt dist-upgrade
     apt:
@@ -60,25 +63,26 @@
       src: dashboard/
       dest: /var/www/html/
 
-  - name: Check if FreshRSS exists
+  - name: Check if Miniflux exists
     stat:
-      path: /var/www/html/freshrss
-    register: freshrss_stat
-  - name: Download FreshRSS
-    when: freshrss_stat.stat.exists
-    git:
-      repo: https://github.com/FreshRSS/FreshRSS.git
-      dest: /var/www/html/freshrss
-      version: master
-      depth: 1
-  - name: FreshRSS - Set permissions
-    when: freshrss_stat.stat.exists
-    file:
-      path: /var/www/html/freshrss/data
-      state: directory
-      recurse: true
-      owner: www-data
-      group: www-data
+      path: /usr/bin/miniflux
+    register: miniflux_stat
+  - name: Download Miniflux
+    when: upgrade_miniflux == 'y' and miniflux_stat.stat.exists
+    shell: curl -s https://api.github.com/repos/miniflux/v2/releases/latest | 
+          grep 'amd64.deb' | cut -d '"' -f 4 | tail -n1 | 
+          xargs curl -L -o /tmp/miniflux_amd64.deb
+  - name: Install Miniflux from deb package
+    when: upgrade_miniflux == 'y' and miniflux_stat.stat.exists
+    apt:
+      deb: /tmp/miniflux_amd64.deb
+  - name: Restart Miniflux
+    when: upgrade_miniflux == 'y' and miniflux_stat.stat.exists
+    systemd:
+      name: miniflux
+      state: restarted
+      enabled: true
+      daemon-reload: true
 
   - name: Check if BookStack exists
     stat:
@@ -120,13 +124,13 @@
     shell:
       chdir: /var/www/bookstack
       cmd: composer install --no-dev
-  - name: BookStack - Generate new key
-    when: bookstack_stat.stat.exists
-    shell:
-      chdir: /var/www/bookstack  
-      cmd: "php artisan key:generate --force"
   - name: BookStack - Database migration
     when: bookstack_stat.stat.exists
     shell:
       chdir: /var/www/bookstack
       cmd: "php artisan migrate --force"
+  - name: BookStack - Clear cache
+    when: bookstack_stat.stat.exists
+    shell:
+      chdir: /var/www/bookstack
+      cmd: "php artisan cache:clear && php artisan config:clear && php artisan view:clear"

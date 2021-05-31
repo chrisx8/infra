@@ -30,8 +30,5 @@
   - name: Install BookStack
     import_role:
       name: app_bookstack
-  - name: Install FreshRSS
-    import_role:
-      name: app_freshrss
   - name: Reboot
     reboot:

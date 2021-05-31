@@ -1,6 +1,6 @@
 - name: Install PHP & MySQL stack
   apt:
-    name: [mariadb-server, php-fpm, php-mysql, python3-mysqldb]
+    name: [mariadb-server, php-fpm, php-mysql]
     state: latest
 
 - name: Generate new MariaDB root password

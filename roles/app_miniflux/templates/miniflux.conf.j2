@@ -1,0 +1,14 @@
+PORT=8080
+BASE_URL=https://tinynet.chrisx.xyz/miniflux
+
+DATABASE_URL=postgres://miniflux:{{ postgres_password }}@127.0.0.1/miniflux
+CLEANUP_REMOVE_SESSIONS_DAYS=1
+POLLING_FREQUENCY=30
+RUN_MIGRATIONS=1
+
+OAUTH2_PROVIDER=oidc
+OAUTH2_OIDC_DISCOVERY_ENDPOINT=https://iam.tinynet.chrisx.xyz/realms/master
+OAUTH2_REDIRECT_URL=https://tinynet.chrisx.xyz/miniflux/oauth2/oidc/callback
+OAUTH2_USER_CREATION=1
+OAUTH2_CLIENT_ID=miniflux
+OAUTH2_CLIENT_SECRET={{ client_secret }}

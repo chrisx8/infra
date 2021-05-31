@@ -1,0 +1,17 @@
+- name: Download Miniflux
+  shell: curl -s https://api.github.com/repos/miniflux/v2/releases/latest | 
+         grep 'amd64.deb' | cut -d '"' -f 4 | tail -n1 | 
+         xargs curl -L -o /tmp/miniflux_amd64.deb
+- name: Install Miniflux from deb package
+  apt:
+    deb: /tmp/miniflux_amd64.deb
+- name: Install Miniflux configuration
+  template:
+    src: miniflux.conf.j2
+    dest: /etc/miniflux.conf
+- name: Restart Miniflux
+  systemd:
+    name: miniflux
+    state: restarted
+    enabled: true
+    daemon-reload: true

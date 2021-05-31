@@ -20,7 +20,7 @@ Core repo for TinyNET infrastructure config and docs.
 - OS: Proxmox VE
 - CPU: Intel Core i5-6500T
 - RAM: 8GB DDR4 (1 * 8GB SODIMM)
-- Storage: 120GB SATA SSD
+- Storage: 240GB NVMe SSD
 - Networking: 1GbE
 
 ## Services
@@ -32,6 +32,7 @@ Core repo for TinyNET infrastructure config and docs.
 
 ### IAM
 
+- [Keycloak](https://www.keycloak.org/)
 - [OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/)
 
 ### Storage
@@ -42,7 +43,7 @@ Core repo for TinyNET infrastructure config and docs.
 ### Web Apps
 
 - [BookStack](https://www.bookstackapp.com/)
-- [FreshRSS](https://freshrss.org/)
+- [Minflux](https://miniflux.app/)
 
 ## Resources
 
