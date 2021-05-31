@@ -25,9 +25,10 @@ Core repo for TinyNET infrastructure config and docs.
 
 ## Services
 
-### Networking
+### Networking / Ingress
 
 - [OpenWrt](https://openwrt.org/)
+- [NGINX](https://nginx.org)
 - [WireGuard](https://www.wireguard.com/)
 
 ### IAM
@@ -35,15 +36,15 @@ Core repo for TinyNET infrastructure config and docs.
 - [Keycloak](https://www.keycloak.org/)
 - [OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/)
 
-### Storage
-
-- [Nextcloud](https://nextcloud.com/)
-- OpenSSH / SFTP
-
 ### Web Apps
 
 - [BookStack](https://www.bookstackapp.com/)
 - [Minflux](https://miniflux.app/)
+- [Nextcloud](https://nextcloud.com/)
+
+### Storage
+
+- OpenSSH / SFTP
 
 ## Resources
 
