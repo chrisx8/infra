@@ -1,0 +1,4 @@
+- name: Install PostgreSQL
+  apt:
+    name: [postgresql, python3-psycopg2]
+    state: latest

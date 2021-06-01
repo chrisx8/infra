@@ -1,7 +1,7 @@
 PORT=8080
 BASE_URL=https://tinynet.chrisx.xyz/miniflux
 
-DATABASE_URL=postgres://miniflux:{{ postgres_password }}@127.0.0.1/miniflux
+DATABASE_URL=postgres://miniflux:{{ postgres_miniflux_password.stdout }}@127.0.0.1/miniflux
 CLEANUP_REMOVE_SESSIONS_DAYS=1
 POLLING_FREQUENCY=30
 RUN_MIGRATIONS=1

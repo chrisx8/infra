@@ -1,11 +1,18 @@
 - name: Install LAMP stack
   apt:
-    name: [apache2, mariadb-server, libapache2-mod-fcgid, php-fpm, php-mysql, python3-mysqldb]
+    name: [apache2, libapache2-mod-fcgid, mariadb-server, python3-mysqldb, php-fpm, php-mysql]
     state: latest
-- name: Remove built-in sites
-  file:
-    path: /var/www/html
-    state: absent
+
+- name: Disable Apache server signature (1/2)
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    regex: "^ServerSignature"
+    line: "ServerSignature Off"
+- name: Disable Apache server signature (2/2)
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    regex: "^ServerTokens"
+    line: "ServerTokens Prod"
 
 - name: Switch to Event MPM
   shell: "a2dismod mpm_prefork && a2enmod mpm_event"
@@ -14,10 +21,16 @@
 - name: Enable Apache rewrite module
   shell: "a2enmod rewrite"
 
-- name: Copy Apache configuration
-  copy:
-    src: 000-default.conf
-    dest: /etc/apache2/sites-available/000-default.conf
+- name: Disable Apache default site
+  shell: "a2dissite 000-default.conf"
+- name: Remove built-in HTML
+  file:
+    path: /var/www/html
+    state: absent
+- name: Remove Apache default sites
+  file:
+    path: /etc/apache2/sites-available
+    state: absent
 
 - name: Restart Apache
   systemd:

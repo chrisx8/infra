@@ -104,30 +104,6 @@
       dest: /var/www/bookstack
       version: release
       depth: 1
-  - name: BookStack - Set permissions (1/3)
-    when: bookstack_stat.stat.exists
-    file:
-      path: /var/www/bookstack/storage
-      state: directory
-      recurse: true
-      owner: www-data
-      group: www-data
-  - name: BookStack - Set permissions (2/3)
-    when: bookstack_stat.stat.exists
-    file:
-      path: /var/www/bookstack/bootstrap/cache
-      state: directory
-      recurse: true
-      owner: www-data
-      group: www-data
-  - name: BookStack - Set permissions (3/3)
-    when: bookstack_stat.stat.exists
-    file:
-      path: /var/www/bookstack/public/uploads
-      state: directory
-      recurse: true
-      owner: www-data
-      group: www-data
   - name: BookStack - Composer install
     when: bookstack_stat.stat.exists
     shell:
