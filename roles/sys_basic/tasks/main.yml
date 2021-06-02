@@ -104,6 +104,9 @@
     name: MAILTO
     env: true
     job: ""
+- name: Set timezone (Linux systemd)
+  command: "timedatectl set-timezone {{ hostvars[ansible_hostname].timezone }}"
+  when: hostvars[ansible_hostname].timezone is defined
 - name: Update /etc/hosts with private IP addresses
   lineinfile:
     dest: /etc/hosts
