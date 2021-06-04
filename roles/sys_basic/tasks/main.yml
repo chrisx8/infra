@@ -99,7 +99,6 @@
     state: restarted
     daemon_reload: yes
 - name: Configure crontab
-  become: false
   cron:
     name: MAILTO
     env: true

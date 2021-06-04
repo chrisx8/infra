@@ -76,6 +76,19 @@
     DB Password: {{ mysql_nextcloud_password.stdout }} \n\n
   "
 
+- name: Configure crontab for www-data
+  cron:
+    env: true
+    name: MAILTO
+    user: www-data
+    job: ""
+- name: Install Nextcloud cron job
+  cron:
+    name: "Nextcloud background jobs"
+    minute: "*/5"
+    user: www-data
+    job: "php -f /var/www/nextcloud/cron.php"
+
 - name: Update database credential
   lineinfile:
     path: /var/www/nextcloud/config/config.php
