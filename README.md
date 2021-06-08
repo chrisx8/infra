@@ -34,7 +34,7 @@ Core repo for TinyNET infrastructure config and docs.
 ### IAM
 
 - [Keycloak](https://www.keycloak.org/)
-- [OAuth2 Proxy](https://oauth2-proxy.github.io/oauth2-proxy/)
+- [mod_auth_openidc](https://github.com/zmartzone/mod_auth_openidc)
 
 ### Web Apps
 

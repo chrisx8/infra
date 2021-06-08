@@ -3,9 +3,6 @@
   hosts: all
   become: true
   vars_prompt:
-    - name: upgrade_oauth2_proxy
-      prompt: "Upgrade oauth2-proxy? (y/n)"
-      private: no
     - name: upgrade_miniflux
       prompt: "Upgrade Miniflux? (y/n)"
       private: no
@@ -35,32 +32,6 @@
   - name: Upgrade acme.sh
     when: acme_check.stat.exists
     command: "/root/.acme.sh/acme.sh --upgrade"
-
-  - name: Check if oauth2-proxy exists
-    stat:
-      path: /opt/oauth2-proxy
-    register: oauth2_proxy_check
-  - name: Download oauth2-proxy
-    when: upgrade_oauth2_proxy == 'y' and oauth2_proxy_check.stat.exists
-    shell: curl -s https://api.github.com/repos/oauth2-proxy/oauth2-proxy/releases/latest | 
-          grep 'linux-amd64.tar' | cut -d '"' -f 4 | tail -n1 | 
-          xargs curl -L -o /opt/oauth2-proxy/oauth2-proxy.tgz
-  - name: Extract oauth2-proxy
-    when: upgrade_oauth2_proxy == 'y' and oauth2_proxy_check.stat.exists
-    shell:
-      chdir: /opt/oauth2-proxy
-      cmd: tar -xf oauth2-proxy.tgz || true
-  - name: Move oauth2-proxy binary
-    when: upgrade_oauth2_proxy == 'y' and oauth2_proxy_check.stat.exists
-    shell: mv /opt/oauth2-proxy/oauth2-proxy-*/oauth2-proxy /opt/oauth2-proxy/
-  - name: Remove oauth2-proxy tarball
-    when: upgrade_oauth2_proxy == 'y' and oauth2_proxy_check.stat.exists
-    file:
-      path: /opt/oauth2-proxy/oauth2-proxy.tgz
-      state: absent
-  - name: Clean up oauth2-proxy download
-    when: upgrade_oauth2_proxy == 'y' and oauth2_proxy_check.stat.exists
-    shell: rm -r /opt/oauth2-proxy/oauth2-proxy-*
 
   - name: Check if Dashboard exists
     stat:

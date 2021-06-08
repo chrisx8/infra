@@ -2,6 +2,9 @@
 - name: Set up LAMP hosts
   hosts: lamp_hosts
   become: true
+  vars_prompt:
+    - name: oidc_client_secret
+      prompt: "Apache - OIDC Client Secret"
   tasks:
   - name: Basic setup
     import_role:
@@ -9,6 +12,9 @@
   - name: Install LAMP stack
     import_role:
       name: sys_lamp
+  - name: Install Dashboard
+    import_role:
+      name: app_dashboard
   - name: Install BookStack
     import_role:
       name: app_bookstack

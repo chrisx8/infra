@@ -3,89 +3,15 @@
     name: openjdk-11-jre-headless
     state: latest
 
-- name: Check if Keycloak is installed
-  stat:
-    path: /opt/keycloak
-  register: keycloak_stat
-
 - name: Create IAM app user
   user:
     name: iamapps
     shell: /bin/false
 
-- name: Create oauth2-proxy direcory
-  file:
-    path: /opt/oauth2-proxy
-    state: directory
-    owner: iamapps
-    group: iamapps
-
-- name: Generate oauth2-proxy secret 1/2
-  command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
-  register: cookie_secret_1
-- name: Generate oauth2-proxy secret 2/2
-  command: "python3 -c 'import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())'"
-  register: cookie_secret_2
-- name: Install oauth2-proxy configurations 1/2
-  template:
-    src: internal.cfg.j2
-    dest: /opt/oauth2-proxy/internal.cfg
-- name: Install oauth2-proxy configurations 2/2
-  template:
-    src: external.cfg.j2
-    dest: /opt/oauth2-proxy/external.cfg
-
-- name: Download oauth2-proxy
-  shell: curl -s https://api.github.com/repos/oauth2-proxy/oauth2-proxy/releases/latest | 
-         grep 'linux-amd64.tar' | cut -d '"' -f 4 | tail -n1 | 
-         xargs curl -L -o /opt/oauth2-proxy/oauth2-proxy.tgz
-- name: Extract oauth2-proxy
-  shell:
-    chdir: /opt/oauth2-proxy
-    cmd: tar -xf oauth2-proxy.tgz || true
-- name: Move oauth2-proxy binary
-  shell: mv /opt/oauth2-proxy/oauth2-proxy-*/oauth2-proxy /opt/oauth2-proxy/
-
-- name: Remove oauth2-proxy tarball
-  file:
-    path: /opt/oauth2-proxy/oauth2-proxy.tgz
-    state: absent
-- name: Clean up oauth2-proxy download
-  shell: rm -r /opt/oauth2-proxy/oauth2-proxy-*
-
-- name: Set permissions on oauth2-proxy direcory
-  file:
-    path: /opt/oauth2-proxy
-    state: directory
-    recurse: true
-    owner: iamapps
-    group: iamapps
-
-- name: Set up systemd service for oauth2-proxy (internal)
-  copy:
-    src: oauth2-proxy-internal.service
-    dest: /etc/systemd/system/
-    owner: root
-    group: root
-- name: Set up systemd service for oauth2-proxy (external)
-  copy:
-    src: oauth2-proxy-external.service
-    dest: /etc/systemd/system
-    owner: root
-    group: root
-- name: Start oauth2-proxy (internal)
-  systemd:
-    name: oauth2-proxy-internal
-    state: restarted
-    enabled: true
-    daemon-reload: true
-- name: Start oauth2-proxy (external)
-  systemd:
-    name: oauth2-proxy-external
-    state: restarted
-    enabled: true
-    daemon-reload: true
-
+- name: Check if Keycloak is installed
+  stat:
+    path: /opt/keycloak
+  register: keycloak_stat
 - name: Prompt for Keycloak installation
   when: not keycloak_stat.stat.exists
   pause:

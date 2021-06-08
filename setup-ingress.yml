@@ -17,8 +17,5 @@
   - name: Install ingress apps
     import_role:
       name: app_ingress
-  - name: Install Dashboard
-    import_role:
-      name: app_dashboard
   - name: Reboot
     reboot:

@@ -3,17 +3,6 @@
     name: [php-curl, php-gd, php-mysql, php-xml, composer]
     state: latest
 
-- name: Install Apache site configuration
-  template:
-    src: bookstack.conf
-    dest: /etc/apache2/sites-available/bookstack.conf
-- name: Enable Apache site
-  shell: "a2ensite bookstack.conf"
-- name: Reload Apache
-  systemd:
-    name: apache2
-    state: reloaded
-
 - name: Create database
   mysql_db:
     name: bookstack

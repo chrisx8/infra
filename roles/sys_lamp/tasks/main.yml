@@ -1,6 +1,7 @@
 - name: Install LAMP stack
   apt:
-    name: [apache2, libapache2-mod-fcgid, mariadb-server, python3-mysqldb, php-fpm, php-mysql]
+    name: [apache2, libapache2-mod-auth-openidc, libapache2-mod-fcgid, mariadb-server, 
+           python3-mysqldb, php-fpm, php-mysql]
     state: latest
 
 - name: Disable Apache server signature (1/2)
@@ -21,16 +22,36 @@
 - name: Enable Apache rewrite module
   shell: "a2enmod rewrite"
 
+- name: Check if Apache default site exists
+  stat:
+    path: /etc/apache2/sites-available/000-default.conf
+  register: site_check
 - name: Disable Apache default site
+  when: site_check.stat.exists
   shell: "a2dissite 000-default.conf"
+
 - name: Remove built-in HTML
   file:
     path: /var/www/html
     state: absent
-- name: Remove Apache default sites
+- name: Remove Apache default sites (1/2)
   file:
-    path: /etc/apache2/sites-available
+    path: /etc/apache2/sites-available/000-default.conf
     state: absent
+- name: Remove Apache default sites (2/2)
+  file:
+    path: /etc/apache2/sites-available/default-ssl.conf
+    state: absent
+
+- name: Generate new OIDC crypto password
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: oidc_crypto
+- name: Configure Apache site
+  template:
+    src: default.conf.j2
+    dest: /etc/apache2/sites-available/default.conf
+- name: Enable default site
+  shell: "a2ensite default.conf"
 
 - name: Restart Apache
   systemd:
