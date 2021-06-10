@@ -1,5 +1,7 @@
 <VirtualHost *:80>
 	ServerName tinynet.chrisx.xyz
+	DocumentRoot /var/www/html
+	
 
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
@@ -7,6 +9,7 @@
 	OIDCProviderMetadataURL https://tinynet-iam.chrisx.xyz/realms/master/.well-known/openid-configuration
 	OIDCClientID web1auth
 	OIDCClientSecret {{ oidc_client_secret }}
+	OIDCRemoteUserClaim preferred_username
 	OIDCScope "openid email groups"
 	OIDCRedirectURI https://tinynet.chrisx.xyz/auth/openid-connect
 	OIDCCryptoPassphrase {{ oidc_crypto.stdout }}

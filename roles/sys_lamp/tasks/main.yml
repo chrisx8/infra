@@ -14,6 +14,8 @@
     path: /etc/apache2/apache2.conf
     regex: "^ServerTokens"
     line: "ServerTokens Prod"
+- name: Disable Apache autoindex module
+  shell: "a2dismod -f autoindex"
 
 - name: Switch to Event MPM
   shell: "a2dismod mpm_prefork && a2enmod mpm_event"
