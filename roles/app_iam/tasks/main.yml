@@ -21,14 +21,13 @@
 - name: Configure Keycloak for use behind reverse proxy
   shell: "/opt/keycloak/bin/kc.sh config --proxy=edge"
 
-- name: Change permission on Keycloak directory
+- name: Change owner on Keycloak directory
   file:
     path: /opt/keycloak
     state: directory
     recurse: true
     owner: iamapps
     group: iamapps
-    mode: 0755
 
 - name: Set up systemd service for Keycloak
   copy:
