@@ -62,11 +62,6 @@
     src: nginx/conf.d
     dest: /etc/nginx/
     directory_mode: true
-- name: Install Nginx snippets
-  copy:
-    src: nginx/snippets
-    dest: /etc/nginx/
-    directory_mode: true
 - name: Restart Nginx
   systemd:
     name: nginx
