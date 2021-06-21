@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>TinyNET - Internal Users</title>
+	<title>TinyNET - Internal Services</title>
 	<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
@@ -16,8 +16,8 @@
 <div class="container">
 	<div class="columns">
 		<div class="column is-10">
-			<h1><a class="title is-1" href="">TinyNET</a></h1>
-			<h2 class="subtitle">Internal Users</h2>
+			<h1><a class="title is-1" href="/">TinyNET</a></h1>
+			<h2 class="subtitle">Internal Services &nbsp;<i class="fa-sm fas fa-lock"></i></h2>
 		</div>
 		<div class="column is-2">
 			<a class="button is-link is-fullwidth" href="/auth/openid-connect?logout=https://tinynet.chrisx.xyz"><i class="fas fa-sign-out-alt"></i>&nbsp; Log out</a>
@@ -29,100 +29,13 @@
 			<p><i class="fas fa-exclamation-triangle"></i>&nbsp; Notice</p>
 		</div>
 		<div class="message-body">
-			Services are powered by free software. <br>
-			<strong>Make sure you have multiple backups of your data!</strong>
+			<strong>You must be on the local network or the VPN to access these internal-only services.</strong> If you want to access these services remotely, set up WireGuard VPN on your devices.
 		</div>
 	</article>
 
 	<div class="columns">
 		<div class="column is-half">
-			<h2 class="title is-3">Applications</h2>
-			<a href="https://tinynet-cloud.chrisx.xyz" rel="noopener noreferrer" target="_blank">
-			<div class="card-content">
-			<div class="media">
-				<div class="media-left">
-					<i class="fa-2x fas fa-cloud"></i>
-				</div>
-				<div class="media-content">
-					<p class="title is-4">Nextcloud</p>
-					<p class="subtitle is-6">A safe home for all your data (not backed up tho)</p>
-				</div>
-			</div>
-			</div>
-			</a>
-			<a href="/bookstack/" rel="noopener noreferrer" target="_blank">
-			<div class="card-content">
-			<div class="media">
-				<div class="media-left">
-					<i class="fa-2x fab fa-wikipedia-w"></i>
-				</div>
-				<div class="media-content">
-					<p class="title is-4">BookStack</p>
-					<p class="subtitle is-6">Markdown-enabled wiki engine</p>
-				</div>
-			</div>
-			</div>
-			</a>
-			<a href="/miniflux/" rel="noopener noreferrer" target="_blank">
-			<div class="card-content">
-			<div class="media">
-				<div class="media-left">
-					&nbsp;<i class="fa-2x fas fa-newspaper"></i>
-				</div>
-				<div class="media-content">
-					<p class="title is-4">Miniflux</p>
-					<p class="subtitle is-6">RSS Feed Reader</p>
-				</div>
-			</div>
-			</div>
-			</a>
-		</div>
-		<div class="column is-half">
-			<h2 class="title is-3">Accounts</h2>
-			<a href="https://tinynet-iam.chrisx.xyz/realms/master/account/" rel="noopener noreferrer" target="_blank">
-			<div class="card-content">
-			<div class="media">
-				<div class="media-left">
-					&nbsp;<i class="fa-2x fas fa-user"></i>&nbsp;
-				</div>
-				<div class="media-content">
-					<p class="title is-4">SSO Account Portal</p>
-					<p class="subtitle is-6">Manage your TinyNET SSO account</p>
-				</div>
-			</div>
-			</div>
-			</a>
-			<a href="https://github.com/settings/applications" rel="noopener noreferrer" target="_blank">
-			<div class="card-content">
-			<div class="media">
-				<div class="media-left">
-					<i class="fa-2x fab fa-github"></i>&nbsp;
-				</div>
-				<div class="media-content">
-					<p class="title is-4">GitHub OAuth Apps</p>
-					<p class="subtitle is-6"> Manage Authorized OAuth Apps on GitHub </p>
-				</div>
-			</div>
-			</div>
-			</a>
-			<a href="vpn.html" rel="noopener noreferrer">
-			<div class="card-content">
-			<div class="media">
-				<div class="media-left">
-					<i class="fa-2x fas fa-shield-alt"></i>&nbsp;
-				</div>
-				<div class="media-content">
-					<p class="title is-4">WireGuard VPN &nbsp;<i class="fa-sm fas fa-lock"></i></p>
-					<p class="subtitle is-6">Remotely access protected TinyNET services</p>
-				</div>
-			</div>
-			</div>
-			</a>
-		</div>
-	</div>
-	<div class="columns">
-		<div class="column is-half">
-			<h2 class="title is-3">Admin Only</h2>
+			<h2 class="title is-3">Administration</h2>
 			<a href="https://tinynet-iam.chrisx.xyz/admin/master/console/" rel="noopener noreferrer" target="_blank">
 			<div class="card-content">
 			<div class="media">
@@ -130,7 +43,7 @@
 					<i class="fa-2x fas fa-users-cog"></i>
 				</div>
 				<div class="media-content">
-					<p class="title is-4">Keycloak Admin &nbsp;<i class="fa-sm fas fa-lock"></i></p>
+					<p class="title is-4">Keycloak Admin</p>
 					<p class="subtitle is-6">Keycloak Security Admin Console</p>
 				</div>
 			</div>
@@ -143,7 +56,7 @@
 					<i class="fa-2x fas fa-network-wired"></i>
 				</div>
 				<div class="media-content">
-					<p class="title is-4">Gateway &nbsp;<i class="fa-sm fas fa-lock"></i></p>
+					<p class="title is-4">Gateway</p>
 					<p class="subtitle is-6">NETGEAR R6220 (OpenWrt) </p>
 				</div>
 			</div>
@@ -156,8 +69,24 @@
 					&nbsp;<i class="fa-2x fas fa-server"></i>&nbsp;
 				</div>
 				<div class="media-content">
-					<p class="title is-4">tmmnode1 Hypervisor &nbsp;<i class="fa-sm fas fa-lock"></i></p>
+					<p class="title is-4">tmmnode1 Hypervisor</p>
 					<p class="subtitle is-6">TinyMiniMicro Node 1 (Proxmox VE) </p>
+				</div>
+			</div>
+			</div>
+			</a>
+		</div>
+		<div class="column is-half">
+			<h2 class="title is-3">Services</h2>
+			<a href="vpn.html">
+			<div class="card-content">
+			<div class="media">
+				<div class="media-left">
+					<i class="fa-2x fas fa-shield-alt"></i>&nbsp;
+				</div>
+				<div class="media-content">
+					<p class="title is-4">WireGuard VPN</p>
+					<p class="subtitle is-6">Remotely access protected TinyNET services</p>
 				</div>
 			</div>
 			</div>

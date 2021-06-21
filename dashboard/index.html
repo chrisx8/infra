@@ -14,30 +14,113 @@
 <body>
 <section class="section">
 <div class="container">
-	<h1><a class="title is-1" href="">TinyNET</a></h1>
-	<h2 class="subtitle">Welcome! Please sign in.</h2>
+	<div class="columns">
+		<div class="column is-10">
+			<h1><a class="title is-1" href="/">TinyNET</a></h1>
+			<h2 class="subtitle">Service Dashboard</h2>
+		</div>
+		<div class="column is-2">
+			<a class="button is-link is-fullwidth" href="/auth/openid-connect?logout=https://tinynet.chrisx.xyz"><i class="fas fa-sign-out-alt"></i>&nbsp; Log out</a>
+		</div>
+	</div>
 	<hr>
 	<article class="message is-warning">
 		<div class="message-header">
-			<p><i class="fas fa-info-circle"></i>&nbsp; Information </p>
+			<p><i class="fas fa-exclamation-triangle"></i>&nbsp; Notice</p>
 		</div>
 		<div class="message-body">
-			You need an SSO account to sign in. Contact an admin to get started.
+			While your data is encrypted at rest, it is NOT end-to-end encrypted. Please encrypt your own data appropriately.<br>
+			<strong>You should have multiple backups of your data!</strong>
 		</div>
 	</article>
-	<h2 class="title">I am an ...</h2>
+
 	<div class="columns">
-		<div class="column">
-			<a class="button is-link is-medium is-fullwidth" href="internal/">Internal User</a>
+		<div class="column is-half">
+			<h2 class="title is-3">Applications</h2>
+			<a href="https://tinynet-cloud.chrisx.xyz" rel="noopener noreferrer" target="_blank">
+			<div class="card-content">
+			<div class="media">
+				<div class="media-left">
+					<i class="fa-2x fas fa-cloud"></i>
+				</div>
+				<div class="media-content">
+					<p class="title is-4">Nextcloud</p>
+					<p class="subtitle is-6">A safe home for all your data</p>
+				</div>
+			</div>
+			</div>
+			</a>
+			<a href="/bookstack/" rel="noopener noreferrer" target="_blank">
+			<div class="card-content">
+			<div class="media">
+				<div class="media-left">
+					<i class="fa-2x fab fa-wikipedia-w"></i>
+				</div>
+				<div class="media-content">
+					<p class="title is-4">BookStack</p>
+					<p class="subtitle is-6">Markdown-enabled wiki engine</p>
+				</div>
+			</div>
+			</div>
+			</a>
+			<a href="/miniflux/" rel="noopener noreferrer" target="_blank">
+			<div class="card-content">
+			<div class="media">
+				<div class="media-left">
+					&nbsp;<i class="fa-2x fas fa-newspaper"></i>
+				</div>
+				<div class="media-content">
+					<p class="title is-4">Miniflux</p>
+					<p class="subtitle is-6">RSS Feed Reader</p>
+				</div>
+			</div>
+			</div>
+			</a>
 		</div>
-		<div class="column">
-			<a class="button is-link is-medium is-fullwidth" href="external/">External User</a>
+		<div class="column is-half">
+			<h2 class="title is-3">Accounts</h2>
+			<a href="https://tinynet-iam.chrisx.xyz/realms/master/account/" rel="noopener noreferrer" target="_blank">
+			<div class="card-content">
+			<div class="media">
+				<div class="media-left">
+					&nbsp;<i class="fa-2x fas fa-user"></i>&nbsp;
+				</div>
+				<div class="media-content">
+					<p class="title is-4">SSO Account Portal</p>
+					<p class="subtitle is-6">Manage your TinyNET SSO account</p>
+				</div>
+			</div>
+			</div>
+			</a>
+			<a href="https://github.com/settings/applications" rel="noopener noreferrer" target="_blank">
+			<div class="card-content">
+			<div class="media">
+				<div class="media-left">
+					<i class="fa-2x fab fa-github"></i>&nbsp;
+				</div>
+				<div class="media-content">
+					<p class="title is-4">GitHub OAuth Apps</p>
+					<p class="subtitle is-6"> Manage Authorized OAuth Apps on GitHub </p>
+				</div>
+			</div>
+			</div>
+			</a>
+			<a href="/internal/" rel="noopener noreferrer" target="_blank">
+			<div class="card-content">
+			<div class="media">
+				<div class="media-left">
+					<i class="fa-2x fas fa-tools"></i>&nbsp;
+				</div>
+				<div class="media-content">
+					<p class="title is-4">Internal Services &nbsp;<i class="fa-sm fas fa-lock"></i></p>
+					<p class="subtitle is-6"> Access internal-only services. </p>
+				</div>
+			</div>
+			</div>
+			</a>
 		</div>
 	</div>
 </div>
 </section>
-<!-- Log out -->
-<img src="https://tinynet.chrisx.xyz/auth/openid-connect?logout=img" alt="">
-<img src="https://tinynet.chrisx.xyz/miniflux/logout" alt="">
 </body>
 </html>
