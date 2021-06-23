@@ -1,0 +1,26 @@
+- name: Install unzip
+  apt:
+    name: unzip
+    state: latest
+
+- name: Download latest Homer release from GitHub
+  shell: curl -s https://api.github.com/repos/bastienwirtz/homer/releases/latest |
+         grep 'homer\.zip' | cut -d '"' -f 4 | tail -n1 |
+         xargs curl -L -o /var/www/html/homer.zip
+- name: Extract Homer
+  shell:
+    chdir: /var/www/html
+    cmd: unzip homer.zip -d . || true
+- name: Remove Homer zip
+  file:
+    path: /var/www/html/homer.zip
+    state: absent
+
+- name: Remove Homer default assets
+  shell:
+    chdir: /var/www/html
+    cmd: rm -rf assets/*.dist* assets/icons assets/tools logo.png
+- name: Install Homer assets
+  copy:
+    src: dashboard/
+    dest: /var/www/html/

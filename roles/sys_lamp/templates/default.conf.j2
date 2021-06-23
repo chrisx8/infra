@@ -1,7 +1,6 @@
 <VirtualHost *:80>
 	ServerName tinynet.chrisx.xyz
 	DocumentRoot /var/www/html
-	
 
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
@@ -23,12 +22,17 @@
 
 	<Directory "/var/www/html">
 		Header set Cache-Control "no-cache"
-		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'none';"
+		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self'"
 		AuthType openid-connect
 		Require valid-user
 	</Directory>
 
-	<Directory "/var/www/html/internal">
+	<Directory "/var/www/html/assets/internal.yml">
+		AuthType openid-connect
+		Require claim groups:internal
+	</Directory>
+
+	<Directory "/var/www/html/internal-pages">
 		AuthType openid-connect
 		Require claim groups:internal
 	</Directory>

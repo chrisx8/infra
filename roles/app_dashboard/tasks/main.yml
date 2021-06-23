@@ -1,4 +1,0 @@
-- name: Install Dashboard
-  copy:
-    src: dashboard/
-    dest: /var/www/html/

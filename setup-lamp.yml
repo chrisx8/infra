@@ -12,9 +12,9 @@
   - name: Install LAMP stack
     import_role:
       name: sys_lamp
-  - name: Install Dashboard
+  - name: Install Homer
     import_role:
-      name: app_dashboard
+      name: app_homer
   - name: Install BookStack
     import_role:
       name: app_bookstack

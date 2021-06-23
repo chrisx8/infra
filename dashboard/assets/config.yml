@@ -1,0 +1,54 @@
+title: "TinyNET"
+subtitle: "Service Dashboard"
+icon: "fas fa-ethernet"
+
+header: true
+footer: false
+
+message:
+  style: "is-warning"
+  title: "Messages"
+  icon: "fas fa-bullhorn"
+  content: "<strong>You should have multiple backups of your data!</strong><br>
+           While your data is encrypted at rest, it is NOT end-to-end encrypted. Please encrypt your own data appropriately."
+
+links:
+  - name: "Account Settings"
+    icon: "fas fa-user"
+    url: "https://tinynet-iam.chrisx.xyz/realms/master/account/"
+    target: "_blank"
+  - name: "Log out"
+    icon: "fas fa-sign-out-alt"
+    url: "/auth/openid-connect?logout=https://tinynet.chrisx.xyz"
+
+services:
+  - name: "Applications"
+    icon: "fas fa-rocket"
+    items:
+      - name: "Nextcloud"
+        icon: "fas fa-cloud"
+        subtitle: "A safe home for all your data"
+        url: "https://tinynet-cloud.chrisx.xyz"
+        target: "_blank"
+      - name: "BookStack"
+        icon: "fas fa-book"
+        subtitle: "Markdown-enabled wiki engine"
+        url: "/bookstack/"
+        target: "_blank"
+      - name: "Miniflux"
+        icon: "fas fa-book-reader"
+        subtitle: "RSS feed reader"
+        url: "/miniflux/"
+        target: "_blank"
+  - name: "Extras"
+    icon: "fas fa-bookmark"
+    items:
+      - name: "GitHub OAuth Apps"
+        icon: "fab fa-github"
+        subtitle: "Manage Authorized OAuth Apps on GitHub"
+        url: "https://github.com/settings/applications"
+        target: "_blank"
+      - name: 'Internal Apps'
+        icon: "fas fa-lock"
+        subtitle: "Access internal services"
+        url: "#internal"
