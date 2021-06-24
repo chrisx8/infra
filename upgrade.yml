@@ -3,6 +3,9 @@
   hosts: all
   become: true
   vars_prompt:
+    - name: upgrade_homer
+      prompt: "Upgrade Homer? (y/n)"
+      private: no
     - name: upgrade_miniflux
       prompt: "Upgrade Miniflux? (y/n)"
       private: no
@@ -33,31 +36,35 @@
     when: acme_check.stat.exists
     command: "/root/.acme.sh/acme.sh --upgrade"
 
-  - name: Check if Dashboard exists
+  - name: Check if Homer exists
     stat:
-      path: /var/www/html/internal
-    register: dashboard_stat
-  - name: Install Dashboard
-    when: dashboard_stat.stat.exists
-    copy:
-      src: dashboard/
-      dest: /var/www/html/
+      path: /var/www/html/assets
+    register: homer_exist
+  - name: Reinstall Homer
+    when: upgrade_homer == 'y' and homer_exist.stat.exists
+    import_role:
+      name: app_homer
 
   - name: Check if Miniflux exists
     stat:
       path: /usr/bin/miniflux
-    register: miniflux_stat
+    register: miniflux_exist
   - name: Download Miniflux
-    when: upgrade_miniflux == 'y' and miniflux_stat.stat.exists
+    when: upgrade_miniflux == 'y' and miniflux_exist.stat.exists
     shell: curl -s https://api.github.com/repos/miniflux/v2/releases/latest | 
           grep 'amd64.deb' | cut -d '"' -f 4 | tail -n1 | 
           xargs curl -L -o /tmp/miniflux_amd64.deb
   - name: Install Miniflux from deb package
-    when: upgrade_miniflux == 'y' and miniflux_stat.stat.exists
+    when: upgrade_miniflux == 'y' and miniflux_exist.stat.exists
     apt:
       deb: /tmp/miniflux_amd64.deb
+  - name: Delete Miniflux deb package
+    when: upgrade_miniflux == 'y' and miniflux_exist.stat.exists
+    file:
+      path: /tmp/miniflux_amd64.deb
+      state: absent
   - name: Restart Miniflux
-    when: upgrade_miniflux == 'y' and miniflux_stat.stat.exists
+    when: upgrade_miniflux == 'y' and miniflux_exist.stat.exists
     systemd:
       name: miniflux
       state: restarted
@@ -67,26 +74,26 @@
   - name: Check if BookStack exists
     stat:
       path: /var/www/bookstack
-    register: bookstack_stat
+    register: bookstack_exist
   - name: Download BookStack
-    when: bookstack_stat.stat.exists
+    when: bookstack_exist.stat.exists
     git:
       repo: https://github.com/BookStackApp/BookStack.git
       dest: /var/www/bookstack
       version: release
       depth: 1
   - name: BookStack - Composer install
-    when: bookstack_stat.stat.exists
+    when: bookstack_exist.stat.exists
     shell:
       chdir: /var/www/bookstack
       cmd: composer install --no-dev
   - name: BookStack - Database migration
-    when: bookstack_stat.stat.exists
+    when: bookstack_exist.stat.exists
     shell:
       chdir: /var/www/bookstack
       cmd: "php artisan migrate --force"
   - name: BookStack - Clear cache
-    when: bookstack_stat.stat.exists
+    when: bookstack_exist.stat.exists
     shell:
       chdir: /var/www/bookstack
       cmd: "php artisan cache:clear && php artisan config:clear && php artisan view:clear"

@@ -42,6 +42,7 @@
     path: /etc/miniflux.conf
     regex: "^DATABASE_URL="
     line: "DATABASE_URL=postgres://miniflux:{{ postgres_miniflux_password.stdout }}@127.0.0.1/miniflux"
+
 - name: Restart Miniflux
   systemd:
     name: miniflux

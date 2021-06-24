@@ -46,7 +46,7 @@
 
 - name: Install favicon
   copy:
-    src: dashboard/favicon.ico
+    src: homer/favicon.ico
     dest: /var/www/favicon.ico
 - name: Install 404 page
   copy:

@@ -66,3 +66,7 @@
   shell:
     chdir: /var/www/bookstack
     cmd: "php artisan migrate --force"
+- name: Clear cache
+  shell:
+    chdir: /var/www/bookstack
+    cmd: "php artisan cache:clear && php artisan config:clear && php artisan view:clear"

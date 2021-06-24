@@ -10,7 +10,7 @@
 - name: Extract Homer
   shell:
     chdir: /var/www/html
-    cmd: unzip homer.zip -d . || true
+    cmd: unzip homer.zip -o -d . || true
 - name: Remove Homer zip
   file:
     path: /var/www/html/homer.zip
@@ -22,5 +22,5 @@
     cmd: rm -rf assets/*.dist* assets/icons assets/tools logo.png
 - name: Install Homer assets
   copy:
-    src: dashboard/
+    src: homer/
     dest: /var/www/html/

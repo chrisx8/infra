@@ -33,7 +33,7 @@ services:
       - name: "BookStack"
         icon: "fas fa-book"
         subtitle: "Markdown-enabled wiki engine"
-        url: "/bookstack/"
+        url: "/bookstack/login"
         target: "_blank"
       - name: "Miniflux"
         icon: "fas fa-book-reader"
