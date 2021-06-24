@@ -9,7 +9,7 @@
 	OIDCClientID web1auth
 	OIDCClientSecret {{ oidc_client_secret }}
 	OIDCRemoteUserClaim preferred_username
-	OIDCScope "openid email groups"
+	OIDCScope "openid groups"
 	OIDCRedirectURI https://tinynet.chrisx.xyz/auth/openid-connect
 	OIDCCryptoPassphrase {{ oidc_crypto.stdout }}
 
@@ -25,6 +25,10 @@
 		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self'"
 		AuthType openid-connect
 		Require valid-user
+	</Directory>
+	
+	<Directory "/var/www/html/assets/manifest.json">
+		Require all granted
 	</Directory>
 
 	<Directory "/var/www/html/assets/internal.yml">

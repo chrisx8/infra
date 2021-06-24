@@ -30,4 +30,4 @@ services:
       - name: "Web Services"
         icon: "fas fa-globe"
         subtitle: "Access TinyNET web services"
-        url: ""
+        url: "#"
