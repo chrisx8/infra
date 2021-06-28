@@ -19,7 +19,7 @@ Core repo for TinyNET infrastructure config and docs.
 - Has Intel vPro
 - OS: Proxmox VE  
   Install kernel 5.11: `apt install pve-kernel-5.11`  
-  Install extra packages: `apt install cryptsetup ntfs-3g udisks2 --no-install-recommends`
+  Install extra packages: `apt install vim cryptsetup-bin ntfs-3g udisks2 --no-install-recommends`
 - CPU: Intel Core i5-6500T
 - RAM: 8GB DDR4 (1 * 8GB SODIMM)
 - Storage: 240GB NVMe SSD
@@ -43,6 +43,7 @@ Core repo for TinyNET infrastructure config and docs.
 - [BookStack](https://www.bookstackapp.com/)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)
+- [Wallabag](https://wallabag.org)
 
 ### Storage
 

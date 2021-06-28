@@ -78,8 +78,6 @@
     # Installed by Ansible\n
     export EDITOR=vim\n
     alias dfh='df -h -x tmpfs -x overlay'\n
-    alias docker='sudo docker'\n
-    alias docker-compose='sudo -E docker-compose'
     "
 - name: Configure OpenSSH client
   copy:

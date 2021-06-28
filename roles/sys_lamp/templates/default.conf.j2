@@ -14,6 +14,7 @@
 	OIDCCryptoPassphrase {{ oidc_crypto.stdout }}
 
 	Alias "/bookstack" "/var/www/bookstack/public"
+	Alias "/wallabag" "/var/www/wallabag/web"
 
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
@@ -22,21 +23,16 @@
 
 	<Directory "/var/www/html">
 		Header set Cache-Control "no-cache"
-		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self'"
+		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self';"
 		AuthType openid-connect
 		Require valid-user
 	</Directory>
-	
+
 	<Directory "/var/www/html/assets/manifest.json">
 		Require all granted
 	</Directory>
 
-	<Directory "/var/www/html/assets/internal.yml">
-		AuthType openid-connect
-		Require claim groups:internal
-	</Directory>
-
-	<Directory "/var/www/html/internal-pages">
+	<Directory "/var/www/html/assets/internal*">
 		AuthType openid-connect
 		Require claim groups:internal
 	</Directory>
@@ -59,6 +55,21 @@
 	<Directory "/var/www/bookstack">
 	  AllowOverride None
 	  Require all denied
+	</Directory>
+
+	<Directory /var/www/wallabag/web>
+		CGIPassAuth On
+		Require all granted
+
+		Options +SymLinksIfOwnerMatch
+		Options -MultiViews
+		RewriteEngine On
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteRule ^(.*)$ app.php [QSA,L]
+	</Directory>
+
+	<Directory /var/www/wallabag/web/bundles>
+		RewriteEngine Off
 	</Directory>
 </VirtualHost>
 
