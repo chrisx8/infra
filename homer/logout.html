@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TinyNET | Log out</title>
+</head>
+<body>
+<h1 id="head">Logging out</h1>
+<p id="msg">Please wait...</p>
+<img src="https://tinynet.chrisx.xyz/auth/openid-connect?logout=img" alt="">
+<img src="https://tinynet.chrisx.xyz/bookstack/saml2/logout" alt="">
+<img src="https://tinynet.chrisx.xyz/miniflux/logout" alt="">
+<img src="https://tinynet.chrisx.xyz/wallabag/logout" alt="">
+<script>
+window.addEventListener('load', function () {
+	document.getElementById("head").innerHTML = "You've been logged out";
+	document.getElementById("msg").innerHTML = "It's a good idea to close your browser window.";
+})
+</script>
+</body>
+</html>
