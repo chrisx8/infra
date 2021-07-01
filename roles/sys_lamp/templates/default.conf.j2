@@ -12,6 +12,7 @@
 	OIDCScope "openid groups"
 	OIDCRedirectURI https://tinynet.chrisx.xyz/auth/openid-connect
 	OIDCCryptoPassphrase {{ oidc_crypto.stdout }}
+	OIDCStateMaxNumberOfCookies 5 true
 
 	Alias "/bookstack" "/var/www/bookstack/public"
 	Alias "/wallabag" "/var/www/wallabag/web"
@@ -23,7 +24,7 @@
 
 	<Directory "/var/www/html">
 		Header set Cache-Control "no-cache"
-		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self';"
+		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self' 'sha256-O0QnpbtsI2f5yQ3Jc40Z0aWGK+Vlqls3azmCWvA+rRs=';"
 		AuthType openid-connect
 		Require valid-user
 	</Directory>
