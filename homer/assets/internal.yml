@@ -19,6 +19,11 @@ services:
         subtitle: "Proxmox VE on Krista"
         url: "https://krista.tinynet:8006"
         target: "_blank"
+      - name: "Krista Backup"
+        icon: "fas fa-hdd"
+        subtitle: "Proxmox Backup Server on Krista"
+        url: "https://krista.tinynet:8007"
+        target: "_blank"
   - name: "Tools"
     icon: "fas fa-tools"
     items:

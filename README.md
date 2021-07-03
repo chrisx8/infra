@@ -4,7 +4,7 @@ Core repo for TinyNET infrastructure config and docs.
 
 ## Hardware
 
-### `gateway`
+### Gateway
 
 - NETGEAR R6220
 - OS: OpenWrt
@@ -13,13 +13,14 @@ Core repo for TinyNET infrastructure config and docs.
 - Storage: 128MB Onboard NAND
 - Networking: 5 * 1GbE + 2x2 dual-band 802.11 n/ac
 
-### `tmmnode1`
+### Krista
 
 - HP EliteDesk 800 G2 Mini
-- Has Intel vPro
+- Intel AMT/vPro
 - OS: Proxmox VE  
   Install kernel 5.11: `apt install pve-kernel-5.11`  
   Install extra packages: `apt install vim lm-sensors cryptsetup-bin ntfs-3g udisks2 --no-install-recommends`
+  Includes [Proxmox Backup Server](https://pbs.proxmox.com/docs/installation.html#install-proxmox-backup-server-on-proxmox-ve)
 - CPU: Intel Core i5-6500T
 - RAM: 8GB DDR4 (1 * 8GB SODIMM)
 - Storage: 240GB NVMe SSD
