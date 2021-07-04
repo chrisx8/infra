@@ -23,10 +23,14 @@
     apt:
       update_cache: yes
       upgrade: dist
-  - name: Clean up apt
+
+  - name: apt autoremove
+    apt:
+      autoremove: yes
+      purge: yes
+  - name: apt autoclean
     apt:
       autoclean: yes
-      autoremove: yes
 
   - name: Check if acme.sh exists
     stat:

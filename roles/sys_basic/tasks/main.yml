@@ -48,10 +48,15 @@
   apt:
     update_cache: yes
     upgrade: dist
-- name: Clean up apt
-  apt:
-    autoclean: yes
-    autoremove: yes
+
+  - name: apt autoremove
+    apt:
+      autoremove: yes
+      purge: yes
+  - name: apt autoclean
+    apt:
+      autoclean: yes
+
 - name: Install additional packages
   apt:
     name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, gnupg, psmisc, vim]
