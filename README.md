@@ -17,10 +17,7 @@ Core repo for TinyNET infrastructure config and docs.
 
 - HP EliteDesk 800 G2 Mini
 - Intel AMT/vPro
-- OS: Proxmox VE  
-  Install kernel 5.11: `apt install pve-kernel-5.11`  
-  Install extra packages: `apt install vim lm-sensors cryptsetup-bin ntfs-3g udisks2 --no-install-recommends`
-  Includes [Proxmox Backup Server](https://pbs.proxmox.com/docs/installation.html#install-proxmox-backup-server-on-proxmox-ve)
+- OS: Proxmox VE (includes [Proxmox Backup Server](https://pbs.proxmox.com/docs/))
 - CPU: Intel Core i5-6500T
 - RAM: 8GB DDR4 (1 * 8GB SODIMM)
 - Storage: 240GB NVMe SSD
@@ -49,8 +46,10 @@ Core repo for TinyNET infrastructure config and docs.
 ### Storage
 
 - OpenSSH / SFTP
+- [Proxmox Backup Server](https://pbs.proxmox.com/docs/)
 
 ## Resources
 
 - [How to Home Lab](https://www.dlford.io/tag/how-to-home-lab-series/)
+- [Postfix mail relay](https://www.howtoforge.com/tutorial/configure-postfix-to-use-gmail-as-a-mail-relay/)
 - [Setting up WireGuard](https://linuxize.com/post/how-to-set-up-wireguard-vpn-on-ubuntu-20-04/)
