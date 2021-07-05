@@ -56,6 +56,11 @@
     apt:
       autoclean: yes
 
+  - name: Disable udisks2 services
+    systemd:
+      name: udisks2.service
+      state: stopped
+      enabled: no
   - name: Disable PBS services (1/2)
     systemd:
       name: proxmox-backup.service
