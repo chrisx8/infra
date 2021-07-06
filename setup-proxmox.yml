@@ -70,6 +70,23 @@
       name: proxmox-backup-proxy.service
       enabled: no
 
+  - name: Configure vim
+    copy:
+      src: roles/sys_basic/files/vimrc
+      dest: /etc/vim/vimrc
+      mode: 0644
+
+  - name: Configure OpenSSH server (1/2)
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regex: PermitRootLogin
+      line: "PermitRootLogin prohibit-password"
+  - name: Configure OpenSSH server (2/2)
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regex: PasswordAuthentication
+      line: "PasswordAuthentication no"
+
   - name: Configure Postfix
     template:
       src: proxmox/etc/postfix/main.cf.j2
