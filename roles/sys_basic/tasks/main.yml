@@ -49,13 +49,13 @@
     update_cache: yes
     upgrade: dist
 
-  - name: apt autoremove
-    apt:
-      autoremove: yes
-      purge: yes
-  - name: apt autoclean
-    apt:
-      autoclean: yes
+- name: apt autoremove
+  apt:
+    autoremove: yes
+    purge: yes
+- name: apt autoclean
+  apt:
+    autoclean: yes
 
 - name: Install additional packages
   apt:
