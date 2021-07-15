@@ -1,10 +1,20 @@
 title: "TinyNET"
 subtitle: "Service Dashboard"
 icon: "fas fa-ethernet"
-link: "#"
 
 header: true
 footer: false
+connectivityCheck: false
+
+colors:
+  light:
+    highlight-primary: "#004ba0"
+    highlight-secondary: "#1565c0"
+    highlight-hover: "#1976d2"
+  dark:
+    highlight-primary: "#004ba0"
+    highlight-secondary: "#1565c0"
+    highlight-hover: "#1976d2"
 
 message:
   style: "is-warning"
