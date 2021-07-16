@@ -40,7 +40,7 @@ services:
       - name: "Nextcloud"
         icon: "fas fa-cloud"
         subtitle: "A safe home for all your data"
-        url: "https://tinynet-cloud.chrisx.xyz"
+        url: "https://tinycloud.chrisx.xyz"
         target: "_blank"
       - name: "BookStack"
         icon: "fas fa-book"
