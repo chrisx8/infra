@@ -1,5 +1,5 @@
 ---
-- name: Upgrade systems
+- name: Upgrade all systems
   hosts: all
   become: true
   vars_prompt:

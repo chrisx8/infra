@@ -1,6 +1,6 @@
 ---
 - name: Set up container hosts
-  hosts: container_hosts
+  hosts: container
   become: true
   vars_prompt:
     - name: miniflux_client_secret

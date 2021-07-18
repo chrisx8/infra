@@ -1,6 +1,6 @@
 ---
 - name: Customize Proxmox VE
-  hosts: proxmox_hosts
+  hosts: krista
   become: true
   vars_prompt:
     - name: ses_user
@@ -9,6 +9,7 @@
       prompt: "SES SMTP Password"
   tasks:
   - name: Customize Proxmox VE
-    include_role: proxmox
+    import_role:
+      name: proxmox
   - name: Reboot
     reboot:

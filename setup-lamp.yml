@@ -1,6 +1,6 @@
 ---
 - name: Set up LAMP hosts
-  hosts: lamp_hosts
+  hosts: lamp
   become: true
   vars_prompt:
     - name: oidc_client_secret

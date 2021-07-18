@@ -1,6 +1,6 @@
 ---
-- name: Set up base systems
-  hosts: basic_hosts
+- name: Set up storage systems
+  hosts: storage
   become: true
   tasks:
   - name: Basic setup

@@ -1,6 +1,6 @@
 ---
-- name: Set up ingress systems
-  hosts: ingress_hosts
+- name: Set up ingress host
+  hosts: ingress
   become: true
   vars_prompt:
     - name: wg_private_key
