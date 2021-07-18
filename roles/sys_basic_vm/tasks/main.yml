@@ -5,27 +5,3 @@
     mode: 0644
 - name: Reload sysctl
   command: sysctl -p /etc/sysctl.conf
-- name: Check if swapfile exists
-  stat:
-    path: /swapfile
-  register: swapfile_check
-- name: Create swapfile
-  command: fallocate -l {{ swap_size }} /swapfile
-  when: not swapfile_check.stat.exists
-- name: Set permission on swapfile
-  file:
-    path: /swapfile
-    owner: root
-    group: root
-    mode: 0600
-  when: not swapfile_check.stat.exists
-- name: Format swapfile
-  command: mkswap /swapfile
-  when: not swapfile_check.stat.exists
-- name: Add swapfile to fstab
-  lineinfile:
-    dest: /etc/fstab
-    regexp: /swapfile
-    line: "/swapfile none swap sw 0 0"
-- name: Enable swap
-  command: swapon -a
