@@ -3,6 +3,10 @@
     name: unzip
     state: latest
 
+- name: Create /var/www/html
+  file:
+    path: /var/www/html
+    state: directory
 - name: Download latest Homer release from GitHub
   shell: curl -s https://api.github.com/repos/bastienwirtz/homer/releases/latest |
          grep 'homer\.zip' | cut -d '"' -f 4 | tail -n1 |
@@ -10,7 +14,7 @@
 - name: Extract Homer
   shell:
     chdir: /var/www/html
-    cmd: unzip homer.zip -o -d . || true
+    cmd: unzip -o -d . homer.zip || true
 - name: Remove Homer zip
   file:
     path: /var/www/html/homer.zip

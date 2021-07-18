@@ -6,9 +6,6 @@
     - name: upgrade_homer
       prompt: "Upgrade Homer? (y/n)"
       private: no
-    - name: upgrade_miniflux
-      prompt: "Upgrade Miniflux? (y/n)"
-      private: no
   tasks:
   - name: Update /etc/hosts with private IP addresses
     lineinfile:

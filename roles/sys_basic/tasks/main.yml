@@ -1,11 +1,9 @@
 - name: Remove default user account (ubuntu) 1/3
-  when: ansible_distribution == 'Ubuntu'
   user:
     name: ubuntu
     state: absent
     remove: yes
 - name: Remove default user account (debian) 2/3
-  when: ansible_distribution == 'Debian'
   user:
     name: debian
     state: absent
