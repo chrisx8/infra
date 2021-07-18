@@ -1,0 +1,14 @@
+---
+- name: Set up container hosts
+  hosts: container_hosts
+  become: true
+  vars_prompt:
+    - name: miniflux_client_secret
+      prompt: "Miniflux - OIDC Client Secret"
+  tasks:
+  - name: Basic setup
+    import_role:
+      name: sys_basic
+  - name: Set up containers
+    import_role:
+      name: containers

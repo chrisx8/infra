@@ -1,0 +1,24 @@
+- name: Create new password for PostgreSQL superuser
+  shell: "echo POSTGRES_PASSWORD={{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }} > ~/containers/postgres.env"
+
+- name: Generate new password for PostgreSQL keycloak user
+  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  register: postgres_keycloak_password
+- name: Generate new password for PostgreSQL miniflux user
+  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  register: postgres_miniflux_password
+
+- name: Install docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: ~/containers/docker-compose.yml
+    mode: 0600
+- name: Install Miniflux env file
+  template:
+    src: miniflux.env.j2
+    dest: ~/containers/miniflux.env
+    mode: 0600
+- name: Start containers (docker-compose)
+  command:
+    chdir: ~/containers
+    cmd: "docker-compose up -d --build"

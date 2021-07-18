@@ -1,0 +1,7 @@
+CREATE DATABASE keycloak;
+CREATE USER keycloak WITH ENCRYPTED PASSWORD '{{ postgres_keycloak_password.stdout }}';
+GRANT ALL PRIVILEGES ON DATABASE keycloak TO keycloak;
+
+CREATE DATABASE miniflux;
+CREATE USER miniflux WITH ENCRYPTED PASSWORD '{{ postgres_miniflux_password.stdout }}';
+GRANT ALL PRIVILEGES ON DATABASE miniflux TO miniflux;

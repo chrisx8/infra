@@ -49,32 +49,6 @@
     import_role:
       name: app_homer
 
-  - name: Check if Miniflux exists
-    stat:
-      path: /usr/bin/miniflux
-    register: miniflux_exist
-  - name: Download Miniflux
-    when: upgrade_miniflux == 'y' and miniflux_exist.stat.exists
-    shell: curl -s https://api.github.com/repos/miniflux/v2/releases/latest | 
-          grep 'amd64.deb' | cut -d '"' -f 4 | tail -n1 | 
-          xargs curl -L -o /tmp/miniflux_amd64.deb
-  - name: Install Miniflux from deb package
-    when: upgrade_miniflux == 'y' and miniflux_exist.stat.exists
-    apt:
-      deb: /tmp/miniflux_amd64.deb
-  - name: Delete Miniflux deb package
-    when: upgrade_miniflux == 'y' and miniflux_exist.stat.exists
-    file:
-      path: /tmp/miniflux_amd64.deb
-      state: absent
-  - name: Restart Miniflux
-    when: upgrade_miniflux == 'y' and miniflux_exist.stat.exists
-    systemd:
-      name: miniflux
-      state: restarted
-      enabled: true
-      daemon-reload: true
-
   - name: Check if BookStack exists
     stat:
       path: /var/www/bookstack

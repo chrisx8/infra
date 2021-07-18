@@ -1,0 +1,6 @@
+- name: Install Docker
+  include: install_docker.yml
+- name: Launch containers
+  include: launch_containers.yml
+- name: Clean up container storage
+  command: "docker system prune -f"
