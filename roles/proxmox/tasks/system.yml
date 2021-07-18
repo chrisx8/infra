@@ -1,0 +1,18 @@
+- name: Run apt dist-upgrade
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Install extra Debian packages
+  apt:
+    name: [vim, libsasl2-modules, lm-sensors, cryptsetup-bin, ntfs-3g, udisks2]
+    install_recommends: no
+    state: latest
+
+- name: apt autoremove
+  apt:
+    autoremove: yes
+    purge: yes
+- name: apt autoclean
+  apt:
+    autoclean: yes

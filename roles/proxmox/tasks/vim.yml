@@ -1,0 +1,5 @@
+- name: Install vimrc
+  copy:
+    src: vimrc
+    dest: /etc/vim/vimrc
+    mode: 0644

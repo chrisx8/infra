@@ -1,0 +1,22 @@
+- name: Install Proxmox Backup Server
+  apt:
+    name: proxmox-backup-server
+    state: latest
+- name: apt autoclean
+  apt:
+    autoclean: yes
+
+- name: Disable PBS services (1/2)
+  systemd:
+    name: proxmox-backup.service
+    enabled: no
+- name: Disable PBS services (2/2)
+  systemd:
+    name: proxmox-backup-proxy.service
+    enabled: no
+
+- name: Disable udisks2 services
+  systemd:
+    name: udisks2.service
+    state: stopped
+    enabled: no

@@ -1,0 +1,8 @@
+- name: Update /etc/hosts with private IP addresses
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '.*{{ item }}$'
+    line: "{{ hostvars[item].private_ip }} {{ item }}"
+    state: present
+  when: hostvars[item].private_ip is defined and item != ansible_hostname
+  with_items: "{{ groups.all }}"

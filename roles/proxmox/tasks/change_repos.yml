@@ -1,0 +1,20 @@
+- name: Switch to Debian HTTPS repos
+  shell: "sed -i 's/http:/https:/g' /etc/apt/sources.list"
+- name: Switch to Debian repos on CDN
+  shell: "sed -i 's/ftp.us.debian.org/deb.debian.org/g' /etc/apt/sources.list"
+
+- name: Remove Proxmox VE enterprise repo
+  apt_repository:
+    repo: "deb https://enterprise.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-enterprise"
+    state: absent
+
+- name: Add Proxmox VE no subscription repo
+  apt_repository:
+    repo: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
+    state: present
+    filename: pve
+- name: Add Proxmox Backup Server no subscription repo
+  apt_repository:
+    repo: "deb http://download.proxmox.com/debian/pbs {{ ansible_distribution_release }} pbs-no-subscription"
+    state: present
+    filename: pbs
