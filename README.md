@@ -11,17 +11,16 @@ Core repo for TinyNET infrastructure config and docs.
 - CPU: MediaTek MT7621ST (ramips)
 - RAM: 128MB (Onboard)
 - Storage: 128MB Onboard NAND
-- Networking: 5 * 1GbE + 2x2 dual-band 802.11 n/ac
+- Networking: 5 * GbE + 2x2 dual-band 802.11 n/ac
 
 ### Krista
 
 - HP EliteDesk 800 G2 Mini
-- Intel AMT/vPro
 - OS: Proxmox VE (includes [Proxmox Backup Server](https://pbs.proxmox.com/docs/))
-- CPU: Intel Core i5-6500T
+- CPU: Intel Core i5-6500T (AMT/vPro)
 - RAM: 8GB DDR4 (1 * 8GB SODIMM)
 - Storage: 240GB NVMe SSD
-- Networking: 1GbE
+- Networking: 1 * GbE
 
 ## Services
 
