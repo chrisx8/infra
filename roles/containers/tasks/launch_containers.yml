@@ -1,23 +1,49 @@
+- name: Create containers directory
+  file:
+    path: ~/containers
+    state: directory
+    mode: 0700
+
 - name: Create new password for PostgreSQL superuser
   shell: "echo POSTGRES_PASSWORD={{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }} > ~/containers/postgres.env"
 
+- name: Check if postgres_init.sql exists
+  stat:
+    path: ~/containers/postgres_init.sql
+  register: postgres_check
+
 - name: Generate new password for PostgreSQL keycloak user
+  when: not postgres_check.stat.exists
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
   register: postgres_keycloak_password
 - name: Generate new password for PostgreSQL miniflux user
+  when: not postgres_check.stat.exists
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
   register: postgres_miniflux_password
 
 - name: Install docker-compose.yml
   template:
-    src: docker-compose.yml.j2
+    src: docker-compose.yml
     dest: ~/containers/docker-compose.yml
-    mode: 0600
+    mode: 0644
+- name: Install Keycloak env file
+  when: not postgres_check.stat.exists
+  template:
+    src: keycloak.env.j2
+    dest: ~/containers/keycloak.env
+    mode: 0644
 - name: Install Miniflux env file
+  when: not postgres_check.stat.exists
   template:
     src: miniflux.env.j2
     dest: ~/containers/miniflux.env
-    mode: 0600
+    mode: 0644
+- name: Install Postgres init script
+  when: not postgres_check.stat.exists
+  template:
+    src: postgres_init.sql.j2
+    dest: ~/containers/postgres_init.sql
+    mode: 0644
 - name: Start containers (docker-compose)
   command:
     chdir: ~/containers

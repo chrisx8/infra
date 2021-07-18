@@ -8,24 +8,19 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql:ro
-    cap_drop:
-      - all
-    cap_add:
-      - DAC_OVERRIDE
-      - FOWNER
-      - FSETID
-      - SETGID
-      - SETUID
     security_opt:
       - no-new-privileges
     restart: unless-stopped
   keycloak:
     container_name: keycloak
     image: quay.io/keycloak/keycloak-x:14.0.0
-    command: "--auto-config --proxy=edge --db=postgres -Dkc.db.url.host=postgres --db-username=keycloak --db-password=$DB_PASSWORD"
+    command: "--auto-config --proxy=edge --db=postgres -Dkc.db.url.host=postgres --db-username=keycloak --db-password=$${DB_PASSWORD}"
     env_file: ./keycloak.env
     ports:
-      - {{ hostvars[ansible_host].private_ip }}:53925:8080
+      - 10.69.233.11:53925:8080
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - /etc/hosts:/etc/hosts:ro
     depends_on:
       - postgres
     cap_drop:
@@ -38,7 +33,7 @@ services:
     image: miniflux/miniflux:latest
     env_file: ./miniflux.env
     ports:
-      - {{ hostvars[ansible_host].private_ip }}:64643:8080
+      - 10.69.233.11:64643:8080
     depends_on:
       - postgres
     cap_drop:
