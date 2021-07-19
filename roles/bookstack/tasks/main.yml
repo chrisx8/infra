@@ -1,0 +1,9 @@
+- name: Install PHP extensions
+  apt:
+    name: [php-curl, php-gd, php-mysql, php-xml, composer]
+    state: latest
+
+- name: Set up database
+  include: db_setup.yml
+- name: Install BookStack
+  include: bookstack.yml

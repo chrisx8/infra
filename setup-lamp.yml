@@ -14,12 +14,12 @@
       name: sys_lamp
   - name: Install Homer
     import_role:
-      name: app_homer
+      name: homer
   - name: Install BookStack
     import_role:
-      name: app_bookstack
+      name: bookstack
   - name: Install Nextcloud
     import_role:
-      name: app_nextcloud
+      name: nextcloud
   - name: Reboot
     reboot:

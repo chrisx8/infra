@@ -1,0 +1,18 @@
+- name: Install PHP extensions
+  apt:
+    name: [php-bcmath, php-curl, php-gd, php-gmp, php-imagick, php-intl, php-mbstring, php-xml, php-zip]
+    state: latest
+
+- name: Check if Nextcloud is installed
+  stat:
+    path: /var/www/nextcloud/index.php
+  register: nextcloud_exist
+
+- name: Configure PHP-FPM
+  include: php_config.yml
+- name: Configure Apache
+  include: apache_config.yml
+- name: Set up database
+  include: db_setup.yml
+- name: Install Nextcloud
+  include: nc.yml

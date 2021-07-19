@@ -1,0 +1,14 @@
+- name: Install acme.sh
+  when: acme_email
+  shell: "curl https://get.acme.sh | sh -s email={{ acme_email }}"
+- name: Issue certificate with acme.sh
+  when: acme_email
+  shell: "export CF_Token='{{ cf_token }}' && \\
+          export CF_Account_ID='{{ cf_account_id }}' && \\
+          export CF_Zone_ID='{{ cf_zone_id }}' && \\
+          ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt && \
+          ~/.acme.sh/acme.sh--issue --dns dns_cf -d {{ acme_domain }} -d *.{{ acme_domain }} && \\
+          ~/.acme.sh/acme.sh--install-cert -d {{ acme_domain }} \\
+            --fullchain-file /etc/ssl/private/fullchain.pem \\
+            --key-file /etc/ssl/private/privkey.pem \\
+            --reloadcmd 'systemctl reload nginx.service'"

@@ -3,19 +3,24 @@
   hosts: ingress
   become: true
   vars_prompt:
-    - name: wg_private_key
-      prompt: "WireGuard - Enter private key"
     - name: acme_email
       prompt: "acme.sh - Enter email address"
+    - name: acme_domain
+      prompt: "acme.sh - Enter domain"
+    - name: cf_token
+      prompt: "acme.sh - Enter Cloudflare API token"
+    - name: cf_account_id
+      prompt: "acme.sh - Enter Cloudflare Account ID"
+    - name: cf_zone_id
+      prompt: "acme.sh - Enter Cloudflare Zone ID"
+    - name: wg_private_key
+      prompt: "WireGuard - Enter private key"
   tasks:
   - name: Basic setup
     import_role:
       name: sys_basic
-  - name: Install Nginx
-    import_role:
-      name: sys_nginx
   - name: Install ingress apps
     import_role:
-      name: app_ingress
+      name: ingress
   - name: Reboot
     reboot:

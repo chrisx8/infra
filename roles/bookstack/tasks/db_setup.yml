@@ -1,0 +1,16 @@
+- name: Create database
+  mysql_db:
+    name: bookstack
+    state: present
+
+- name: Generate new password for MySQL bookstack user
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: mysql_bookstack_password
+- name: Create MySQL bookstack user
+  mysql_user:
+    name: bookstack
+    host: localhost
+    password: "{{ mysql_bookstack_password.stdout }}"
+    priv:
+      'bookstack.*': 'ALL'
+    state: present

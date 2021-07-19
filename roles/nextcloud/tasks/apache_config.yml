@@ -1,0 +1,10 @@
+- name: Install Apache site configuration
+  copy:
+    src: nextcloud.conf
+    dest: /etc/apache2/sites-available/nextcloud.conf
+- name: Enable Apache site
+  shell: "a2ensite nextcloud.conf"
+- name: Reload Apache
+  systemd:
+    name: apache2
+    state: reloaded

@@ -15,15 +15,20 @@
   shell:
     chdir: /var/www/html
     cmd: unzip -o -d . homer.zip || true
-- name: Remove Homer zip
+- name: Delete Homer zip
   file:
     path: /var/www/html/homer.zip
     state: absent
 
-- name: Remove Homer default assets
-  shell:
-    chdir: /var/www/html
-    cmd: rm -rf assets/*.dist* assets/icons assets/tools logo.png
+- name: Delete Homer default assets
+  file:
+    path: /var/www/html/assets
+    state: absent
+- name: Delete Homer default logo
+  file:
+    path: /var/www/html/logo.png
+    state: absent
+
 - name: Install Homer assets
   copy:
     src: homer/

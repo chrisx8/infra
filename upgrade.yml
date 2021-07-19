@@ -15,7 +15,6 @@
       state: present
     when: hostvars[item].private_ip is defined and item != ansible_hostname
     with_items: "{{ groups.all }}"
-
   - name: Run apt dist-upgrade
     apt:
       update_cache: yes
@@ -40,35 +39,17 @@
   - name: Check if Homer exists
     stat:
       path: /var/www/html/assets
-    register: homer_exist
-  - name: Reinstall Homer
-    when: upgrade_homer == 'y' and homer_exist.stat.exists
+    register: homer_check
+  - name: Upgrade/Reinstall Homer
+    when: upgrade_homer == 'y' and homer_check.stat.exists
     import_role:
-      name: app_homer
+      name: homer
 
   - name: Check if BookStack exists
     stat:
       path: /var/www/bookstack
-    register: bookstack_exist
-  - name: Download BookStack
-    when: bookstack_exist.stat.exists
-    git:
-      repo: https://github.com/BookStackApp/BookStack.git
-      dest: /var/www/bookstack
-      version: release
-      depth: 1
-  - name: BookStack - Composer install
-    when: bookstack_exist.stat.exists
-    shell:
-      chdir: /var/www/bookstack
-      cmd: composer install --no-dev
-  - name: BookStack - Database migration
-    when: bookstack_exist.stat.exists
-    shell:
-      chdir: /var/www/bookstack
-      cmd: "php artisan migrate --force"
-  - name: BookStack - Clear cache
-    when: bookstack_exist.stat.exists
-    shell:
-      chdir: /var/www/bookstack
-      cmd: "php artisan cache:clear && php artisan config:clear && php artisan view:clear"
+    register: bookstack_check
+  - name: Upgrade/Reinstall BookStack
+    when: bookstack_check.stat.exists
+    import_role:
+      name: bookstack

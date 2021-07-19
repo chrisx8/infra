@@ -1,0 +1,8 @@
+- name: Set up acme.sh
+  include: acme.yml
+- name: Install Nginx
+  include: nginx_install.yml
+- name: Configure Nginx
+  include: nginx_config.yml
+- name: Install WireGuard
+  include: wireguard.yml
