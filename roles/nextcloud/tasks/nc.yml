@@ -39,6 +39,7 @@
     path: /var/www/nextcloud/config/config.php
     regexp: 'installed'
     line: "'installed' => 'true',\n
+    'memcache.local' => '\OC\Memcache\APCu',\n
     'overwrite.cli.url' => 'https://tinynet.chrisx.xyz/nextcloud',\n
     'htaccess.RewriteBase' => '/nextcloud',\n
     'trusted_proxies' => ['10.69.233.10'],\n
@@ -60,4 +61,4 @@
     name: "Nextcloud background jobs"
     minute: "*/5"
     user: www-data
-    job: "php -f /var/www/nextcloud/cron.php"
+    job: "php --define apc.enable_cli=1 -f /var/www/nextcloud/cron.php"
