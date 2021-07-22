@@ -1,11 +1,3 @@
-- name: Install favicon
-  copy:
-    src: homer/favicon.ico
-    dest: /var/www/favicon.ico
-- name: Install 404 page
-  copy:
-    src: nginx/iam-404.html
-    dest: /var/www/iam-404.html
 - name: Install Nginx global configuration
   copy:
     src: nginx/nginx.conf
@@ -16,6 +8,10 @@
     src: nginx/conf.d
     dest: /etc/nginx/
     directory_mode: true
+- name: Install Nginx WWW
+  copy:
+    src: nginx/www/
+    dest: /var/www
 - name: Restart Nginx
   systemd:
     name: nginx
