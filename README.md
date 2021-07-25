@@ -40,7 +40,6 @@ Core repo for TinyNET infrastructure config and docs.
 - [BookStack](https://www.bookstackapp.com/)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)
-- [Wallabag](https://wallabag.org)
 
 ### Storage
 

@@ -14,7 +14,6 @@
 	OIDCStateMaxNumberOfCookies 5 true
 
 	Alias "/bookstack" "/var/www/bookstack/public"
-	Alias "/wallabag" "/var/www/wallabag/web"
 
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
@@ -55,21 +54,6 @@
 	<Directory "/var/www/bookstack">
 	  AllowOverride None
 	  Require all denied
-	</Directory>
-
-	<Directory /var/www/wallabag/web>
-		CGIPassAuth On
-		Require all granted
-
-		Options +SymLinksIfOwnerMatch
-		Options -MultiViews
-		RewriteEngine On
-		RewriteCond %{REQUEST_FILENAME} !-f
-		RewriteRule ^(.*)$ app.php [QSA,L]
-	</Directory>
-
-	<Directory /var/www/wallabag/web/bundles>
-		RewriteEngine Off
 	</Directory>
 </VirtualHost>
 

@@ -52,12 +52,6 @@ services:
         subtitle: "RSS feed reader"
         url: "/miniflux/"
         target: "_blank"
-      - name: "Wallabag"
-        icon: "fas fa-bookmark"
-        tag: "separate account needed"
-        subtitle: "Read and archive articles"
-        url: "/wallabag/"
-        target: "_blank"
   - name: "Extras"
     icon: "fas fa-bookmark"
     items:
