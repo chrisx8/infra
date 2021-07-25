@@ -53,3 +53,24 @@
     when: bookstack_check.stat.exists
     import_role:
       name: bookstack
+
+  - name: Check if container stack exists
+    stat:
+      path: ~/containers/docker-compose.yml
+    register:  container_check
+  - name: Upgrade/Reinstall docker-compose.yml
+    when:  container_check.stat.exists
+    template:
+      src: roles/containers/templates/docker-compose.yml
+      dest: ~/containers/docker-compose.yml
+      mode: 0644
+  - name: Pull container images (docker-compose)
+    when:  container_check.stat.exists
+    command:
+      chdir: ~/containers
+      cmd: "docker-compose pull"
+  - name: Start containers (docker-compose)
+    when:  container_check.stat.exists
+    command:
+      chdir: ~/containers
+      cmd: "docker-compose up -d --build --remove-orphans"

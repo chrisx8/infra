@@ -58,4 +58,4 @@
 - name: Start containers (docker-compose)
   command:
     chdir: ~/containers
-    cmd: "docker-compose up -d --build"
+    cmd: "docker-compose up -d --build --remove-orphans"
