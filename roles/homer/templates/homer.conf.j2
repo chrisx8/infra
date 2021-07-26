@@ -13,7 +13,7 @@
 	OIDCCryptoPassphrase {{ oidc_crypto.stdout }}
 	OIDCStateMaxNumberOfCookies 5 true
 
-	Alias "/bookstack" "/var/www/bookstack/public"
+	DocumentRoot /var/www/html
 
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
@@ -34,26 +34,6 @@
 	<Directory "/var/www/html/assets/internal*">
 		AuthType openid-connect
 		Require claim groups:internal
-	</Directory>
-
-	<Directory "/var/www/bookstack/public">
-		Options FollowSymlinks
-		AllowOverride None
-		Require all granted
-
-		RewriteEngine On
-		# Redirect Trailing Slashes If Not A Folder...
-		RewriteCond %{REQUEST_FILENAME} !-d
-		RewriteRule ^(.*)/$ /$1 [L,R=301]
-		# Handle Front Controller...
-		RewriteCond %{REQUEST_FILENAME} !-d
-		RewriteCond %{REQUEST_FILENAME} !-f
-		RewriteRule ^ index.php [L]
-	</Directory>
-
-	<Directory "/var/www/bookstack">
-	  AllowOverride None
-	  Require all denied
 	</Directory>
 </VirtualHost>
 
