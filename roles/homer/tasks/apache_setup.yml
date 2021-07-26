@@ -1,7 +1,9 @@
 - name: Generate new OIDC crypto password
+  when: oidc_client_secret is defined
   command: "echo {{ lookup('password', '/dev/null length=64') }}"
   register: oidc_crypto
 - name: Configure Apache site
+  when: oidc_client_secret is defined
   template:
     src: homer.conf.j2
     dest: /etc/apache2/sites-available/homer.conf
