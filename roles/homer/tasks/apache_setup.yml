@@ -1,0 +1,14 @@
+- name: Generate new OIDC crypto password
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: oidc_crypto
+- name: Configure Apache site
+  template:
+    src: homer.conf.j2
+    dest: /etc/apache2/sites-available/homer.conf
+- name: Enable homer site
+  shell: "a2ensite homer.conf"
+
+- name: Restart Apache
+  systemd:
+    name: apache2
+    state: restarted
