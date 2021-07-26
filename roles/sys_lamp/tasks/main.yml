@@ -45,21 +45,6 @@
     path: /etc/apache2/sites-available/default-ssl.conf
     state: absent
 
-- name: Generate new OIDC crypto password
-  command: "echo {{ lookup('password', '/dev/null length=64') }}"
-  register: oidc_crypto
-- name: Configure Apache site
-  template:
-    src: default.conf.j2
-    dest: /etc/apache2/sites-available/default.conf
-- name: Enable default site
-  shell: "a2ensite default.conf"
-
-- name: Restart Apache
-  systemd:
-    name: apache2
-    state: restarted
-
 - name: Generate new MariaDB root password
   command: "echo {{ lookup('password', '/dev/null length=64') }}"
   register: mysql_root_password
