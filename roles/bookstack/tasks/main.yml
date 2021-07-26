@@ -5,5 +5,7 @@
 
 - name: Set up database
   include: db_setup.yml
+- name: Set up Apache
+  include: apache_setup.yml
 - name: Install BookStack
   include: bookstack.yml
