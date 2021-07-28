@@ -45,6 +45,21 @@
     path: /etc/apache2/sites-available/default-ssl.conf
     state: absent
 
+- name: Set PHP-FPM max POST size
+  lineinfile:
+    path: /etc/php/7.4/fpm/php.ini
+    regexp: '^post_max_size'
+    line: 'post_max_size = 21M'
+- name: Set PHP-FPM max upload size
+  lineinfile:
+    path: /etc/php/7.4/fpm/php.ini
+    regexp: '^upload_max_filesize'
+    line: 'upload_max_filesize = 20M'
+- name: Restart PHP
+  systemd:
+    name: php7.4-fpm
+    state: restarted
+
 - name: Generate new MariaDB root password
   command: "echo {{ lookup('password', '/dev/null length=64') }}"
   register: mysql_root_password
