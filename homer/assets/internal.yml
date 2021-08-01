@@ -1,4 +1,4 @@
-subtitle: "Internal Services"
+subtitle: "Internal Tools"
 
 services:
   - name: "Administration"
@@ -27,7 +27,7 @@ services:
   - name: "Tools"
     icon: "fas fa-tools"
     items:
-      - name: "Web Services"
+      - name: "<Dashboard>"
         icon: "fas fa-globe"
-        subtitle: "Access TinyNET web services"
+        subtitle: "Return to Dashboard"
         url: "#"
