@@ -60,11 +60,6 @@ services:
   - name: "Extras"
     icon: "fas fa-bookmark"
     items:
-      - name: "Google OAuth Apps"
-        icon: "fab fa-google"
-        subtitle: "Manage Authorized OAuth Apps on Google"
-        url: "https://myaccount.google.com/permissions"
-        target: "_blank"
       - name: "GitHub OAuth Apps"
         icon: "fab fa-github"
         subtitle: "Manage Authorized OAuth Apps on GitHub"
