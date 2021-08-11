@@ -40,6 +40,8 @@ Core repo for TinyNET infrastructure config and docs.
 - [BookStack](https://www.bookstackapp.com/)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)
+- [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
+- [Wiki.js](https://js.wiki/)
 
 ### Storage
 

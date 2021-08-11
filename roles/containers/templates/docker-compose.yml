@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
   keycloak:
     container_name: keycloak
-    image: quay.io/keycloak/keycloak-x:15.0.0
+    image: quay.io/keycloak/keycloak-x:15.0.1
     command: "--auto-config --proxy=edge --db=postgres -Dkc.db.url.host=postgres --db-username=keycloak --db-password=$${DB_PASSWORD}"
     env_file: ./keycloak.env
     ports:
@@ -41,6 +41,18 @@ services:
     security_opt:
       - no-new-privileges
     restart: unless-stopped
+  vaultwarden:
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    ports:
+      - 8288:80
+    environment:
+      - WEBSOCKET_ENABLED=true
+    volumes:
+      - vaultwarden_data:/data
+    security_opt:
+      - no-new-privileges
+    restart: unless-stopped
   wikijs:
     container_name: wikijs
     image: requarks/wiki:2
@@ -57,3 +69,4 @@ services:
 
 volumes:
   postgres_data:
+  vaultwarden_data:
