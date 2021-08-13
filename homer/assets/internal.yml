@@ -1,14 +1,22 @@
 subtitle: "Internal Tools"
 
 services:
-  - name: "Administration"
-    icon: "fas fa-toolbox"
+  - name: "Applications"
+    icon: "fas fa-rocket"
     items:
       - name: "Keycloak Admin"
         icon: "fas fa-users-cog"
         subtitle: "Keycloak Security Admin Console"
         url: "https://tinynet-iam.chrisx.xyz/admin/tinynet/console/"
         target: "_blank"
+      - name: "Vaultwarden Admin"
+        icon: "fas fa-key"
+        subtitle: "Vaultwarden Admin Console"
+        url: "https://vaultwarden.chrisx.xyz/admin"
+        target: "_blank"
+  - name: "Systems"
+    icon: "fas fa-microchip"
+    items:
       - name: "OpenWrt Gateway"
         icon: "fas fa-network-wired"
         subtitle: "OpenWrt on NETGEAR R6220"
