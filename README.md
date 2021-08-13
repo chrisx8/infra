@@ -38,6 +38,7 @@ Core repo for TinyNET infrastructure config and docs.
 ### Web Apps
 
 - [BookStack](https://www.bookstackapp.com/)
+- [Firefly III](https://www.firefly-iii.org/)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
