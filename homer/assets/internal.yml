@@ -32,8 +32,8 @@ services:
         subtitle: "Proxmox Backup Server on Krista"
         url: "https://krista.home:8007"
         target: "_blank"
-  - name: "Tools"
-    icon: "fas fa-tools"
+  - name: "Extras"
+    icon: "fas fa-bookmark"
     items:
       - name: "<Dashboard>"
         icon: "fas fa-globe"
