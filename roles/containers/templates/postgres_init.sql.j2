@@ -6,6 +6,10 @@ CREATE DATABASE miniflux;
 CREATE USER miniflux WITH ENCRYPTED PASSWORD '{{ postgres_miniflux_password.stdout }}';
 GRANT ALL PRIVILEGES ON DATABASE miniflux TO miniflux;
 
+CREATE DATABASE vaultwarden;
+CREATE USER vaultwarden WITH ENCRYPTED PASSWORD '{{ postgres_vaultwarden_password.stdout }}';
+GRANT all privileges ON database vaultwarden TO vaultwarden;
+
 CREATE DATABASE wikijs;
 CREATE USER wikijs WITH ENCRYPTED PASSWORD '{{ postgres_wikijs_password.stdout }}';
 GRANT ALL PRIVILEGES ON DATABASE wikijs TO wikijs;

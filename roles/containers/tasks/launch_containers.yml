@@ -20,6 +20,10 @@
   when: not postgres_check.stat.exists
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
   register: postgres_miniflux_password
+- name: Generate new password for PostgreSQL vaultwarden user
+  when: not postgres_check.stat.exists
+  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  register: postgres_vaultwarden_password
 - name: Generate new password for PostgreSQL wikijs user
   when: not postgres_check.stat.exists
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
@@ -42,6 +46,12 @@
     src: miniflux.env.j2
     dest: ~/containers/miniflux.env
     mode: 0644
+- name: Install Vaultwarden env file
+  when: not postgres_check.stat.exists
+  template:
+    src: vaultwarden.env.j2
+    dest: ~/containers/vaultwarden.env
+    mode: 0644
 - name: Install Wiki.js env file
   when: not postgres_check.stat.exists
   template:
@@ -54,6 +64,13 @@
     src: postgres_init.sql.j2
     dest: ~/containers/postgres_init.sql
     mode: 0644
+
+- name: Create vaultwarden data directory
+  file:
+    path: /opt/vaultwarden-data
+    state: directory
+    owner: nobody
+    group: nogroup
 
 - name: Start containers (docker-compose)
   command:

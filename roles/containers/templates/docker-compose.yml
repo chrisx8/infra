@@ -44,12 +44,12 @@ services:
   vaultwarden:
     container_name: vaultwarden
     image: vaultwarden/server:latest
+    env_file: ./vaultwarden.env
+    user: nobody:nogroup
     ports:
-      - 8288:80
-    environment:
-      - WEBSOCKET_ENABLED=true
+      - 10.69.233.11:8288:8288
     volumes:
-      - vaultwarden_data:/data
+      - /opt/vaultwarden-data:/data
     security_opt:
       - no-new-privileges
     restart: unless-stopped
@@ -69,4 +69,3 @@ services:
 
 volumes:
   postgres_data:
-  vaultwarden_data:
