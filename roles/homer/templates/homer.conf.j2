@@ -36,6 +36,12 @@
 	<Directory "/var/www/html">
 		Header set Cache-Control "no-cache"
 		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self' 'sha256-O0QnpbtsI2f5yQ3Jc40Z0aWGK+Vlqls3azmCWvA+rRs=';"
+		Header set Referrer-Policy "no-referrer"
+		Header set X-Content-Type-Options "nosniff"
+		Header set X-Frame-Options "DENY"
+		Header set X-Robots-Tag "none"
+		Header set X-XSS-Protection "1; mode=block"
+
 		AuthType openid-connect
 		Require valid-user
 	</Directory>
