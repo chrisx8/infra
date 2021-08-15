@@ -47,9 +47,12 @@ services:
     env_file: ./vaultwarden.env
     user: nobody:nogroup
     ports:
+      - 10.69.233.11:3012:3012
       - 10.69.233.11:8288:8288
     volumes:
       - /opt/vaultwarden-data:/data
+    cap_drop:
+      - all
     security_opt:
       - no-new-privileges
     restart: unless-stopped
