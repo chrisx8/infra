@@ -11,7 +11,7 @@
       name: sys_basic
   - name: Install LAMP stack
     import_role:
-      name: sys_lamp
+      name: lamp_stack
   - name: Install Homer
     import_role:
       name: homer

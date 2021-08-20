@@ -1,0 +1,34 @@
+- name: Generate new MariaDB root password
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  register: mysql_root_password
+- name: Update MariaDB root password
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "{{ mysql_root_password.stdout }}"
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+- name: Set my.cnf file for user
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    mode: 0600
+- name: Delete anonymous MySQL user
+  mysql_user:
+    name: ""
+    host: "{{ item }}"
+    state: absent
+  with_items:
+    - localhost
+    - "{{ ansible_nodename }}"
+- name: Delete Hostname based MySQL user
+  mysql_user:
+    name: root
+    host: "{{ ansible_nodename }}"
+    state: absent
+- name: Remove MySQL test database
+  mysql_db:
+    name: test
+    state: absent

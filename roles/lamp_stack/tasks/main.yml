@@ -1,0 +1,12 @@
+- name: Install LAMP stack
+  apt:
+    name: [apache2, libapache2-mod-auth-openidc, libapache2-mod-fcgid, mariadb-server, 
+           python3-mysqldb, php-fpm, php-mysql]
+    state: latest
+
+- name: Configure Apache
+  include: apache_config.yml
+- name: Configure PHP-FPM
+  include: php_config.yml
+- name: Configure MariaDB
+  include: mysql_config.yml

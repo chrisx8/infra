@@ -3,11 +3,11 @@
   hosts: all
   become: true
   vars_prompt:
-    - name: upgrade_firefly
-      prompt: "Upgrade Firefly III? (y/n)"
-      private: no
     - name: upgrade_homer
-      prompt: "Upgrade Homer? (y/n)"
+      prompt: "Upgrade Homer dashboard? (y/n)"
+      private: no
+    - name: upgrade_apps
+      prompt: "Upgrade applications? (y/n)"
       private: no
   tasks:
   - name: Update /etc/hosts with private IP addresses
@@ -39,33 +39,6 @@
     when: acme_check.stat.exists
     command: "/root/.acme.sh/acme.sh --upgrade"
 
-  - name: Check if Homer exists
-    stat:
-      path: /var/www/html/assets
-    register: homer_check
-  - name: Upgrade/Reinstall Homer
-    when: upgrade_homer == 'y' and homer_check.stat.exists
-    import_role:
-      name: homer
-
-  - name: Check if BookStack exists
-    stat:
-      path: /var/www/bookstack
-    register: bookstack_check
-  - name: Upgrade/Reinstall BookStack
-    when: bookstack_check.stat.exists
-    import_role:
-      name: bookstack
-
-  - name: Check if Firefly III exists
-    stat:
-      path: /var/www/firefly-iii
-    register: firefly_check
-  - name: Upgrade/Reinstall Firefly III
-    when: upgrade_firefly == 'y' and firefly_check.stat.exists
-    import_role:
-      name: firefly-iii
-
   - name: Check if container stack exists
     stat:
       path: ~/containers/docker-compose.yml
@@ -88,4 +61,31 @@
       cmd: "docker-compose up -d --build --remove-orphans"
   - name: Clean up container storage
     when: container_check.stat.exists
-    command: "docker system prune -f"
+    command: "docker system prune -af"
+
+  - name: Check if Homer exists
+    stat:
+      path: /var/www/html/assets
+    register: homer_check
+  - name: Upgrade/Reinstall Homer
+    when: upgrade_homer == 'y' and homer_check.stat.exists
+    import_role:
+      name: homer
+
+  - name: Check if BookStack exists
+    stat:
+      path: /var/www/bookstack
+    register: bookstack_check
+  - name: Upgrade/Reinstall BookStack
+    when: upgrade_apps == 'y' and bookstack_check.stat.exists
+    import_role:
+      name: bookstack
+
+  - name: Check if Firefly III exists
+    stat:
+      path: /var/www/firefly-iii
+    register: firefly_check
+  - name: Upgrade/Reinstall Firefly III
+    when: upgrade_apps == 'y' and firefly_check.stat.exists
+    import_role:
+      name: firefly-iii

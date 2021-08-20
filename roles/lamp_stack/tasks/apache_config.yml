@@ -1,0 +1,42 @@
+- name: Disable Apache server signature (1/2)
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    regex: "^ServerSignature"
+    line: "ServerSignature Off"
+- name: Disable Apache server signature (2/2)
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    regex: "^ServerTokens"
+    line: "ServerTokens Prod"
+
+- name: Disable Apache autoindex module
+  shell: "a2dismod -f autoindex"
+- name: Enable Apache rewrite module
+  shell: "a2enmod rewrite"
+
+- name: Switch to Event MPM
+  shell: "a2dismod mpm_prefork && a2enmod mpm_event"
+- name: Enable PHP-FPM handler
+  shell: "a2enconf php7.4-fpm && a2enmod proxy && a2enmod proxy_fcgi"
+
+- name: Remove built-in HTML
+  file:
+    path: /var/www/html
+    state: absent
+
+- name: Check if Apache default site exists
+  stat:
+    path: /etc/apache2/sites-available/000-default.conf
+  register: site_check
+- name: Disable Apache default site
+  when: site_check.stat.exists
+  shell: "a2dissite 000-default.conf"
+- name: Remove Apache default sites (1/2)
+  file:
+    path: /etc/apache2/sites-available/000-default.conf
+    state: absent
+- name: Remove Apache default sites (2/2)
+  file:
+    path: /etc/apache2/sites-available/default-ssl.conf
+    state: absent
+ 
