@@ -18,6 +18,9 @@
   - name: Install BookStack
     import_role:
       name: bookstack
+  - name: Install Firefly III
+    import_role:
+      name: firefly-iii
   - name: Install Nextcloud
     import_role:
       name: nextcloud

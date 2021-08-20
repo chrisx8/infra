@@ -3,6 +3,9 @@
   hosts: all
   become: true
   vars_prompt:
+    - name: upgrade_firefly
+      prompt: "Upgrade Firefly III? (y/n)"
+      private: no
     - name: upgrade_homer
       prompt: "Upgrade Homer? (y/n)"
       private: no
@@ -53,6 +56,15 @@
     when: bookstack_check.stat.exists
     import_role:
       name: bookstack
+
+  - name: Check if Firefly III exists
+    stat:
+      path: /var/www/firefly-iii
+    register: firefly_check
+  - name: Upgrade/Reinstall Firefly III
+    when: upgrade_firefly == 'y' and firefly_check.stat.exists
+    import_role:
+      name: firefly-iii
 
   - name: Check if container stack exists
     stat:

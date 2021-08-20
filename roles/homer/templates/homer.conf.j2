@@ -5,7 +5,7 @@
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 
 	OIDCProviderMetadataURL https://tinynet-iam.chrisx.xyz/realms/tinynet/.well-known/openid-configuration
-	OIDCClientID web1auth
+	OIDCClientID webapps-apache
 	OIDCClientSecret {{ oidc_client_secret }}
 	OIDCRemoteUserClaim preferred_username
 	OIDCScope "openid groups"
@@ -15,14 +15,33 @@
 
 	DocumentRoot /var/www/html
 
+	Alias "/firefly-iii" "/var/www/firefly-iii/public"
+
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
 		Require valid-user
 	</Location>
 
+	<Directory "/var/www/firefly-iii/public">
+		Include /var/www/firefly-iii/public/.htaccess
+		AuthType openid-connect
+		Require valid-user
+	</Directory>
+
+	<Directory "/var/www/firefly-iii">
+		AllowOverride None
+		Require all denied
+	</Directory>
+
 	<Directory "/var/www/html">
 		Header set Cache-Control "no-cache"
 		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self' 'sha256-O0QnpbtsI2f5yQ3Jc40Z0aWGK+Vlqls3azmCWvA+rRs=';"
+		Header set Referrer-Policy "no-referrer"
+		Header set X-Content-Type-Options "nosniff"
+		Header set X-Frame-Options "DENY"
+		Header set X-Robots-Tag "none"
+		Header set X-XSS-Protection "1; mode=block"
+
 		AuthType openid-connect
 		Require valid-user
 	</Directory>

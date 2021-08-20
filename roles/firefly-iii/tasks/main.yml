@@ -1,0 +1,9 @@
+- name: Install PHP extensions
+  apt:
+    name: [php-curl, php-gd, php-mysql, php-xml, composer, language-pack-en-base]
+    state: latest
+
+- name: Set up database
+  include: db_setup.yml
+- name: Install Firefly III
+  include: firefly.yml
