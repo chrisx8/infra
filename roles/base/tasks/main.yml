@@ -1,0 +1,15 @@
+- name: Remove unneeded stuff
+  include: debloat.yml
+- name: Upgrade & install packages
+  include: packages.yml
+- name: Configure system
+  include: system_config.yml
+
+- name: Update /etc/hosts with private IP addresses
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '.*{{ item }}$'
+    line: "{{ hostvars[item].private_ip }} {{ item }}"
+    state: present
+  when: hostvars[item].private_ip is defined
+  with_items: "{{ groups.all }}"

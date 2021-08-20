@@ -1,0 +1,55 @@
+- name: Limit systemd-journald
+  lineinfile:
+    dest: "/etc/systemd/journald.conf"
+    regex: "SystemMaxUse="
+    line: "SystemMaxUse=10M"
+
+- name: Configure vim
+  copy:
+    src: vimrc
+    dest: /etc/vim/vimrc
+    mode: 0644
+
+- name: Check configuration existence
+  stat:
+    path: /etc/ssh/ssh_host_dsa_key
+  register: configured
+
+- name: Remove unsupported SSH host keys
+  shell: "rm -f /etc/ssh/ssh_host_*dsa_key*"
+
+- name: Configure bashrc
+  when: configured.stat.exists
+  lineinfile:
+    dest: "/etc/bash.bashrc"
+    line: "
+    # Installed by Ansible\n
+    export EDITOR=vim\n
+    alias dfh='df -h -x tmpfs -x overlay'\n
+    "
+
+- name: Configure OpenSSH client
+  copy:
+    src: ssh_config
+    dest: /etc/ssh/ssh_config
+    mode: 0644
+- name: Configure OpenSSH server
+  copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    mode: 0644
+- name: Restart OpenSSH server (sshd)
+  systemd:
+    name: sshd
+    state: restarted
+    daemon_reload: yes
+
+- name: Configure crontab
+  cron:
+    name: MAILTO
+    env: true
+    job: ""
+
+- name: Set timezone (systemd)
+  command: "timedatectl set-timezone {{ hostvars[ansible_hostname].timezone }}"
+  when: hostvars[ansible_hostname].timezone is defined

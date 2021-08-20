@@ -1,0 +1,17 @@
+- name: Run apt dist-upgrade
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Install additional packages
+  apt:
+    name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, gnupg, psmisc, vim]
+    state: latest
+
+- name: apt autoremove
+  apt:
+    autoremove: yes
+    purge: yes
+- name: apt autoclean
+  apt:
+    autoclean: yes

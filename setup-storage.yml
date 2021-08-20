@@ -5,6 +5,6 @@
   tasks:
   - name: Basic setup
     import_role:
-      name: sys_basic
+      name: base
   - name: Reboot
     reboot:

@@ -8,10 +8,10 @@
   tasks:
   - name: Basic setup
     import_role:
-      name: sys_basic
+      name: base
   - name: Basic setup (VM)
     import_role:
-      name: sys_basic_vm
+      name: base_vm
   - name: Set up containers
     import_role:
       name: containers
