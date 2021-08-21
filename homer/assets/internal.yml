@@ -7,7 +7,7 @@ services:
       - name: "Keycloak Admin"
         icon: "fas fa-users-cog"
         subtitle: "Keycloak Security Admin Console"
-        url: "https://tinynet-iam.chrisx.xyz/admin/tinynet/console/"
+        url: "https://tinynet-iam.chrisx.xyz/auth/admin/tinynet/console/"
         target: "_blank"
       - name: "Vaultwarden Admin"
         icon: "fas fa-key"

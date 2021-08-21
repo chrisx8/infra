@@ -25,7 +25,7 @@ message:
 links:
   - name: "Account Settings"
     icon: "fas fa-user"
-    url: "https://tinynet-iam.chrisx.xyz/realms/tinynet/account/"
+    url: "https://tinynet-iam.chrisx.xyz/auth/realms/tinynet/account/"
     target: "_blank"
   - name: "Log out"
     icon: "fas fa-sign-out-alt"

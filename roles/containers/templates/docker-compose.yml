@@ -13,8 +13,7 @@ services:
     restart: unless-stopped
   keycloak:
     container_name: keycloak
-    image: quay.io/keycloak/keycloak-x:15.0.2
-    command: "--auto-config --proxy=edge --db=postgres -Dkc.db.url.host=postgres --db-username=keycloak --db-password=$${DB_PASSWORD}"
+    image: quay.io/keycloak/keycloak:15.0.2
     env_file: ./keycloak.env
     ports:
       - 10.69.233.11:53925:8080
