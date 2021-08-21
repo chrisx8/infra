@@ -18,9 +18,6 @@ services:
     env_file: ./keycloak.env
     ports:
       - 10.69.233.11:53925:8080
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - /etc/hosts:/etc/hosts:ro
     depends_on:
       - postgres
     cap_drop:
