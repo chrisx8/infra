@@ -44,3 +44,11 @@
   shell:
     chdir: /var/www/firefly-iii
     cmd: "php artisan cache:clear && php artisan config:clear && php artisan view:clear"
+
+- name: Install Firefly III cron job
+  cron:
+    name: "Firefly III background jobs"
+    minute: "1"
+    hour: "23"
+    user: www-data
+    job: "php -f /var/www/nextcloud/cron.php"
