@@ -20,7 +20,7 @@ message:
   style: "is-warning"
   title: "Messages"
   icon: "fas fa-bullhorn"
-  content: 'To log out of all SSO-enabled applications at once, use the <code><i class="fa-fw fas fa-sign-out-alt"></i> Log out</code> button on the menu bar.'
+  content: 'When logging out, please be sure to log out of every application individually.'
 
 links:
   - name: "Account Settings"
@@ -29,7 +29,7 @@ links:
     target: "_blank"
   - name: "Log out"
     icon: "fas fa-sign-out-alt"
-    url: "/logout.html"
+    url: "/auth/openid-connect?logout=https://tinynet.chrisx.xyz"
 
 services:
   - name: "Applications"
