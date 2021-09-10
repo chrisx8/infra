@@ -4,12 +4,8 @@
   include: system.yml
 - name: Install Proxmox Backup Server
   include: pbs.yml
-- name: Configure vim
-  include: vim.yml
-- name: Configure OpenSSH server
-  include: sshd.yml
-- name: Configure Postfix
-  include: postfix.yml
+- name: Configure system software
+  include: software_config.yml
 - name: Add private IPs to /etc/hosts
   include: private_ip.yml
 - name: Reboot

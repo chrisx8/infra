@@ -1,0 +1,36 @@
+- name: Configure OpenSSH client
+  copy:
+    src: ssh_config
+    dest: /etc/ssh/ssh_config
+    mode: 0644
+- name: Configure OpenSSH server
+  copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    mode: 0644
+- name: Restart OpenSSH server (sshd)
+  systemd:
+    name: sshd
+    state: restarted
+    daemon_reload: yes
+
+- name: Install vimrc
+  copy:
+    src: vimrc
+    dest: /etc/vim/vimrc
+    mode: 0644
+
+- name: Install main.cf
+  template:
+    src: main.cf.j2
+    dest: /etc/postfix/main.cf
+- name: Add SES credentials
+  template:
+    src: sasl_passwd.j2
+    dest: /etc/postfix/sasl_passwd
+- name: Process credential DB
+  shell: postmap /etc/postfix/sasl_passwd
+- name: Restart Postfix
+  systemd:
+    name: postfix.service
+    state: restarted
