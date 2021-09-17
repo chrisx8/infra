@@ -48,7 +48,7 @@
 - name: Install Firefly III cron job
   cron:
     name: "Firefly III background jobs"
-    minute: "1"
-    hour: "23"
+    minute: "45"
+    hour: "21"
     user: www-data
-    job: "php -f /var/www/nextcloud/cron.php"
+    job: "php -f /var/www/firefly-iii/artisan firefly-iii:cron"
