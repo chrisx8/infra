@@ -35,7 +35,7 @@
 - name: Composer install
   shell:
     chdir: /var/www/bookstack
-    cmd: composer install --no-dev
+    cmd: "runuser -u www-data -- composer install --no-dev"
 - name: Generate new key
   shell:
     chdir: /var/www/bookstack  

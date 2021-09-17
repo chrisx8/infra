@@ -72,6 +72,22 @@
     import_role:
       name: homer
 
+  - name: Check if Composer exists
+    stat:
+      path: /usr/local/bin/composer
+    register: composer_check
+  - name: Copy Composer install script
+    when: upgrade_apps == 'y' and composer_check.stat.exists
+    template:
+      src: roles/lamp_stack/templates/composer-install.sh
+      dest: ~/composer-install.sh
+      mode: 0755
+  - name: Install Composer
+    when: upgrade_apps == 'y' and composer_check.stat.exists
+    shell:
+      chdir: "~"
+      cmd: "~/composer-install.sh"
+
   - name: Check if BookStack exists
     stat:
       path: /var/www/bookstack

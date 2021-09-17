@@ -27,7 +27,7 @@
 - name: Composer install
   shell:
     chdir: /var/www/firefly-iii
-    cmd: composer install --no-dev --prefer-dist
+    cmd: "runuser -u www-data -- composer install --no-dev --prefer-dist"
 - name: Generate new key
   shell:
     chdir: /var/www/firefly-iii  
