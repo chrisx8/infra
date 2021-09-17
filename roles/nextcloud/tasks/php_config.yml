@@ -1,7 +1,7 @@
 - name: Configure PHP-FPM (1/2)
   when: not nextcloud_exist.stat.exists
   lineinfile:
-    path: /etc/php/7.4/fpm/pool.d/www.conf
+    path: /etc/php/8.0/fpm/pool.d/www.conf
     line: "env[HOSTNAME] = $HOSTNAME\n
           env[PATH] = /usr/local/bin:/usr/bin:/bin\n
           env[TMP] = /tmp\n
@@ -10,10 +10,10 @@
           "
 - name: Configure PHP-FPM (2/2)
   lineinfile:
-    path: /etc/php/7.4/fpm/php.ini
+    path: /etc/php/8.0/fpm/php.ini
     regexp: '^memory_limit'
     line: 'memory_limit = 512M'
 - name: Restart PHP
   systemd:
-    name: php7.4-fpm
+    name: php8.0-fpm
     state: restarted

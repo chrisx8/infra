@@ -1,8 +1,24 @@
+- name: Install software-properties-common
+  apt:
+    name: software-properties-common
+    state: latest
+
+- name: Add PPA for PHP
+  apt_repository:
+    repo: ppa:ondrej/php
+
 - name: Install LAMP stack
   apt:
     name: [apache2, libapache2-mod-auth-openidc, libapache2-mod-fcgid, mariadb-server, 
            python3-mysqldb, php-fpm, php-mysql]
     state: latest
+
+- name: Remove software-properties-common
+  apt:
+    name: software-properties-common
+    state: absent
+    autoremove: yes
+    purge: yes
 
 - name: Configure Apache
   include: apache_config.yml
