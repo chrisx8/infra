@@ -16,7 +16,6 @@ PasswordAuthentication no
 ChallengeResponseAuthentication no
 UsePAM yes
 
-AllowTcpForwarding no
 X11Forwarding no
 PrintMotd no
 Banner none
