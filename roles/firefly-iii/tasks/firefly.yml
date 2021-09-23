@@ -35,7 +35,7 @@
 - name: Database migration
   shell:
     chdir: /var/www/firefly-iii
-    cmd: "php artisan migrate --force && php artisan firefly-iii:upgrade-database"
+    cmd: "php artisan migrate --seed --force && php artisan firefly-iii:upgrade-database"
 - name: Install Passport
   shell:
     chdir: /var/www/firefly-iii
