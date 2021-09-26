@@ -74,5 +74,5 @@ services:
         target: "_blank"
       - name: '<Internal Tools>'
         icon: "fas fa-lock"
-        subtitle: "Access via internal LAN"
+        subtitle: "Admin tools for internal users"
         url: "#internal"
