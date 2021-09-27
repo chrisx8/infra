@@ -2,6 +2,8 @@
   apt:
     name: [php-curl, php-gd, php-mysql, php-xml]
     state: latest
+- name: apt clean
+  command: "apt-get clean"
 
 - name: Set up database
   include: db_setup.yml

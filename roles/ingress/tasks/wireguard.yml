@@ -3,6 +3,9 @@
     name: wireguard-tools
     install_recommends: false
     state: latest
+- name: apt clean
+  command: "apt-get clean"
+
 - name: Configure WireGuard
   when: wg_private_key
   template:

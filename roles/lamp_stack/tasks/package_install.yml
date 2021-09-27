@@ -20,6 +20,9 @@
     autoremove: yes
     purge: yes
 
+- name: apt clean
+  command: "apt-get clean"
+
 - name: Copy Composer install script
   template:
     src: composer-install.sh

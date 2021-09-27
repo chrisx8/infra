@@ -16,3 +16,5 @@
 - name: apt autoclean
   apt:
     autoclean: yes
+- name: apt clean
+  command: "apt-get clean"

@@ -2,6 +2,8 @@
   apt:
     name: nginx
     state: latest
+- name: apt clean
+  command: "apt-get clean"
 
 - name: Remove built-in Nginx sites (1/3)
   file:

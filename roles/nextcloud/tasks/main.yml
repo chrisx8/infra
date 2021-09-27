@@ -2,6 +2,8 @@
   apt:
     name: [php-apcu, php-bcmath, php-curl, php-gd, php-gmp, php-imagick, php-intl, php-mbstring, php-xml, php-zip]
     state: latest
+- name: apt clean
+  command: "apt-get clean"
 
 - name: Check if Nextcloud is installed
   stat:

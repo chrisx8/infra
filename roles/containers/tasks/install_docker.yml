@@ -11,3 +11,5 @@
     name: [docker-ce, docker-ce-cli, containerd.io, docker-compose]
     state: latest
     update_cache: yes
+- name: apt clean
+  command: "apt-get clean"

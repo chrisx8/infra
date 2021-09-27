@@ -30,6 +30,8 @@
   - name: apt autoclean
     apt:
       autoclean: yes
+  - name: apt clean
+    command: "apt-get clean"
 
   - name: Check if acme.sh exists
     stat:
