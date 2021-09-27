@@ -21,4 +21,4 @@ PrintMotd no
 Banner none
 
 AcceptEnv LANG LC_*
-Subsystem sftp /usr/lib/openssh/sftp-server
+Subsystem sftp internal-sftp
