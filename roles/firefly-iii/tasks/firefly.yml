@@ -2,7 +2,7 @@
   git:
     repo: https://github.com/firefly-iii/firefly-iii.git
     dest: /var/www/firefly-iii
-    version: 5.6.0
+    version: 5.6.1
     depth: 1
 
 - name: Set permissions (1/2)
