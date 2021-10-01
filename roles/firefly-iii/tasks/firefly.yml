@@ -49,6 +49,6 @@
   cron:
     name: "Firefly III background jobs"
     minute: "45"
-    hour: "21"
+    hour: "*"
     user: www-data
     job: "php -f /var/www/firefly-iii/artisan firefly-iii:cron"
