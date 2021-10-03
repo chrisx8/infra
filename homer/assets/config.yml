@@ -64,6 +64,11 @@ services:
         subtitle: "Personal finance manager"
         url: "/firefly-iii/"
         target: "_blank"
+      - name: "Gitea"
+        icon: "fab fa-git-alt"
+        subtitle: "Lightweight Git service"
+        url: "https://gitea.chrisx.xyz"
+        target: "_blank"
   - name: "Extras"
     icon: "fas fa-bookmark"
     items:

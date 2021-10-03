@@ -11,6 +11,20 @@ services:
     security_opt:
       - no-new-privileges
     restart: unless-stopped
+  gitea:
+    container_name: gitea
+    image: gitea/gitea:1
+    env_file: ./gitea.env
+    volumes:
+      - gitea_data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 10.69.233.11:44832:3000
+      - 44822:22
+    security_opt:
+      - no-new-privileges
+    restart: unless-stopped
   keycloak:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:15.0.2
@@ -54,4 +68,5 @@ services:
     restart: unless-stopped
 
 volumes:
+  gitea_data:
   postgres_data:
