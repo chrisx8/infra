@@ -30,6 +30,10 @@ Core repo for TinyNET infrastructure config and docs.
 - [NGINX](https://nginx.org)
 - [WireGuard](https://www.wireguard.com/)
 
+### Home Automation
+
+- [Home Assistant](https://www.home-assistant.io)
+
 ### IAM
 
 - [Keycloak](https://www.keycloak.org/)

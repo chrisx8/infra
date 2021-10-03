@@ -72,6 +72,11 @@ services:
   - name: "Extras"
     icon: "fas fa-bookmark"
     items:
+      - name: 'Home Assistant'
+        icon: "fas fa-home"
+        subtitle: "Home automation and system dashboard"
+        url: "https://homeassistant.chrisx.xyz"
+        target: "_blank"
       - name: '<Internal Tools>'
         icon: "fas fa-lock"
         subtitle: "Admin tools for internal users"

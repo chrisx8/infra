@@ -55,12 +55,12 @@
     when: container_check.stat.exists
     command:
       chdir: ~/containers
-      cmd: "docker-compose pull"
+      cmd: "docker compose pull"
   - name: Start containers (docker-compose)
     when: container_check.stat.exists
     command:
       chdir: ~/containers
-      cmd: "docker-compose up -d --build --remove-orphans"
+      cmd: "docker compose up -d --build --remove-orphans"
   - name: Clean up container storage
     when: container_check.stat.exists
     command: "docker system prune -af"
