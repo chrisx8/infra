@@ -21,7 +21,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 10.69.233.11:44832:3000
-      - 44822:22
     security_opt:
       - no-new-privileges
     restart: unless-stopped
