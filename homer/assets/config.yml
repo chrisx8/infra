@@ -67,7 +67,7 @@ services:
       - name: "Gitea"
         icon: "fab fa-git-alt"
         subtitle: "Lightweight Git service"
-        url: "https://gitea.chrisx.xyz"
+        url: "https://gitea.chrisx.xyz/user/login"
         target: "_blank"
   - name: "Extras"
     icon: "fas fa-bookmark"

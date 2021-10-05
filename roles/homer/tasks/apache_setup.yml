@@ -10,14 +10,6 @@
 - name: Enable homer site
   shell: "a2ensite homer.conf"
 
-- name: Configure Apache vaultwarden site
-  when: oidc_client_secret is defined
-  template:
-    src: vaultwarden.conf.j2
-    dest: /etc/apache2/sites-available/vaultwarden.conf
-- name: Enable vaultwarden site
-  shell: "a2ensite vaultwarden.conf"
-
 - name: Restart Apache
   systemd:
     name: apache2
