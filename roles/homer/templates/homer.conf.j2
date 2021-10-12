@@ -11,7 +11,8 @@
 	OIDCScope "openid groups"
 	OIDCRedirectURI https://tinynet.chrisx.xyz/auth/openid-connect
 	OIDCCryptoPassphrase {{ oidc_crypto.stdout }}
-	OIDCStateMaxNumberOfCookies 5 true
+	OIDCSessionInactivityTimeout 3600
+	OIDCStateMaxNumberOfCookies 2 true
 
 	DocumentRoot /var/www/html
 
