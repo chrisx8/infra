@@ -28,6 +28,7 @@ Core repo for TinyNET infrastructure config and docs.
 
 - [OpenWrt](https://openwrt.org/)
 - [NGINX](https://nginx.org)
+- [Tailscale](https://tailscale.com/)
 - [WireGuard](https://www.wireguard.com/)
 
 ### Home Automation

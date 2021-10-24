@@ -13,8 +13,6 @@
       prompt: "acme.sh - Enter Cloudflare Account ID"
     - name: cf_zone_id
       prompt: "acme.sh - Enter Cloudflare Zone ID"
-    - name: wg_private_key
-      prompt: "WireGuard - Enter private key"
   tasks:
   - name: Basic setup
     import_role:
