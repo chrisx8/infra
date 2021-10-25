@@ -43,7 +43,7 @@
     line: "'installed' => 'true',\n
     'overwrite.cli.url' => 'https://tinynet.chrisx.xyz/nextcloud',\n
     'htaccess.RewriteBase' => '/nextcloud',\n
-    'trusted_proxies' => ['10.69.233.10'],\n
+    'trusted_proxies' => ['10.69.233.11'],\n
     'auth.webauthn.enabled' => false,\n
     'default_phone_region' => 'US',
     "
