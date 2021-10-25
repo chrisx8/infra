@@ -24,7 +24,7 @@ Core repo for TinyNET infrastructure config and docs.
 
 ## Services
 
-### Networking / Ingress
+### Networking
 
 - [OpenWrt](https://openwrt.org/)
 - [NGINX](https://nginx.org)

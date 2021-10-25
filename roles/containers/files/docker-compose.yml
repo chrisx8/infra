@@ -12,6 +12,21 @@ services:
     security_opt:
       - no-new-privileges
     restart: unless-stopped
+  nginx:
+    container_name: nginx
+    image: nginx:alpine
+    ports:
+      - 443:443
+    volumes:
+      - ~/log/nginx:/var/log/nginx/
+      - ~/.acme.sh/chrisx.xyz/:/etc/ssl/:ro
+      - /etc/hosts:/etc/hosts:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d/:ro
+      - ./nginx/www/:/var/www/:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    security_opt:
+      - no-new-privileges
+    restart: unless-stopped
 
   postgres:
     container_name: postgres
@@ -32,8 +47,6 @@ services:
       - gitea_data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 10.69.233.11:44832:3000
     security_opt:
       - no-new-privileges
     restart: unless-stopped
@@ -41,8 +54,6 @@ services:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:15.0.2
     env_file: ./keycloak.env
-    ports:
-      - 10.69.233.11:53925:8080
     depends_on:
       - postgres
     cap_drop:
@@ -54,8 +65,6 @@ services:
     container_name: miniflux
     image: miniflux/miniflux:latest
     env_file: ./miniflux.env
-    ports:
-      - 10.69.233.11:64643:8080
     depends_on:
       - postgres
     cap_drop:
@@ -68,9 +77,6 @@ services:
     image: vaultwarden/server:latest
     env_file: ./vaultwarden.env
     user: nobody:nogroup
-    ports:
-      - 10.69.233.11:3012:3012
-      - 10.69.233.11:8288:8288
     volumes:
       - /opt/vaultwarden-data:/data
     cap_drop:
@@ -82,8 +88,6 @@ services:
     container_name: wikijs
     image: requarks/wiki:2
     env_file: ./wikijs.env
-    ports:
-      - 10.69.233.11:9454:3000
     depends_on:
       - postgres
     cap_drop:

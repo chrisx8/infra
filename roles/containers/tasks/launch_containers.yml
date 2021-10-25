@@ -3,6 +3,11 @@
     path: ~/containers
     state: directory
     mode: 0700
+- name: Create Nginx logs directory
+  file:
+    path: ~/log/nginx
+    state: directory
+    mode: 0700
 
 - name: Create new password for PostgreSQL superuser
   shell: "echo POSTGRES_PASSWORD={{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }} > ~/containers/postgres.env"
@@ -34,7 +39,7 @@
   register: postgres_wikijs_password
 
 - name: Install docker-compose.yml
-  template:
+  copy:
     src: docker-compose.yml
     dest: ~/containers/docker-compose.yml
     mode: 0644

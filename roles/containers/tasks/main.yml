@@ -1,3 +1,5 @@
+- name: Set up acme.sh
+  include: acme.yml
 - name: Install Docker
   include: install_docker.yml
 - name: Launch containers

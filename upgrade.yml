@@ -47,10 +47,19 @@
     register: container_check
   - name: Upgrade/Reinstall docker-compose.yml
     when: container_check.stat.exists
-    template:
-      src: roles/containers/templates/docker-compose.yml
+    copy:
+      src: roles/containers/files/docker-compose.yml
       dest: ~/containers/docker-compose.yml
       mode: 0644
+  - name: Upgrade/Reinstall Nginx files
+    when: container_check.stat.exists
+    copy:
+      src: roles/containers/files/nginx
+      dest: ~/containers
+  - name: Reload Nginx
+    when: container_check.stat.exists
+    command:
+      cmd: "docker exec nginx nginx -s reload"
   - name: Pull container images (docker-compose)
     when: container_check.stat.exists
     command:
