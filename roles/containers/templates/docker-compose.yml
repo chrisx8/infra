@@ -78,6 +78,19 @@ services:
     security_opt:
       - no-new-privileges
     restart: unless-stopped
+  wikijs:
+    container_name: wikijs
+    image: requarks/wiki:2
+    env_file: ./wikijs.env
+    ports:
+      - 10.69.233.11:9454:3000
+    depends_on:
+      - postgres
+    cap_drop:
+      - all
+    security_opt:
+      - no-new-privileges
+    restart: unless-stopped
 
 volumes:
   cloudflared:

@@ -54,6 +54,11 @@ services:
   - name: "Productivity"
     icon: "fas fa-briefcase"
     items:
+      - name: "MyWiki"
+        icon: "fas fa-book"
+        subtitle: "Wiki.js: A modern wiki engine"
+        url: "https://mywiki.chrisx.xyz"
+        target: "_blank"
       - name: "BookStack"
         icon: "fas fa-book"
         subtitle: "Markdown-enabled wiki engine"
