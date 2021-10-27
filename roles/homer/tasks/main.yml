@@ -33,7 +33,7 @@
 
 - name: Install Homer assets
   copy:
-    src: homer/
+    src: .
     dest: /var/www/html/
 
 - name: Set up Apache
