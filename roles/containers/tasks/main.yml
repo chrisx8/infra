@@ -2,7 +2,22 @@
   include: acme.yml
 - name: Install Docker
   include: install_docker.yml
+
+- name: Check if postgres_init.sql exists
+  stat:
+    path: ~/containers/postgres_init.sql
+  register: postgres_check
+- name: Prep containers
+  when: not postgres_check.stat.exists
+  include: prep_containers.yml
+
 - name: Launch containers
   include: launch_containers.yml
 - name: Clean up container storage
   command: "docker system prune -f"
+
+- name: Install logrotate config for Nginx
+  copy:
+    src: nginx-docker
+    dest: /etc/logrotate.d/
+    mode: 0644

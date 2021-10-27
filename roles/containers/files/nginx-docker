@@ -1,0 +1,13 @@
+/root/log/nginx/*.log {
+	daily
+	missingok
+	rotate 52
+	compress
+	delaycompress
+	notifempty
+	create 644 root root
+	sharedscripts
+	postrotate
+		docker exec nginx nginx -s reload
+	endscript
+}

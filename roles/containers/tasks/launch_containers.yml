@@ -9,83 +9,18 @@
     state: directory
     mode: 0700
 
-- name: Create new password for PostgreSQL superuser
-  shell: "echo POSTGRES_PASSWORD={{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }} > ~/containers/postgres.env"
-
-- name: Check if postgres_init.sql exists
-  stat:
-    path: ~/containers/postgres_init.sql
-  register: postgres_check
-
-- name: Generate new password for PostgreSQL keycloak user
-  when: not postgres_check.stat.exists
-  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-  register: postgres_keycloak_password
-- name: Generate new password for PostgreSQL gitea user
-  when: not postgres_check.stat.exists
-  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-  register: postgres_gitea_password
-- name: Generate new password for PostgreSQL miniflux user
-  when: not postgres_check.stat.exists
-  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-  register: postgres_miniflux_password
-- name: Generate new password for PostgreSQL vaultwarden user
-  when: not postgres_check.stat.exists
-  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-  register: postgres_vaultwarden_password
-- name: Generate new password for PostgreSQL wikijs user
-  when: not postgres_check.stat.exists
-  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-  register: postgres_wikijs_password
-
-- name: Install docker-compose.yml
-  copy:
-    src: docker-compose.yml
-    dest: ~/containers/docker-compose.yml
-    mode: 0644
-- name: Install Keycloak env file
-  when: not postgres_check.stat.exists
-  template:
-    src: gitea.env.j2
-    dest: ~/containers/gitea.env
-    mode: 0644
-- name: Install Keycloak env file
-  when: not postgres_check.stat.exists
-  template:
-    src: keycloak.env.j2
-    dest: ~/containers/keycloak.env
-    mode: 0644
-- name: Install Miniflux env file
-  when: not postgres_check.stat.exists
-  template:
-    src: miniflux.env.j2
-    dest: ~/containers/miniflux.env
-    mode: 0644
-- name: Install Vaultwarden env file
-  when: not postgres_check.stat.exists
-  template:
-    src: vaultwarden.env.j2
-    dest: ~/containers/vaultwarden.env
-    mode: 0644
-- name: Install Wiki.js env file
-  when: not postgres_check.stat.exists
-  template:
-    src: wikijs.env.j2
-    dest: ~/containers/wikijs.env
-    mode: 0644
-- name: Install Postgres init script
-  when: not postgres_check.stat.exists
-  template:
-    src: postgres_init.sql.j2
-    dest: ~/containers/postgres_init.sql
-    mode: 0644
-
 - name: Create vaultwarden data directory
   file:
     path: /opt/vaultwarden-data
     state: directory
     owner: nobody
     group: nogroup
+
+- name: Install docker-compose.yml
+  copy:
+    src: docker-compose.yml
+    dest: ~/containers/docker-compose.yml
+    mode: 0644
 
 - name: Start containers (docker-compose)
   command:

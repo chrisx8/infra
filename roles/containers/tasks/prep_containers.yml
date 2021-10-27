@@ -1,0 +1,49 @@
+- name: Create new password for PostgreSQL superuser
+  shell: "echo POSTGRES_PASSWORD={{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }} > ~/containers/postgres.env"
+
+- name: Generate new password for PostgreSQL keycloak user
+  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  register: postgres_keycloak_password
+- name: Generate new password for PostgreSQL gitea user
+  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  register: postgres_gitea_password
+- name: Generate new password for PostgreSQL miniflux user
+  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  register: postgres_miniflux_password
+- name: Generate new password for PostgreSQL vaultwarden user
+  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  register: postgres_vaultwarden_password
+- name: Generate new password for PostgreSQL wikijs user
+  command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  register: postgres_wikijs_password
+
+- name: Install Keycloak env file
+  template:
+    src: gitea.env.j2
+    dest: ~/containers/gitea.env
+    mode: 0644
+- name: Install Keycloak env file
+  template:
+    src: keycloak.env.j2
+    dest: ~/containers/keycloak.env
+    mode: 0644
+- name: Install Miniflux env file
+  template:
+    src: miniflux.env.j2
+    dest: ~/containers/miniflux.env
+    mode: 0644
+- name: Install Vaultwarden env file
+  template:
+    src: vaultwarden.env.j2
+    dest: ~/containers/vaultwarden.env
+    mode: 0644
+- name: Install Wiki.js env file
+  template:
+    src: wikijs.env.j2
+    dest: ~/containers/wikijs.env
+    mode: 0644
+- name: Install Postgres init script
+  template:
+    src: postgres_init.sql.j2
+    dest: ~/containers/postgres_init.sql
+    mode: 0644
