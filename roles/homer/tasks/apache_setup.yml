@@ -5,10 +5,10 @@
 - name: Configure Apache site
   when: oidc_client_secret is defined
   template:
-    src: homer.conf.j2
-    dest: /etc/apache2/sites-available/homer.conf
+    src: main.conf.j2
+    dest: /etc/apache2/sites-available/main.conf
 - name: Enable homer site
-  shell: "a2ensite homer.conf"
+  shell: "a2ensite main.conf"
 
 - name: Restart Apache
   systemd:
