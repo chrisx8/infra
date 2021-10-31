@@ -6,5 +6,8 @@
   - name: Basic setup
     import_role:
       name: base
+  - name: Storage setup
+    import_role:
+      name: storage
   - name: Reboot
     reboot:

@@ -1,0 +1,20 @@
+- name: Install SAMBA
+  apt:
+    name: samba
+    state: latest
+- name: apt clean
+  command: "apt-get clean"
+
+- name: Install SAMBA config
+  copy:
+    src: smb.conf
+    dest: /etc/samba/smb.conf
+
+- name: Restart smb service
+  systemd:
+    name: smbd
+    state: restarted
+- name: Restart nmb service
+  systemd:
+    name: nmbd
+    state: restarted
