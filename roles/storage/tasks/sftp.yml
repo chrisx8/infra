@@ -1,0 +1,27 @@
+- name: Check if sftp group is set up
+  lineinfile:
+    name: /etc/ssh/sshd_config
+    line: "Match Group sftpusers"
+  check_mode: yes
+  register: sftp_set
+- name: debug
+  debug:
+    var: sftp_set
+
+- name: Create sftpusers group
+  group:
+    name: sftpusers
+    state: present
+- name: Configure sshd for sftp group
+  when: sftp_set.changed
+  lineinfile:
+    name: /etc/ssh/sshd_config
+    line: "Match Group sftpusers\n
+    ChrootDirectory /mnt\n
+    ForceCommand internal-sftp\n
+    AllowTcpForwarding no\n
+    X11Forwarding no"
+- name: Restart sshd
+  systemd:
+    name: sshd
+    state: restarted
