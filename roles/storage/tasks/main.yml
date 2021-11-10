@@ -1,4 +1,4 @@
 - name: Set up SAMBA
-  include: samba.yml
+  import_tasks: samba.yml
 - name: Set up sftp users
-  include: sftp.yml
+  import_tasks: sftp.yml

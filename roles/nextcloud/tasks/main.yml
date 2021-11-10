@@ -11,10 +11,10 @@
   register: nextcloud_exist
 
 - name: Configure PHP-FPM
-  include: php_config.yml
+  import_tasks: php_config.yml
 - name: Configure Apache
-  include: apache_config.yml
+  import_tasks: apache_config.yml
 - name: Set up database
-  include: db_setup.yml
+  import_tasks: db_setup.yml
 - name: Install Nextcloud
-  include: nc.yml
+  import_tasks: nc.yml

@@ -6,6 +6,6 @@
   command: "apt-get clean"
 
 - name: Set up database
-  include: db_setup.yml
+  import_tasks: db_setup.yml
 - name: Install Firefly III
-  include: firefly.yml
+  import_tasks: firefly.yml

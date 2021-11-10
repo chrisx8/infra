@@ -1,7 +1,7 @@
 - name: Set up acme.sh
-  include: acme.yml
+  import_tasks: acme.yml
 - name: Install Docker
-  include: install_docker.yml
+  import_tasks: install_docker.yml
 
 - name: Check if postgres_init.sql exists
   stat:
@@ -9,10 +9,10 @@
   register: postgres_check
 - name: Prep containers
   when: not postgres_check.stat.exists
-  include: prep_containers.yml
+  import_tasks: prep_containers.yml
 
 - name: Launch containers
-  include: launch_containers.yml
+  import_tasks: launch_containers.yml
 - name: Clean up container storage
   command: "docker system prune -f"
 

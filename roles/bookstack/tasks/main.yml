@@ -6,8 +6,8 @@
   command: "apt-get clean"
 
 - name: Set up database
-  include: db_setup.yml
+  import_tasks: db_setup.yml
 - name: Set up Apache
-  include: apache_setup.yml
+  import_tasks: apache_setup.yml
 - name: Install BookStack
-  include: bookstack.yml
+  import_tasks: bookstack.yml

@@ -1,12 +1,12 @@
 - name: Change repos
-  include: change_repos.yml
+  import_tasks: change_repos.yml
 - name: Install/upgrade system packages
-  include: system.yml
+  import_tasks: system.yml
 - name: Install Proxmox Backup Server
-  include: pbs.yml
+  import_tasks: pbs.yml
 - name: Configure system software
-  include: software_config.yml
+  import_tasks: software_config.yml
 - name: Add private IPs to /etc/hosts
-  include: private_ip.yml
+  import_tasks: private_ip.yml
 - name: Reboot
   reboot:

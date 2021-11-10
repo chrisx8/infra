@@ -1,8 +1,8 @@
 - name: Install packages
-  include: package_install.yml
+  import_tasks: package_install.yml
 - name: Configure Apache
-  include: apache_config.yml
+  import_tasks: apache_config.yml
 - name: Configure PHP-FPM
-  include: php_config.yml
+  import_tasks: php_config.yml
 - name: Configure MariaDB
-  include: mysql_config.yml
+  import_tasks: mysql_config.yml

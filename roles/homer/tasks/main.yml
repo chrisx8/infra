@@ -37,4 +37,4 @@
     dest: /var/www/html/
 
 - name: Set up Apache
-  include: apache_setup.yml
+  import_tasks: apache_setup.yml
