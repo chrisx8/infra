@@ -1,6 +1,10 @@
+- name: Install system dependencies
+  apt:
+    name: imagemagick
+    state: latest
 - name: Install PHP extensions
   apt:
-    name: [php-apcu, php-bcmath, php-curl, php-gd, php-gmp, php-imagick, php-intl, php-mbstring, php-xml, php-zip]
+    name: [php8.0-apcu, php8.0-bcmath, php8.0-curl, php8.0-gd, php8.0-gmp, php8.0-imagick, php8.0-intl, php8.0-mbstring, php8.0-xml, php8.0-zip]
     state: latest
 - name: apt clean
   command: "apt-get clean"
