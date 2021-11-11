@@ -18,9 +18,9 @@ colors:
 
 message:
   style: "is-warning"
-  title: "Messages"
+  title: "Message"
   icon: "fas fa-bullhorn"
-  content: 'When logging out, please be sure to log out of every application individually.'
+  content: "Welcome to TinyNET! If you're unable to access a service, please try the VPN."
 
 links:
   - name: "Account Settings"
@@ -82,7 +82,6 @@ services:
         subtitle: "Home automation and system dashboard"
         url: "https://homeassistant.chrisx.xyz"
         target: "_blank"
-      - name: '<Internal Tools>'
+      - name: '<Admin Dashboard>'
         icon: "fas fa-lock"
-        subtitle: "Admin tools for internal users"
-        url: "#internal"
+        url: "#admin"

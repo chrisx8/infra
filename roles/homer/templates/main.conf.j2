@@ -51,6 +51,11 @@
 		Require all granted
 	</Directory>
 
+	<Directory "/var/www/html/assets/admin*">
+		AuthType openid-connect
+		Require claim groups:admin
+	</Directory>
+
 	<Directory "/var/www/html/assets/internal*">
 		AuthType openid-connect
 		Require claim groups:internal
