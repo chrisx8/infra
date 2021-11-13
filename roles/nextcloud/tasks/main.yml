@@ -1,6 +1,6 @@
 - name: Install system dependencies
   apt:
-    name: imagemagick
+    name: [imagemagick, libmagickcore-6.q16-6-extra]
     state: latest
 - name: Install PHP extensions
   apt:
