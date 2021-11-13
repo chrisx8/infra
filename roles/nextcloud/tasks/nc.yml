@@ -41,11 +41,12 @@
     path: /var/www/nextcloud/config/config.php
     regexp: 'installed'
     line: "'installed' => 'true',\n
-    'overwrite.cli.url' => 'https://tinynet.chrisx.xyz/nextcloud',\n
-    'htaccess.RewriteBase' => '/nextcloud',\n
+    'overwrite.cli.url' => 'https://tinycloud.chrisx.xyz',\n
+    'htaccess.RewriteBase' => '/',\n
     'trusted_proxies' => ['10.69.233.11'],\n
     'auth.webauthn.enabled' => false,\n
-    'default_phone_region' => 'US',
+    'default_phone_region' => 'US',\n
+    'memcache.local' => '\\OC\\Memcache\\APCu',
     "
 
 - name: Update htaccess
@@ -62,4 +63,4 @@
     name: "Nextcloud background jobs"
     minute: "*/5"
     user: www-data
-    job: "php -f /var/www/nextcloud/cron.php"
+    job: "php --define apc.enable_cli=1 -f /var/www/nextcloud/cron.php"
