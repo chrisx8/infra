@@ -99,15 +99,6 @@
       chdir: "~"
       cmd: "~/composer-install.sh"
 
-  - name: Check if BookStack exists
-    stat:
-      path: /var/www/bookstack
-    register: bookstack_check
-  - name: Upgrade/Reinstall BookStack
-    when: upgrade_apps == 'y' and bookstack_check.stat.exists
-    import_role:
-      name: bookstack
-
   - name: Check if Firefly III exists
     stat:
       path: /var/www/firefly-iii

@@ -42,7 +42,6 @@ Core repo for TinyNET infrastructure config and docs.
 
 ### Web Apps
 
-- [BookStack](https://www.bookstackapp.com/)
 - [Firefly III](https://www.firefly-iii.org/)
 - [Gitea](https://gitea.io/)
 - [Minflux](https://miniflux.app/)
