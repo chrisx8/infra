@@ -62,7 +62,7 @@ services:
     restart: unless-stopped
   keycloak:
     container_name: keycloak
-    image: quay.io/keycloak/keycloak:15.0.2
+    image: quay.io/keycloak/keycloak:15.1.0
     env_file: ./keycloak.env
     depends_on:
       - postgres
