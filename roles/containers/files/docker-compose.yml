@@ -85,7 +85,7 @@ services:
     restart: unless-stopped
   vaultwarden:
     container_name: vaultwarden
-    image: vaultwarden/server:latest
+    image: vaultwarden/server:alpine
     env_file: ./vaultwarden.env
     user: nobody:nogroup
     volumes:
