@@ -1,4 +1,4 @@
-subtitle: "Admin Dashboard"
+title: "Admin Center"
 
 services:
   - name: "Applications"
@@ -35,6 +35,6 @@ services:
   - name: "Extras"
     icon: "fas fa-bookmark"
     items:
-      - name: "<User Dashboard>"
+      - name: "<ACCESS>"
         icon: "fas fa-globe"
         url: "#"

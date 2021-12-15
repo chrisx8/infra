@@ -1,8 +1,7 @@
-title: "TinyNET"
-subtitle: "Dashboard"
+title: "ACCESS"
+subtitle: "TinyNET" 
 icon: "fas fa-ethernet"
 
-header: true
 footer: false
 connectivityCheck: false
 
@@ -20,10 +19,10 @@ message:
   style: "is-warning"
   title: "Message"
   icon: "fas fa-bullhorn"
-  content: "Welcome to TinyNET! If you're unable to access a service, please try the VPN."
+  content: "Welcome! If you're unable to access a service, please try the VPN."
 
 links:
-  - name: "Account Settings"
+  - name: "Account Console"
     icon: "fas fa-user"
     url: "https://tinynet-iam.chrisx.xyz/auth/realms/tinynet/account/"
     target: "_blank"
@@ -77,6 +76,6 @@ services:
         subtitle: "Home automation and system dashboard"
         url: "https://homeassistant.chrisx.xyz"
         target: "_blank"
-      - name: '<Admin Dashboard>'
+      - name: '<Admin Center>'
         icon: "fas fa-lock"
         url: "#admin"
