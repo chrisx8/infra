@@ -6,6 +6,9 @@
   - name: Basic setup
     import_role:
       name: base
+  - name: Basic setup (VM)
+    import_role:
+      name: base_vm
   - name: Storage setup
     import_role:
       name: storage

@@ -52,6 +52,7 @@ Core repo for TinyNET infrastructure config and docs.
 ### Storage
 
 - OpenSSH / SFTP
+- SAMBA
 - [Proxmox Backup Server](https://pbs.proxmox.com/docs/)
 
 ## Resources

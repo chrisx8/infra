@@ -2,8 +2,6 @@
   import_tasks: change_repos.yml
 - name: Install/upgrade system packages
   import_tasks: system.yml
-- name: Install Proxmox Backup Server
-  import_tasks: pbs.yml
 - name: Configure system software
   import_tasks: software_config.yml
 - name: Add private IPs to /etc/hosts

@@ -14,7 +14,7 @@
   lineinfile:
     name: /etc/ssh/sshd_config
     line: "Match Group sftpusers\n
-    ChrootDirectory /mnt\n
+    ChrootDirectory /home\n
     ForceCommand internal-sftp\n
     AllowTcpForwarding no\n
     X11Forwarding no"

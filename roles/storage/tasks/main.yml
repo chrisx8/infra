@@ -1,3 +1,7 @@
+- name: Install rclone and tree
+  apt:
+    name: [rclone, tree]
+    state: latest
 - name: Set up SAMBA
   import_tasks: samba.yml
 - name: Set up sftp users
