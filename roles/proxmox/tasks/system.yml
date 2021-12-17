@@ -5,8 +5,12 @@
 
 - name: Install extra Debian packages
   apt:
-    name: [vim, libsasl2-modules, lm-sensors, cryptsetup-bin, ntfs-3g, udisks2]
+    name: [vim, libsasl2-modules, lm-sensors]
     install_recommends: no
+    state: latest
+- name: Install Proxmox Backup Server
+  apt:
+    name: proxmox-backup-server
     state: latest
 
 - name: apt autoremove
