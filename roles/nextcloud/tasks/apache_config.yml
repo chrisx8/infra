@@ -2,8 +2,9 @@
   copy:
     src: nextcloud.conf
     dest: /etc/apache2/sites-available/nextcloud.conf
+    mode: 0644
 - name: Enable Apache site
-  shell: "a2ensite nextcloud.conf"
+  command: "a2ensite nextcloud.conf"
 - name: Reload Apache
   systemd:
     name: apache2

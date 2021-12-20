@@ -7,11 +7,11 @@
   apt:
     name: [vim, libsasl2-modules, lm-sensors]
     install_recommends: no
-    state: latest
+    state: present
 - name: Install Proxmox Backup Server
   apt:
     name: proxmox-backup-server
-    state: latest
+    state: present
 
 - name: apt autoremove
   apt:

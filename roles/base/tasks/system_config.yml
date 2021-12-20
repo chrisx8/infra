@@ -15,18 +15,21 @@
     path: /etc/ssh/ssh_host_dsa_key
   register: configured
 
-- name: Remove unsupported SSH host keys
-  shell: "rm -f /etc/ssh/ssh_host_*dsa_key*"
+- name: Remove DSA and ECDSA SSH host keys
+  file:
+    path: [/etc/ssh/ssh_host_ecdsa_key, /etc/ssh/ssh_host_ecdsa_key.pub, 
+           /etc/ssh/ssh_host_dsa_key, /etc/ssh/ssh_host_dsa_key.pub]
+    state: absent
 
 - name: Configure bashrc
   when: configured.stat.exists
   lineinfile:
     dest: "/etc/bash.bashrc"
     line: "
-    # Installed by Ansible\n
-    export EDITOR=vim\n
-    alias dfh='df -h -x tmpfs -x overlay'\n
-    "
+          # Installed by Ansible\n
+          export EDITOR=vim\n
+          alias dfh='df -h -x tmpfs -x overlay'\n
+          "
 
 - name: Configure OpenSSH client
   copy:

@@ -1,7 +1,13 @@
 - name: Switch to Debian HTTPS repos
-  shell: "sed -i 's/http:/https:/g' /etc/apt/sources.list"
+  replace:
+    path: /etc/apt/sources.list
+    regexp: "http:"
+    replace: "https:"
 - name: Switch to Debian repos on CDN
-  shell: "sed -i 's/ftp.us.debian.org/deb.debian.org/g' /etc/apt/sources.list"
+  replace:
+    path: /etc/apt/sources.list
+    regexp: "ftp\\.us\\.debian\\.org"
+    replace: "deb.debian.org"
 
 - name: Remove Proxmox VE enterprise repo
   apt_repository:

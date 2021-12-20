@@ -1,7 +1,7 @@
 - name: Install software-properties-common
   apt:
     name: software-properties-common
-    state: latest
+    state: present
 
 - name: Add PPA for PHP
   apt_repository:
@@ -11,7 +11,7 @@
   apt:
     name: [apache2, libapache2-mod-auth-openidc, libapache2-mod-fcgid, mariadb-server, 
            python3-mysqldb, php8.0-fpm, php8.0-mysql]
-    state: latest
+    state: present
 
 - name: Remove software-properties-common
   apt:

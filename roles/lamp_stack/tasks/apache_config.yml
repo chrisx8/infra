@@ -10,9 +10,9 @@
     line: "ServerTokens Prod"
 
 - name: Disable Apache autoindex module
-  shell: "a2dismod -f autoindex"
+  command: "a2dismod -f autoindex"
 - name: Enable Apache rewrite module
-  shell: "a2enmod rewrite"
+  command: "a2enmod rewrite"
 
 - name: Switch to Event MPM
   shell: "a2dismod mpm_prefork && a2enmod mpm_event"
@@ -30,7 +30,7 @@
   register: site_check
 - name: Disable Apache default site
   when: site_check.stat.exists
-  shell: "a2dissite 000-default.conf"
+  command: "a2dissite 000-default.conf"
 - name: Remove Apache default sites (1/2)
   file:
     path: /etc/apache2/sites-available/000-default.conf

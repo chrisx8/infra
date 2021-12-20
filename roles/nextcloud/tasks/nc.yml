@@ -1,16 +1,8 @@
-- name: Download Nextcloud tarball
-  when: not nextcloud_exist.stat.exists
-  command: "curl -o /var/www/nextcloud.bz2 https://download.nextcloud.com/server/releases/latest.tar.bz2"
-- name: Extract Nextcloud tarball
-  when: not nextcloud_exist.stat.exists
-  shell:
-    chdir: /var/www
-    cmd: tar xf nextcloud.bz2
-- name: Delete Nextcloud tarball
-  when: not nextcloud_exist.stat.exists
-  file:
-    path: /var/www/nextcloud.bz2
-    state: absent
+- name: Download and extract latest Nextcloud release tarball
+  unarchive:
+    src: https://download.nextcloud.com/server/releases/latest.tar.bz2
+    dest: /var/www
+    remote_src: yes
 
 - name: Change Nextcloud directory permission
   file:
@@ -24,11 +16,11 @@
   when: not nextcloud_exist.stat.exists
   pause:
     prompt: "Finish Nextcloud installation in a web browser \n
-    Database: MySQL on localhost \n
-    DB Name: nextcloud \n
-    DB Username: nextcloud \n
-    DB Password: {{ mysql_nextcloud_password.stdout }} \n\n
-  "
+             Database: MySQL on localhost \n
+             DB Name: nextcloud \n
+             DB Username: nextcloud \n
+             DB Password: {{ mysql_nextcloud_password.stdout }} \n\n
+            "
 
 - name: Update database credential
   lineinfile:
@@ -41,16 +33,16 @@
     path: /var/www/nextcloud/config/config.php
     regexp: 'installed'
     line: "'installed' => 'true',\n
-    'overwrite.cli.url' => 'https://tinycloud.chrisx.xyz',\n
-    'htaccess.RewriteBase' => '/',\n
-    'trusted_proxies' => ['10.69.233.11'],\n
-    'auth.webauthn.enabled' => false,\n
-    'default_phone_region' => 'US',\n
-    'memcache.local' => '\\OC\\Memcache\\APCu',
-    "
+           'overwrite.cli.url' => 'https://tinycloud.chrisx.xyz',\n
+           'htaccess.RewriteBase' => '/',\n
+           'trusted_proxies' => ['10.69.233.11'],\n
+           'auth.webauthn.enabled' => false,\n
+           'default_phone_region' => 'US',\n
+           'memcache.local' => '\\OC\\Memcache\\APCu',
+          "
 
 - name: Update htaccess
-  shell: "runuser -u www-data php /var/www/nextcloud/occ maintenance:update:htaccess"
+  command: "runuser -u www-data php /var/www/nextcloud/occ maintenance:update:htaccess"
 
 - name: Configure crontab for www-data
   cron:

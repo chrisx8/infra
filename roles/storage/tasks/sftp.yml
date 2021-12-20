@@ -14,10 +14,10 @@
   lineinfile:
     name: /etc/ssh/sshd_config
     line: "Match Group sftpusers\n
-    ChrootDirectory /home\n
-    ForceCommand internal-sftp\n
-    AllowTcpForwarding no\n
-    X11Forwarding no"
+          ChrootDirectory /home\n
+          ForceCommand internal-sftp\n
+          AllowTcpForwarding no\n
+          X11Forwarding no"
 - name: Restart sshd
   systemd:
     name: sshd

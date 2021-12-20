@@ -6,7 +6,7 @@
 - name: Install additional packages
   apt:
     name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, gnupg, psmisc, vim]
-    state: latest
+    state: present
 
 - name: apt autoremove
   apt:

@@ -1,7 +1,7 @@
 - name: Install unzip
   apt:
     name: unzip
-    state: latest
+    state: present
 - name: apt clean
   command: "apt-get clean"
 
@@ -9,18 +9,21 @@
   file:
     path: /var/www/html
     state: directory
-- name: Download latest Homer release from GitHub
-  shell: curl -s https://api.github.com/repos/bastienwirtz/homer/releases/latest |
-         grep 'homer\.zip' | cut -d '"' -f 4 | tail -n1 |
-         xargs curl -L -o /var/www/html/homer.zip
-- name: Extract Homer
-  shell:
-    chdir: /var/www/html
-    cmd: unzip -o -d . homer.zip || true
-- name: Delete Homer zip
-  file:
-    path: /var/www/html/homer.zip
-    state: absent
+    owner: www-data
+    group: www-data
+    mode: 0755
+- name: Get latest Homer version number from GitHub
+  uri:
+    url: https://api.github.com/repos/bastienwirtz/homer/releases/latest
+    method: GET
+  register: homer_info
+- name: Download and extract latest Homer release from GitHub
+  unarchive:
+    src: "https://github.com/bastienwirtz/homer/releases/download/{{ item }}/homer.zip"
+    dest: /var/www/html
+    remote_src: yes
+  with_items:
+    "{{ homer_info['json']['tag_name'] }}"
 
 - name: Delete Homer default assets
   file:
@@ -35,6 +38,11 @@
   copy:
     src: .
     dest: /var/www/html/
+    mode: 0644
+- name: Fix Homer assets directory permisison
+  file:
+    path: /var/www/html/assets
+    mode: 0755
 
 - name: Set up Apache
   import_tasks: apache_setup.yml

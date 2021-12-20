@@ -1,7 +1,7 @@
 - name: Install SAMBA
   apt:
     name: samba
-    state: latest
+    state: present
 - name: apt clean
   command: "apt-get clean"
 

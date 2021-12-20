@@ -7,8 +7,9 @@
   template:
     src: main.conf.j2
     dest: /etc/apache2/sites-available/main.conf
+    mode: 0644
 - name: Enable homer site
-  shell: "a2ensite main.conf"
+  command: "a2ensite main.conf"
 
 - name: Restart Apache
   systemd:

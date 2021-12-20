@@ -13,6 +13,7 @@
   file:
     path: /opt/vaultwarden-data
     state: directory
+    mode: 0700
     owner: nobody
     group: nogroup
 

@@ -24,12 +24,14 @@
   template:
     src: main.cf.j2
     dest: /etc/postfix/main.cf
+    mode: 0644
 - name: Add SES credentials
   template:
     src: sasl_passwd.j2
     dest: /etc/postfix/sasl_passwd
+    mode: 0600
 - name: Process credential DB
-  shell: postmap /etc/postfix/sasl_passwd
+  command: postmap /etc/postfix/sasl_passwd
 - name: Restart Postfix
   systemd:
     name: postfix.service
