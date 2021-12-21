@@ -5,6 +5,7 @@
 
 - name: Generate new password for MySQL firefly user
   command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  changed_when: no
   register: mysql_firefly_password
 - name: Create MySQL firefly user
   mysql_user:

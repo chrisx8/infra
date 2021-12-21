@@ -27,3 +27,4 @@
   command:
     chdir: ~/containers
     cmd: "docker compose up -d --build --remove-orphans"
+  changed_when: yes

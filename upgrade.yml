@@ -32,6 +32,7 @@
       autoclean: yes
   - name: apt clean
     command: "apt-get clean"
+    changed_when: no
 
   - name: Check if acme.sh exists
     stat:
@@ -69,6 +70,7 @@
     copy:
       src: roles/containers/files/nginx
       dest: ~/containers
+      mode: 0644
   - name: Reload Nginx
     when: container_check.stat.exists
     command:
@@ -95,7 +97,7 @@
       mode: 0755
   - name: Install Composer
     when: upgrade_apps == 'y' and composer_check.stat.exists
-    shell:
+    command:
       chdir: "~"
       cmd: "~/composer-install.sh"
 

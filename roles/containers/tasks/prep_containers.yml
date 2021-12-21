@@ -1,20 +1,26 @@
 - name: Create new password for PostgreSQL superuser
   shell: "echo POSTGRES_PASSWORD={{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }} > ~/containers/postgres.env"
+  changed_when: yes
 
 - name: Generate new password for PostgreSQL keycloak user
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  changed_when: no
   register: postgres_keycloak_password
 - name: Generate new password for PostgreSQL gitea user
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  changed_when: no
   register: postgres_gitea_password
 - name: Generate new password for PostgreSQL miniflux user
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  changed_when: no
   register: postgres_miniflux_password
 - name: Generate new password for PostgreSQL vaultwarden user
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  changed_when: no
   register: postgres_vaultwarden_password
 - name: Generate new password for PostgreSQL wikijs user
   command: "echo {{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+  changed_when: no
   register: postgres_wikijs_password
 
 - name: Install Keycloak env file

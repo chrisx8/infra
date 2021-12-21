@@ -32,6 +32,7 @@
     mode: 0600
 - name: Process credential DB
   command: postmap /etc/postfix/sasl_passwd
+  changed_when: yes
 - name: Restart Postfix
   systemd:
     name: postfix.service

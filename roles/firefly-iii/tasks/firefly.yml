@@ -31,22 +31,27 @@
   command:
     chdir: /var/www/firefly-iii
     cmd: "runuser -u www-data -- composer install --no-dev --prefer-dist"
+  changed_when: yes
 - name: Generate new key
   command:
     chdir: /var/www/firefly-iii  
     cmd: "php artisan key:generate --force"
+  changed_when: yes
 - name: Database migration
-  command:
+  shell:
     chdir: /var/www/firefly-iii
     cmd: "php artisan migrate --seed --force && php artisan firefly-iii:upgrade-database"
+  changed_when: yes
 - name: Install Passport
   command:
     chdir: /var/www/firefly-iii
     cmd: "php artisan passport:install --force"
+  changed_when: yes
 - name: Clear cache
-  command:
+  shell:
     chdir: /var/www/firefly-iii
     cmd: "php artisan cache:clear && php artisan config:clear && php artisan view:clear"
+  changed_when: yes
 
 - name: Install Firefly III cron job
   cron:

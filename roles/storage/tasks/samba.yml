@@ -4,11 +4,13 @@
     state: present
 - name: apt clean
   command: "apt-get clean"
+  changed_when: yes
 
 - name: Install SAMBA config
   copy:
     src: smb.conf
     dest: /etc/samba/smb.conf
+    mode: 0644
 
 - name: Restart smb service
   systemd:

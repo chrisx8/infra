@@ -11,13 +11,17 @@
 
 - name: Disable Apache autoindex module
   command: "a2dismod -f autoindex"
+  changed_when: yes
 - name: Enable Apache rewrite module
   command: "a2enmod rewrite"
+  changed_when: yes
 
 - name: Switch to Event MPM
   shell: "a2dismod mpm_prefork && a2enmod mpm_event"
+  changed_when: yes
 - name: Enable PHP-FPM handler
   shell: "a2enconf php8.0-fpm && a2enmod proxy && a2enmod proxy_fcgi"
+  changed_when: yes
 
 - name: Remove built-in HTML
   file:

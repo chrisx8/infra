@@ -5,6 +5,7 @@
     mode: 0644
 - name: Enable Apache site
   command: "a2ensite nextcloud.conf"
+  changed_when: yes
 - name: Reload Apache
   systemd:
     name: apache2

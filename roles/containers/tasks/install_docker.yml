@@ -13,6 +13,7 @@
     update_cache: yes
 - name: apt clean
   command: "apt-get clean"
+  changed_when: no
 
 - name: Create /usr/local/lib/docker/cli-plugins
   file:

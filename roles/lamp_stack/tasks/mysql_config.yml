@@ -1,5 +1,6 @@
 - name: Generate new MariaDB root password
   command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  changed_when: no
   register: mysql_root_password
 - name: Update MariaDB root password
   mysql_user:

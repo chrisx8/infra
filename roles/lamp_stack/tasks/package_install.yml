@@ -22,6 +22,7 @@
 
 - name: apt clean
   command: "apt-get clean"
+  changed_when: no
 
 - name: Copy Composer install script
   template:
@@ -29,6 +30,7 @@
     dest: ~/composer-install.sh
     mode: 0755
 - name: Install Composer
-  shell:
+  command:
     chdir: "~"
     cmd: "~/composer-install.sh"
+  changed_when: yes

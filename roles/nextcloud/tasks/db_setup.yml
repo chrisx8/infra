@@ -1,6 +1,7 @@
 - name: Generate new password for MySQL nextcloud user
   command: "echo {{ lookup('password', '/dev/null length=64') }}"
   register: mysql_nextcloud_password
+  changed_when: no
 - name: Create Nextcloud database
   mysql_db:
     name: nextcloud

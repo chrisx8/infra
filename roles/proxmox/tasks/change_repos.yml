@@ -1,8 +1,3 @@
-- name: Switch to Debian HTTPS repos
-  replace:
-    path: /etc/apt/sources.list
-    regexp: "http:"
-    replace: "https:"
 - name: Switch to Debian repos on CDN
   replace:
     path: /etc/apt/sources.list

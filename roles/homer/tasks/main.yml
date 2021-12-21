@@ -4,6 +4,7 @@
     state: present
 - name: apt clean
   command: "apt-get clean"
+  changed_when: no
 
 - name: Create /var/www/html
   file:
