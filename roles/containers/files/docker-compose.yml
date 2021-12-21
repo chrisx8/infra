@@ -62,7 +62,7 @@ services:
     restart: unless-stopped
   keycloak:
     container_name: keycloak
-    image: quay.io/keycloak/keycloak-x:16.0.0
+    image: quay.io/keycloak/keycloak-x:16.1.0
     command: start --auto-build
     env_file: ./keycloak.env
     depends_on:
