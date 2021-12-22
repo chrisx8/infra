@@ -47,7 +47,7 @@
 
 - name: Configure crontab for www-data
   cron:
-    env: true
+    env: yes
     name: MAILTO
     user: www-data
     job: ""

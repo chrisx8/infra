@@ -1,7 +1,7 @@
 ---
 - name: Upgrade all systems
   hosts: all
-  become: true
+  become: yes
   vars_prompt:
     - name: upgrade_homer
       prompt: "Upgrade Homer dashboard? (y/n)"

@@ -1,7 +1,7 @@
 ---
 - name: Set up LAMP hosts
   hosts: lamp
-  become: true
+  become: yes
   vars_prompt:
     - name: oidc_client_secret
       prompt: "Apache - OIDC Client Secret"

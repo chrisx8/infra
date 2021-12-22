@@ -1,7 +1,7 @@
 ---
 - name: Set up container hosts
   hosts: vm01-apps
-  become: true
+  become: yes
   vars_prompt:
     - name: acme_email
       prompt: "acme.sh - Enter email address"

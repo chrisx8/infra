@@ -1,7 +1,7 @@
 ---
 - name: Customize Proxmox VE
   hosts: krista
-  become: true
+  become: yes
   vars_prompt:
     - name: ses_user
       prompt: "SES SMTP Username"

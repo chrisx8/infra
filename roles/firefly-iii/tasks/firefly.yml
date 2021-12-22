@@ -9,14 +9,14 @@
   file:
     path: /var/www/firefly-iii
     state: directory
-    recurse: true
+    recurse: yes
     owner: www-data
     group: www-data
 - name: Set permissions (2/2)
   file:
     path: /var/www/firefly-iii/firefly-iii/storage
     state: directory
-    recurse: true
+    recurse: yes
     mode: 0775
 
 - name: Install config file

@@ -33,8 +33,3 @@
     mode: 0755
   with_items:
     "{{ docker_compose_info['json']['tag_name'] }}"
-- name: Set permission on docker-compose
-  file:
-    path: /usr/local/lib/docker/cli-plugins/docker-compose
-    state: file
-    mode: 0755

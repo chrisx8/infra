@@ -50,7 +50,7 @@
 - name: Configure crontab
   cron:
     name: MAILTO
-    env: true
+    env: yes
     job: ""
 
 - name: Set timezone (systemd)

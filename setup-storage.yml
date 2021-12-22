@@ -1,7 +1,7 @@
 ---
 - name: Set up storage systems
   hosts: storage
-  become: true
+  become: yes
   tasks:
   - name: Basic setup
     import_role:
