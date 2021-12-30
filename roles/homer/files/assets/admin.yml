@@ -32,6 +32,10 @@ services:
         subtitle: "Proxmox Backup Server on Krista"
         url: "https://krista:8007"
         target: "_blank"
+      - name: "TinyNET CA Certificate"
+        icon: "fas fa-globe"
+        subtitle: "CA Certificate for TinyNET Systems"
+        url: "/assets/tinynet-ca.crt"
   - name: "Extras"
     icon: "fas fa-bookmark"
     items:

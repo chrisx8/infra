@@ -3,7 +3,7 @@ version: '3'
 services:
   cloudflared:
     container_name: cloudflared
-    image: cloudflare/cloudflared:2021.12.1
+    image: cloudflare/cloudflared:2021.12.4
     command: tunnel run
     volumes:
       - cloudflared:/etc/cloudflared
