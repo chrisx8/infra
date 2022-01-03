@@ -42,7 +42,7 @@
           "
 
 - name: Update htaccess
-  command: "runuser -u www-data php /var/www/nextcloud/occ maintenance:update:htaccess"
+  command: "runuser -u www-data -- php --define apc.enable_cli=1 /var/www/nextcloud/occ maintenance:update:htaccess"
   changed_when: yes
 
 - name: Configure crontab for www-data
