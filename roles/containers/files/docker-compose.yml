@@ -27,6 +27,7 @@ services:
       - ./nginx/www/:/var/www/:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
+      - changedetection.io
       - gitea
       - keycloak
       - miniflux
@@ -47,6 +48,19 @@ services:
       - no-new-privileges
     restart: unless-stopped
 
+  changedetection.io:
+    image: ghcr.io/dgtlmoon/changedetection.io
+    container_name: changedetection.io
+    user: nobody
+    volumes:
+      - changedetection_data:/datastore
+    environment:
+      - USE_X_SETTINGS=1
+    cap_drop:
+      - all
+    security_opt:
+      - no-new-privileges
+    restart: unless-stopped
   gitea:
     container_name: gitea
     image: gitea/gitea:1
@@ -89,7 +103,7 @@ services:
     env_file: ./vaultwarden.env
     user: nobody:nogroup
     volumes:
-      - /opt/vaultwarden-data:/data
+      - vaultwarden_data:/data
     depends_on:
       - postgres
     cap_drop:
@@ -110,6 +124,8 @@ services:
     restart: unless-stopped
 
 volumes:
+  changedetection_data:
   cloudflared:
   gitea_data:
   postgres_data:
+  vaultwarden_data:

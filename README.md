@@ -42,6 +42,7 @@ Core repo for TinyNET infrastructure config and docs.
 
 ### Web Apps
 
+- [changedetection.io](https://github.com/dgtlmoon/changedetection.io)
 - [Firefly III](https://www.firefly-iii.org/)
 - [Gitea](https://gitea.io/)
 - [Minflux](https://miniflux.app/)
