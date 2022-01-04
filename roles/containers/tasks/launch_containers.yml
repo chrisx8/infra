@@ -9,14 +9,6 @@
     state: directory
     mode: 0700
 
-- name: Create vaultwarden data directory
-  file:
-    path: /opt/vaultwarden-data
-    state: directory
-    mode: 0700
-    owner: nobody
-    group: nogroup
-
 - name: Install docker-compose.yml
   copy:
     src: docker-compose.yml
@@ -28,3 +20,19 @@
     chdir: ~/containers
     cmd: "docker compose up -d --build --remove-orphans"
   changed_when: yes
+
+- name: Change owner of changedetetion.io data volume
+  file:
+    path: /var/lib/docker/volumes/containers_changedetection_data/_data
+    state: directory
+    recurse: yes
+    owner: nobody
+    group: nogroup
+
+- name: Change owner of vaultwarden data volume
+  file:
+    path: /var/lib/docker/volumes/containers_vaultwarden_data/_data
+    state: directory
+    recurse: yes
+    owner: nobody
+    group: nogroup

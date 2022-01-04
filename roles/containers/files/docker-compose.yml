@@ -49,9 +49,11 @@ services:
     restart: unless-stopped
 
   changedetection.io:
-    image: ghcr.io/dgtlmoon/changedetection.io
     container_name: changedetection.io
+    image: ghcr.io/dgtlmoon/changedetection.io
     user: nobody
+    ports:
+      - 10.69.233.11:55000:5000
     volumes:
       - changedetection_data:/datastore
     environment:

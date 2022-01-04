@@ -5,7 +5,7 @@
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 
 	OIDCProviderMetadataURL https://tinynet-iam.chrisx.xyz/auth/realms/tinynet/.well-known/openid-configuration
-	OIDCClientID webapps-apache
+	OIDCClientID tinynet.chrisx.xyz
 	OIDCClientSecret {{ oidc_client_secret }}
 	OIDCRemoteUserClaim preferred_username
 	OIDCScope "openid groups"
@@ -22,6 +22,18 @@
 		AuthType openid-connect
 		Require valid-user
 	</Location>
+
+	<LocationMatch "/changedetection">
+		AuthType openid-connect
+		Require claim groups:internal
+		ProxyPass http://apps01:55000/
+		ProxyPassReverse http://apps01:55000/
+		RequestHeader set X-Forwarded-Prefix "/changedetection"
+	</LocationMatch>
+
+	<LocationMatch "/changedetection/rss">
+		Require all granted
+	</LocationMatch>
 
 	<Directory "/var/www/firefly-iii/public">
 		Include /var/www/firefly-iii/public/.htaccess
@@ -42,7 +54,6 @@
 		Header set X-Frame-Options "DENY"
 		Header set X-Robots-Tag "none"
 		Header set X-XSS-Protection "1; mode=block"
-
 		AuthType openid-connect
 		Require valid-user
 	</Directory>
