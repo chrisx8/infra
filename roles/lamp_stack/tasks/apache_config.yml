@@ -28,13 +28,10 @@
     path: /var/www/html
     state: absent
 
-- name: Check if Apache default site exists
-  stat:
-    path: /etc/apache2/sites-available/000-default.conf
-  register: site_check
 - name: Disable Apache default site
-  when: site_check.stat.exists
-  command: "a2dissite 000-default.conf"
+  file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
 - name: Remove Apache default sites (1/2)
   file:
     path: /etc/apache2/sites-available/000-default.conf
@@ -43,4 +40,3 @@
   file:
     path: /etc/apache2/sites-available/default-ssl.conf
     state: absent
- 

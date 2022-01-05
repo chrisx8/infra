@@ -6,7 +6,7 @@
   when: oidc_client_secret is defined
   template:
     src: main.conf.j2
-    dest: /etc/apache2/sites-available/main.conf
+    dest: /etc/apache2/sites-enabled/main.conf
     mode: 0644
 - name: Enable homer site
   command: "a2ensite main.conf"

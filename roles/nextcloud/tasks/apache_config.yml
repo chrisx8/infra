@@ -1,7 +1,7 @@
 - name: Install Apache site configuration
   copy:
     src: nextcloud.conf
-    dest: /etc/apache2/sites-available/nextcloud.conf
+    dest: /etc/apache2/sites-enabled/nextcloud.conf
     mode: 0644
 - name: Enable Apache site
   command: "a2ensite nextcloud.conf"
