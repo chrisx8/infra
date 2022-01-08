@@ -24,6 +24,12 @@
 	</Location>
 
 	<LocationMatch "/changedetection">
+		Header set Referrer-Policy "no-referrer"
+		Header set X-Content-Type-Options "nosniff"
+		Header set X-Frame-Options "DENY"
+		Header set X-Robots-Tag "none"
+		Header set X-XSS-Protection "1; mode=block"
+
 		AuthType openid-connect
 		Require claim groups:internal
 		ProxyPass http://apps01:55000/
