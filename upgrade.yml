@@ -2,6 +2,8 @@
 - name: Upgrade all systems
   hosts: all
   become: yes
+  vars:
+    - acme_email: ''
   vars_prompt:
     - name: upgrade_homer
       prompt: "Upgrade Homer dashboard? (y/n)"
@@ -46,31 +48,10 @@
     stat:
       path: ~/containers/docker-compose.yml
     register: container_check
-  - name: Reinstall docker-compose.yml
+  - name: Upgrade/Reinstall container stack
     when: container_check.stat.exists
-    copy:
-      src: roles/containers/files/docker-compose.yml
-      dest: ~/containers/docker-compose.yml
-      mode: 0644
-  - name: Pull container images (docker-compose)
-    when: container_check.stat.exists
-    command:
-      chdir: ~/containers
-      cmd: "docker compose pull"
-  - name: Start containers (docker-compose)
-    when: container_check.stat.exists
-    command:
-      chdir: ~/containers
-      cmd: "docker compose up -d --build --remove-orphans"
-  - name: Clean up container storage
-    when: container_check.stat.exists
-    command: "docker system prune -af"
-  - name: Reinstall Nginx files
-    when: container_check.stat.exists
-    copy:
-      src: roles/containers/files/nginx
-      dest: ~/containers
-      mode: 0644
+    import_role:
+      name: containers
   - name: Reload Nginx
     when: container_check.stat.exists
     command:

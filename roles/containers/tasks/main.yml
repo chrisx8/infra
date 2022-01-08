@@ -13,8 +13,6 @@
 
 - name: Launch containers
   import_tasks: launch_containers.yml
-- name: Clean up container storage
-  command: "docker system prune -f"
 
 - name: Install logrotate config for Nginx
   copy:

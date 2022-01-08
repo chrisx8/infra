@@ -15,10 +15,24 @@
     dest: ~/containers/docker-compose.yml
     mode: 0644
 
+- name: Install Nginx files
+  copy:
+    src: nginx
+    dest: ~/containers
+    mode: 0644
+
+- name: Pull container images (docker-compose)
+  command:
+    chdir: ~/containers
+    cmd: "docker compose pull"
+  changed_when: yes
 - name: Start containers (docker-compose)
   command:
     chdir: ~/containers
     cmd: "docker compose up -d --build --remove-orphans"
+  changed_when: yes
+- name: Clean up container storage
+  command: "docker system prune -af"
   changed_when: yes
 
 - name: Change owner of changedetetion.io data volume
