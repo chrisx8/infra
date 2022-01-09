@@ -1,8 +1,13 @@
+- name: Get latest Firefly III version number from GitHub
+  uri:
+    url: https://api.github.com/repos/firefly-iii/firefly-iii/releases/latest
+    method: GET
+  register: firefly_info
 - name: Download Firefly III
   git:
     repo: https://github.com/firefly-iii/firefly-iii.git
     dest: /var/www/firefly-iii
-    version: 5.6.9
+    version: "{{ firefly_info['json']['tag_name'] }}"
     depth: 1
 
 - name: Set permissions (1/2)
