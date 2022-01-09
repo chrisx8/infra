@@ -9,8 +9,13 @@
     state: directory
     mode: 0700
 
+- name: Get latest cloudflared version number from GitHub
+  uri:
+    url: https://api.github.com/repos/cloudflare/cloudflared/releases/latest
+    method: GET
+  register: cloudflared_info
 - name: Install docker-compose.yml
-  copy:
+  template:
     src: docker-compose.yml
     dest: ~/containers/docker-compose.yml
     mode: 0644
