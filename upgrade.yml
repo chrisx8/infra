@@ -2,8 +2,6 @@
 - name: Upgrade all systems
   hosts: all
   become: yes
-  vars:
-    - acme_email: ''
   vars_prompt:
     - name: upgrade_homer
       prompt: "Upgrade Homer dashboard? (y/n)"
@@ -12,81 +10,58 @@
       prompt: "Upgrade applications? (y/n)"
       private: no
   tasks:
-  - name: Update /etc/hosts with private IP addresses
-    lineinfile:
-      dest: /etc/hosts
-      regexp: '.*{{ item }}$'
-      line: "{{ hostvars[item].private_ip }} {{ item }}"
-      state: present
-    when: hostvars[item].private_ip is defined and item != ansible_hostname
-    with_items: "{{ groups.all }}"
-  - name: Run apt dist-upgrade
-    apt:
-      update_cache: yes
-      upgrade: dist
+    - name: Update /etc/hosts with private IP addresses
+      import_tasks: tasks/private_ip.yml
 
-  - name: apt autoremove
-    apt:
-      autoremove: yes
-      purge: yes
-  - name: apt autoclean
-    apt:
-      autoclean: yes
-  - name: apt clean
-    command: "apt-get clean"
-    changed_when: no
+    - name: apt dist-upgrade
+      apt:
+        update_cache: yes
+        upgrade: dist
+    - name: apt cleanup
+      import_tasks: tasks/apt_post.yml
 
-  - name: Check if acme.sh exists
-    stat:
-      path: /root/.acme.sh/acme.sh
-    register: acme_check
-  - name: Upgrade acme.sh
-    when: acme_check.stat.exists
-    command: "/root/.acme.sh/acme.sh --upgrade"
+    - name: Check if acme.sh exists
+      stat:
+        path: ~/acme.sh
+      register: acme_check
+    - name: Upgrade acme.sh
+      when: acme_check.stat.exists
+      command: "~/acme.sh --upgrade"
 
-  - name: Check if container stack exists
-    stat:
-      path: ~/containers/docker-compose.yml
-    register: container_check
-  - name: Upgrade/Reinstall container stack
-    when: container_check.stat.exists
-    import_role:
-      name: containers
-  - name: Reload Nginx
-    when: container_check.stat.exists
-    command:
-      cmd: "docker exec nginx nginx -s reload"
+    - name: Check if container stack exists
+      stat:
+        path: ~/containers/docker-compose.yml
+      register: container_check
+    - name: Upgrade/Reinstall container stack
+      when: container_check.stat.exists
+      import_role:
+        name: containers
+    - name: Reload Nginx
+      when: container_check.stat.exists
+      command: "docker exec nginx nginx -s reload"
 
-  - name: Check if Homer exists
-    stat:
-      path: /var/www/html/assets
-    register: homer_check
-  - name: Upgrade/Reinstall Homer
-    when: upgrade_homer == 'y' and homer_check.stat.exists
-    import_role:
-      name: homer
+    - name: Check if Homer exists
+      stat:
+        path: /var/www/html/assets
+      register: homer_check
+    - name: Upgrade/Reinstall Homer
+      when: upgrade_homer == 'y' and homer_check.stat.exists
+      import_role:
+        name: homer
 
-  - name: Check if Composer exists
-    stat:
-      path: /usr/local/bin/composer
-    register: composer_check
-  - name: Copy Composer install script
-    when: upgrade_apps == 'y' and composer_check.stat.exists
-    template:
-      src: roles/lamp_stack/templates/composer-install.sh
-      dest: ~/composer-install.sh
-      mode: 0755
-  - name: Install Composer
-    when: upgrade_apps == 'y' and composer_check.stat.exists
-    command:
-      chdir: "~"
-      cmd: "~/composer-install.sh"
+    - name: Check if Composer exists
+      stat:
+        path: /usr/local/bin/composer
+      register: composer_check
+    - name: Install Composer
+      when: upgrade_apps == 'y' and composer_check.stat.exists
+      import_tasks: tasks/composer.yml
 
-  - name: Check if Firefly III exists
-    stat:
-      path: /var/www/firefly-iii
-    register: firefly_check
-  - name: Upgrade/Reinstall Firefly III
-    when: upgrade_apps == 'y' and firefly_check.stat.exists
-    import_role:
-      name: firefly-iii
+    - name: Check if Firefly III exists
+      stat:
+        path: /var/www/firefly-iii
+      register: firefly_check
+    - name: Upgrade/Reinstall Firefly III
+      when: upgrade_apps == 'y' and firefly_check.stat.exists
+      import_role:
+        name: firefly-iii

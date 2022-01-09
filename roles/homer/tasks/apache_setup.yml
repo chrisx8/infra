@@ -8,11 +8,8 @@
     src: main.conf.j2
     dest: /etc/apache2/sites-enabled/main.conf
     mode: 0644
-- name: Enable homer site
-  command: "a2ensite main.conf"
-  changed_when: yes
 
-- name: Restart Apache
+- name: Reload Apache
   systemd:
     name: apache2
-    state: restarted
+    state: reloaded

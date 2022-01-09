@@ -2,9 +2,8 @@
   apt:
     name: unzip
     state: present
-- name: apt clean
-  command: "apt-get clean"
-  changed_when: no
+- name: apt cleanup
+  import_tasks: apt_post.yml
 
 - name: Create /var/www/html
   file:

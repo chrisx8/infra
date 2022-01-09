@@ -1,6 +1,6 @@
 ---
 - name: Set up container hosts
-  hosts: vm01-apps
+  hosts: apps01
   become: yes
   vars_prompt:
     - name: acme_email

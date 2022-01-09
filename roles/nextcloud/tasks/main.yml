@@ -6,9 +6,8 @@
   apt:
     name: [php8.0-apcu, php8.0-bcmath, php8.0-curl, php8.0-gd, php8.0-gmp, php8.0-imagick, php8.0-intl, php8.0-mbstring, php8.0-xml, php8.0-zip]
     state: present
-- name: apt clean
-  command: "apt-get clean"
-  changed_when: no
+- name: apt cleanup
+  import_tasks: apt_post.yml
 
 - name: Check if Nextcloud is installed
   stat:

@@ -4,12 +4,5 @@
   import_tasks: packages.yml
 - name: Configure system
   import_tasks: system_config.yml
-
-- name: Update /etc/hosts with private IP addresses
-  lineinfile:
-    dest: /etc/hosts
-    regexp: '.*{{ item }}$'
-    line: "{{ hostvars[item].private_ip }} {{ item }}"
-    state: present
-  when: hostvars[item].private_ip is defined
-  with_items: "{{ groups.all }}"
+- name: Add private IPs to /etc/hosts
+  import_tasks: private_ip.yml

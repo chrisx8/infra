@@ -2,8 +2,8 @@
   apt:
     name: [php-curl, php-gd, php-mysql, php-xml, language-pack-en-base]
     state: present
-- name: apt clean
-  command: "apt-get clean"
+- name: apt cleanup
+  import_tasks: apt_post.yml
 
 - name: Set up database
   import_tasks: db_setup.yml

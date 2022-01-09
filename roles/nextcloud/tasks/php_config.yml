@@ -1,4 +1,4 @@
-- name: Configure PHP-FPM (1/3)
+- name: Configure PHP-FPM env
   when: not nextcloud_exist.stat.exists
   lineinfile:
     path: /etc/php/8.0/fpm/pool.d/www.conf
@@ -8,12 +8,17 @@
           env[TMPDIR] = /tmp\n
           env[TEMP] = /tmp\n
           "
-- name: Configure PHP-FPM (2/3)
+- name: Set PHP-FPM memory limit
   lineinfile:
     path: /etc/php/8.0/fpm/php.ini
     regexp: '^memory_limit'
     line: 'memory_limit = 512M'
-- name: Configure PHP-FPM (3/3)
+- name: Set PHP-FPM max POST size
+  lineinfile:
+    path: /etc/php/8.0/fpm/php.ini
+    regexp: '^post_max_size'
+    line: 'post_max_size = 5G'
+- name: Set PHP-FPM max upload size
   lineinfile:
     path: /etc/php/8.0/fpm/php.ini
     regexp: '^upload_max_filesize'

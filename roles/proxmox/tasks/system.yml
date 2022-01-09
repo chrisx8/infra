@@ -1,4 +1,4 @@
-- name: Run apt dist-upgrade
+- name: apt dist-upgrade
   apt:
     update_cache: yes
     upgrade: dist
@@ -13,13 +13,5 @@
     name: proxmox-backup-server
     state: present
 
-- name: apt autoremove
-  apt:
-    autoremove: yes
-    purge: yes
-- name: apt autoclean
-  apt:
-    autoclean: yes
-- name: apt clean
-  command: "apt-get clean"
-  changed_when: no
+- name: apt cleanup
+  import_tasks: apt_post.yml

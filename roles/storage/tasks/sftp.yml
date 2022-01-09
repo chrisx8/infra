@@ -1,3 +1,8 @@
+- name: Create sftpusers group
+  group:
+    name: sftpusers
+    state: present
+
 - name: Check if sftp group is set up
   lineinfile:
     name: /etc/ssh/sshd_config
@@ -6,8 +11,3 @@
   notify:
     - Configure sshd for sftpusers group
     - Restart sshd
-
-- name: Create sftpusers group
-  group:
-    name: sftpusers
-    state: present

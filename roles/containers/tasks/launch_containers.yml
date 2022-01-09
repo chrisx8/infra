@@ -9,6 +9,8 @@
     state: directory
     mode: 0700
 
+- name: Load version info vars
+  include_vars: versions.yml
 - name: Get latest cloudflared version number from GitHub
   uri:
     url: https://api.github.com/repos/cloudflare/cloudflared/releases/latest

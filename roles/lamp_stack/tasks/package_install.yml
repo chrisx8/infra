@@ -19,18 +19,8 @@
     state: absent
     autoremove: yes
     purge: yes
+- name: apt cleanup
+  import_tasks: apt_post.yml
 
-- name: apt clean
-  command: "apt-get clean"
-  changed_when: no
-
-- name: Copy Composer install script
-  template:
-    src: composer-install.sh
-    dest: ~/composer-install.sh
-    mode: 0755
 - name: Install Composer
-  command:
-    chdir: "~"
-    cmd: "~/composer-install.sh"
-  changed_when: yes
+  import_tasks: composer.yml
