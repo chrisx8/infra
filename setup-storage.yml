@@ -12,5 +12,3 @@
   - name: Storage setup
     import_role:
       name: storage
-  - name: Reboot
-    reboot:

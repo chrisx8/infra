@@ -6,3 +6,13 @@
     sysctl_set: yes
     reload: yes
   with_dict: "{{ sysctl_config }}"
+- name: Set kernel lockdown=integrity
+  lineinfile:
+    path: /etc/default/grub
+    regexp: "^GRUB_CMDLINE_LINUX_DEFAULT"
+    line: GRUB_CMDLINE_LINUX_DEFAULT="lockdown=integrity"
+- name: Update GRUB config
+  command: update-grub2
+  changed_when: yes
+- name: Reboot
+  reboot:

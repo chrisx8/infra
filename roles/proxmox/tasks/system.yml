@@ -15,3 +15,6 @@
 
 - name: apt cleanup
   import_tasks: apt_post.yml
+
+- name: Reboot
+  reboot:

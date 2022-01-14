@@ -11,5 +11,3 @@
   - name: Customize Proxmox VE
     import_role:
       name: proxmox
-  - name: Reboot
-    reboot:
