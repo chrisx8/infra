@@ -16,5 +16,13 @@
 - name: apt cleanup
   import_tasks: apt_post.yml
 
+- name: Set kernel cmdline
+  lineinfile:
+    path: /etc/default/grub
+    regexp: "^GRUB_CMDLINE_LINUX_DEFAULT"
+    line: GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on pcie_aspm=off"
+- name: Update GRUB config
+  command: update-grub2
+  changed_when: yes
 - name: Reboot
   reboot:
