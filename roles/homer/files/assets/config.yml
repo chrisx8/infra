@@ -41,7 +41,7 @@ services:
         target: "_blank"
       - name: 'Home Assistant'
         icon: "fas fa-home"
-        subtitle: "Home automation and system dashboard"
+        subtitle: "Home automation platform"
         url: "https://homeassistant.chrisx.xyz"
         target: "_blank"
       - name: "MyWiki"
@@ -60,7 +60,7 @@ services:
     items:
       - name: "ChangeDetection"
         icon: "fas fa-stream"
-        subtitle: "Website change detection and notification"
+        subtitle: "Website change detection monitoring"
         url: "/changedetection/"
         target: "_blank"
       - name: "Firefly III"
