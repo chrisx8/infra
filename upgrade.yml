@@ -3,8 +3,8 @@
   hosts: all
   become: yes
   vars_prompt:
-    - name: upgrade_homer
-      prompt: "Upgrade Homer dashboard? (y/n)"
+    - name: upgrade_dashboard
+      prompt: "Upgrade dashboard? (y/n)"
       private: no
     - name: upgrade_apps
       prompt: "Upgrade applications? (y/n)"
@@ -40,14 +40,14 @@
       when: container_check.stat.exists
       command: "docker exec nginx nginx -s reload"
 
-    - name: Check if Homer exists
+    - name: Check if dashboard exists
       stat:
-        path: /var/www/html/assets
-      register: homer_check
-    - name: Upgrade/Reinstall Homer
-      when: upgrade_homer == 'y' and homer_check.stat.exists
+        path: /var/www/html/assets/
+      register: dashboard_check
+    - name: Upgrade/Reinstall dashboard
+      when: upgrade_dashboard == 'y' and dashboard_check.stat.exists
       import_role:
-        name: homer
+        name: dashboard
 
     - name: Check if Composer exists
       stat:

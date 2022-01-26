@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Center</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma/css/bulma.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/bulma-prefers-dark/css/bulma-prefers-dark.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href=" https://unpkg.com/@fortawesome/fontawesome-free/css/all.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/assets/css/dashboard.css" crossorigin="anonymous">
+</head>
+<body>
+<section class="section">
+<div class="container">
+  <!-- <div class="columns">
+    <div class="column is-10">
+      <a href="/"><h1 class="title is-1">Admin Center</h1></a>
+    </div>
+    <div class="column is-2">
+      class="button is-fullwidth" 
+      <a class="button is-fullwidth" href="/auth/openid-connect?logout=https://tinynet.chrisx.xyz">
+        <i class="fas fa-sign-out-alt"></i> Log out
+      </a>
+    </div>
+  </div> -->
+  <nav class="navbar" role="navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="."><h1 class="title is-1">Admin Center</h1></a>
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="https://tinynet-iam.chrisx.xyz/auth/realms/tinynet/account/" rel="noopener noreferrer" target="_blank">
+        <i class="fa-md fas fa-user"></i> Account Console
+      </a>
+      <a class="navbar-item" href="/auth/openid-connect?logout=https://tinynet.chrisx.xyz">
+        <i class="fa-md fas fa-sign-out-alt"></i> Log out
+      </a>
+    </div>
+  </nav>
+  <hr>
+
+  <article class="message is-warning">
+    <div class="message-header">
+      <p><i class="fa-md fas fa-bullhorn"></i> Message</p>
+    </div>
+    <div class="message-body">
+      <p>Welcome! Some services are only available to internal users and can only be accessed via the VPN.</p>
+      <p>Internal users: Please 
+        <a href="https://mywiki.chrisx.xyz/en/internal/remote-access-tailscale" rel="noopener noreferrer" target="_blank">set up Tailscale</a>
+        <small>(login required)</small> to access these services.
+      </p>
+    </div>
+  </article>
+
+  <h2 class="title is-3">Applications</h2>
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-4">
+    <div class="tile">
+    <div class="tile is-parent is-vertical">
+      <a class="tile-link" href="https://tinynet-iam.chrisx.xyz/auth/admin/tinynet/console/" rel="noopener noreferrer" target="_blank">
+      <article class="tile is-child notification">
+        <p class="title is-5"><i class="fa-lg fas fa-users-cog"></i> Keycloak Admin Console</p>
+        <!-- <div class="columns">
+          <div class="center column is-2"><i class="fa-2x fas fa-home"></i></div>
+          <div class="column is-10"><p class="title is-5">Home Assistant</p></div>
+        </div> -->
+      </article>
+      </a>
+      <a class="tile-link" href="https://vaultwarden.chrisx.xyz/admin" rel="noopener noreferrer" target="_blank">
+      <article class="tile is-child notification">
+        <p class="title is-5"><i class="fa-lg fas fa-key"></i> Vaultwarden Admin Panel</p>
+      </article>
+      </a>
+    </div>
+    </div>
+    </div>
+    <div class="tile is-vertical is-4">
+    <div class="tile">
+    <div class="tile is-parent is-vertical">
+      <a class="tile-link" href="https://openwrt" rel="noopener noreferrer" target="_blank">
+      <article class="tile is-child notification">
+        <p class="title is-5"><i class="fa-lg fas fa-network-wired"></i> OpenWrt</p>
+      </article>
+      </a>
+      <a class="tile-link" href="https://krista:8006" rel="noopener noreferrer" target="_blank">
+      <article class="tile is-child notification">
+        <p class="title is-5"><i class="fa-lg fas fa-server"></i> Krista - Proxmox VE</p>
+      </article>
+      </a>
+      <a class="tile-link" href="https://krista:8007" rel="noopener noreferrer" target="_blank">
+      <article class="tile is-child notification">
+        <p class="title is-5"><i class="fa-lg fas fa-hdd"></i> Krista - Proxmox Backup</p>
+      </article>
+      </a>
+    </div>
+    </div>
+    </div>
+    <div class="tile is-vertical is-4">
+    <div class="tile">
+    <div class="tile is-parent is-vertical">
+      <a class="tile-link" href="tinynet-ca.crt" rel="noopener noreferrer" target="_blank">
+      <article class="tile is-child notification">
+        <p class="title is-5"><i class="fa-lg fas fa-fingerprint"></i> TinyNET CA Certificate</p>
+      </article>
+      </a>
+    </div>
+    </div>
+    </div>
+  </div>
+  <hr>
+
+  <p class="center"><a class="button" href="../"><i class="fa-md fas fa-chevron-left"></i> Back to ACCESS</a></p>
+</div>
+</section>
+</body>
+</html>

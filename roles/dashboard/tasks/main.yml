@@ -1,0 +1,17 @@
+- name: Create /var/www/html
+  file:
+    path: /var/www/html
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0755
+- name: Install dashboard
+  copy:
+    src: .
+    dest: /var/www/html/
+    owner: www-data
+    group: www-data
+    mode: 0644
+
+- name: Set up Apache
+  import_tasks: apache_setup.yml

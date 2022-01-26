@@ -1,0 +1,29 @@
+hr {
+  margin-top: 0.75rem;
+}
+.fa-md {
+  margin-right: 6px;
+  width: 16px;
+  height: 16px;
+}
+.fa-lg {
+  margin-right: 22px;
+  width: 20px;
+  height: 20px;
+}
+.tile.is-child {
+  margin-bottom: 10px !important;
+}
+
+.center {
+  text-align: center;
+}
+.tile-link {
+  color: #4c4c4c;
+  text-decoration: none !important;
+}
+@media (prefers-color-scheme: dark) {
+  .tile-link {
+    color: #ababab;
+  }
+}

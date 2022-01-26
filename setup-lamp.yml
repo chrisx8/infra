@@ -12,9 +12,9 @@
   - name: Install LAMP stack
     import_role:
       name: lamp_stack
-  - name: Install Homer
+  - name: Install Dashboard
     import_role:
-      name: homer
+      name: dashboard
   - name: Install Firefly III
     import_role:
       name: firefly-iii
