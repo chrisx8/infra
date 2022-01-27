@@ -4,9 +4,6 @@ hr {
 .fa-md.fa-fw {
   padding-right: 4px;
 }
-.fa-lg.fa-fw {
-  padding-right: 10px;
-}
 .tile.is-child {
   margin-bottom: 10px !important;
 }
@@ -20,7 +17,7 @@ hr {
 }
 .tile-icon {
   flex: none;
-  margin: 0 0.7rem 0 -0.4rem ;
+  margin: 0 0.6rem 0 -0.4rem ;
 }
 .tile-link {
   color: #4c4c4c;
