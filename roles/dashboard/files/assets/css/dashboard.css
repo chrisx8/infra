@@ -10,17 +10,9 @@ hr {
 .tile.is-child {
   margin-bottom: 10px !important;
 }
-.title.is-5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
 .center {
   text-align: center;
-}
-.mono {
-  font-family: monospace;
 }
 .tile-flex {
   align-items: center;
@@ -28,18 +20,20 @@ hr {
 }
 .tile-icon {
   flex: none;
-  width: 50px;
+  margin: 0 0.7rem 0 -0.4rem ;
 }
 .tile-link {
   color: #4c4c4c;
   text-decoration: none !important;
 }
-.tile-text {
+.tile-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  max-width: 90%;
   flex: none;
-  width: 80%;
-  width: -webkit-calc(100% - 50px);
-  width: -moz-calc(100% - 50px);
-  width: calc(100% - 50px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 @media (prefers-color-scheme: dark) {
   .tile-link {
