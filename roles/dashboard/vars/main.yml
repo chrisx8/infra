@@ -1,0 +1,26 @@
+# vars setup is heavily inspired by Homer (github.com/bastienwirtz/homer)
+
+# [OPTIONAL] links shown in the header bar
+# Required: name, icon, url
+# Optional: newtab (open in new tab)
+header_links:
+  - name: Account Console
+    icon: fas fa-user
+    url: https://tinynet-iam.chrisx.xyz/auth/realms/tinynet/account/
+    newtab: true
+  - name: Log out
+    icon: fas fa-sign-out-alt
+    url: /auth/openid-connect?logout=https://tinynet.chrisx.xyz
+
+# [OPTIONAL] message/announcement on top of page
+# Required: style, title, icon, content (write in HTML)
+message:
+  style: is-warning
+  title: Message
+  icon: fas fa-bullhorn
+  content: '
+    <p>Welcome! Some services are only available to internal users and can only be accessed via the VPN.</p>
+    <p>Internal users: Please 
+      <a href="https://mywiki.chrisx.xyz/en/internal/remote-access-tailscale" rel="noopener noreferrer" target="_blank">set up Tailscale</a>
+      <small>(login required)</small> to access these services.
+    </p>'

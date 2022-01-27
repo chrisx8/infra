@@ -13,5 +13,31 @@
     group: www-data
     mode: 0644
 
+- name: Load main config
+  include_vars:
+    file: main.yml
+- block:
+  - name: Load ACCESS config
+    include_vars:
+      file: access.yml
+  - name: Generate ACCESS HTML
+    template:
+      src: dashboard.html.j2
+      dest: /var/www/html/index.html
+      owner: www-data
+      group: www-data
+      mode: 0644
+- block:
+  - name: Load Admin Center config
+    include_vars:
+      file: admin-center.yml
+  - name: Generate Admin Center HTML
+    template:
+      src: dashboard.html.j2
+      dest: /var/www/html/admin/index.html
+      owner: www-data
+      group: www-data
+      mode: 0644
+
 - name: Set up Apache
   import_tasks: apache_setup.yml

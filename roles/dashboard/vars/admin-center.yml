@@ -1,0 +1,49 @@
+# vars setup is heavily inspired by Homer (github.com/bastienwirtz/homer)
+
+# [REQUIRED] title of the page: shown in header and as HTML <title>
+page_title: Admin Center
+
+# [REQUIRED] tiles
+# Required: name, icon, apps
+# apps is a list of dicts, each must have name, icon, url; newtab is optional
+services:
+  - name: Applications
+    icon: fas fa-rocket
+    apps:
+      - name: Keycloak Admin Console
+        icon: fas fa-users-cog
+        url: https://tinynet-iam.chrisx.xyz/auth/admin/tinynet/console/
+        newtab: true
+      - name: Vaultwarden Admin Panel
+        icon: fas fa-key
+        url: https://vaultwarden.chrisx.xyz/admin
+        newtab: true
+  - name: Systems
+    icon: fas fa-microchip
+    apps:
+      - name: OpenWrt Gateway
+        icon: fas fa-network-wired
+        url: https://openwrt
+        newtab: true
+      - name: Proxmox VE
+        icon: fas fa-server
+        url: https://krista:8006
+        newtab: true
+      - name: Proxmox Backup Server
+        icon: fas fa-hdd
+        url: https://krista:8007
+        newtab: true
+  - name: Extras
+    icon: fas fa-bookmark
+    apps:
+      - name: TinyNET CA Certificate
+        icon: fas fa-fingerprint
+        url: tinynet-ca.crt
+
+# [OPTIONAL] button in the footer
+# Required: name, icon, url
+# Optional: newtab
+footer_link:
+  name: Back to ACCESS
+  icon: fas fa-chevron-left
+  url: ../

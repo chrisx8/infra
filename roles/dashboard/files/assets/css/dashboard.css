@@ -7,7 +7,7 @@ hr {
 .tile.is-child {
   margin-bottom: 10px !important;
 }
-/* workaround for wrong hover color in bulma-prefers-dark */
+/* workaround for wrong focus color in bulma-prefers-dark */
 @media (prefers-color-scheme: dark) {
   .navbar-item:focus {
     background-color: #121212 !important;
