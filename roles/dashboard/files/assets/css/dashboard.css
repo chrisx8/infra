@@ -14,9 +14,19 @@ hr {
 .center {
   text-align: center;
 }
+.tile-flex {
+  display: flex;
+}
+.tile-icon {
+  flex: none;
+  width: 20%;
+}
 .tile-link {
   color: #4c4c4c;
   text-decoration: none !important;
+}
+.tile-text {
+  flex: none;
 }
 @media (prefers-color-scheme: dark) {
   .tile-link {
