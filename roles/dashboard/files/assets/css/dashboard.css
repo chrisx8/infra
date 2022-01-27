@@ -2,17 +2,25 @@ hr {
   margin-top: 0.75rem;
 }
 .fa-md.fa-fw {
-  margin-right: 4px;
+  padding-right: 4px;
 }
 .fa-lg.fa-fw {
-  margin-right: 10px;
+  padding-right: 10px;
 }
 .tile.is-child {
   margin-bottom: 10px !important;
 }
+.title.is-5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .center {
   text-align: center;
+}
+.mono {
+  font-family: monospace;
 }
 .tile-flex {
   align-items: center;
@@ -20,7 +28,7 @@ hr {
 }
 .tile-icon {
   flex: none;
-  margin-right: 12px;
+  width: 50px;
 }
 .tile-link {
   color: #4c4c4c;
@@ -28,6 +36,10 @@ hr {
 }
 .tile-text {
   flex: none;
+  width: 80%;
+  width: -webkit-calc(100% - 50px);
+  width: -moz-calc(100% - 50px);
+  width: calc(100% - 50px);
 }
 @media (prefers-color-scheme: dark) {
   .tile-link {
