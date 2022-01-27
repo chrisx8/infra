@@ -15,11 +15,12 @@ hr {
   text-align: center;
 }
 .tile-flex {
+  align-items: center;
   display: flex;
 }
 .tile-icon {
   flex: none;
-  width: 20%;
+  margin-right: 12px;
 }
 .tile-link {
   color: #4c4c4c;
