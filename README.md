@@ -2,6 +2,14 @@
 
 Core repo for TinyNET infrastructure config and docs.
 
+## Ansible Dependencies
+
+Ansible playbooks here depend on `ansible.posix` and `community.mysql` modules. To install these dependencies, run:
+
+```bash
+ansible-galaxy collection install ansible.posix community.mysql
+```
+
 ## Hardware
 
 ### Gateway

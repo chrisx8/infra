@@ -1,0 +1,10 @@
+--- base.html	2022-01-27 23:10:12.104736612 -0500
++++ patch.html	2022-01-27 23:09:57.420946541 -0500
+@@ -5,6 +5,7 @@
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="description" content="Self hosted website change detection.">
+     <title>Change Detection{{extra_title}}</title>
++    <link rel="shortcut icon" href="/changedetection/favicon.ico">
+     <link rel="stylesheet" href="{{url_for('static_content', group='styles', filename='pure-min.css')}}">
+     <link rel="stylesheet" href="{{url_for('static_content', group='styles', filename='styles.css')}}">
+     {% if extra_stylesheets %}

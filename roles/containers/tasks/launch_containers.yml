@@ -28,6 +28,23 @@
     dest: ~/containers
     mode: 0644
 
+- name: Create changedetection.io directory
+  file:
+    path: ~/containers/changedetectionio/templates
+    mode: 0755
+    state: directory
+- name: Download changedetetion.io base.html template
+  get_url:
+    url: https://github.com/dgtlmoon/changedetection.io/raw/master/changedetectionio/templates/base.html
+    dest: ~/containers/changedetectionio/templates/
+    mode: 0644
+    owner: nobody
+    group: nogroup
+- name: Apply changedetetion.io base.html patch
+  patch:
+    src: changedetectionio/base.html.patch
+    dest: ~/containers/changedetectionio/templates/base.html
+
 - name: Pull container images (docker-compose)
   command:
     chdir: ~/containers

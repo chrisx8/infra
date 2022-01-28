@@ -17,6 +17,6 @@
 
 - name: Install logrotate config for Nginx
   copy:
-    src: nginx-docker
+    src: logrotate/nginx-docker
     dest: /etc/logrotate.d/
     mode: 0644

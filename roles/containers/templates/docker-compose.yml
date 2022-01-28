@@ -55,6 +55,7 @@ services:
     ports:
       - 10.69.233.11:55000:5000
     volumes:
+      - ./changedetectionio/templates/base.html:/app/changedetectionio/templates/base.html:ro
       - changedetection_data:/datastore
     environment:
       - USE_X_SETTINGS=1
