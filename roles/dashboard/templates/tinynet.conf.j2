@@ -32,9 +32,9 @@
 
 		AuthType openid-connect
 		Require claim groups:internal
+		RequestHeader set X-Forwarded-Prefix "/changedetection"
 		ProxyPass http://apps01:55000/
 		ProxyPassReverse http://apps01:55000/
-		RequestHeader set X-Forwarded-Prefix "/changedetection"
 	</LocationMatch>
 
 	<LocationMatch "/changedetection/rss">
@@ -54,7 +54,7 @@
 
 	<Directory "/var/www/html">
 		Header set Cache-Control "no-cache"
-		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'self' 'sha256-O0QnpbtsI2f5yQ3Jc40Z0aWGK+Vlqls3azmCWvA+rRs=';"
+		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'none';"
 		Header set Referrer-Policy "no-referrer"
 		Header set X-Content-Type-Options "nosniff"
 		Header set X-Frame-Options "DENY"
@@ -64,16 +64,12 @@
 		Require valid-user
 	</Directory>
 
-	<Directory "/var/www/html/assets/manifest.json">
-		Require all granted
-	</Directory>
-
-	<Directory "/var/www/html/assets/admin*">
+	<Directory "/var/www/html/admin">
 		AuthType openid-connect
 		Require claim groups:admin
 	</Directory>
 
-	<Directory "/var/www/html/assets/internal*">
+	<Directory "/var/www/html/internal">
 		AuthType openid-connect
 		Require claim groups:internal
 	</Directory>

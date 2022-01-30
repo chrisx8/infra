@@ -5,8 +5,8 @@
 - name: Configure Apache site
   when: oidc_client_secret is defined
   template:
-    src: main.conf.j2
-    dest: /etc/apache2/sites-enabled/main.conf
+    src: tinynet.conf.j2
+    dest: /etc/apache2/sites-enabled/tinynet.conf
     mode: 0644
 
 - name: Reload Apache
