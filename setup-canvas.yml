@@ -1,0 +1,9 @@
+---
+- name: Set up Canvas Lab
+  hosts: canvas-lab
+  become: yes
+  tasks:
+  - name: Basic setup
+    import_role:
+      name: base
+  # TODO: write Canvas role

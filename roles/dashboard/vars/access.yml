@@ -29,6 +29,10 @@ services:
   - name: Extras
     icon: fas fa-cubes
     apps:
+      - name: Canvas
+        icon: fas fa-graduation-cap
+        url: https://canvas-lab.chrisx.xyz/login/openid_connect
+        newtab: true
       - name: ChangeDetection
         icon: fas fa-stream
         url: /changedetection/
