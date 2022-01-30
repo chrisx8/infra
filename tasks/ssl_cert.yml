@@ -1,0 +1,5 @@
+- name: Install SSL certs to /etc/ssl/private
+  copy:
+    src: private/ssl/
+    dest: /etc/ssl/private
+    mode: 0400

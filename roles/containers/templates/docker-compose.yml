@@ -21,8 +21,8 @@ services:
       - 443:443
     volumes:
       - ~/log/nginx:/var/log/nginx/
-      - ~/.acme.sh/chrisx.xyz/:/etc/ssl/:ro
       - /etc/hosts:/etc/hosts:ro
+      - /etc/ssl/private/:/etc/ssl/:ro
       - ./nginx/conf.d:/etc/nginx/conf.d/:ro
       - ./nginx/www/:/var/www/:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro

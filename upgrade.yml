@@ -6,8 +6,8 @@
     - name: upgrade_dashboard
       prompt: "Upgrade dashboard? (y/n)"
       private: no
-    - name: upgrade_apps
-      prompt: "Upgrade applications? (y/n)"
+    - name: upgrade_php_apps
+      prompt: "Upgrade PHP applications? (y/n)"
       private: no
   tasks:
     - name: Update /etc/hosts with private IP addresses
@@ -19,6 +19,14 @@
         upgrade: dist
     - name: apt cleanup
       import_tasks: tasks/apt_post.yml
+
+    - name: Check if SSL cert exists
+      stat:
+        path: /etc/ssl/private/fullchain.pem
+      register: ssl_check
+    - name: Upgrade/Reinstall SSL cert
+      when: ssl_check.stat.exists
+      import_tasks: tasks/ssl_cert.yml
 
     - name: Check if container stack exists
       stat:
@@ -46,7 +54,7 @@
         path: /usr/local/bin/composer
       register: composer_check
     - name: Install Composer
-      when: upgrade_apps == 'y' and composer_check.stat.exists
+      when: upgrade_php_apps == 'y' and composer_check.stat.exists
       import_tasks: tasks/composer.yml
 
     - name: Check if Firefly III exists
@@ -54,6 +62,6 @@
         path: /var/www/firefly-iii
       register: firefly_check
     - name: Upgrade/Reinstall Firefly III
-      when: upgrade_apps == 'y' and firefly_check.stat.exists
+      when: upgrade_php_apps == 'y' and firefly_check.stat.exists
       import_role:
         name: firefly-iii
