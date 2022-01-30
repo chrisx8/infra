@@ -20,14 +20,6 @@
     - name: apt cleanup
       import_tasks: tasks/apt_post.yml
 
-    - name: Check if acme.sh exists
-      stat:
-        path: ~/acme.sh
-      register: acme_check
-    - name: Upgrade acme.sh
-      when: acme_check.stat.exists
-      command: "~/acme.sh --upgrade"
-
     - name: Check if container stack exists
       stat:
         path: ~/containers/docker-compose.yml
