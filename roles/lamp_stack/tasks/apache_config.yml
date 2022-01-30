@@ -8,12 +8,20 @@
     path: /etc/apache2/apache2.conf
     regex: "^ServerTokens"
     line: "ServerTokens Prod"
+- name: Add default non-ssl site
+  copy:
+    src: 1-default.conf
+    dest: /etc/apache2/sites-enabled/1-default.conf
+    mode: 0644
 
 - name: Disable Apache autoindex module
   command: "a2dismod -f autoindex"
   changed_when: yes
 - name: Enable Apache rewrite module
   command: "a2enmod rewrite"
+  changed_when: yes
+- name: Enable Apache ssl module
+  command: "a2enmod ssl"
   changed_when: yes
 
 - name: Switch to Event MPM
@@ -28,15 +36,20 @@
     path: /var/www/html
     state: absent
 
-- name: Disable Apache default site
+- name: Remove Apache default sites (1/3)
   file:
     path: /etc/apache2/sites-enabled/000-default.conf
     state: absent
-- name: Remove Apache default sites (1/2)
+- name: Remove Apache default sites (2/3)
   file:
     path: /etc/apache2/sites-available/000-default.conf
     state: absent
-- name: Remove Apache default sites (2/2)
+- name: Remove Apache default sites (3/3)
   file:
     path: /etc/apache2/sites-available/default-ssl.conf
     state: absent
+
+- name: Restart Apache
+  systemd:
+    name: apache2
+    state: restarted
