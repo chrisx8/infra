@@ -1,4 +1,10 @@
+- name: Check if SSL certs exist
+  delegate_to: localhost
+  stat:
+    path: private/ssl/
+  register: certs_exist
 - name: Install SSL certs to /etc/ssl/private
+  when: certs_exist.stat.exists
   copy:
     src: private/ssl/
     dest: /etc/ssl/private
