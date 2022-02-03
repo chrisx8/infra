@@ -23,24 +23,6 @@
 		Require valid-user
 	</Location>
 
-	<LocationMatch "/changedetection">
-		Header set Referrer-Policy "no-referrer"
-		Header set X-Content-Type-Options "nosniff"
-		Header set X-Frame-Options "DENY"
-		Header set X-Robots-Tag "none"
-		Header set X-XSS-Protection "1; mode=block"
-
-		AuthType openid-connect
-		Require claim groups:internal
-		RequestHeader set X-Forwarded-Prefix "/changedetection"
-		ProxyPass http://apps01:55000/
-		ProxyPassReverse http://apps01:55000/
-	</LocationMatch>
-
-	<LocationMatch "/changedetection/rss">
-		Require all granted
-	</LocationMatch>
-
 	<Directory "/var/www/firefly-iii/public">
 		Include /var/www/firefly-iii/public/.htaccess
 		AuthType openid-connect

@@ -28,7 +28,6 @@ services:
       - ./nginx/www/:/var/www/:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - changedetection.io
       - gitea
       - keycloak
       - miniflux
@@ -49,22 +48,6 @@ services:
       - no-new-privileges
     restart: unless-stopped
 
-  changedetection.io:
-    container_name: changedetection.io
-    image: ghcr.io/dgtlmoon/changedetection.io
-    user: nobody
-    ports:
-      - 10.69.233.11:55000:5000
-    volumes:
-      - ./changedetectionio/templates/base.html:/app/changedetectionio/templates/base.html:ro
-      - changedetection_data:/datastore
-    environment:
-      - USE_X_SETTINGS=1
-    cap_drop:
-      - all
-    security_opt:
-      - no-new-privileges
-    restart: unless-stopped
   gitea:
     container_name: gitea
     image: gitea/gitea:1
@@ -128,7 +111,6 @@ services:
     restart: unless-stopped
 
 volumes:
-  changedetection_data:
   cloudflared:
   gitea_data:
   postgres_data:
