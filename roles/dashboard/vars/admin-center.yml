@@ -36,6 +36,10 @@ services:
   - name: Extras
     icon: fas fa-bookmark
     apps:
+      - name: Tailscale Admin Console
+        icon: fas fa-globe
+        url: https://login.tailscale.com/welcome
+        newtab: true
       - name: TinyNET CA Certificate
         icon: fas fa-fingerprint
         url: tinynet-ca.crt
