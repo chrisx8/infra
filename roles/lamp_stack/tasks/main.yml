@@ -1,5 +1,7 @@
 - name: Install packages
   import_tasks: package_install.yml
+- name: Install SSL cert
+  import_tasks: ssl_cert.yml
 - name: Configure Apache
   import_tasks: apache_config.yml
 - name: Configure PHP-FPM

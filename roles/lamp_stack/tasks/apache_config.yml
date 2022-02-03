@@ -17,6 +17,9 @@
 - name: Disable Apache autoindex module
   command: "a2dismod -f autoindex"
   changed_when: yes
+- name: Enable Apache headers module
+  command: "a2enmod headers"
+  changed_when: yes
 - name: Enable Apache rewrite module
   command: "a2enmod rewrite"
   changed_when: yes
