@@ -18,6 +18,7 @@ services:
     container_name: nginx
     image: nginx:alpine
     ports:
+      - 80:80
       - 443:443
     volumes:
       - ~/log/nginx:/var/log/nginx/
