@@ -5,7 +5,7 @@
 
 - name: Install additional packages
   apt:
-    name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, gnupg, psmisc, vim]
+    name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, gnupg, psmisc, vim, unzip]
     state: present
 
 - name: apt cleanup
