@@ -23,6 +23,11 @@
     path: /etc/php/8.0/fpm/php.ini
     regexp: '^upload_max_filesize'
     line: 'upload_max_filesize = 5G'
+- name: Set PHP-FPM OPCache string buffer size
+  lineinfile:
+    path: /etc/php/8.0/fpm/php.ini
+    regexp: 'opcache\.interned_strings_buffer'
+    line: 'opcache.interned_strings_buffer=32'
 
 - name: Restart PHP
   systemd:
