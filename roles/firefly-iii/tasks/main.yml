@@ -1,6 +1,6 @@
 - name: Install PHP extensions
   apt:
-    name: [php-curl, php-gd, php-mysql, php-xml, language-pack-en-base]
+    name: [php-bcmath, php-curl, php-gd, php-intl, php-mysql, php-xml, language-pack-en-base]
     state: present
 - name: apt cleanup
   import_tasks: apt_post.yml
