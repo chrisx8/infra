@@ -64,7 +64,7 @@ services:
   keycloak:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:{{ KEYCLOAK_VERSION }}
-    command: start --auto-build
+    command: start --auto-build --features-disabled=ciba,impersonation
     env_file: ./keycloak.env
     depends_on:
       - postgres
