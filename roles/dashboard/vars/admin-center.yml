@@ -12,7 +12,7 @@ services:
     apps:
       - name: Keycloak Admin Console
         icon: fas fa-users-cog
-        url: https://tinynet-iam.chrisx.xyz/auth/admin/tinynet/console/
+        url: https://sso.chrisx.xyz/admin/chrisx/console/
         newtab: true
       - name: Vaultwarden Admin Panel
         icon: fas fa-key

@@ -6,7 +6,7 @@
 header_links:
   - name: Account Console
     icon: fas fa-user
-    url: https://tinynet-iam.chrisx.xyz/auth/realms/tinynet/account/
+    url: https://sso.chrisx.xyz/realms/chrisx/account/
     newtab: true
   - name: Log out
     icon: fas fa-sign-out-alt

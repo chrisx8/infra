@@ -4,7 +4,7 @@
 	ErrorLog ${APACHE_LOG_DIR}/error.log
 	CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-	OIDCProviderMetadataURL https://tinynet-iam.chrisx.xyz/auth/realms/tinynet/.well-known/openid-configuration
+	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
 	OIDCClientID tinynet.chrisx.xyz
 	OIDCClientSecret {{ oidc_client_secret }}
 	OIDCRemoteUserClaim preferred_username
