@@ -52,6 +52,8 @@ services:
     container_name: gitea
     image: gitea/gitea:1
     env_file: ./gitea.env
+    ports:
+      - 22:22
     volumes:
       - gitea_data:/data
       - /etc/timezone:/etc/timezone:ro
