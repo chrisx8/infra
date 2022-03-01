@@ -8,10 +8,10 @@
   changed_when: no
   register: mysql_firefly_password
 - name: Create MySQL firefly user
+  no_log: true
   mysql_user:
     name: firefly
     host: localhost
     password: "{{ mysql_firefly_password.stdout }}"
-    priv:
-      'firefly.*': 'ALL'
+    priv: 'firefly.*:ALL'
     state: present
