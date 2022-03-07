@@ -29,10 +29,6 @@ services:
   - name: Extras
     icon: fas fa-cubes
     apps:
-      - name: Canvas
-        icon: fas fa-graduation-cap
-        url: https://canvas-lab.chrisx.xyz/login/openid_connect
-        newtab: true
       - name: Firefly III
         icon: fas fa-dollar-sign
         url: /firefly-iii/

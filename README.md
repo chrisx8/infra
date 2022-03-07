@@ -50,7 +50,6 @@ ansible-galaxy collection install ansible.posix community.mysql
 
 ### Web Apps
 
-- [Canvas LMS](https://github.com/instructure/canvas-lms)
 - [Firefly III](https://www.firefly-iii.org/)
 - [Gitea](https://gitea.io/)
 - [Minflux](https://miniflux.app/)
