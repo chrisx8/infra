@@ -1,9 +1,10 @@
-- name: Install SSL certs to /etc/ssl/private
+- name: Install SSL cert fullchain.pem to /etc/ssl/private
   copy:
-    src: "{{ item }}"
+    src: private/ssl/fullchain.pem
     dest: /etc/ssl/private
     mode: 0400
-  with_first_found:
-  - files:
-      - private/ssl/
-    skip: true
+- name: Install SSL cert privkey.pem to /etc/ssl/private
+  copy:
+    src: private/ssl/privkey.pem
+    dest: /etc/ssl/private
+    mode: 0400
