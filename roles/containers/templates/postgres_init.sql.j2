@@ -1,5 +1,5 @@
 CREATE DATABASE gitea;
-CREATE USER gitea WITH ENCRYPTED PASSWORD '7zlZll1Gmz4iP8G4ctIW9B4SyLSrFxXlwTnpuIHUMSvEMaqxXegPwUFt5nU0FJqb'; #{{ postgres_gitea_password.stdout }}
+CREATE USER gitea WITH ENCRYPTED PASSWORD '{{ postgres_gitea_password.stdout }}';
 GRANT ALL PRIVILEGES ON DATABASE gitea TO gitea;
 
 CREATE DATABASE keycloak;

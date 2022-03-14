@@ -23,7 +23,7 @@
   changed_when: no
   register: postgres_wikijs_password
 
-- name: Install Keycloak env file
+- name: Install Gitea env file
   template:
     src: gitea.env.j2
     dest: ~/containers/gitea.env
