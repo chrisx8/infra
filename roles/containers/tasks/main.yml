@@ -1,3 +1,6 @@
+- name: Load version info vars
+  include_vars: versions.yml
+
 - name: Switch SSH to port 2201
   lineinfile:
     dest: "/etc/ssh/sshd_config"
