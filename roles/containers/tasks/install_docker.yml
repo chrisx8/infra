@@ -19,6 +19,11 @@
     path: /usr/local/lib/docker/cli-plugins
     state: directory
     mode: 0755
+- name: Get latest Docker Compose version number from GitHub
+  uri:
+    url: https://api.github.com/repos/docker/compose/releases/latest
+    method: GET
+  register: docker_compose_info
 - name: Download latest Docker Compose release from GitHub
   get_url:
     url: "https://github.com/docker/compose/releases/download/{{ item }}/docker-compose-linux-x86_64"
@@ -26,4 +31,4 @@
     checksum: sha256:https://github.com/docker/compose/releases/download/{{ item }}/docker-compose-linux-x86_64.sha256
     mode: 0755
   with_items:
-    "{{ DOCKER_COMPOSE_VERSION }}"
+    "{{ docker_compose_info['json']['tag_name'] }}"
