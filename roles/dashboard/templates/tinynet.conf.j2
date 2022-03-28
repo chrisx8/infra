@@ -8,7 +8,7 @@
 	OIDCClientID tinynet.chrisx.xyz
 	OIDCClientSecret {{ oidc_client_secret }}
 	OIDCRemoteUserClaim preferred_username
-	OIDCScope "openid groups"
+	OIDCScope openid
 	OIDCRedirectURI https://tinynet.chrisx.xyz/auth/openid-connect
 	OIDCCryptoPassphrase {{ oidc_crypto.stdout }}
 	OIDCSessionInactivityTimeout 3600
@@ -26,7 +26,7 @@
 	<Directory "/var/www/firefly-iii/public">
 		Include /var/www/firefly-iii/public/.htaccess
 		AuthType openid-connect
-		Require valid-user
+		Require claim roles:firefly-iii
 	</Directory>
 
 	<Directory "/var/www/firefly-iii">
@@ -43,17 +43,17 @@
 		Header set X-Robots-Tag "none"
 		Header set X-XSS-Protection "1; mode=block"
 		AuthType openid-connect
-		Require valid-user
+		Require claim roles:access
 	</Directory>
 
 	<Directory "/var/www/html/admin">
 		AuthType openid-connect
-		Require claim groups:admin
+		Require claim roles:admin-center
 	</Directory>
 
 	<Directory "/var/www/html/internal">
 		AuthType openid-connect
-		Require claim groups:internal
+		Require claim roles:internal
 	</Directory>
 </VirtualHost>
 
