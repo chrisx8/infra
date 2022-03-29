@@ -9,6 +9,9 @@
     state: directory
     mode: 0700
 
+- name: Load cloudflared token
+  include_vars: private/cloudflared.yml
+
 - name: Get latest cloudflared version number from GitHub
   uri:
     url: https://api.github.com/repos/cloudflare/cloudflared/releases/latest
