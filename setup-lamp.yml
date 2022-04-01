@@ -3,8 +3,10 @@
   hosts: lamp
   become: yes
   vars_prompt:
-    - name: oidc_client_secret
-      prompt: "Apache - OIDC Client Secret"
+    - name: ha_client_secret
+      prompt: "home-assistant.chrisx.xyz - OIDC Client Secret"
+    - name: tinynet_client_secret
+      prompt: "tinynet.chrisx.xyz - OIDC Client Secret"
   tasks:
   - name: Basic setup
     import_role:

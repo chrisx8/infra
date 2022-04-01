@@ -16,7 +16,7 @@ services:
         newtab: true
       - name: 'Home Assistant'
         icon: fas fa-home
-        url: https://homeassistant.chrisx.xyz
+        url: https://home-assistant.chrisx.xyz
         newtab: true
       - name: MyWiki
         icon: fas fa-book

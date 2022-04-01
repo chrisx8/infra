@@ -8,3 +8,5 @@
   import_tasks: php_config.yml
 - name: Configure MariaDB
   import_tasks: mysql_config.yml
+- name: Configure Home Assistant site
+  import_tasks: home_assistant_sso.yml
