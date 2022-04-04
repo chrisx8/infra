@@ -41,6 +41,12 @@ services:
         icon: fas fa-book-reader
         url: /miniflux/
         newtab: true
+  - name: Downloads
+    icon: fas fa-download
+    apps:
+      - name: Downloads
+        icon: fas fa-download
+        url: downloads.html
 
 # [OPTIONAL] button in the footer
 # Required: name, icon, url

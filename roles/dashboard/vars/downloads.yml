@@ -1,0 +1,65 @@
+# vars setup is heavily inspired by Homer (github.com/bastienwirtz/homer)
+
+# [REQUIRED] title of the page: shown in header and as HTML <title>
+page_title: Downloads
+
+# [REQUIRED] tiles
+# Required: name, icon, apps
+# apps is a list of dicts, each must have name, icon, url; newtab is optional
+services:
+  - name: Home Assistant
+    icon: fas fa-home
+    apps:
+      - name: Android app
+        icon: fab fa-android
+        url: https://play.google.com/store/apps/details?id=io.homeassistant.companion.android
+        newtab: true
+      - name: iOS/macOS app
+        icon: fab fa-apple
+        url: https://apps.apple.com/us/app/home-assistant/id1099568401
+        newtab: true
+  - name: RSS Readers
+    icon: fas fa-newspaper
+    apps:
+      - name: FeedMe (Android)
+        icon: fab fa-android
+        url: https://play.google.com/store/apps/details?id=com.seazon.feedme
+        newtab: true
+      - name: NewsFlash (Linux - GTK)
+        icon: fab fa-linux
+        url: https://gitlab.com/news-flash/news_flash_gtk
+        newtab: true
+      - name: Unread (iOS)
+        icon: fab fa-app-store-ios
+        url: https://apps.apple.com/us/app/unread-an-rss-reader/id1363637349
+        newtab: true
+  - name: SFTP Clients
+    icon: fas fa-hdd
+    apps:
+      - name: CyberDuck (Windows/macOS)
+        icon: fas fa-database
+        url: https://cyberduck.io
+        newtab: true
+      - name: WinSCP (Windows)
+        icon: fas-fa-lock
+        url: https://winscp.net/eng/download.php
+        newtab: true
+  - name: Remote Access
+    icon: fas fa-globe
+    apps:
+      - name: Tailscale
+        icon: fas fa-globe
+        url: https://tailscale.com/download/
+        newtab: true
+      - name: WireGuard
+        icon: fas fa-network-wired
+        url: https://www.wireguard.com/install/
+        newtab: true
+
+# [OPTIONAL] button in the footer
+# Required: name, icon, url
+# Optional: newtab
+footer_link:
+  name: Back to ACCESS
+  icon: fas fa-chevron-left
+  url: ../

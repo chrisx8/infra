@@ -28,6 +28,17 @@
       group: www-data
       mode: 0644
 - block:
+  - name: Load Downloads config
+    include_vars:
+      file: downloads.yml
+  - name: Generate Downloads HTML
+    template:
+      src: dashboard.html.j2
+      dest: /var/www/html/downloads.html
+      owner: www-data
+      group: www-data
+      mode: 0644
+- block:
   - name: Load Admin Center config
     include_vars:
       file: admin-center.yml
