@@ -22,19 +22,19 @@
     <div class="navbar-brand">
       <a class="navbar-item" href=""><h1 class="title is-1">{{ page_title }}</h1></a>
     </div>
-    {% if header_links is defined %}
+    {% if header_links is defined -%}
     <div class="navbar-end">
-      {% for item in header_links %}
-      <a class="navbar-item" href="{{ item.url }}" {% if item.newtab is defined and item.newtab %}rel="noopener noreferrer" target="_blank"{% endif %}>
+      {% for item in header_links -%}
+      <a class="navbar-item" href="{{ item.url }}"{% if item.newtab is defined and item.newtab %} rel="noopener noreferrer" target="_blank"{% endif %}>
         <i class="fa-md fa-fw {{ item.icon }}"></i> {{ item.name }}
       </a>
-      {% endfor %}
+      {%- endfor +%}
     </div>
-    {% endif %}
+    {%- endif +%}
   </nav>
   <hr>
 
-  {% if message is defined %}
+  {%+ if message is defined -%}
   <article class="message {{ message.style }}">
     <div class="message-header">
       <p><i class="fa-md fa-fw {{ message.icon }}"></i> {{ message.title }}</p>
@@ -43,15 +43,15 @@
       {{ message.content }}
     </div>
   </article>
-  {% endif %}
+  {%- endif +%}
 
-	{% for category in services %}
-  {% if loop.index0 % 3 == 0 %}
+  {%+ for category in services -%}
+  {%+ if loop.index0 % 3 == 0 -%}
   <div class="columns">
-  {% endif %}
+  {%- endif +%}
     <div class="column is-4">
       <h2 class="title is-4"><i class="fa-fw {{ category.icon }}"></i> {{ category.name }}</h2>
-	    {% for app in category.apps %}
+      {%- for app in category.apps +%}
       <a class="tile-link" href="{{ app.url }}" {% if app.newtab is defined and app.newtab %}rel="noopener noreferrer" target="_blank"{% endif %}>
       <article class="tile is-child notification">
       <div class="tile-flex">
@@ -60,19 +60,19 @@
       </div>
       </article>
       </a>
-	    {% endfor %}
+      {%- endfor +%}
     </div>
-  {% if loop.index0 % 3 == 2 or loop.last %}
+  {%- if loop.index0 % 3 == 2 or loop.last +%}
   </div>
-  {% endif %}
-	{% endfor %}
+  {% endif +%}
+  {%- endfor +%}
   <hr>
 
-  {% if footer_link is defined %}
+  {%+ if footer_link is defined -%}
   <p class="center"><a class="button" href="{{ footer_link.url }}">
     <i class="fa-md fa-fw {{ footer_link.icon }}"></i> {{ footer_link.name }}
   </a></p>
-  {% endif %}
+  {%- endif +%}
 </div>
 </section>
 </body>
