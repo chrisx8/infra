@@ -41,7 +41,7 @@ services:
         url: https://cyberduck.io
         newtab: true
       - name: WinSCP (Windows)
-        icon: fas-fa-lock
+        icon: fas fa-lock
         url: https://winscp.net/eng/download.php
         newtab: true
   - name: Remote Access
