@@ -39,7 +39,7 @@ services:
         newtab: true
       - name: Miniflux
         icon: fas fa-book-reader
-        url: /miniflux/
+        url: https://miniflux.chrisx.xyz
         newtab: true
   - name: Downloads
     icon: fas fa-download
