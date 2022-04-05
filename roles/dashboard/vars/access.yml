@@ -37,6 +37,10 @@ services:
         icon: fas fa-code-branch
         url: https://gitea.chrisx.xyz/user/login
         newtab: true
+      - name: Kanboard
+        icon: fas fa-clipboard
+        url: /kanboard/
+        newtab: true
       - name: Miniflux
         icon: fas fa-book-reader
         url: https://miniflux.chrisx.xyz

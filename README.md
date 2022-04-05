@@ -52,6 +52,7 @@ ansible-galaxy collection install ansible.posix community.mysql
 
 - [Firefly III](https://www.firefly-iii.org/)
 - [Gitea](https://gitea.io/)
+- [Kanboard](https://kanboard.org/)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)

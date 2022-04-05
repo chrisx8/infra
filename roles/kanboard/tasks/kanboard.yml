@@ -1,0 +1,39 @@
+- name: Get latest Kanboard version number from GitHub
+  uri:
+    url: https://api.github.com/repos/kanboard/kanboard/releases/latest
+    method: GET
+  register: kanboard_info
+- name: Download Kanboard
+  git:
+    repo: https://github.com/kanboard/kanboard.git
+    dest: /var/www/kanboard
+    version: "{{ kanboard_info['json']['tag_name'] }}"
+    depth: 1
+
+- name: Change Kanboard directory permission
+  file:
+    path: /var/www/kanboard
+    state: directory
+    recurse: yes
+    owner: www-data
+    group: www-data
+
+- name: Install Kanboard config
+  copy:
+    src: config.php
+    dest: /var/www/kanboard/config.php
+    owner: www-data
+    group: www-data
+
+- name: Configure crontab for www-data
+  cron:
+    env: yes
+    name: MAILTO
+    user: www-data
+    job: ""
+- name: Install Kanboard cron job
+  cron:
+    name: "Kanboard background jobs"
+    hour: 5
+    user: www-data
+    job: "/var/www/kanboard/cli cronjob"

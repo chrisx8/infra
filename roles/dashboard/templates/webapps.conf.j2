@@ -24,6 +24,7 @@
 	DocumentRoot /var/www/html
 
 	Alias "/firefly-iii" "/var/www/firefly-iii/public"
+	Alias "/kanboard" "/var/www/kanboard"
 
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
@@ -31,7 +32,7 @@
 	</Location>
 
 	<Directory "/var/www/firefly-iii/public">
-		Include /var/www/firefly-iii/public/.htaccess
+		AllowOverride All
 		AuthType openid-connect
 		Require claim roles:firefly-iii
 	</Directory>
@@ -39,6 +40,13 @@
 	<Directory "/var/www/firefly-iii">
 		AllowOverride None
 		Require all denied
+	</Directory>
+
+	<Directory "/var/www/kanboard">
+		AllowOverride All
+		<Files "config.php">
+			Require all denied
+		</Files>
 	</Directory>
 
 	<Directory "/var/www/html">

@@ -17,6 +17,9 @@
   - name: Install Firefly III
     import_role:
       name: firefly-iii
+  - name: Install Kanboard
+    import_role:
+      name: kanboard
   - name: Install Nextcloud
     import_role:
       name: nextcloud
