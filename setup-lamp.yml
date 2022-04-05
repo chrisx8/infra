@@ -5,8 +5,8 @@
   vars_prompt:
     - name: ha_client_secret
       prompt: "home-assistant.chrisx.xyz - OIDC Client Secret"
-    - name: tinynet_client_secret
-      prompt: "tinynet.chrisx.xyz - OIDC Client Secret"
+    - name: webapps_client_secret
+      prompt: "webapps.chrisx.xyz - OIDC Client Secret"
   tasks:
   - name: Basic setup
     import_role:

@@ -10,7 +10,7 @@ header_links:
     newtab: true
   - name: Log out
     icon: fas fa-sign-out-alt
-    url: /auth/openid-connect?logout=https://tinynet.chrisx.xyz
+    url: /auth/openid-connect?logout=https://webapps.chrisx.xyz
 
 # [OPTIONAL] message/announcement on top of page
 # Required: style, title, icon, content (write in HTML)

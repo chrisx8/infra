@@ -1,12 +1,12 @@
 - name: Generate new OIDC crypto password
-  when: tinynet_client_secret is defined
+  when: webapps_client_secret is defined
   command: "echo {{ lookup('password', '/dev/null length=64') }}"
   register: oidc_crypto
 - name: Configure Apache site
-  when: tinynet_client_secret is defined
+  when: webapps_client_secret is defined
   template:
-    src: tinynet.conf.j2
-    dest: /etc/apache2/sites-enabled/tinynet.conf
+    src: webapps.conf.j2
+    dest: /etc/apache2/sites-enabled/webapps.conf
     mode: 0644
 
 - name: Reload Apache
