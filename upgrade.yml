@@ -57,6 +57,14 @@
       when: upgrade_php_apps == 'y' and composer_check.stat.exists
       import_tasks: tasks/composer.yml
 
+    - name: Check if Firefly III exists
+      stat:
+        path: /var/www/firefly-iii
+      register: firefly_check
+    - name: Upgrade/Reinstall Firefly III
+      when: upgrade_php_apps == 'y' and firefly_check.stat.exists
+      import_role:
+        name: firefly-iii
     - name: Check if Kanboard exists
       stat:
         path: /var/www/kanboard
