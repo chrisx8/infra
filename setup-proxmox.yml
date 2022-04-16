@@ -2,11 +2,6 @@
 - name: Customize Proxmox VE
   hosts: krista
   become: yes
-  vars_prompt:
-    - name: ses_user
-      prompt: "SES SMTP Username"
-    - name: ses_pass
-      prompt: "SES SMTP Password"
   tasks:
   - name: Customize Proxmox VE
     import_role:

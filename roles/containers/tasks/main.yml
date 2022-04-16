@@ -13,6 +13,10 @@
 - name: Install Docker
   import_tasks: install_docker.yml
 
+- name: Configure postfix
+  import_role:
+    name: postfix
+
 - name: Check if postgres_init.sql exists
   stat:
     path: ~/containers/postgres_init.sql

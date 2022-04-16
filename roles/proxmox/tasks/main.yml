@@ -4,3 +4,6 @@
   import_tasks: system.yml
 - name: Configure system software
   import_tasks: software_config.yml
+- name: Configure postfix
+  import_role:
+    name: postfix

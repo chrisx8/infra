@@ -11,14 +11,6 @@ define('MAIL_FROM', 'kanboard@noreply.chrisx.xyz');
 // Mail transport available: "smtp", "sendmail", "mail" (PHP mail function), "postmark", "mailgun", "sendgrid"
 define('MAIL_TRANSPORT', 'mail');
 
-// SMTP configuration to use when the "smtp" transport is chosen
-define('MAIL_SMTP_HOSTNAME', '');
-define('MAIL_SMTP_PORT', 25);
-define('MAIL_SMTP_USERNAME', '');
-define('MAIL_SMTP_PASSWORD', '');
-define('MAIL_SMTP_HELO_NAME', null); // valid: null (default), or FQDN
-define('MAIL_SMTP_ENCRYPTION', null); // Valid values are null (not a string "null"), "ssl" or "tls"
-
 // Run automatically database migrations
 // If set to false, you will have to run manually the SQL migrations from the CLI during the next Kanboard upgrade
 // Do not run the migrations from multiple processes at the same time (example: web page + background worker)

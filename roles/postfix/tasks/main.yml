@@ -1,0 +1,25 @@
+- name: Install postfix
+  apt:
+    name: postfix
+    state: latest
+
+- name: Load AWS SES credential
+  include_vars: private/ses.yml
+
+- name: Install postfix main.cf
+  template:
+    src: main.cf.j2
+    dest: /etc/postfix/main.cf
+    mode: 0644
+- name: Add SES credentials
+  template:
+    src: sasl_passwd.j2
+    dest: /etc/postfix/sasl_passwd
+    mode: 0600
+- name: Process credential DB
+  command: postmap /etc/postfix/sasl_passwd
+  changed_when: yes
+- name: Restart Postfix
+  systemd:
+    name: postfix.service
+    state: restarted

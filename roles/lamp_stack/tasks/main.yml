@@ -2,6 +2,9 @@
   import_tasks: package_install.yml
 - name: Install SSL cert
   import_tasks: ssl_cert.yml
+- name: Configure postfix
+  import_role: 
+    name: postfix
 - name: Configure Apache
   import_tasks: apache_config.yml
 - name: Configure PHP-FPM
