@@ -4,5 +4,3 @@
   import_tasks: system.yml
 - name: Configure system software
   import_tasks: software_config.yml
-- name: Add private IPs to /etc/hosts
-  import_tasks: private_ip.yml

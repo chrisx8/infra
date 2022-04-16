@@ -10,9 +10,6 @@
       prompt: "Upgrade PHP applications? (y/n)"
       private: no
   tasks:
-    - name: Update /etc/hosts with private IP addresses
-      import_tasks: tasks/private_ip.yml
-
     - name: apt dist-upgrade
       apt:
         update_cache: yes
