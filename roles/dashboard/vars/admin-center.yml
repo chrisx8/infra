@@ -23,29 +23,26 @@ services:
     apps:
       - name: OPNsense Gateway
         icon: fas fa-network-wired
-        url: https://opnsense
+        url: https://opnsense.arb.chrisx.xyz
         newtab: true
       - name: OpenWrt Wireless AP
         icon: fas fa-wifi
-        url: https://openwrt
+        url: https://openwrt.arb.chrisx.xyz
         newtab: true
       - name: Tailscale Admin Console
         icon: fas fa-globe
         url: https://login.tailscale.com/welcome
         newtab: true
-      - name: TinyNET CA Certificate
-        icon: fas fa-fingerprint
-        url: tinynet-ca.crt
   - name: Systems
     icon: fas fa-microchip
     apps:
       - name: Proxmox VE
         icon: fas fa-server
-        url: https://krista:8006
+        url: https://krista.arb.chrisx.xyz:8006
         newtab: true
       - name: Proxmox Backup Server
         icon: fas fa-hdd
-        url: https://krista:8007
+        url: https://krista.arb.chrisx.xyz:8007
         newtab: true
 
 # [OPTIONAL] button in the footer
