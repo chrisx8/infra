@@ -12,7 +12,7 @@ ansible-galaxy collection install ansible.posix community.mysql
 
 ## Hardware
 
-### Gateway
+### Wireless AP
 
 - NETGEAR R6220
 - OS: OpenWrt
@@ -30,11 +30,12 @@ ansible-galaxy collection install ansible.posix community.mysql
 - Storage: 240GB NVMe SSD
 - Networking: 1 * GbE
 
-## Services
+## Software
 
 ### Networking
 
 - [OpenWrt](https://openwrt.org/)
+- [OPNsense](https://opnsense.org/)
 - [NGINX](https://nginx.org)
 - [Tailscale](https://tailscale.com/)
 - [WireGuard](https://www.wireguard.com/)
@@ -69,4 +70,3 @@ ansible-galaxy collection install ansible.posix community.mysql
 - [How to Home Lab](https://www.dlford.io/tag/how-to-home-lab-series/)
 - [Postfix mail relay](https://www.howtoforge.com/tutorial/configure-postfix-to-use-gmail-as-a-mail-relay/)
 - [Setting up WireGuard](https://linuxize.com/post/how-to-set-up-wireguard-vpn-on-ubuntu-20-04/)
-- [Using Samba for Time Machine](https://adamdemasi.com/2018/03/24/using-samba-as-a-time-machine-network-server.html)

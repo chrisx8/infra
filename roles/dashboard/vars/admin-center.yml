@@ -18,13 +18,27 @@ services:
         icon: fas fa-key
         url: https://vaultwarden.chrisx.xyz/admin
         newtab: true
+  - name: Network
+    icon: fas fa-network-wired
+    apps:
+      - name: OPNsense Gateway
+        icon: fas fa-network-wired
+        url: https://opnsense
+        newtab: true
+      - name: OpenWrt Wireless AP
+        icon: fas fa-wifi
+        url: https://openwrt
+        newtab: true
+      - name: Tailscale Admin Console
+        icon: fas fa-globe
+        url: https://login.tailscale.com/welcome
+        newtab: true
+      - name: TinyNET CA Certificate
+        icon: fas fa-fingerprint
+        url: tinynet-ca.crt
   - name: Systems
     icon: fas fa-microchip
     apps:
-      - name: OpenWrt Gateway
-        icon: fas fa-network-wired
-        url: https://openwrt
-        newtab: true
       - name: Proxmox VE
         icon: fas fa-server
         url: https://krista:8006
@@ -33,16 +47,6 @@ services:
         icon: fas fa-hdd
         url: https://krista:8007
         newtab: true
-  - name: Extras
-    icon: fas fa-bookmark
-    apps:
-      - name: Tailscale Admin Console
-        icon: fas fa-globe
-        url: https://login.tailscale.com/welcome
-        newtab: true
-      - name: TinyNET CA Certificate
-        icon: fas fa-fingerprint
-        url: tinynet-ca.crt
 
 # [OPTIONAL] button in the footer
 # Required: name, icon, url
