@@ -1,10 +1,10 @@
-- name: Install SSL cert fullchain.pem to /etc/ssl/private
+- name: Install chrisx.xyz/fullchain.pem to /etc/ssl/private
   copy:
-    src: private/ssl/fullchain.pem
+    src: certbot/config/live/chrisx.xyz/fullchain.pem
     dest: /etc/ssl/private
     mode: 0400
-- name: Install SSL cert privkey.pem to /etc/ssl/private
+- name: Install chrisx.xyz/privkey.pem to /etc/ssl/private
   copy:
-    src: private/ssl/privkey.pem
+    src: certbot/config/live/chrisx.xyz/privkey.pem
     dest: /etc/ssl/private
     mode: 0400
