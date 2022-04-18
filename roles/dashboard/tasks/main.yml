@@ -13,6 +13,32 @@
     group: www-data
     mode: 0644
 
+- name: Download latest bulma.min.css
+  get_url:
+    url: https://unpkg.com/bulma/css/bulma.min.css
+    dest: /var/www/html/assets/css/bulma.min.css
+    mode: 0644  
+- name: Download latest bulma-prefers-dark.min.css
+  get_url:
+    url: https://unpkg.com/bulma-prefers-dark/css/bulma-prefers-dark.min.css
+    dest: /var/www/html/assets/css/bulma-prefers-dark.min.css
+    mode: 0644
+
+- name: Load version info vars
+  include_vars: versions.yml
+- name: Download and extract Font Awesome
+  unarchive:
+    src: "https://use.fontawesome.com/releases/v{{ item }}/fontawesome-free-{{ item }}-web.zip"
+    dest: /var/www/html/assets
+    remote_src: yes
+    include:
+      - "fontawesome-free-{{ item }}-web/css/all.min.css"
+      - "fontawesome-free-{{ item }}-web/webfonts/fa-brands-400.woff2"
+      - "fontawesome-free-{{ item }}-web/webfonts/fa-solid-900.woff2"
+      - "fontawesome-free-{{ item }}-web/LICENSE.txt"
+  with_items:
+    - "{{ FONT_AWESOME_VERSION }}"
+
 - name: Load main config
   include_vars:
     file: main.yml
@@ -27,6 +53,7 @@
       owner: www-data
       group: www-data
       mode: 0644
+
 - block:
   - name: Load Downloads config
     include_vars:
@@ -38,6 +65,7 @@
       owner: www-data
       group: www-data
       mode: 0644
+
 - block:
   - name: Load Admin Center config
     include_vars:
