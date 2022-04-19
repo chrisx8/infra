@@ -1,0 +1,17 @@
+- name: Create database
+  mysql_db:
+    name: kanboard
+    state: present
+
+- name: Generate new password for MySQL kanboard user
+  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  changed_when: no
+  register: mysql_kanboard_password
+- name: Create MySQL kanboard user
+  no_log: true
+  mysql_user:
+    name: kanboard
+    host: localhost
+    password: "{{ mysql_kanboard_password.stdout }}"
+    priv: 'kanboard.*:ALL'
+    state: present

@@ -18,10 +18,11 @@
     owner: www-data
     group: www-data
 
-- name: Install Kanboard config
-  copy:
-    src: config.php
+- name: Install config file
+  template:
+    src: config.php.j2
     dest: /var/www/kanboard/config.php
+    mode: 0640
     owner: www-data
     group: www-data
 
