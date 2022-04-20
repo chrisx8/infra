@@ -1,7 +1,8 @@
 - name: Add Docker repo keys
-  apt_key:
-    url: https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg
-    state: present
+  get_url:
+    url: "https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg"
+    dest: /etc/apt/trusted.gpg.d/docker.asc
+    mode: 0644
 - name: Add Docker repo
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} stable
