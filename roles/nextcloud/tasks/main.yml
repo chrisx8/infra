@@ -6,19 +6,14 @@
   apt:
     name: [php8.0-apcu, php8.0-bcmath, php8.0-curl, php8.0-gd, php8.0-gmp, php8.0-imagick, php8.0-intl, php8.0-mbstring, php8.0-xml, php8.0-zip]
     state: present
-- name: apt cleanup
-  import_tasks: apt_post.yml
+- import_tasks: apt_post.yml
 
 - name: Check if Nextcloud is installed
   stat:
     path: /var/www/nextcloud/index.php
   register: nextcloud_exist
 
-- name: Configure PHP-FPM
-  import_tasks: php_config.yml
-- name: Configure Apache
-  import_tasks: apache_config.yml
-- name: Set up database
-  import_tasks: db_setup.yml
-- name: Install Nextcloud
-  import_tasks: nc.yml
+- import_tasks: php_config.yml
+- import_tasks: apache_config.yml
+- import_tasks: db_setup.yml
+- import_tasks: nc.yml

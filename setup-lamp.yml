@@ -8,23 +8,17 @@
     - name: webapps_client_secret
       prompt: "webapps.chrisx.xyz - OIDC Client Secret"
   tasks:
-  - name: Basic setup
-    import_role:
+  - import_role:
       name: base
-  - name: Install LAMP stack
-    import_role:
+  - import_role:
       name: lamp_stack
-  - name: Install Firefly III
-    import_role:
+  - import_role:
       name: firefly-iii
-  - name: Install Kanboard
-    import_role:
+  - import_role:
       name: kanboard
-  - name: Install Nextcloud
-    import_role:
+  - import_role:
       name: nextcloud
-  - name: Install Dashboard
-    import_role:
+  - import_role:
       name: dashboard
   - name: Reboot
     reboot:

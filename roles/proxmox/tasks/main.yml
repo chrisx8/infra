@@ -1,9 +1,5 @@
-- name: Change repos
-  import_tasks: change_repos.yml
-- name: Install/upgrade system
-  import_tasks: system.yml
-- name: Configure system software
-  import_tasks: software_config.yml
-- name: Configure postfix
-  import_role:
+- import_tasks: change_repos.yml
+- import_tasks: system.yml
+- import_tasks: software_config.yml
+- import_role:
     name: postfix

@@ -13,8 +13,7 @@
     name: proxmox-backup-server
     state: present
 
-- name: apt cleanup
-  import_tasks: apt_post.yml
+- import_tasks: apt_post.yml
 
 - name: Set kernel cmdline
   lineinfile:

@@ -8,5 +8,4 @@
     name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, gnupg, psmisc, vim, unzip]
     state: present
 
-- name: apt cleanup
-  import_tasks: apt_post.yml
+- import_tasks: apt_post.yml

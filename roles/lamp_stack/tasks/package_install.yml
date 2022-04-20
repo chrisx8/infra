@@ -3,9 +3,6 @@
     name: [apache2, libapache2-mod-auth-openidc, libapache2-mod-fcgid, mariadb-server, 
            python3-mysqldb, php8.0-fpm, php8.0-mysql]
     state: present
+- import_tasks: apt_post.yml
 
-- name: apt cleanup
-  import_tasks: apt_post.yml
-
-- name: Install Composer
-  import_tasks: composer.yml
+- import_tasks: composer.yml

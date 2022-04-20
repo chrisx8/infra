@@ -10,23 +10,18 @@
   systemd:
     name: sshd
     state: restarted
-- name: Install Docker
-  import_tasks: install_docker.yml
+- import_tasks: install_docker.yml
 
-- name: Configure postfix
-  import_role:
+- import_role:
     name: postfix
 
 - name: Check if postgres_init.sql exists
   stat:
     path: ~/containers/postgres_init.sql
   register: postgres_check
-- name: Prep containers
+- import_tasks: prep_containers.yml
   when: not postgres_check.stat.exists
-  import_tasks: prep_containers.yml
-
-- name: Launch containers
-  import_tasks: launch_containers.yml
+- import_tasks: launch_containers.yml
 
 - name: Install logrotate config for Nginx
   copy:

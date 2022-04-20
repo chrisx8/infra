@@ -11,8 +11,7 @@
     name: [docker-ce, docker-ce-cli, containerd.io]
     state: present
     update_cache: yes
-- name: apt cleanup
-  import_tasks: apt_post.yml
+- import_tasks: apt_post.yml
 
 - name: Create /usr/local/lib/docker/cli-plugins
   file:

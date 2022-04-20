@@ -1,8 +1,7 @@
 ---
 - name: Customize Proxmox VE
-  hosts: krista
+  hosts: hyper1
   become: yes
   tasks:
-  - name: Customize Proxmox VE
-    import_role:
+  - import_role:
       name: proxmox

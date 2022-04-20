@@ -1,6 +1,3 @@
-- name: Remove unneeded stuff
-  import_tasks: debloat.yml
-- name: Upgrade & install packages
-  import_tasks: packages.yml
-- name: Configure system
-  import_tasks: system_config.yml
+- import_tasks: debloat.yml
+- import_tasks: packages.yml
+- import_tasks: system_config.yml

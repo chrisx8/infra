@@ -2,10 +2,7 @@
   apt:
     name: [php-curl, php-gd, php-mbstring, php-mysql, php-xml, php-zip]
     state: present
-- name: apt cleanup
-  import_tasks: apt_post.yml
+- import_tasks: apt_post.yml
 
-- name: Set up database
-  import_tasks: db_setup.yml
-- name: Install Kanboard
-  import_tasks: kanboard.yml
+- import_tasks: db_setup.yml
+- import_tasks: kanboard.yml

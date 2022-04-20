@@ -78,5 +78,4 @@
       group: www-data
       mode: 0644
 
-- name: Set up Apache
-  import_tasks: apache_setup.yml
+- import_tasks: apache_setup.yml

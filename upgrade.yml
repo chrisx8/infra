@@ -14,8 +14,7 @@
       apt:
         update_cache: yes
         upgrade: dist
-    - name: apt cleanup
-      import_tasks: tasks/apt_post.yml
+    - import_tasks: tasks/apt_post.yml
 
     - name: Check if SSL cert exists
       stat:
@@ -29,10 +28,9 @@
       stat:
         path: ~/containers/docker-compose.yml
       register: container_check
-    - name: Upgrade/Reinstall container stack
-      when: container_check.stat.exists
-      import_role:
+    - import_role:
         name: containers
+      when: container_check.stat.exists
     - name: Reload Nginx
       when: container_check.stat.exists
       command: "docker exec nginx nginx -s reload"
@@ -41,32 +39,29 @@
       stat:
         path: /var/www/html/assets/
       register: dashboard_check
-    - name: Upgrade/Reinstall dashboard
-      when: upgrade_dashboard == 'y' and dashboard_check.stat.exists
-      import_role:
+    - import_role:
         name: dashboard
+      when: upgrade_dashboard == 'y' and dashboard_check.stat.exists
 
     - name: Check if Composer exists
       stat:
         path: /usr/local/bin/composer
       register: composer_check
-    - name: Install Composer
+    - import_tasks: tasks/composer.yml
       when: upgrade_php_apps == 'y' and composer_check.stat.exists
-      import_tasks: tasks/composer.yml
 
     - name: Check if Firefly III exists
       stat:
         path: /var/www/firefly-iii
       register: firefly_check
-    - name: Upgrade/Reinstall Firefly III
-      when: upgrade_php_apps == 'y' and firefly_check.stat.exists
-      import_role:
+    - import_role:
         name: firefly-iii
+      when: upgrade_php_apps == 'y' and firefly_check.stat.exists
+
     - name: Check if Kanboard exists
       stat:
         path: /var/www/kanboard
       register: kanboard_check
-    - name: Upgrade/Reinstall Kanboard
-      when: upgrade_php_apps == 'y' and kanboard_check.stat.exists
-      import_role:
+    - import_role:
         name: kanboard
+      when: upgrade_php_apps == 'y' and kanboard_check.stat.exists

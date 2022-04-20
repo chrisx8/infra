@@ -1,15 +1,8 @@
-- name: Install packages
-  import_tasks: package_install.yml
-- name: Install SSL cert
-  import_tasks: ssl_cert.yml
-- name: Configure postfix
-  import_role: 
+- import_tasks: package_install.yml
+- import_tasks: ssl_cert.yml
+- import_tasks: apache_config.yml
+- import_tasks: php_config.yml
+- import_tasks: mysql_config.yml
+- import_tasks: home_assistant_sso.yml
+- import_role: 
     name: postfix
-- name: Configure Apache
-  import_tasks: apache_config.yml
-- name: Configure PHP-FPM
-  import_tasks: php_config.yml
-- name: Configure MariaDB
-  import_tasks: mysql_config.yml
-- name: Configure Home Assistant site
-  import_tasks: home_assistant_sso.yml

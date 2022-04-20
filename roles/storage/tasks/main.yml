@@ -2,7 +2,5 @@
   apt:
     name: [rclone, tree]
     state: present
-- name: Set up SAMBA
-  import_tasks: samba.yml
-- name: Set up sftp users
-  import_tasks: sftp.yml
+- import_tasks: samba.yml
+- import_tasks: sftp.yml

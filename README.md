@@ -21,7 +21,7 @@ ansible-galaxy collection install ansible.posix community.mysql
 - Storage: 128MB Onboard NAND
 - Networking: 5 * GbE + 2x2 dual-band 802.11 n/ac
 
-### Krista
+### Server
 
 - HP EliteDesk 800 G2 Mini
 - OS: Proxmox VE (includes [Proxmox Backup Server](https://pbs.proxmox.com/docs/))
