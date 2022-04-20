@@ -2,9 +2,13 @@
   copy:
     src: certbot/config/live/chrisx.xyz/fullchain.pem
     dest: /etc/ssl/private
-    mode: 0400
+    mode: 0440
+    owner: root
+    group: ssl-cert
 - name: Install chrisx.xyz/privkey.pem to /etc/ssl/private
   copy:
     src: certbot/config/live/chrisx.xyz/privkey.pem
     dest: /etc/ssl/private
-    mode: 0400
+    mode: 0440
+    owner: root
+    group: ssl-cert
