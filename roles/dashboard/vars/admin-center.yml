@@ -21,13 +21,13 @@ services:
   - name: Network
     icon: fas fa-network-wired
     apps:
-      - name: OPNsense Gateway
+      - name: OPNsense
         icon: fas fa-network-wired
         url: https://opnsense.arb.chrisx.xyz
         newtab: true
-      - name: OpenWrt Wireless AP
+      - name: wap-ac1
         icon: fas fa-wifi
-        url: https://openwrt.arb.chrisx.xyz
+        url: https://wap-ac1.arb.chrisx.xyz
         newtab: true
       - name: Tailscale Admin Console
         icon: fas fa-globe
@@ -38,11 +38,11 @@ services:
     apps:
       - name: Proxmox VE
         icon: fas fa-server
-        url: https://krista.arb.chrisx.xyz:8006
+        url: https://hyper1.arb.chrisx.xyz:8006
         newtab: true
       - name: Proxmox Backup Server
         icon: fas fa-hdd
-        url: https://krista.arb.chrisx.xyz:8007
+        url: https://hyper1.arb.chrisx.xyz:8007
         newtab: true
 
 # [OPTIONAL] button in the footer
