@@ -12,9 +12,14 @@
       stat:
         path: /etc/ssl/private/fullchain.pem
       register: ssl_check
-    - name: Upgrade/Reinstall SSL cert
+    - import_tasks: tasks/ssl_cert.yml
       when: ssl_check.stat.exists
-      import_tasks: tasks/ssl_cert.yml
+    - name: Check if arb SSL cert exists
+      stat:
+        path: /etc/ssl/private/arb.fullchain.pem
+      register: arb_ssl_check
+    - import_tasks: tasks/ssl_cert_arb.yml
+      when: arb_ssl_check.stat.exists
 
     - name: Check if container stack exists
       stat:

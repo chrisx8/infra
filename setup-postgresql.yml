@@ -1,0 +1,11 @@
+---
+- name: Set up PostgreSQL server
+  hosts: postgresql
+  become: yes
+  tasks:
+  - import_role:
+      name: base
+  - import_role:
+      name: postgresql
+  - name: Reboot
+    reboot:
