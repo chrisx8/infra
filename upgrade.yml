@@ -1,21 +1,13 @@
 ---
-- name: Upgrade all systems
+- name: Upgrade all
   hosts: all
   become: yes
-  vars_prompt:
-    - name: upgrade_dashboard
-      prompt: "Upgrade dashboard? (y/n)"
-      private: no
-    - name: upgrade_php_apps
-      prompt: "Upgrade PHP applications? (y/n)"
-      private: no
   tasks:
     - name: apt dist-upgrade
       apt:
         update_cache: yes
         upgrade: dist
     - import_tasks: tasks/apt_post.yml
-
     - name: Check if SSL cert exists
       stat:
         path: /etc/ssl/private/fullchain.pem
@@ -30,38 +22,34 @@
       register: container_check
     - import_role:
         name: containers
-      when: container_check.stat.exists
+- name: Upgrade containers
+  hosts: apps01
+  become: yes
+  tasks:
+    - import_role:
+        name: containers
     - name: Reload Nginx
-      when: container_check.stat.exists
       command: "docker exec nginx nginx -s reload"
 
-    - name: Check if dashboard exists
-      stat:
-        path: /var/www/html/assets/
-      register: dashboard_check
+- name: Upgrade LAMP
+  hosts: lamp
+  become: yes
+  vars_prompt:
+    - name: upgrade_dashboard
+      prompt: "Upgrade dashboard? (y/n)"
+      private: no
+    - name: upgrade_php_apps
+      prompt: "Upgrade PHP applications? (y/n)"
+      private: no
+  tasks:
     - import_role:
         name: dashboard
-      when: upgrade_dashboard == 'y' and dashboard_check.stat.exists
-
-    - name: Check if Composer exists
-      stat:
-        path: /usr/local/bin/composer
-      register: composer_check
+      when: upgrade_dashboard == 'y'
     - import_tasks: tasks/composer.yml
-      when: upgrade_php_apps == 'y' and composer_check.stat.exists
-
-    - name: Check if Firefly III exists
-      stat:
-        path: /var/www/firefly-iii
-      register: firefly_check
+      when: upgrade_php_apps == 'y'
     - import_role:
         name: firefly-iii
-      when: upgrade_php_apps == 'y' and firefly_check.stat.exists
-
-    - name: Check if Kanboard exists
-      stat:
-        path: /var/www/kanboard
-      register: kanboard_check
+      when: upgrade_php_apps == 'y'
     - import_role:
         name: kanboard
-      when: upgrade_php_apps == 'y' and kanboard_check.stat.exists
+      when: upgrade_php_apps == 'y'

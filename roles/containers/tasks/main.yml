@@ -1,5 +1,7 @@
 - name: Load version info vars
   include_vars: versions.yml
+- name: Load secret vars
+  include_vars: secrets.yml
 
 - name: Switch SSH to port 2201
   lineinfile:

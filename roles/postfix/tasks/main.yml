@@ -4,7 +4,7 @@
     state: latest
 
 - name: Load AWS SES credential
-  include_vars: private/ses.yml
+  include_vars: secrets.yml
 
 - name: Install postfix main.cf
   template:

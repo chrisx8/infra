@@ -2,9 +2,6 @@
 - name: Set up container hosts
   hosts: apps01
   become: yes
-  vars_prompt:
-    - name: miniflux_client_secret
-      prompt: "Miniflux - OIDC Client Secret"
   tasks:
   - import_role:
       name: base
