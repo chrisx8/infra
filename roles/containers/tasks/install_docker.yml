@@ -27,7 +27,7 @@
 - name: Download latest Docker Compose release from GitHub
   get_url:
     url: "https://github.com/docker/compose/releases/download/{{ item }}/docker-compose-linux-x86_64"
-    dest: /usr/local/lib/docker/cli-plugins/docker-compose
+    dest: /usr/local/bin/docker-compose
     checksum: sha256:https://github.com/docker/compose/releases/download/{{ item }}/docker-compose-linux-x86_64.sha256
     mode: 0755
   with_items:
