@@ -9,6 +9,14 @@
     state: directory
     mode: 0700
 
+- name: Configure UDP receive buffer size
+  sysctl:
+    name: net.core.rmem_max
+    value: 2500000
+    state: present
+    sysctl_set: yes
+    reload: yes
+
 - name: Get latest cloudflared version number from GitHub
   uri:
     url: https://api.github.com/repos/cloudflare/cloudflared/releases/latest
