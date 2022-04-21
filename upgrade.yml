@@ -1,4 +1,27 @@
 ---
+- name: Upgrade LAMP
+  hosts: lamp
+  become: yes
+  vars_prompt:
+    - name: upgrade_dashboard
+      prompt: "Upgrade dashboard? (y/n)"
+      private: no
+    - name: upgrade_php_apps
+      prompt: "Upgrade PHP applications? (y/n)"
+      private: no
+  tasks:
+    - import_role:
+        name: dashboard
+      when: upgrade_dashboard == 'y'
+    - import_tasks: tasks/composer.yml
+      when: upgrade_php_apps == 'y'
+    - import_role:
+        name: firefly-iii
+      when: upgrade_php_apps == 'y'
+    - import_role:
+        name: kanboard
+      when: upgrade_php_apps == 'y'
+
 - name: Upgrade all
   hosts: all
   become: yes
@@ -38,26 +61,3 @@
         name: containers
     - name: Reload Nginx
       command: "docker exec nginx nginx -s reload"
-
-- name: Upgrade LAMP
-  hosts: lamp
-  become: yes
-  vars_prompt:
-    - name: upgrade_dashboard
-      prompt: "Upgrade dashboard? (y/n)"
-      private: no
-    - name: upgrade_php_apps
-      prompt: "Upgrade PHP applications? (y/n)"
-      private: no
-  tasks:
-    - import_role:
-        name: dashboard
-      when: upgrade_dashboard == 'y'
-    - import_tasks: tasks/composer.yml
-      when: upgrade_php_apps == 'y'
-    - import_role:
-        name: firefly-iii
-      when: upgrade_php_apps == 'y'
-    - import_role:
-        name: kanboard
-      when: upgrade_php_apps == 'y'
