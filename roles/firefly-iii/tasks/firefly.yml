@@ -33,9 +33,10 @@
     group: www-data
 
 - name: Composer install
+  become_user: www-data
   command:
     chdir: /var/www/firefly-iii
-    cmd: "runuser -u www-data -- composer install --no-dev --prefer-dist"
+    cmd: "composer install --no-dev --prefer-dist"
   changed_when: yes
 - name: Generate new key
   command:

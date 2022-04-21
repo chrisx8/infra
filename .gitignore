@@ -1,3 +1,3 @@
 files/certbot/
 files/private/
-vars/private/
+secrets.yml
