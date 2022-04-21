@@ -1,0 +1,25 @@
+- name: Install Gitea env file
+  template:
+    src: gitea.env.j2
+    dest: ~/containers/gitea.env
+    mode: 0644
+- name: Install Keycloak env file
+  template:
+    src: keycloak.env.j2
+    dest: ~/containers/keycloak.env
+    mode: 0644
+- name: Install Miniflux env file
+  template:
+    src: miniflux.env.j2
+    dest: ~/containers/miniflux.env
+    mode: 0644
+- name: Install Vaultwarden env file
+  template:
+    src: vaultwarden.env.j2
+    dest: ~/containers/vaultwarden.env
+    mode: 0644
+- name: Install Wiki.js env file
+  template:
+    src: wikijs.env.j2
+    dest: ~/containers/wikijs.env
+    mode: 0644

@@ -1,0 +1,74 @@
+- name: Generate new password for PostgreSQL keycloak user
+  set_fact:
+    postgres_keycloak_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+- name: Create keycloak database
+  postgresql_db:
+    name: keycloak
+    state: present
+- name: Create PostgreSQL keycloak user
+  postgresql_user:
+    db: keycloak
+    name: keycloak
+    password: "{{ postgres_keycloak_password }}"
+
+- name: Generate new password for PostgreSQL gitea user
+  set_fact:
+    postgres_gitea_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+- name: Create gitea database
+  postgresql_db:
+    name: gitea
+    state: present
+- name: Create PostgreSQL gitea user
+  postgresql_user:
+    db: gitea
+    name: gitea
+    password: "{{ postgres_gitea_password }}"
+
+- name: Generate new password for PostgreSQL miniflux user
+  set_fact:
+    postgres_miniflux_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+- name: Create miniflux database
+  postgresql_db:
+    name: miniflux
+    state: present
+- name: Add hstore extension to the miniflux database
+  postgresql_ext:
+    name: hstore
+    db: miniflux
+    state: present
+- name: Create PostgreSQL miniflux user
+  postgresql_user:
+    db: miniflux
+    name: miniflux
+    password: "{{ postgres_miniflux_password }}"
+
+- name: Generate new password for PostgreSQL vaultwarden user
+  set_fact:
+    postgres_vaultwarden_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+- name: Create vaultwarden database
+  postgresql_db:
+    name: vaultwarden
+    state: present
+- name: Create PostgreSQL vaultwarden user
+  postgresql_user:
+    db: vaultwarden
+    name: vaultwarden
+    password: "{{ postgres_vaultwarden_password }}"
+
+- name: Generate new password for PostgreSQL wikijs user
+  set_fact:
+    postgres_wikijs_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+- name: Create wikijs database
+  postgresql_db:
+    name: wikijs
+    state: present
+- name: Add pg_trgm extension to the miniflux database
+  postgresql_ext:
+    name: pg_trgm
+    db: wikijs
+    state: present
+- name: Create PostgreSQL wikijs user
+  postgresql_user:
+    db: wikijs
+    name: wikijs
+    password: "{{ postgres_wikijs_password }}"

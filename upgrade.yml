@@ -21,12 +21,15 @@
     - import_tasks: tasks/ssl_cert_arb.yml
       when: arb_ssl_check.stat.exists
 
-    - name: Check if container stack exists
-      stat:
-        path: ~/containers/docker-compose.yml
-      register: container_check
-    - import_role:
-        name: containers
+- name: Set up Postgres databases
+  hosts: postgresql
+  become: yes
+  become_user: postgres
+  tasks:
+  - import_role:
+      name: containers
+      tasks_from: create_postgres_db.yml
+
 - name: Upgrade containers
   hosts: apps01
   become: yes

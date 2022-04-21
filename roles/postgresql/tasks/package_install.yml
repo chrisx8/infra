@@ -10,6 +10,10 @@
 - name: Install PostgreSQL 14
   apt:
     name: postgresql-14
-    state: present
+    state: latest
     update_cache: yes
+- name: Install dependencies for Ansible Postgres module
+  apt:
+    name: [libpq-dev, python3-psycopg2]
+    state: latest
 - import_tasks: apt_post.yml

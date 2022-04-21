@@ -33,17 +33,6 @@ services:
       - no-new-privileges
     restart: unless-stopped
 
-  postgres:
-    container_name: postgres
-    image: postgres:{{ POSTGRES_VERSION }}-alpine
-    env_file: ./postgres.env
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./postgres_init.sql:/docker-entrypoint-initdb.d/postgres_init.sql:ro
-    security_opt:
-      - no-new-privileges
-    restart: unless-stopped
-
   gitea:
     container_name: gitea
     image: gitea/gitea:1
@@ -54,8 +43,6 @@ services:
       - gitea_data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-    depends_on:
-      - postgres
     security_opt:
       - no-new-privileges
     restart: unless-stopped
@@ -64,8 +51,6 @@ services:
     image: quay.io/keycloak/keycloak:{{ KEYCLOAK_VERSION }}
     command: start --auto-build --features-disabled=ciba,impersonation
     env_file: ./keycloak.env
-    depends_on:
-      - postgres
     cap_drop:
       - all
     security_opt:
@@ -75,8 +60,6 @@ services:
     container_name: miniflux
     image: miniflux/miniflux:latest
     env_file: ./miniflux.env
-    depends_on:
-      - postgres
     cap_drop:
       - all
     security_opt:
@@ -89,8 +72,6 @@ services:
     user: nobody:nogroup
     volumes:
       - vaultwarden_data:/data
-    depends_on:
-      - postgres
     cap_drop:
       - all
     security_opt:
@@ -100,8 +81,6 @@ services:
     container_name: wikijs
     image: requarks/wiki:2
     env_file: ./wikijs.env
-    depends_on:
-      - postgres
     cap_drop:
       - all
     security_opt:
@@ -111,5 +90,4 @@ services:
 volumes:
   cloudflared:
   gitea_data:
-  postgres_data:
   vaultwarden_data:

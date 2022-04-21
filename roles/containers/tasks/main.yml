@@ -17,12 +17,7 @@
 - import_role:
     name: postfix
 
-- name: Check if postgres_init.sql exists
-  stat:
-    path: ~/containers/postgres_init.sql
-  register: postgres_check
-- import_tasks: prep_containers.yml
-  when: not postgres_check.stat.exists
+- import_tasks: configure_containers.yml
 - import_tasks: launch_containers.yml
 
 - name: Install logrotate config for Nginx
