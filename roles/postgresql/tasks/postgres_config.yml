@@ -22,7 +22,7 @@
   lineinfile:
     path: /etc/postgresql/14/main/pg_hba.conf
     line: "host    all             all             10.69.0.0/24            scram-sha-256"
-    regex: "10\.69\.0\.0\/24"
+    regex: "10\\.69\\.0\\.0\/24"
 - name: Restart postgresql
   systemd:
     name: postgresql.service
