@@ -19,14 +19,14 @@
              Database: MySQL on localhost \n
              DB Name: nextcloud \n
              DB Username: nextcloud \n
-             DB Password: {{ mysql_nextcloud_password.stdout }} \n\n
+             DB Password: {{ mysql_nextcloud_password }} \n\n
             "
 
 - name: Update database credential
   lineinfile:
     path: /var/www/nextcloud/config/config.php
     regexp: 'dbpassword'
-    line: "'dbpassword' => '{{ mysql_nextcloud_password.stdout }}',"
+    line: "'dbpassword' => '{{ mysql_nextcloud_password }}',"
 - name: Inject extra Nextcloud config options
   when: not nextcloud_exist.stat.exists
   lineinfile:

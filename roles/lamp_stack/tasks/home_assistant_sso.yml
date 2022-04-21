@@ -1,7 +1,7 @@
 - name: Generate new OIDC crypto password
   when: ha_client_secret is defined
-  command: "echo {{ lookup('password', '/dev/null length=64') }}"
-  register: oidc_crypto
+  set_fact:
+    oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
 - name: Configure Apache site
   when: ha_client_secret is defined
   template:

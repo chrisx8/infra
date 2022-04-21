@@ -13,7 +13,7 @@
 	OIDCClientSecret {{ ha_client_secret }}
 	OIDCScope openid
 	OIDCRedirectURI https://home-assistant.chrisx.xyz/auth/openid-connect
-	OIDCCryptoPassphrase {{ oidc_crypto.stdout }}
+	OIDCCryptoPassphrase {{ oidc_crypto }}
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true
 

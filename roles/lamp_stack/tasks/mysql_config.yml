@@ -1,12 +1,12 @@
 - name: Generate new MariaDB root password
-  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  set_fact:
+    mysql_root_password: "{{ lookup('password', '/dev/null length=64') }}"
   changed_when: no
-  register: mysql_root_password
 - name: Update MariaDB root password
   mysql_user:
     name: root
     host: "{{ item }}"
-    password: "{{ mysql_root_password.stdout }}"
+    password: "{{ mysql_root_password }}"
   with_items:
     - 127.0.0.1
     - ::1

@@ -4,14 +4,14 @@
     state: present
 
 - name: Generate new password for MySQL kanboard user
-  command: "echo {{ lookup('password', '/dev/null length=64') }}"
+  set_fact:
+    mysql_kanboard_password: "{{ lookup('password', '/dev/null length=64') }}"
   changed_when: no
-  register: mysql_kanboard_password
 - name: Create MySQL kanboard user
   no_log: true
   mysql_user:
     name: kanboard
     host: localhost
-    password: "{{ mysql_kanboard_password.stdout }}"
+    password: "{{ mysql_kanboard_password }}"
     priv: 'kanboard.*:ALL'
     state: present
