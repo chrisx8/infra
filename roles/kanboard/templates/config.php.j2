@@ -17,7 +17,7 @@ define('MAIL_TRANSPORT', 'mail');
 define('DB_RUN_MIGRATIONS', true);
 
 // Database driver: sqlite, mysql or postgres (sqlite by default)
-define('DB_DRIVER', 'mysql');
+define('DB_DRIVER', 'postgres');
 
 // Mysql/Postgres database name
 define('DB_NAME', 'kanboard');
@@ -26,13 +26,13 @@ define('DB_NAME', 'kanboard');
 define('DB_USERNAME', 'kanboard');
 
 // Mysql/Postgres password
-define('DB_PASSWORD', '{{ mysql_kanboard_password }}');
+define('DB_PASSWORD', '{{ hostvars["db-postgres"]["postgres_kanboard_password"] }}');
 
 // Mysql/Postgres hostname
-define('DB_HOSTNAME', 'localhost');
+define('DB_HOSTNAME', 'db-postgres.arb.chrisx.xyz');
 
 // Mysql/Postgres custom port (null = default port)
-define('DB_PORT', null);
+define('DB_PORT', 5432);
 
 // Enable/disable remember me authentication
 define('REMEMBER_ME_AUTH', false);

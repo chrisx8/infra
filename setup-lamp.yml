@@ -8,6 +8,9 @@
       name: firefly-iii
       tasks_from: create_postgres_db.yml
   - import_role:
+      name: kanboard
+      tasks_from: create_postgres_db.yml
+  - import_role:
       name: nextcloud
       tasks_from: create_postgres_db.yml
 - name: Set up LAMP hosts

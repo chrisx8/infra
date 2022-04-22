@@ -1,0 +1,12 @@
+- name: Generate new password for PostgreSQL kanboard user
+  set_fact:
+    postgres_kanboard_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+- name: Create kanboard database
+  postgresql_db:
+    name: kanboard
+    state: present
+- name: Create PostgreSQL kanboard user
+  postgresql_user:
+    db: kanboard
+    name: kanboard
+    password: "{{ postgres_kanboard_password }}"
