@@ -18,10 +18,10 @@
     path: /etc/postgresql/14/main/postgresql.conf
     line: "listen_addresses = '*'"
     regex: "^#?listen_addresses ="
-- name: Allow access from local network
+- name: Allow SSL access from local network
   lineinfile:
     path: /etc/postgresql/14/main/pg_hba.conf
-    line: "host    all             all             10.69.0.0/24            scram-sha-256"
+    line: "hostssl all             all             10.69.0.0/24            scram-sha-256"
     regex: "10\\.69\\.0\\.0\/24"
 - name: Restart postgresql
   systemd:
