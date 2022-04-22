@@ -8,12 +8,15 @@
     state: present
 - import_tasks: apt_post.yml
 
-- name: Check if Nextcloud is installed
-  stat:
-    path: /var/www/nextcloud/index.php
-  register: nextcloud_exist
+- name: Install Apache site configuration
+  copy:
+    src: nextcloud.conf
+    dest: /etc/apache2/sites-enabled/nextcloud.conf
+    mode: 0644
+- name: Reload Apache
+  systemd:
+    name: apache2
+    state: reloaded
 
 - import_tasks: php_config.yml
-- import_tasks: apache_config.yml
-- import_tasks: db_setup.yml
 - import_tasks: nc.yml

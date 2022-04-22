@@ -1,9 +1,0 @@
-- name: Install Apache site configuration
-  copy:
-    src: nextcloud.conf
-    dest: /etc/apache2/sites-enabled/nextcloud.conf
-    mode: 0644
-- name: Reload Apache
-  systemd:
-    name: apache2
-    state: reloaded

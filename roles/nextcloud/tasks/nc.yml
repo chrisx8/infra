@@ -1,3 +1,8 @@
+- name: Check if Nextcloud is installed
+  stat:
+    path: /var/www/nextcloud/config/config.php
+  register: nextcloud_exist
+
 - name: Download and extract latest Nextcloud release tarball
   unarchive:
     src: https://download.nextcloud.com/server/releases/latest.tar.bz2
@@ -16,17 +21,18 @@
   when: not nextcloud_exist.stat.exists
   pause:
     prompt: "Finish Nextcloud installation in a web browser \n
-             Database: MySQL on localhost \n
+             Database: PostgreSQL on {{ hostvars['db-postgres']['fqdn'] }} \n
              DB Name: nextcloud \n
              DB Username: nextcloud \n
-             DB Password: {{ mysql_nextcloud_password }} \n\n
+             DB Password: {{ {{ hostvars['db-postgres']['postgres_nextcloud_password'] }} }} \n\n
             "
 
 - name: Update database credential
   lineinfile:
     path: /var/www/nextcloud/config/config.php
     regexp: 'dbpassword'
-    line: "'dbpassword' => '{{ mysql_nextcloud_password }}',"
+    line: "'dbpassword' => '{{ {{ hostvars['db-postgres']['postgres_nextcloud_password'] }} }}',"
+
 - name: Inject extra Nextcloud config options
   when: not nextcloud_exist.stat.exists
   lineinfile:
