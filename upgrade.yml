@@ -1,28 +1,24 @@
 ---
-- name: Upgrade LAMP
-  hosts: lamp
-  become: yes
+- name: Prompts
+  hosts: localhost
   vars_prompt:
     - name: upgrade_dashboard
       prompt: "Upgrade dashboard? (y/n)"
+      private: no
+    - name: upgrade_containers
+      prompt: "Upgrade containers? (y/n)"
       private: no
     - name: upgrade_php_apps
       prompt: "Upgrade PHP applications? (y/n)"
       private: no
   tasks:
-    - import_role:
-        name: dashboard
-      when: upgrade_dashboard == 'y'
-    - import_tasks: tasks/composer.yml
-      when: upgrade_php_apps == 'y'
-    - import_role:
-        name: firefly-iii
-      when: upgrade_php_apps == 'y'
-    - import_role:
-        name: kanboard
-      when: upgrade_php_apps == 'y'
+  - name: Store prompt inputs
+    set_fact:
+      upgrade_dashboard: "{{ upgrade_dashboard }}"
+      upgrade_containers: "{{ upgrade_containers }}"
+      upgrade_php_apps: "{{ upgrade_php_apps }}"
 
-- name: Upgrade all
+- name: Upgrade system
   hosts: all
   become: yes
   tasks:
@@ -52,6 +48,15 @@
   - import_role:
       name: containers
       tasks_from: create_postgres_db.yml
+    when: hostvars['localhost']['upgrade_containers'] == 'y'
+  - import_role:
+      name: firefly-iii
+      tasks_from: create_postgres_db.yml
+    when: hostvars['localhost']['upgrade_php_apps'] == 'y'
+  - import_role:
+      name: kanboard
+      tasks_from: create_postgres_db.yml
+    when: hostvars['localhost']['upgrade_php_apps'] == 'y'
 
 - name: Upgrade containers
   hosts: apps01
@@ -59,5 +64,23 @@
   tasks:
     - import_role:
         name: containers
+      when: hostvars['localhost']['upgrade_containers'] == 'y'
     - name: Reload Nginx
       command: "docker exec nginx nginx -s reload"
+      when: hostvars['localhost']['upgrade_containers'] == 'y'
+
+- name: Upgrade LAMP
+  hosts: lamp
+  become: yes
+  tasks:
+    - import_role:
+        name: dashboard
+      when: hostvars['localhost']['upgrade_dashboard'] == 'y'
+    - import_tasks: tasks/composer.yml
+      when: hostvars['localhost']['upgrade_php_apps'] == 'y'
+    - import_role:
+        name: firefly-iii
+      when: hostvars['localhost']['upgrade_php_apps'] == 'y'
+    - import_role:
+        name: kanboard
+      when: hostvars['localhost']['upgrade_php_apps'] == 'y'
