@@ -1,0 +1,12 @@
+- name: Generate new password for PostgreSQL firefly-iii user
+  set_fact:
+    postgres_firefly_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+- name: Create firefly-iii database
+  postgresql_db:
+    name: firefly-iii
+    state: present
+- name: Create PostgreSQL firefly-iii user
+  postgresql_user:
+    db: firefly-iii
+    name: firefly-iii
+    password: "{{ postgres_firefly_password }}"
