@@ -45,7 +45,7 @@
       when: arb_ssl_check.stat.exists
 
 - name: Set up Postgres databases
-  hosts: postgresql
+  hosts: db-postgres
   become: yes
   become_user: postgres
   tasks:

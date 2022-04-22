@@ -1,6 +1,6 @@
 ---
 - name: Set up PostgreSQL server
-  hosts: postgresql
+  hosts: db-postgres
   become: yes
   tasks:
   - import_role:
