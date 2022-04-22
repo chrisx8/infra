@@ -1,6 +1,7 @@
 - name: Install PHP extensions
   apt:
-    name: [php-curl, php-gd, php-mbstring, php-pgsql, php-xml, php-zip]
+    name: [php8.0-curl, php8.0-gd, php8.0-mbstring, php8.0-pgsql, php8.0-xml,
+           php8.0-zip]
     state: present
 - import_tasks: apt_post.yml
 - import_tasks: kanboard.yml
