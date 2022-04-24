@@ -20,5 +20,9 @@
     name: apache2
     state: reloaded
 
+- name: Check if Nextcloud is installed
+  stat:
+    path: /var/www/nextcloud/config/config.php
+  register: nextcloud_exist
 - import_tasks: php_config.yml
 - import_tasks: nc.yml
