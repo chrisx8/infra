@@ -1,6 +1,7 @@
 ---
 - name: Prompts
   hosts: localhost
+  gather_facts: no
   vars_prompt:
     - name: upgrade_dashboard
       prompt: "Upgrade dashboard? (y/n)"
@@ -20,6 +21,7 @@
 
 - name: Upgrade system
   hosts: all
+  gather_facts: no
   become: yes
   tasks:
     - name: apt dist-upgrade
@@ -42,6 +44,7 @@
 
 - name: Set up Postgres databases
   hosts: db-postgres
+  gather_facts: no
   become: yes
   become_user: postgres
   tasks:
@@ -71,6 +74,7 @@
 
 - name: Upgrade LAMP
   hosts: lamp
+  gather_facts: no
   become: yes
   tasks:
     - import_role:

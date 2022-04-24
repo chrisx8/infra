@@ -67,6 +67,13 @@
       mode: 0644
 
 - block:
+  - name: Create admin directory
+    file:
+      path: /var/www/html/admin
+      state: directory
+      owner: www-data
+      group: www-data
+      mode: 0755
   - name: Load Admin Center config
     include_vars:
       file: admin-center.yml

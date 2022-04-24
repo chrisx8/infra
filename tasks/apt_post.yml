@@ -2,9 +2,6 @@
   apt:
     autoremove: yes
     purge: yes
-- name: apt autoclean
-  apt:
-    autoclean: yes
 - name: apt clean
   command: "apt-get clean"
   changed_when: no

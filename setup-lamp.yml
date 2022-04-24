@@ -1,6 +1,7 @@
 ---
 - name: Set up Postgres nextcloud database
   hosts: db-postgres
+  gather_facts: no
   become: yes
   become_user: postgres
   tasks:
