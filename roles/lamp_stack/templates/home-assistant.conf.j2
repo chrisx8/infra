@@ -19,16 +19,16 @@
 
 	SSLProxyEngine On
 	ProxyRequests Off
-	ProxyPass /api/websocket wss://homeassistant.arb.chrisx.xyz/api/websocket
-	ProxyPassReverse /api/websocket wss://homeassistant.arb.chrisx.xyz/api/websocket
-	ProxyPass / https://homeassistant.arb.chrisx.xyz/
-	ProxyPassReverse / https://homeassistant.arb.chrisx.xyz/
+	ProxyPass /api/websocket wss://homeassistant.arb.chrisx.xyz:8123/api/websocket
+	ProxyPassReverse /api/websocket wss://homeassistant.arb.chrisx.xyz:8123/api/websocket
+	ProxyPass / https://homeassistant.arb.chrisx.xyz:8123/
+	ProxyPassReverse / https://homeassistant.arb.chrisx.xyz:8123/
 
 	RewriteEngine On
 	RewriteCond %{HTTP:Upgrade} =websocket [NC]
-	RewriteRule /(.*)  wss://homeassistant.arb.chrisx.xyz/$1 [P,L]
+	RewriteRule /(.*)  wss://homeassistant.arb.chrisx.xyz:8123/$1 [P,L]
 	RewriteCond %{HTTP:Upgrade} !=websocket [NC]
-	RewriteRule /(.*)  https://homeassistant.arb.chrisx.xyz/$1 [P,L]
+	RewriteRule /(.*)  https://homeassistant.arb.chrisx.xyz:8123/$1 [P,L]
 
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
