@@ -1,9 +1,9 @@
-- name: Set PHP-FPM max POST size
+- name: Set php8.0-fpm max POST size
   lineinfile:
     path: /etc/php/8.0/fpm/php.ini
     regexp: '^post_max_size'
     line: 'post_max_size = 21M'
-- name: Set PHP-FPM max upload size
+- name: Set php8.0-fpm max upload size
   lineinfile:
     path: /etc/php/8.0/fpm/php.ini
     regexp: '^upload_max_filesize'

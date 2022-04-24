@@ -1,8 +1,20 @@
-- name: Install LAMP stack
+- name: Install software-properties-common
   apt:
-    name: [apache2, libapache2-mod-auth-openidc, libapache2-mod-fcgid, mariadb-server, 
-           python3-mysqldb, php8.0-fpm, php8.0-mysql]
+    name: software-properties-common
     state: present
-- import_tasks: apt_post.yml
+- name: Add ppa:ondrej/php
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
 
+- name: Install Apache
+  apt:
+    name: [apache2, libapache2-mod-auth-openidc, libapache2-mod-fcgid]
+    state: present
+- name: Install php8.0-fpm
+  apt:
+    name: php8.0-fpm
+    state: present
+
+- import_tasks: apt_post.yml
 - import_tasks: composer.yml

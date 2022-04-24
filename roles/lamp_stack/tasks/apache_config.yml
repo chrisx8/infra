@@ -30,7 +30,7 @@
 - name: Switch to Event MPM
   shell: "a2dismod mpm_prefork && a2enmod mpm_event"
   changed_when: yes
-- name: Enable PHP-FPM handler
+- name: Enable php8.0-fpm handler
   shell: "a2enconf php8.0-fpm && a2enmod proxy && a2enmod proxy_fcgi"
   changed_when: yes
 
