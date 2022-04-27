@@ -21,6 +21,6 @@ message:
   content: '
     <p>Welcome! Some services are only available to internal users and can only be accessed via the VPN.</p>
     <p>Internal users: Please 
-      <a href="https://mywiki.chrisx.xyz/en/internal/remote-access-tailscale" rel="noopener noreferrer" target="_blank">set up Tailscale</a>
+      <a href="https://docs.arb.chrisx.xyz/_internal/remote-access-tailscale.html" rel="noopener noreferrer" target="_blank">set up Tailscale</a>
       <small>(login required)</small> to access these services.
     </p>'

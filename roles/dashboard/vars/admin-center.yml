@@ -10,6 +10,10 @@ services:
   - name: Applications
     icon: fas fa-rocket
     apps:
+      - name: Admin Docs
+        icon: fas fa-file-alt
+        url: https://webapps.chrisx.xyz/docs/_admin/
+        newtab: true
       - name: Keycloak Admin Console
         icon: fas fa-users-cog
         url: https://sso.chrisx.xyz/admin/chrisx/console/

@@ -45,12 +45,21 @@ services:
         icon: fas fa-book-reader
         url: https://miniflux.chrisx.xyz
         newtab: true
-  - name: Downloads
-    icon: fas fa-download
+  - name: Resources
+    icon: fas fa-info
     apps:
       - name: Downloads
         icon: fas fa-download
-        url: downloads.html
+        url: https://webapps.chrisx.xyz/docs/downloads.html
+        newtab: true
+      - name: Public Docs
+        icon: fas fa-file-alt
+        url: https://webapps.chrisx.xyz/docs
+        newtab: true
+      - name: Internal Docs
+        icon: fas fa-lock
+        url: https://webapps.chrisx.xyz/docs/_internal/
+        newtab: true
 
 # [OPTIONAL] button in the footer
 # Required: name, icon, url
