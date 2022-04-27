@@ -23,8 +23,13 @@
 
 	DocumentRoot /var/www/html
 
+	Alias "/docs" "/var/www/docs"
 	Alias "/firefly-iii" "/var/www/firefly-iii/public"
 	Alias "/kanboard" "/var/www/kanboard"
+
+	RedirectMatch "/docs/.*/_admin/" "/docs/_admin/"
+	RedirectMatch "/docs/.*/_internal/" "/docs/_internal/"
+	RedirectMatch "/docs/.*/_public/" "/docs/"
 
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
@@ -49,6 +54,27 @@
 		</Files>
 	</Directory>
 
+	<Directory "/var/www/docs">
+		Header set Cache-Control "no-cache"
+		Header set Referrer-Policy "no-referrer"
+		Header set X-Content-Type-Options "nosniff"
+		Header set X-Frame-Options "DENY"
+		Header set X-Robots-Tag "none"
+		Header set X-XSS-Protection "1; mode=block"
+		AuthType openid-connect
+		Require claim roles:access
+	</Directory>
+
+	<Directory "/var/www/docs/_admin">
+		AuthType openid-connect
+		Require claim roles:admin
+	</Directory>
+
+	<Directory "/var/www/docs/_internal">
+		AuthType openid-connect
+		Require claim roles:internal
+	</Directory>
+
 	<Directory "/var/www/html">
 		Header set Cache-Control "no-cache"
 		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'none';"
@@ -63,13 +89,17 @@
 
 	<Directory "/var/www/html/admin">
 		AuthType openid-connect
-		Require claim roles:admin-center
+		Require claim roles:admin
 	</Directory>
 
 	<Directory "/var/www/html/internal">
 		AuthType openid-connect
 		Require claim roles:internal
 	</Directory>
+
+	<FilesMatch "\.(jpe?g|png|gif|svg|webp|js|css)$">
+		Header unset Cache-Control
+	</FilesMatch>
 </VirtualHost>
 
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
