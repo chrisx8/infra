@@ -2,6 +2,6 @@
 - import_tasks: ssl_cert.yml
 - import_tasks: apache_config.yml
 - import_tasks: php_config.yml
-- import_tasks: home_assistant_sso.yml
+- import_tasks: sites_config.yml
 - import_role: 
     name: postfix

@@ -72,5 +72,3 @@
       owner: www-data
       group: www-data
       mode: 0644
-
-- import_tasks: apache_setup.yml
