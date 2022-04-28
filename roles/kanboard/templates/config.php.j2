@@ -6,6 +6,8 @@ define('DB_PORT', 5432);
 define('DB_NAME', 'kanboard');
 define('DB_USERNAME', 'kanboard');
 define('DB_PASSWORD', '{{ hostvars["db-postgres"]["postgres_kanboard_password"] }}');
+define('DB_SSL_CA', '/etc/ssl/certs/ca-certificates.crt');
+define('DB_VERIFY_SERVER_CERT', true);
 
 define('MAIL_TRANSPORT', 'mail');
 define('MAIL_FROM', 'kanboard@noreply.chrisx.xyz');
