@@ -5,7 +5,8 @@
 
 - name: Install additional packages
   apt:
-    name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, gnupg, psmisc, vim, unzip]
+    name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, 
+           gnupg, psmisc, vim, unzip]
     state: present
 
 - import_tasks: apt_post.yml

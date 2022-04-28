@@ -15,12 +15,7 @@ header_links:
 # [OPTIONAL] message/announcement on top of page
 # Required: style, title, icon, content (write in HTML)
 message:
-  style: is-warning
+  style: is-link
   title: Message
   icon: fas fa-bullhorn
-  content: '
-    <p>Welcome! Some services are only available to internal users and can only be accessed via the VPN.</p>
-    <p>Internal users: Please 
-      <a href="https://docs.arb.chrisx.xyz/_internal/remote-access-tailscale.html" rel="noopener noreferrer" target="_blank">set up Tailscale</a>
-      <small>(login required)</small> to access these services.
-    </p>'
+  content: '<p>Welcome!</p>'

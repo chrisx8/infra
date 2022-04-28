@@ -80,7 +80,7 @@
     - import_role:
         name: dashboard
       when: hostvars['localhost']['upgrade_dashboard'] == 'y'
-    - import_tasks: tasks/composer.yml
+    - import_tasks: roles/lamp_stack/tasks/composer.yml
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
     - import_role:
         name: firefly-iii
