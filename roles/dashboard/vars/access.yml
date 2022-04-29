@@ -54,7 +54,7 @@ services:
         newtab: true
       - name: Public Docs
         icon: fas fa-file-alt
-        url: https://webapps.chrisx.xyz/docs
+        url: https://webapps.chrisx.xyz/docs/
         newtab: true
       - name: Internal Docs
         icon: fas fa-lock

@@ -15,7 +15,8 @@ header_links:
 # [OPTIONAL] message/announcement on top of page
 # Required: style, title, icon, content (write in HTML)
 message:
-  style: is-link
+  style: is-warning
   title: Message
   icon: fas fa-bullhorn
-  content: '<p>Welcome!</p>'
+  content: "<p><strong>Hello world!</strong> Many services are only available to internal users and can only be accessed
+            locally or via Tailscale.</p>"
