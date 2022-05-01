@@ -4,8 +4,12 @@
 page_title: ACCESS
 
 # [REQUIRED] tiles
-# Required: name, icon, apps
-# apps is a list of dicts, each must have name, icon, url; newtab is optional
+# Options: 
+#   Required: name, icon, apps
+#   Optional: NONE
+# Apps options:
+#   Required: name, icon, url
+#   Optional: newtab (deafult = true)
 services:
   - name: Core
     icon: fas fa-briefcase
@@ -36,10 +40,6 @@ services:
       - name: Gitea
         icon: fas fa-code-branch
         url: https://gitea.chrisx.xyz/user/login
-        newtab: true
-      - name: Kanboard
-        icon: fas fa-clipboard
-        url: /kanboard/
         newtab: true
       - name: Miniflux
         icon: fas fa-book-reader

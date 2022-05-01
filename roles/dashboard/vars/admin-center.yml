@@ -4,8 +4,12 @@
 page_title: Admin Center
 
 # [REQUIRED] tiles
-# Required: name, icon, apps
-# apps is a list of dicts, each must have name, icon, url; newtab is optional
+# Options: 
+#   Required: name, icon, apps
+#   Optional: NONE
+# Apps options:
+#   Required: name, icon, url
+#   Optional: newtab (deafult = true)
 services:
   - name: Applications
     icon: fas fa-rocket

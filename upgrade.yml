@@ -85,6 +85,3 @@
     - import_role:
         name: firefly-iii
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
-    - import_role:
-        name: kanboard
-      when: hostvars['localhost']['upgrade_php_apps'] == 'y'

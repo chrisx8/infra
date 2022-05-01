@@ -30,8 +30,6 @@
   - import_role:
       name: firefly-iii
   - import_role:
-      name: kanboard
-  - import_role:
       name: nextcloud
   - import_role:
       name: dashboard
