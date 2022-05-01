@@ -16,7 +16,7 @@ services:
     apps:
       - name: Nextcloud
         icon: fas fa-cloud
-        url: https://tinycloud.chrisx.xyz
+        url: https://nextcloud.chrisx.xyz
         newtab: true
       - name: 'Home Assistant'
         icon: fas fa-home
