@@ -1,10 +1,16 @@
 # TinyNET Infrastructure Repo
 
-Core repo for TinyNET infrastructure config and docs.
+A self-hosted virtualized Linux environment, deployed and managed with Ansible and Docker.
 
-## Ansible Dependencies
+## Tools used
 
-Ansible playbooks here depend on `ansible.posix` and `community.postgresql` modules. To install these dependencies, run:
+- [Ansible](https://docs.ansible.com/ansible/latest/index.html)
+- [Docker](https://docs.docker.com/engine/)
+- [Docker Compose v2](https://docs.docker.com/compose/)
+
+### Ansible Dependencies
+
+Ansible roles here depend on `ansible.posix` and `community.postgresql` modules. To install these dependencies, run:
 
 ```bash
 ansible-galaxy collection install ansible.posix community.postgresql
@@ -12,23 +18,21 @@ ansible-galaxy collection install ansible.posix community.postgresql
 
 ## Hardware
 
-### Wireless AP
+### Server: HP EliteDesk 800 G2 Mini
 
-- NETGEAR R6220
-- OS: OpenWrt
-- CPU: MediaTek MT7621ST (ramips)
-- RAM: 128MB (Onboard)
-- Storage: 128MB Onboard NAND
-- Networking: 5 * GbE + 2x2 dual-band 802.11 n/ac
+- Runs [Proxmox VE](https://www.proxmox.com/en/proxmox-ve)
+- Intel Core i5-6500T, with Intel vPro
+- 16GB DDR4 RAM (2 * 8GB)
+- 240GB NVMe SSD + 1TB SATA HDD
+- Intel I219-LM Onboard Gigabit Ethernet
+- Intel Wireless-AC 8260 (dual-band 802.11ac Wi-Fi + Bluetooth 4.2)
 
-### Server
+### Wireless AP: NETGEAR R6220
 
-- HP EliteDesk 800 G2 Mini
-- OS: Proxmox VE (includes [Proxmox Backup Server](https://pbs.proxmox.com/docs/))
-- CPU: Intel Core i5-6500T (AMT/vPro)
-- RAM: 8GB DDR4 (1 * 8GB SODIMM)
-- Storage: 240GB NVMe SSD
-- Networking: 1 * GbE
+- [OpenWrt wiki page](https://openwrt.org/toh/netgear/r6220)
+- Runs [OpenWrt](https://openwrt.org)
+- 5 Gigabit Ethernet ports (1 WAN, 4 LAN)
+- 2x2 802.11ac Wi-Fi (300Mbps on 2.4GHz, 867Mbps on 5GHz)
 
 ## Software
 
@@ -36,15 +40,21 @@ ansible-galaxy collection install ansible.posix community.postgresql
 
 - [OpenWrt](https://openwrt.org/)
 - [OPNsense](https://opnsense.org/)
-- [NGINX](https://nginx.org)
 - [Tailscale](https://tailscale.com/)
 - [WireGuard](https://www.wireguard.com/)
+
+### Storage & Backup
+
+- Per-user file shares, accessible via Samba and SFTP
+- [Proxmox Backup Server](https://pbs.proxmox.com/docs/)
 
 ### Home Automation
 
 - [Home Assistant](https://www.home-assistant.io)
+  - [My Home Assistant config repo](https://github.com/chrisx8/home-assistant-config)
+  - [HACS](https://hacs.xyz)
 
-### IAM
+### Identity Management & Single Sign-On
 
 - [Keycloak](https://www.keycloak.org/)
 - [mod_auth_openidc](https://github.com/zmartzone/mod_auth_openidc)
@@ -58,12 +68,6 @@ ansible-galaxy collection install ansible.posix community.postgresql
 - [Nextcloud](https://nextcloud.com/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 - [Wiki.js](https://js.wiki/)
-
-### Storage
-
-- OpenSSH / SFTP
-- SAMBA
-- [Proxmox Backup Server](https://pbs.proxmox.com/docs/)
 
 ## Resources
 
