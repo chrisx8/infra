@@ -52,6 +52,10 @@ services:
         icon: fas fa-hdd
         url: https://hyper1.arb.chrisx.xyz:8007
         newtab: true
+      - name: Storage (Cockpit)
+        icon: fas fa-hdd
+        url: https://storage.arb.chrisx.xyz:9090
+        newtab: true
 
 # [OPTIONAL] button in the footer
 # Required: name, icon, url
