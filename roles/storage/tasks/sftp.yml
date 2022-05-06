@@ -7,7 +7,7 @@
   lineinfile:
     name: /etc/ssh/sshd_config
     line: "Match Group sftpusers"
-  check_mode: yes
+  check_mode: true
   notify:
     - Configure sshd for sftpusers group
     - Restart sshd
