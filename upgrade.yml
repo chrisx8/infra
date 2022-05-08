@@ -49,7 +49,7 @@
   tasks:
   - import_role:
       name: storage
-      tasks_from: ssl_cert_cockpit.yml
+      tasks_from: cockpit_ssl.yml
 
 - name: Set up Postgres databases
   hosts: db-postgres

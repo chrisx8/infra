@@ -5,4 +5,5 @@
 - import_tasks: samba.yml
 - import_tasks: sftp.yml
 - import_tasks: cockpit.yml
-- import_tasks: ssl_cert_cockpit.yml
+- import_tasks: cockpit_ssl.yml
+- import_tasks: cockpit_totp.yml
