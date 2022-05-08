@@ -54,21 +54,3 @@
     db: vaultwarden
     name: vaultwarden
     password: "{{ postgres_vaultwarden_password }}"
-
-- name: Generate new password for PostgreSQL wikijs user
-  set_fact:
-    postgres_wikijs_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-- name: Create wikijs database
-  postgresql_db:
-    name: wikijs
-    state: present
-- name: Add pg_trgm extension to the miniflux database
-  postgresql_ext:
-    name: pg_trgm
-    db: wikijs
-    state: present
-- name: Create PostgreSQL wikijs user
-  postgresql_user:
-    db: wikijs
-    name: wikijs
-    password: "{{ postgres_wikijs_password }}"

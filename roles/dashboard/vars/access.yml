@@ -22,10 +22,6 @@ services:
         icon: fas fa-home
         url: https://home-assistant.chrisx.xyz
         newtab: true
-      - name: MyWiki
-        icon: fas fa-book
-        url: https://mywiki.chrisx.xyz
-        newtab: true
       - name: Vaultwarden
         icon: fas fa-key
         url: https://vaultwarden.chrisx.xyz

@@ -28,7 +28,6 @@ services:
       - keycloak
       - miniflux
       - vaultwarden
-      - wikijs
     security_opt:
       - no-new-privileges
     restart: unless-stopped
@@ -73,15 +72,6 @@ services:
     user: nobody:nogroup
     volumes:
       - vaultwarden_data:/data
-    cap_drop:
-      - all
-    security_opt:
-      - no-new-privileges
-    restart: unless-stopped
-  wikijs:
-    container_name: wikijs
-    image: requarks/wiki:2
-    env_file: ./wikijs.env
     cap_drop:
       - all
     security_opt:

@@ -18,8 +18,3 @@
     src: vaultwarden.env.j2
     dest: ~/containers/vaultwarden.env
     mode: 0644
-- name: Install Wiki.js env file
-  template:
-    src: wikijs.env.j2
-    dest: ~/containers/wikijs.env
-    mode: 0644
