@@ -64,10 +64,6 @@
         name: firefly-iii
         tasks_from: create_postgres_db.yml
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
-    - import_role:
-        name: kanboard
-        tasks_from: create_postgres_db.yml
-      when: hostvars['localhost']['upgrade_php_apps'] == 'y'
 
 - name: Upgrade containers
   hosts: apps01
