@@ -28,6 +28,11 @@
     dest: ~/containers/docker-compose.yml
     mode: 0644
 
+- name: Install Gitea templates
+  copy:
+    src: gitea
+    dest: ~/containers
+    mode: 0644
 - name: Install Nginx files
   copy:
     src: nginx
