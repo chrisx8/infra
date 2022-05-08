@@ -18,8 +18,8 @@
     name: [cockpit-storaged, cockpit-file-sharing]
     state: present
 
-- name: Enable Cockpit socket
+- name: Restart Cockpit socket
   systemd:
     name: cockpit.socket
     enabled: true
-    state: started
+    state: restarted

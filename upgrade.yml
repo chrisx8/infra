@@ -42,6 +42,15 @@
     - import_tasks: tasks/ssl_cert_arb.yml
       when: arb_ssl_check.stat.exists
 
+- name: Upgrade cert on storage
+  hosts: storage
+  gather_facts: no
+  become: yes
+  tasks:
+  - import_role:
+      name: storage
+      tasks_from: ssl_cert_cockpit.yml
+
 - name: Set up Postgres databases
   hosts: db-postgres
   gather_facts: no
