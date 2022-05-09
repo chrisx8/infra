@@ -19,7 +19,7 @@
   lineinfile:
     path: /etc/default/grub
     regexp: "^GRUB_CMDLINE_LINUX_DEFAULT"
-    line: GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on nvme_core.default_ps_max_latency_us=0"
+    line: GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on pcie_aspm=off"
 - name: Update GRUB config
   command: update-grub2
   changed_when: yes
