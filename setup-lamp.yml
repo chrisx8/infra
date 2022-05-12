@@ -32,5 +32,3 @@
       name: nextcloud
   - import_role:
       name: dashboard
-  - name: Reboot
-    reboot:
