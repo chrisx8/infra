@@ -14,8 +14,8 @@
     name: net.core.rmem_max
     value: 2500000
     state: present
-    sysctl_set: yes
-    reload: yes
+    sysctl_set: true
+    reload: true
 
 - name: Get latest cloudflared version number from GitHub
   uri:
@@ -43,20 +43,20 @@
   command:
     chdir: ~/containers
     cmd: "docker-compose pull"
-  changed_when: yes
+  changed_when: true
 - name: Start containers (docker-compose)
   command:
     chdir: ~/containers
     cmd: "docker-compose up -d --build --remove-orphans"
-  changed_when: yes
+  changed_when: true
 - name: Clean up container storage
   command: "docker system prune -af"
-  changed_when: yes
+  changed_when: true
 
 - name: Change owner of vaultwarden data volume
   file:
     path: /var/lib/docker/volumes/containers_vaultwarden_data/_data
     state: directory
-    recurse: yes
+    recurse: true
     owner: nobody
     group: nogroup

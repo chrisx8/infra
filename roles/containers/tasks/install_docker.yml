@@ -11,7 +11,7 @@
   apt:
     name: [docker-ce, docker-ce-cli, containerd.io]
     state: present
-    update_cache: yes
+    update_cache: true
 - import_tasks: apt_post.yml
 
 - name: Create /usr/local/lib/docker/cli-plugins

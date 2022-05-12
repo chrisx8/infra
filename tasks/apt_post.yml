@@ -1,7 +1,7 @@
 - name: apt autopurge
   apt:
-    autoremove: yes
-    purge: yes
+    autoremove: true
+    purge: true
 - name: apt clean
   command: "apt-get clean"
-  changed_when: no
+  changed_when: false

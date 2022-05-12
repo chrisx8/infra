@@ -2,13 +2,13 @@
   unarchive:
     src: https://download.nextcloud.com/server/releases/latest.tar.bz2
     dest: /var/www
-    remote_src: yes
+    remote_src: true
 
 - name: Change Nextcloud directory permission
   file:
     path: /var/www/nextcloud
     state: directory
-    recurse: yes
+    recurse: true
     owner: www-data
     group: www-data
 
@@ -44,11 +44,11 @@
 - name: Update htaccess
   become_user: www-data
   command: "php --define apc.enable_cli=1 /var/www/nextcloud/occ maintenance:update:htaccess"
-  changed_when: yes
+  changed_when: true
 
 - name: Configure crontab for www-data
   cron:
-    env: yes
+    env: true
     name: MAILTO
     user: www-data
     job: ""

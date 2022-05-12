@@ -16,23 +16,23 @@
 
 - name: Disable Apache autoindex module
   command: "a2dismod -f autoindex"
-  changed_when: yes
+  changed_when: true
 - name: Enable Apache headers module
   command: "a2enmod headers"
-  changed_when: yes
+  changed_when: true
 - name: Enable Apache rewrite module
   command: "a2enmod rewrite"
-  changed_when: yes
+  changed_when: true
 - name: Enable Apache ssl module
   command: "a2enmod ssl"
-  changed_when: yes
+  changed_when: true
 
 - name: Switch to Event MPM
   shell: "a2dismod mpm_prefork && a2enmod mpm_event"
-  changed_when: yes
+  changed_when: true
 - name: Enable php8.0-fpm handler
   shell: "a2enconf php8.0-fpm && a2enmod proxy && a2enmod proxy_fcgi"
-  changed_when: yes
+  changed_when: true
 
 - name: Remove built-in HTML
   file:

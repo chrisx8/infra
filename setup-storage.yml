@@ -1,11 +1,10 @@
----
 - name: Set up storage systems
   hosts: storage
-  become: yes
+  become: true
   tasks:
   - import_role:
-      name: base
-  - import_role:
       name: base_vm
+  - import_role:
+      name: base
   - import_role:
       name: storage

@@ -1,6 +1,6 @@
 - name: Set up Postgres databases
   hosts: db-postgres
-  become: yes
+  become: true
   become_user: postgres
   tasks:
   - import_role:
@@ -8,11 +8,11 @@
       tasks_from: create_postgres_db.yml
 - name: Set up container hosts
   hosts: apps01
-  become: yes
+  become: true
   tasks:
   - import_role:
-      name: base
-  - import_role:
       name: base_vm
+  - import_role:
+      name: base
   - import_role:
       name: containers

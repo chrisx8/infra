@@ -1,32 +1,31 @@
----
 - name: Prompts
   hosts: localhost
-  gather_facts: no
+  gather_facts: false
   vars_prompt:
     - name: upgrade_dashboard
       prompt: "Upgrade dashboard? (y/n)"
-      private: no
+      private: false
     - name: upgrade_containers
       prompt: "Upgrade containers? (y/n)"
-      private: no
+      private: false
     - name: upgrade_php_apps
       prompt: "Upgrade PHP applications? (y/n)"
-      private: no
+      private: false
   tasks:
-  - name: Store prompt inputs
-    set_fact:
-      upgrade_dashboard: "{{ upgrade_dashboard }}"
-      upgrade_containers: "{{ upgrade_containers }}"
-      upgrade_php_apps: "{{ upgrade_php_apps }}"
+    - name: Store prompt inputs
+      set_fact:
+        upgrade_dashboard: "{{ upgrade_dashboard }}"
+        upgrade_containers: "{{ upgrade_containers }}"
+        upgrade_php_apps: "{{ upgrade_php_apps }}"
 
 - name: Upgrade system
   hosts: all
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
   tasks:
     - name: apt dist-upgrade
       apt:
-        update_cache: yes
+        update_cache: true
         upgrade: dist
     - import_tasks: tasks/apt_post.yml
     - name: Check if SSL cert exists
@@ -44,35 +43,35 @@
 
 - name: Upgrade cert on storage
   hosts: storage
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
   tasks:
-  - import_role:
-      name: storage
-      tasks_from: cockpit_ssl.yml
+    - import_role:
+        name: storage
+        tasks_from: cockpit_ssl.yml
 
 - name: Set up Postgres databases
   hosts: db-postgres
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
   become_user: postgres
   tasks:
-  - import_role:
-      name: containers
-      tasks_from: create_postgres_db.yml
-    when: hostvars['localhost']['upgrade_containers'] == 'y'
-  - import_role:
-      name: firefly-iii
-      tasks_from: create_postgres_db.yml
-    when: hostvars['localhost']['upgrade_php_apps'] == 'y'
-  - import_role:
-      name: kanboard
-      tasks_from: create_postgres_db.yml
-    when: hostvars['localhost']['upgrade_php_apps'] == 'y'
+    - import_role:
+        name: containers
+        tasks_from: create_postgres_db.yml
+      when: hostvars['localhost']['upgrade_containers'] == 'y'
+    - import_role:
+        name: firefly-iii
+        tasks_from: create_postgres_db.yml
+      when: hostvars['localhost']['upgrade_php_apps'] == 'y'
+    - import_role:
+        name: kanboard
+        tasks_from: create_postgres_db.yml
+      when: hostvars['localhost']['upgrade_php_apps'] == 'y'
 
 - name: Upgrade containers
   hosts: apps01
-  become: yes
+  become: true
   tasks:
     - import_role:
         name: containers
@@ -83,8 +82,8 @@
 
 - name: Upgrade LAMP
   hosts: lamp
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
   tasks:
     - import_role:
         name: dashboard

@@ -1,8 +1,7 @@
----
 - name: Set up Postgres nextcloud database
   hosts: db-postgres
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
   become_user: postgres
   tasks:
   - import_role:
@@ -16,7 +15,7 @@
       tasks_from: create_postgres_db.yml
 - name: Set up LAMP hosts
   hosts: lamp
-  become: yes
+  become: true
   vars_prompt:
     - name: ha_client_secret
       prompt: "home-assistant.chrisx.xyz - OIDC Client Secret"

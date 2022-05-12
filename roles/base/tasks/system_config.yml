@@ -45,12 +45,12 @@
   systemd:
     name: sshd
     state: restarted
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: Configure crontab
   cron:
     name: MAILTO
-    env: yes
+    env: true
     job: ""
 
 - name: Set timezone (systemd)

@@ -1,12 +1,12 @@
 - name: apt dist-upgrade
   apt:
-    update_cache: yes
+    update_cache: true
     upgrade: dist
 
 - name: Install extra Debian packages
   apt:
     name: [vim, libsasl2-modules, lm-sensors]
-    install_recommends: no
+    install_recommends: false
     state: present
 - name: Install Proxmox Backup Server
   apt:
@@ -22,6 +22,6 @@
     line: GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on pcie_aspm=off"
 - name: Update GRUB config
   command: update-grub2
-  changed_when: yes
+  changed_when: true
 - name: Reboot
   reboot:

@@ -11,7 +11,7 @@
   apt:
     name: postgresql-14
     state: latest
-    update_cache: yes
+    update_cache: true
 - name: Install dependencies for Ansible Postgres module
   apt:
     name: [libpq-dev, python3-psycopg2]

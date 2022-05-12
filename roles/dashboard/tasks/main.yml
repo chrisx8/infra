@@ -30,7 +30,7 @@
   unarchive:
     src: "https://use.fontawesome.com/releases/v{{ item }}/fontawesome-free-{{ item }}-web.zip"
     dest: /var/www/html/assets
-    remote_src: yes
+    remote_src: true
     include:
       - "fontawesome-free-{{ item }}-web/css/all.min.css"
       - "fontawesome-free-{{ item }}-web/webfonts/fa-brands-400.woff2"

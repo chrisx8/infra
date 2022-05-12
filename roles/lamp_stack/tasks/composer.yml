@@ -1,7 +1,7 @@
 - name: Get Composer installer checksum
   uri:
     url: https://composer.github.io/installer.sig
-    return_content: yes
+    return_content: true
   register: checksum
 - name: Download Composer installer
   get_url:
@@ -12,7 +12,7 @@
 
 - name: Install Composer to /usr/local/bin
   command: "php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer"
-  changed_when: yes
+  changed_when: true
 
 - name: Delete Composer installer
   file:

@@ -3,8 +3,8 @@
     name: "{{ item.key }}"
     value: "{{ item.value }}"
     state: present
-    sysctl_set: yes
-    reload: yes
+    sysctl_set: true
+    reload: true
   with_dict: "{{ sysctl_config }}"
 - name: Set kernel lockdown=integrity
   lineinfile:
@@ -13,6 +13,6 @@
     line: GRUB_CMDLINE_LINUX_DEFAULT="lockdown=integrity"
 - name: Update GRUB config
   command: update-grub2
-  changed_when: yes
+  changed_when: true
 - name: Reboot
   reboot:

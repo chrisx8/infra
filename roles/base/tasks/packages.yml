@@ -1,6 +1,6 @@
 - name: apt dist-upgrade
   apt:
-    update_cache: yes
+    update_cache: true
     upgrade: dist
 
 - name: Install additional packages

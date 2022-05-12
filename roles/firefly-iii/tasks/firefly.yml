@@ -14,14 +14,14 @@
   file:
     path: /var/www/firefly-iii
     state: directory
-    recurse: yes
+    recurse: true
     owner: www-data
     group: www-data
 - name: Set permissions (2/2)
   file:
     path: /var/www/firefly-iii/firefly-iii/storage
     state: directory
-    recurse: yes
+    recurse: true
     mode: 0775
 
 - name: Install config file
@@ -37,27 +37,27 @@
   command:
     chdir: /var/www/firefly-iii
     cmd: "composer install --no-dev --prefer-dist"
-  changed_when: yes
+  changed_when: true
 - name: Generate new key
   command:
     chdir: /var/www/firefly-iii  
     cmd: "php artisan key:generate --force"
-  changed_when: yes
+  changed_when: true
 - name: Database migration
   shell:
     chdir: /var/www/firefly-iii
     cmd: "php artisan migrate --seed --force && php artisan firefly-iii:upgrade-database"
-  changed_when: yes
+  changed_when: true
 - name: Install Passport
   command:
     chdir: /var/www/firefly-iii
     cmd: "php artisan passport:install --force"
-  changed_when: yes
+  changed_when: true
 - name: Clear cache
   shell:
     chdir: /var/www/firefly-iii
     cmd: "php artisan cache:clear && php artisan config:clear && php artisan view:clear"
-  changed_when: yes
+  changed_when: true
 
 - name: Install Firefly III cron job
   cron:
