@@ -51,7 +51,8 @@ ansible-galaxy collection install ansible.posix community.postgresql
 ### Home Automation
 
 - [Home Assistant](https://www.home-assistant.io)
-  - [My Home Assistant config repo](https://github.com/chrisx8/home-assistant-config)
+  - [My Home Assistant Add-ons](https://github.com/chrisx8/home-assistant-addons)
+  - [My Home Assistant config](https://github.com/chrisx8/home-assistant-config)
   - [HACS](https://hacs.xyz)
 
 ### Identity Management & Single Sign-On

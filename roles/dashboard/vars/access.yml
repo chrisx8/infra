@@ -20,7 +20,7 @@ services:
         newtab: true
       - name: 'Home Assistant'
         icon: fas fa-home
-        url: https://home-assistant.chrisx.xyz
+        url: https://homeassistant.arb.chrisx.xyz
         newtab: true
       - name: Vaultwarden
         icon: fas fa-key

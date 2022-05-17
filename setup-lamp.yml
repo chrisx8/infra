@@ -14,8 +14,6 @@
   hosts: lamp
   become: true
   vars_prompt:
-    - name: ha_client_secret
-      prompt: "home-assistant.chrisx.xyz - OIDC Client Secret"
     - name: webapps_client_secret
       prompt: "webapps.chrisx.xyz - OIDC Client Secret"
   tasks:
