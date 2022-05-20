@@ -14,9 +14,6 @@
     state: restarted
 - import_tasks: install_docker.yml
 
-- import_role:
-    name: postfix
-
 - import_tasks: configure_containers.yml
 - import_tasks: launch_containers.yml
 
