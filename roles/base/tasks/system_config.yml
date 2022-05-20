@@ -1,36 +1,22 @@
-- name: Limit systemd-journald
-  lineinfile:
-    dest: "/etc/systemd/journald.conf"
-    regex: "SystemMaxUse="
-    line: "SystemMaxUse=10M"
+- name: Set hostname
+  hostname:
+    name: "{{ ansible_host }}"
+    use: systemd
+- name: Set timezone
+  command: "timedatectl set-timezone {{ hostvars[ansible_hostname].timezone }}"
+  when: hostvars[ansible_hostname].timezone is defined
 
-- name: Configure vim
-  copy:
-    src: vimrc
-    dest: /etc/vim/vimrc
-    mode: 0644
-
-- name: Check configuration existence
-  stat:
-    path: /etc/ssh/ssh_host_dsa_key
-  register: configured
+- name: Set authorized key for {{ ansible_user }} from ~/.ssh/id_ed25519.pub
+  authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_ed25519.pub') }}"
 
 - name: Remove DSA and ECDSA SSH host keys
   file:
     path: [/etc/ssh/ssh_host_ecdsa_key, /etc/ssh/ssh_host_ecdsa_key.pub, 
            /etc/ssh/ssh_host_dsa_key, /etc/ssh/ssh_host_dsa_key.pub]
     state: absent
-
-- name: Configure bashrc
-  when: configured.stat.exists
-  lineinfile:
-    dest: "/etc/bash.bashrc"
-    line: "
-          # Installed by Ansible\n
-          export EDITOR=vim\n
-          alias dfh='df -h -x tmpfs -x overlay'\n
-          "
-
 - name: Configure OpenSSH client
   copy:
     src: ssh_config
@@ -47,12 +33,26 @@
     state: restarted
     daemon_reload: true
 
+- name: Limit systemd-journald
+  lineinfile:
+    dest: "/etc/systemd/journald.conf"
+    regex: "SystemMaxUse="
+    line: "SystemMaxUse=10M"
+
+- name: Set default text editor to vim
+  lineinfile:
+    dest: /etc/bash.bashrc
+    regex: "^export EDITOR="
+    line: export EDITOR=vim
+
+- name: Configure vim
+  copy:
+    src: vimrc
+    dest: /etc/vim/vimrc
+    mode: 0644
+
 - name: Configure crontab
   cron:
     name: MAILTO
     env: true
     job: ""
-
-- name: Set timezone (systemd)
-  command: "timedatectl set-timezone {{ hostvars[ansible_hostname].timezone }}"
-  when: hostvars[ansible_hostname].timezone is defined
