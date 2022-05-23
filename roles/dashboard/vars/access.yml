@@ -12,48 +12,48 @@ page_title: ACCESS
 #   Optional: newtab (deafult = true)
 services:
   - name: Core
-    icon: fas fa-briefcase
+    icon: fa-solid fa-cubes
     apps:
       - name: Nextcloud
-        icon: fas fa-cloud
+        icon: fa-solid fa-cloud
         url: https://nextcloud.chrisx.xyz
         newtab: true
-      - name: 'Home Assistant'
-        icon: fas fa-home
-        url: https://homeassistant.arb.chrisx.xyz
-        newtab: true
-      - name: Vaultwarden
-        icon: fas fa-key
-        url: https://vaultwarden.chrisx.xyz
-        newtab: true
-  - name: Extras
-    icon: fas fa-cubes
-    apps:
-      - name: Firefly III
-        icon: fas fa-dollar-sign
-        url: /firefly-iii/
-        newtab: true
       - name: Gitea
-        icon: fas fa-code-branch
+        icon: fa-solid fa-code-branch
         url: https://gitea.chrisx.xyz
         newtab: true
+      - name: Vaultwarden
+        icon: fa-solid fa-key
+        url: https://vaultwarden.chrisx.xyz
+        newtab: true
+  - name: Internal
+    icon: fa-solid fa-shield-halved
+    apps:
+      - name: Home Assistant
+        icon: fa-solid fa-house
+        url: https://homeassistant.arb.chrisx.xyz
+        newtab: true
+      - name: Firefly III
+        icon: fa-solid fa-sack-dollar
+        url: /firefly-iii/
+        newtab: true
       - name: Miniflux
-        icon: fas fa-book-reader
+        icon: fa-solid fa-book-open-reader
         url: https://miniflux.chrisx.xyz
         newtab: true
   - name: Resources
-    icon: fas fa-info
+    icon: fa-solid fa-info
     apps:
       - name: Downloads
-        icon: fas fa-download
+        icon: fa-solid fa-download
         url: /docs/downloads.html
         newtab: true
       - name: Public Docs
-        icon: fas fa-file-alt
+        icon: fa-solid fa-file
         url: /docs/
         newtab: true
       - name: Internal Docs
-        icon: fas fa-lock
+        icon: fa-solid fa-file-shield
         url: /docs/_internal/
         newtab: true
 
@@ -62,5 +62,5 @@ services:
 # Optional: newtab
 footer_link:
   name: Admin Center
-  icon: fas fa-lock
+  icon: fa-solid fa-lock
   url: admin/

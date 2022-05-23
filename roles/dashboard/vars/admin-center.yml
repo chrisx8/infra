@@ -12,48 +12,48 @@ page_title: Admin Center
 #   Optional: newtab (deafult = true)
 services:
   - name: Applications
-    icon: fas fa-rocket
+    icon: fa-solid fa-rocket
     apps:
       - name: Admin Docs
-        icon: fas fa-file-alt
+        icon: fa-solid fa-file-lines
         url: /docs/_admin/
         newtab: true
       - name: Keycloak Admin Console
-        icon: fas fa-users-cog
+        icon: fa-solid fa-users-gear
         url: https://sso.chrisx.xyz/admin/chrisx/console/
         newtab: true
       - name: Vaultwarden Admin Panel
-        icon: fas fa-key
+        icon: fa-solid fa-key
         url: https://vaultwarden.chrisx.xyz/admin
         newtab: true
   - name: Network
-    icon: fas fa-network-wired
+    icon: fa-solid fa-network-wired
     apps:
       - name: OPNsense
-        icon: fas fa-network-wired
+        icon: fa-solid fa-network-wired
         url: https://opnsense.arb.chrisx.xyz
         newtab: true
       - name: wap-ac1
-        icon: fas fa-wifi
+        icon: fa-solid fa-wifi
         url: https://wap-ac1.arb.chrisx.xyz
         newtab: true
       - name: Tailscale Admin Console
-        icon: fas fa-globe
+        icon: fa-solid fa-globe
         url: https://login.tailscale.com/welcome
         newtab: true
   - name: Systems
-    icon: fas fa-microchip
+    icon: fa-solid fa-microchip
     apps:
       - name: Proxmox VE
-        icon: fas fa-server
+        icon: fa-solid fa-server
         url: https://hyper1.arb.chrisx.xyz:8006
         newtab: true
       - name: Proxmox Backup Server
-        icon: fas fa-hdd
+        icon: fa-solid fa-database
         url: https://hyper1.arb.chrisx.xyz:8007
         newtab: true
       - name: Storage (Cockpit)
-        icon: fas fa-hdd
+        icon: fa-solid fa-hard-drive
         url: https://storage.arb.chrisx.xyz:9090
         newtab: true
 
@@ -62,5 +62,5 @@ services:
 # Optional: newtab
 footer_link:
   name: Back to ACCESS
-  icon: fas fa-chevron-left
+  icon: fa-solid fa-angle-left
   url: ../

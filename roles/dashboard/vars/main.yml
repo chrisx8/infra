@@ -5,11 +5,11 @@
 # Optional: newtab (open in new tab)
 header_links:
   - name: Account Console
-    icon: fas fa-user
-    url: https://sso.chrisx.xyz/realms/chrisx/account/
+    icon: fa-solid fa-user
+    url: https://sso.chrisx.xyz/realms/chrisx/account/?referrer=webapps.chrisx.xyz
     newtab: true
   - name: Log out
-    icon: fas fa-sign-out-alt
+    icon: fa-solid fa-right-from-bracket
     url: /auth/openid-connect?logout=
 
 # [OPTIONAL] message/announcement on top of page
@@ -17,6 +17,5 @@ header_links:
 message:
   style: is-warning
   title: Message
-  icon: fas fa-bullhorn
-  content: "<p><strong>Hello world!</strong> Many services are only available to internal users and can only be accessed
-            locally or via Tailscale.</p>"
+  icon: fa-solid fa-bullhorn
+  content: "<p><strong>Hello world!</strong></p>"
