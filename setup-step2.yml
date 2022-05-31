@@ -1,0 +1,43 @@
+# Set up web applications
+
+- name: Set up Postgres databases
+  hosts: db-postgres
+  gather_facts: false
+  become: true
+  become_user: postgres
+  tasks:
+    - import_role:
+        name: containers
+        tasks_from: create_postgres_db.yml
+    - import_role:
+        name: firefly-iii
+        tasks_from: create_postgres_db.yml
+    - import_role:
+        name: nextcloud
+        tasks_from: create_postgres_db.yml
+
+- name: Set up container hosts
+  hosts: apps01
+  become: true
+  tasks:
+    - import_role:
+        name: base_vm
+    - import_role:
+        name: base
+    - import_role:
+        name: containers
+
+- name: Set up LAMP hosts
+  hosts: lamp
+  become: true
+  tasks:
+    - import_role:
+        name: base
+    - import_role:
+        name: lamp_stack
+    - import_role:
+        name: firefly-iii
+    - import_role:
+        name: nextcloud
+    - import_role:
+        name: dashboard

@@ -1,9 +1,0 @@
-- name: Set up AdGuard Home
-  hosts: adguard-home
-  become: true
-  gather_facts: false
-  tasks:
-  - import_role:
-      name: base
-  - import_role:
-      name: adguard-home

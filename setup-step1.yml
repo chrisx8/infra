@@ -1,0 +1,37 @@
+# Set up physical hosts and everything that doesn't depend on any local services
+
+- name: Customize Proxmox VE
+  hosts: hyper1
+  become: true
+  tasks:
+    - import_role:
+        name: proxmox
+    
+- name: Set up AdGuard Home
+  hosts: adguard-home
+  become: true
+  tasks:
+    - import_role:
+        name: base
+    - import_role:
+        name: adguard-home
+
+- name: Set up PostgreSQL server
+  hosts: db-postgres
+  become: true
+  tasks:
+    - import_role:
+        name: base
+    - import_role:
+        name: postgresql
+
+- name: Set up storage systems
+  hosts: storage
+  become: true
+  tasks:
+    - import_role:
+        name: base_vm
+    - import_role:
+        name: base
+    - import_role:
+        name: storage

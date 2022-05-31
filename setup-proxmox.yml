@@ -1,6 +1,0 @@
-- name: Customize Proxmox VE
-  hosts: hyper1
-  become: true
-  tasks:
-  - import_role:
-      name: proxmox

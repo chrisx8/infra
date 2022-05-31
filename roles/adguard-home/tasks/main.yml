@@ -25,3 +25,7 @@
 - name: Run AdGuard Home install
   command: /opt/AdGuardHome/AdGuardHome -s install
   changed_when: true
+
+- name: Prompt for AdGuard Home setup
+  pause:
+    prompt: "Finish AdGuard Home setup in a web browser: <http://{{ ansible_host }}:3000>"
