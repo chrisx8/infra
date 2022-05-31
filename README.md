@@ -27,7 +27,7 @@ ansible-galaxy collection install ansible.posix community.postgresql
 - Intel I219-LM Onboard Gigabit Ethernet
 - Intel Wireless-AC 8260 (dual-band 802.11ac Wi-Fi + Bluetooth 4.2)
 
-### Wireless AP: NETGEAR R6220
+### Router & Wi-Fi AP: NETGEAR R6220
 
 - [OpenWrt wiki page](https://openwrt.org/toh/netgear/r6220)
 - Runs [OpenWrt](https://openwrt.org)
@@ -38,8 +38,8 @@ ansible-galaxy collection install ansible.posix community.postgresql
 
 ### Networking
 
+- [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome)
 - [OpenWrt](https://openwrt.org/)
-- [OPNsense](https://opnsense.org/)
 - [Tailscale](https://tailscale.com/)
 - [WireGuard](https://www.wireguard.com/)
 

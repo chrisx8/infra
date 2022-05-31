@@ -29,13 +29,13 @@ services:
   - name: Network
     icon: fa-solid fa-network-wired
     apps:
-      - name: OPNsense
-        icon: fa-solid fa-network-wired
-        url: https://opnsense.arb.chrisx.xyz
+      - name: AdGuard Home
+        icon: fa-solid fa-list
+        url: https://adguard-home.arb.chrisx.xyz
         newtab: true
-      - name: wap-ac1
+      - name: OpenWrt
         icon: fa-solid fa-wifi
-        url: https://wap-ac1.arb.chrisx.xyz
+        url: https://openwrt.arb.chrisx.xyz
         newtab: true
       - name: Tailscale Admin Console
         icon: fa-solid fa-globe
