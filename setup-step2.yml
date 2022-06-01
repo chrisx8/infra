@@ -16,8 +16,8 @@
         name: nextcloud
         tasks_from: create_postgres_db.yml
 
-- name: Set up container hosts
-  hosts: apps01
+- name: Set up containers
+  hosts: web-docker
   become: true
   tasks:
     - import_role:
@@ -27,14 +27,14 @@
     - import_role:
         name: containers
 
-- name: Set up LAMP hosts
-  hosts: lamp
+- name: Set up Apache + PHP
+  hosts: web-php
   become: true
   tasks:
     - import_role:
         name: base
     - import_role:
-        name: lamp_stack
+        name: apache_php
     - import_role:
         name: firefly-iii
     - import_role:

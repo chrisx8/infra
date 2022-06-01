@@ -66,7 +66,7 @@
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
 
 - name: Upgrade containers
-  hosts: apps01
+  hosts: web-docker
   become: true
   tasks:
     - import_role:
@@ -76,15 +76,15 @@
       command: "docker exec nginx nginx -s reload"
       when: hostvars['localhost']['upgrade_containers'] == 'y'
 
-- name: Upgrade LAMP
-  hosts: lamp
+- name: Upgrade PHP apps
+  hosts: web-php
   gather_facts: false
   become: true
   tasks:
     - import_role:
         name: dashboard
       when: hostvars['localhost']['upgrade_dashboard'] == 'y'
-    - import_tasks: roles/lamp_stack/tasks/composer.yml
+    - import_tasks: roles/apache_php/tasks/composer.yml
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
     - import_role:
         name: firefly-iii

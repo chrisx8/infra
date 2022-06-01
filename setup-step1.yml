@@ -1,13 +1,13 @@
 # Set up physical hosts and everything that doesn't depend on any local services
 
-- name: Customize Proxmox VE
+- name: Set up Proxmox VE
   hosts: hyper1
   become: true
   tasks:
     - import_role:
         name: proxmox
     
-- name: Set up AdGuard Home
+- name: Set up AdGuard Home instance
   hosts: adguard-home
   become: true
   tasks:
@@ -25,7 +25,7 @@
     - import_role:
         name: postgresql
 
-- name: Set up storage systems
+- name: Set up storage server
   hosts: storage
   become: true
   tasks:
