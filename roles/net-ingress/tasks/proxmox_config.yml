@@ -1,0 +1,28 @@
+- name: Get pve_id
+  set_fact:
+    ct_id: "{{ hostvars['net-ingress']['pve_id'] }}"
+- name: Allow CT {{ ct_id }} to access devices
+  lineinfile:
+    path: /etc/pve/lxc/{{ ct_id }}.conf
+    line: "lxc.cgroup2.devices.allow: c 10:200 rwm"
+    regexp: "^lxc.cgroup2.devices.allow"
+- name: Allow CT {{ ct_id }} to access /dev/net
+  lineinfile:
+    path: /etc/pve/lxc/{{ ct_id }}.conf
+    line: "lxc.mount.entry: /dev/net dev/net none bind,create=dir"
+    regexp: "^lxc.mount.entry"
+- name: Change owner of /dev/net/tun
+  file:
+    path: /dev/net/tun
+    owner: 100000
+    group: 100000
+- name: Reboot CT {{ ct_id }}
+  command: "pct reboot {{ ct_id }}"
+  changed_when: true
+  ignore_errors: true
+  timeout: 5
+- name: Wait for CT {{ ct_id }} to reboot 
+  wait_for:
+    host: "{{ hostvars['net-ingress']['ansible_host'] }}"
+    port: 22
+    timeout: 60

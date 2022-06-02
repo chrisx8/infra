@@ -6,15 +6,18 @@
   tasks:
     - import_role:
         name: proxmox
-    
-- name: Set up AdGuard Home instance
-  hosts: adguard-home
+    - import_role:
+        name: net-ingress
+        tasks_from: proxmox_config.yml
+
+- name: Set up Ingress instance
+  hosts: net-ingress
   become: true
   tasks:
     - import_role:
         name: base
     - import_role:
-        name: adguard-home
+        name: net-ingress
 
 - name: Set up PostgreSQL server
   hosts: db-postgres

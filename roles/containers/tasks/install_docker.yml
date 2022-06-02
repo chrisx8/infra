@@ -14,11 +14,6 @@
     update_cache: true
 - import_tasks: apt_post.yml
 
-- name: Create /usr/local/lib/docker/cli-plugins
-  file:
-    path: /usr/local/lib/docker/cli-plugins
-    state: directory
-    mode: 0755
 - name: Get latest Docker Compose version number from GitHub
   uri:
     url: https://api.github.com/repos/docker/compose/releases/latest

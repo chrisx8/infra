@@ -31,7 +31,7 @@ services:
     apps:
       - name: AdGuard Home
         icon: fa-solid fa-list
-        url: https://adguard-home.arb.chrisx.xyz
+        url: https://net-ingress.arb.chrisx.xyz
         newtab: true
       - name: OpenWrt
         icon: fa-solid fa-wifi

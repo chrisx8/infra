@@ -1,0 +1,13 @@
+- name: Disable systemd-resolved
+  systemd:
+    name: systemd-resolved.service
+    enabled: false
+    state: stopped
+- name: Install ssl-cert
+  apt:
+    name: ssl-cert
+    state: present
+
+- import_tasks: ssl_cert_arb.yml
+- import_tasks: adguard-home.yml
+- import_tasks: tailscale.yml
