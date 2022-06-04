@@ -23,10 +23,7 @@
   gather_facts: false
   become: true
   tasks:
-    - name: apt dist-upgrade
-      apt:
-        update_cache: true
-        upgrade: dist
+    - import_tasks: tasks/apt_upgrade.yml
     - import_tasks: tasks/apt_post.yml
     - name: Check if SSL cert exists
       stat:

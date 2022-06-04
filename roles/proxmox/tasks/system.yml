@@ -1,8 +1,4 @@
-- name: apt dist-upgrade
-  apt:
-    update_cache: true
-    upgrade: dist
-
+- import_tasks: tasks/apt_upgrade.yml
 - name: Install extra Debian packages
   apt:
     name: [vim, libsasl2-modules, lm-sensors]
@@ -12,7 +8,6 @@
   apt:
     name: proxmox-backup-server
     state: present
-
 - import_tasks: apt_post.yml
 
 - name: Set kernel cmdline

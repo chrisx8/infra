@@ -1,12 +1,7 @@
-- name: apt dist-upgrade
-  apt:
-    update_cache: true
-    upgrade: dist
-
+- import_tasks: tasks/apt_upgrade.yml
 - name: Install additional packages
   apt:
     name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, 
            gnupg, psmisc, vim, unzip]
     state: present
-
 - import_tasks: apt_post.yml
