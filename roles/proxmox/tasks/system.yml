@@ -10,6 +10,11 @@
     state: present
 - import_tasks: apt_post.yml
 
+- name: Set GRUB timeout
+  lineinfile:
+    path: /etc/default/grub
+    regexp: "^GRUB_TIMEOUT"
+    line: GRUB_TIMEOUT=2
 - name: Set kernel cmdline
   lineinfile:
     path: /etc/default/grub
@@ -18,5 +23,6 @@
 - name: Update GRUB config
   command: update-grub2
   changed_when: true
+
 - name: Reboot
   reboot:
