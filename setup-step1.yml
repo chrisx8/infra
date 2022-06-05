@@ -1,7 +1,7 @@
 # Set up physical hosts and everything that doesn't depend on any local services
 
 - name: Set up Proxmox VE
-  hosts: hyper1
+  hosts: proxmox1
   become: true
   tasks:
     - import_role:

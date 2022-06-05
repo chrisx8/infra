@@ -46,11 +46,11 @@ services:
     apps:
       - name: Proxmox VE
         icon: fa-solid fa-server
-        url: https://hyper1.arb.chrisx.xyz:8006
+        url: https://proxmox1.arb.chrisx.xyz:8006
         newtab: true
       - name: Proxmox Backup Server
         icon: fa-solid fa-database
-        url: https://hyper1.arb.chrisx.xyz:8007
+        url: https://proxmox1.arb.chrisx.xyz:8007
         newtab: true
       - name: Storage (Cockpit)
         icon: fa-solid fa-hard-drive
