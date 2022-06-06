@@ -1,7 +1,8 @@
-- import_tasks: package_install.yml
 - import_tasks: ssl_cert.yml
-- import_tasks: apache_config.yml
-- import_tasks: php_config.yml
-- import_tasks: sites_config.yml
-- import_role: 
+- import_tasks: apache.yml
+- import_tasks: php.yml
+- import_tasks: composer.yml
+- import_tasks: sites.yml
+- import_role:
     name: postfix
+- import_tasks: apt_post.yml

@@ -1,3 +1,17 @@
+- name: Install software-properties-common
+  apt:
+    name: software-properties-common
+    state: present
+- name: Add ppa:ondrej/php
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+
+- name: Install php8.0-fpm
+  apt:
+    name: php8.0-fpm
+    state: present
+
 - name: Set php8.0-fpm max POST size
   lineinfile:
     path: /etc/php/8.0/fpm/php.ini

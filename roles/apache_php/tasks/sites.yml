@@ -10,6 +10,14 @@
     dest: /etc/apache2/sites-enabled/webapps.conf
     mode: 0644
 
+- name: Copy robots.txt
+  copy:
+    src: robots.txt
+    dest: /var/www/robots.txt
+    owner: www-data
+    group: www-data
+    mode: 0644
+
 - name: Reload Apache
   systemd:
     name: apache2
