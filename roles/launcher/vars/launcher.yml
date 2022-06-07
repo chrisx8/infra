@@ -1,7 +1,7 @@
 # vars setup is heavily inspired by Homer (github.com/bastienwirtz/homer)
 
 # [REQUIRED] title of the page: shown in header and as HTML <title>
-page_title: ACCESS
+page_title: Launcher
 
 # [REQUIRED] tiles
 # Options: 
@@ -63,4 +63,4 @@ services:
 footer_link:
   name: Admin Center
   icon: fa-solid fa-lock
-  url: admin/
+  url: admin.html

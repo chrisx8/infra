@@ -40,4 +40,4 @@
     - import_role:
         name: nextcloud
     - import_role:
-        name: dashboard
+        name: launcher

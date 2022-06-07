@@ -2,8 +2,8 @@
   hosts: localhost
   gather_facts: false
   vars_prompt:
-    - name: upgrade_dashboard
-      prompt: "Upgrade dashboard? (y/n)"
+    - name: upgrade_launcher
+      prompt: "Upgrade Launcher? (y/n)"
       private: false
     - name: upgrade_containers
       prompt: "Upgrade containers? (y/n)"
@@ -14,7 +14,7 @@
   tasks:
     - name: Store prompt inputs
       set_fact:
-        upgrade_dashboard: "{{ upgrade_dashboard }}"
+        upgrade_launcher: "{{ upgrade_launcher }}"
         upgrade_containers: "{{ upgrade_containers }}"
         upgrade_php_apps: "{{ upgrade_php_apps }}"
 
@@ -79,8 +79,8 @@
   become: true
   tasks:
     - import_role:
-        name: dashboard
-      when: hostvars['localhost']['upgrade_dashboard'] == 'y'
+        name: launcher
+      when: hostvars['localhost']['upgrade_launcher'] == 'y'
     - import_tasks: roles/apache_php/tasks/composer.yml
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
     - import_role:

@@ -1,14 +1,14 @@
-- name: Create /var/www/html
+- name: Create /var/www/launcher
   file:
-    path: /var/www/html
+    path: /var/www/launcher
     state: directory
     owner: www-data
     group: www-data
     mode: 0755
-- name: Install dashboard
+- name: Copy Launcher assets
   copy:
     src: .
-    dest: /var/www/html/
+    dest: /var/www/launcher/
     owner: www-data
     group: www-data
     mode: 0644
@@ -16,12 +16,12 @@
 - name: Download latest bulma.min.css
   get_url:
     url: https://unpkg.com/bulma/css/bulma.min.css
-    dest: /var/www/html/assets/css/bulma.min.css
+    dest: /var/www/launcher/assets/css/bulma.min.css
     mode: 0644  
 - name: Download latest bulma-prefers-dark.min.css
   get_url:
     url: https://unpkg.com/bulma-prefers-dark/css/bulma-prefers-dark.min.css
-    dest: /var/www/html/assets/css/bulma-prefers-dark.min.css
+    dest: /var/www/launcher/assets/css/bulma-prefers-dark.min.css
     mode: 0644
 
 - name: Load version info vars
@@ -29,7 +29,7 @@
 - name: Download and extract Font Awesome
   unarchive:
     src: "https://use.fontawesome.com/releases/v{{ item }}/fontawesome-free-{{ item }}-web.zip"
-    dest: /var/www/html/assets
+    dest: /var/www/launcher/assets
     remote_src: true
     include:
       - "fontawesome-free-{{ item }}-web/css/all.min.css"
@@ -39,36 +39,26 @@
   with_items:
     - "{{ FONT_AWESOME_VERSION }}"
 
-- name: Load main config
-  include_vars:
-    file: main.yml
 - block:
-  - name: Load ACCESS config
+  - name: Load Launcher config
     include_vars:
-      file: access.yml
-  - name: Generate ACCESS HTML
+      file: launcher.yml
+  - name: Generate Launcher HTML
     template:
-      src: dashboard.html.j2
-      dest: /var/www/html/index.html
+      src: launcher.html.j2
+      dest: /var/www/launcher/index.html
       owner: www-data
       group: www-data
       mode: 0644
 
 - block:
-  - name: Create admin directory
-    file:
-      path: /var/www/html/admin
-      state: directory
-      owner: www-data
-      group: www-data
-      mode: 0755
   - name: Load Admin Center config
     include_vars:
       file: admin-center.yml
   - name: Generate Admin Center HTML
     template:
-      src: dashboard.html.j2
-      dest: /var/www/html/admin/index.html
+      src: launcher.html.j2
+      dest: /var/www/launcher/admin.html
       owner: www-data
       group: www-data
       mode: 0644

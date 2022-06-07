@@ -61,6 +61,6 @@ services:
 # Required: name, icon, url
 # Optional: newtab
 footer_link:
-  name: Back to ACCESS
+  name: Back to Launcher
   icon: fa-solid fa-angle-left
-  url: ../
+  url: .

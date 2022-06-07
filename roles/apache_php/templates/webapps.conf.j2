@@ -21,10 +21,9 @@
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true
 
-	DocumentRoot /var/www/html
-
 	Alias "/docs" "/var/www/docs"
 	Alias "/firefly-iii" "/var/www/firefly-iii/public"
+	Alias "/launcher" "/var/www/launcher"
 
 	RedirectMatch "/docs/.*/_admin/" "/docs/_admin/"
 	RedirectMatch "/docs/.*/_internal/" "/docs/_internal/"
@@ -34,17 +33,6 @@
 		AuthType openid-connect
 		Require valid-user
 	</Location>
-
-	<Directory "/var/www/firefly-iii/public">
-		AllowOverride All
-		AuthType openid-connect
-		Require claim roles:firefly-iii
-	</Directory>
-
-	<Directory "/var/www/firefly-iii">
-		AllowOverride None
-		Require all denied
-	</Directory>
 
 	<Directory "/var/www/docs">
 		Header set Cache-Control "no-cache"
@@ -67,7 +55,18 @@
 		Require claim roles:internal
 	</Directory>
 
-	<Directory "/var/www/html">
+	<Directory "/var/www/firefly-iii/public">
+		AllowOverride All
+		AuthType openid-connect
+		Require claim roles:firefly-iii
+	</Directory>
+
+	<Directory "/var/www/firefly-iii">
+		AllowOverride None
+		Require all denied
+	</Directory>
+
+	<Directory "/var/www/launcher">
 		Header set Cache-Control "no-cache"
 		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'none';"
 		Header set Referrer-Policy "no-referrer"
@@ -79,14 +78,9 @@
 		Require claim roles:access
 	</Directory>
 
-	<Directory "/var/www/html/admin">
+	<Directory "/var/www/launcher/admin.html">
 		AuthType openid-connect
 		Require claim roles:admin
-	</Directory>
-
-	<Directory "/var/www/html/internal">
-		AuthType openid-connect
-		Require claim roles:internal
 	</Directory>
 
 	<FilesMatch "\.(jpe?g|png|gif|svg|webp|js|css)$">
