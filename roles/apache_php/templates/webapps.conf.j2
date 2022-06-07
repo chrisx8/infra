@@ -21,6 +21,8 @@
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true
 
+	DocumentRoot /var/www/html
+
 	Alias "/docs" "/var/www/docs"
 	Alias "/firefly-iii" "/var/www/firefly-iii/public"
 	Alias "/launcher" "/var/www/launcher"
@@ -81,6 +83,10 @@
 	<Directory "/var/www/launcher/admin.html">
 		AuthType openid-connect
 		Require claim roles:admin
+	</Directory>
+
+	<Directory "/var/www/launcher/assets/img">
+		Require all allowed
 	</Directory>
 
 	<FilesMatch "\.(jpe?g|png|gif|svg|webp|js|css)$">
