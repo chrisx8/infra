@@ -1,11 +1,3 @@
-- name: Copy default html
-  copy:
-    src: index.html
-    dest: /var/www/html/
-    owner: www-data
-    group: www-data
-    mode: 0644
-
 - name: Create /var/www/launcher
   file:
     path: /var/www/launcher
@@ -15,7 +7,7 @@
     mode: 0755
 - name: Copy Launcher assets
   copy:
-    src: assets
+    src: .
     dest: /var/www/launcher/
     owner: www-data
     group: www-data

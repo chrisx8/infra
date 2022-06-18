@@ -85,8 +85,12 @@
 		Require claim roles:admin
 	</Directory>
 
+	<Directory "/var/www/launcher/launch.html">
+		Require all granted
+	</Directory>
+
 	<Directory "/var/www/launcher/assets/img">
-		Require all allowed
+		Require all granted
 	</Directory>
 
 	<FilesMatch "\.(jpe?g|png|gif|svg|webp|js|css)$">
