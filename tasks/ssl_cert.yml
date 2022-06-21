@@ -1,14 +1,21 @@
-- name: Install chrisx.xyz/fullchain.pem to /etc/ssl/private
+- name: Create /etc/ssl/chrisx.xyz
+  file:
+    path: /etc/ssl/chrisx.xyz
+    state: directory
+    mode: 0700
+    owner: root
+    group: root
+- name: Install chrisx.xyz/fullchain.pem
   copy:
     src: certbot/config/live/chrisx.xyz/fullchain.pem
-    dest: /etc/ssl/private
-    mode: 0440
+    dest: /etc/ssl/chrisx.xyz
+    mode: 0400
     owner: root
-    group: ssl-cert
-- name: Install chrisx.xyz/privkey.pem to /etc/ssl/private
+    group: root
+- name: Install chrisx.xyz/privkey.pem
   copy:
     src: certbot/config/live/chrisx.xyz/privkey.pem
-    dest: /etc/ssl/private
-    mode: 0440
+    dest: /etc/ssl/chrisx.xyz
+    mode: 0400
     owner: root
-    group: ssl-cert
+    group: root

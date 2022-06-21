@@ -25,15 +25,15 @@
   tasks:
     - import_tasks: tasks/apt_upgrade.yml
     - import_tasks: tasks/apt_post.yml
-    - name: Check if SSL cert exists
+    - name: Check if chrisx.xyz SSL cert exists
       stat:
-        path: /etc/ssl/private/fullchain.pem
+        path: /etc/ssl/chrisx.xyz
       register: ssl_check
     - import_tasks: tasks/ssl_cert.yml
       when: ssl_check.stat.exists
-    - name: Check if arb SSL cert exists
+    - name: Check if arb.chrisx.xyz SSL cert exists
       stat:
-        path: /etc/ssl/private/arb.fullchain.pem
+        path: /etc/ssl/arb.chrisx.xyz
       register: arb_ssl_check
     - import_tasks: tasks/ssl_cert_arb.yml
       when: arb_ssl_check.stat.exists

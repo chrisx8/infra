@@ -1,14 +1,21 @@
-- name: Install arb.chrisx.xyz/fullchain.pem to /etc/ssl/private
+- name: Create /etc/ssl/arb.chrisx.xyz
+  file:
+    path: /etc/ssl/arb.chrisx.xyz
+    state: directory
+    mode: 0700
+    owner: root
+    group: root
+- name: Install arb.chrisx.xyz/fullchain.pem
   copy:
     src: certbot/config/live/arb.chrisx.xyz/fullchain.pem
-    dest: /etc/ssl/private/arb.fullchain.pem
-    mode: 0440
+    dest: /etc/ssl/arb.chrisx.xyz/fullchain.pem
+    mode: 0400
     owner: root
-    group: ssl-cert
-- name: Install arb.chrisx.xyz/privkey.pem to /etc/ssl/private
+    group: root
+- name: Install arb.chrisx.xyz/privkey.pem
   copy:
     src: certbot/config/live/arb.chrisx.xyz/privkey.pem
-    dest: /etc/ssl/private/arb.privkey.pem
-    mode: 0440
+    dest: /etc/ssl/arb.chrisx.xyz/privkey.pem
+    mode: 0400
     owner: root
-    group: ssl-cert
+    group: root

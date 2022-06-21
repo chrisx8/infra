@@ -1,12 +1,12 @@
 - name: Configure ssl_cert_file
   lineinfile:
     path: /etc/postgresql/14/main/postgresql.conf
-    line: "ssl_cert_file = '/etc/ssl/private/arb.fullchain.pem'"
+    line: "ssl_cert_file = '/etc/ssl/arb.chrisx.xyz/fullchain.pem'"
     regex: "^#?ssl_cert_file ="
 - name: Configure ssl_key_file
   lineinfile:
     path: /etc/postgresql/14/main/postgresql.conf
-    line: "ssl_key_file = '/etc/ssl/private/arb.privkey.pem'"
+    line: "ssl_key_file = '/etc/ssl/arb.chrisx.xyz/privkey.pem'"
     regex: "^#?ssl_key_file ="
 - name: Configure ssl_min_protocol_version
   lineinfile: 
