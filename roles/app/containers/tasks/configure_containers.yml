@@ -1,3 +1,14 @@
+# Gitea uses port 22/tcp, so system SSH needs to be moved to port 2201
+- name: Switch SSH to port 2201
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regex: "^Port "
+    line: "Port 2201"
+- name: Restart sshd
+  systemd:
+    name: sshd
+    state: restarted
+
 - name: Install Gitea env file
   template:
     src: gitea.env.j2
@@ -17,4 +28,15 @@
   template:
     src: vaultwarden.env.j2
     dest: ~/containers/vaultwarden.env
+    mode: 0644
+
+- name: Install Gitea templates
+  copy:
+    src: gitea
+    dest: ~/containers
+    mode: 0644
+- name: Install Nginx files
+  copy:
+    src: nginx
+    dest: ~/containers
     mode: 0644

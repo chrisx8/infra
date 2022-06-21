@@ -9,14 +9,6 @@
     state: directory
     mode: 0700
 
-- name: Configure UDP receive buffer size
-  sysctl:
-    name: net.core.rmem_max
-    value: 2500000
-    state: present
-    sysctl_set: true
-    reload: true
-
 - name: Get latest cloudflared version number from GitHub
   uri:
     url: https://api.github.com/repos/cloudflare/cloudflared/releases/latest
@@ -26,17 +18,6 @@
   template:
     src: docker-compose.yml
     dest: ~/containers/docker-compose.yml
-    mode: 0644
-
-- name: Install Gitea templates
-  copy:
-    src: gitea
-    dest: ~/containers
-    mode: 0644
-- name: Install Nginx files
-  copy:
-    src: nginx
-    dest: ~/containers
     mode: 0644
 
 - name: Pull container images (docker-compose)

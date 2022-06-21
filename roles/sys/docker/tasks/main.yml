@@ -9,7 +9,10 @@
     state: present
 - name: Install Docker
   apt:
-    name: [docker-ce, docker-ce-cli, containerd.io]
+    name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
     state: present
     update_cache: true
 - import_tasks: apt_post.yml

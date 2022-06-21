@@ -54,11 +54,11 @@
   become_user: postgres
   tasks:
     - import_role:
-        name: containers
+        name: app/containers
         tasks_from: create_postgres_db.yml
       when: hostvars['localhost']['upgrade_containers'] == 'y'
     - import_role:
-        name: firefly-iii
+        name: app/firefly-iii
         tasks_from: create_postgres_db.yml
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
 
@@ -67,7 +67,7 @@
   become: true
   tasks:
     - import_role:
-        name: containers
+        name: app/containers
       when: hostvars['localhost']['upgrade_containers'] == 'y'
     - name: Reload Nginx
       command: "docker exec nginx nginx -s reload"
@@ -79,10 +79,12 @@
   become: true
   tasks:
     - import_role:
-        name: launcher
+        name: app/launcher
       when: hostvars['localhost']['upgrade_launcher'] == 'y'
-    - import_tasks: roles/apache_php/tasks/composer.yml
+    - import_role:
+        name: inf/apache_php
+        tasks_from: composer.yml
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
     - import_role:
-        name: firefly-iii
+        name: app/firefly-iii
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'

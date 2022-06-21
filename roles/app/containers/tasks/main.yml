@@ -3,16 +3,6 @@
 - name: Load secret vars
   include_vars: secrets.yml
 
-- name: Switch SSH to port 2201
-  lineinfile:
-    dest: "/etc/ssh/sshd_config"
-    regex: "^Port "
-    line: "Port 2201"
-- name: Restart sshd
-  systemd:
-    name: sshd
-    state: restarted
-- import_tasks: install_docker.yml
 
 - import_tasks: configure_containers.yml
 - import_tasks: launch_containers.yml

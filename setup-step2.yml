@@ -7,37 +7,30 @@
   become_user: postgres
   tasks:
     - import_role:
-        name: containers
+        name: app/containers
         tasks_from: create_postgres_db.yml
     - import_role:
-        name: firefly-iii
+        name: app/firefly-iii
         tasks_from: create_postgres_db.yml
     - import_role:
-        name: nextcloud
+        name: app/nextcloud
         tasks_from: create_postgres_db.yml
 
 - name: Set up containers
   hosts: web-docker
   become: true
-  tasks:
-    - import_role:
-        name: base_vm
-    - import_role:
-        name: base
-    - import_role:
-        name: containers
+  roles:
+    - sys/base_vm
+    - sys/base
+    - sys/docker
+    - app/containers
 
 - name: Set up Apache + PHP
   hosts: web-php
   become: true
-  tasks:
-    - import_role:
-        name: base
-    - import_role:
-        name: apache_php
-    - import_role:
-        name: firefly-iii
-    - import_role:
-        name: nextcloud
-    - import_role:
-        name: launcher
+  roles:
+    - sys/base
+    - inf/apache_php
+    - app/firefly-iii
+    - app/launcher
+    - app/nextcloud
