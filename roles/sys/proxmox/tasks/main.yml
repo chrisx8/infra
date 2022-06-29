@@ -2,4 +2,4 @@
 - import_tasks: system.yml
 - import_tasks: software_config.yml
 - import_role:
-    name: postfix
+    name: inf/postfix

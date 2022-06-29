@@ -1,3 +1,9 @@
+- name: Disable systemd-resolved
+  systemd:
+    name: systemd-resolved.service
+    enabled: false
+    state: stopped
+
 - name: Add Tailscale repo keys
   get_url:
     url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release|lower }}.noarmor.gpg

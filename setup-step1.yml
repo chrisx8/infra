@@ -7,7 +7,7 @@
     - sys/proxmox
   tasks:
     - import_role:
-        name: net-ingress
+        name: inf/tailscale
         tasks_from: proxmox_config.yml
 
 - name: Set up Ingress instance
@@ -15,7 +15,8 @@
   become: true
   roles:
     - sys/base
-    - net-ingress
+    - inf/tailscale
+    - app/adguard-home
 
 - name: Set up PostgreSQL server
   hosts: db-postgres
