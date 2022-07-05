@@ -1,27 +1,27 @@
 - name: Disable systemd-resolved
-  systemd:
+  ansible.builtin.systemd:
     name: systemd-resolved.service
     enabled: false
     state: stopped
 
 - name: Add Tailscale repo keys
-  get_url:
-    url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release|lower }}.noarmor.gpg
+  ansible.builtin.get_url:
+    url: "https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release|lower }}.noarmor.gpg"
     dest: /etc/apt/trusted.gpg.d/tailscale.gpg
     mode: 0644
 - name: Add Tailscale repo
-  apt_repository:
-    repo: deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main
+  ansible.builtin.apt_repository:
+    repo: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
     state: present
 - name: Install Tailscale
-  apt:
+  ansible.builtin.apt:
     name: tailscale
     state: present
     update_cache: true
-- import_tasks: apt_post.yml
+- ansible.builtin.import_tasks: apt_post.yml
 
 - name: Change sysctl configs
-  sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"
     state: present
@@ -30,7 +30,7 @@
   with_dict: "{{ sysctl_config }}"
 
 - name: Prompt for Tailscale setup
-  pause:
+  ansible.builtin.pause:
     prompt: "
       Finish Tailscale setup in a terminal session: \n\n
       tailscale up --accept-dns=false --advertise-routes=x.x.x.x/x \n\n"

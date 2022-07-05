@@ -1,19 +1,19 @@
 - name: Create /etc/ssl/arb.chrisx.xyz
-  file:
+  ansible.builtin.file:
     path: /etc/ssl/arb.chrisx.xyz
     state: directory
     mode: 0700
     owner: root
     group: root
 - name: Install arb.chrisx.xyz/fullchain.pem
-  copy:
+  ansible.builtin.copy:
     src: certbot/config/live/arb.chrisx.xyz/fullchain.pem
     dest: /etc/ssl/arb.chrisx.xyz/fullchain.pem
     mode: 0400
     owner: root
     group: root
 - name: Install arb.chrisx.xyz/privkey.pem
-  copy:
+  ansible.builtin.copy:
     src: certbot/config/live/arb.chrisx.xyz/privkey.pem
     dest: /etc/ssl/arb.chrisx.xyz/privkey.pem
     mode: 0400

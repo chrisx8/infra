@@ -13,7 +13,7 @@
       private: false
   tasks:
     - name: Store prompt inputs
-      set_fact:
+      ansible.builtin.set_fact:
         upgrade_launcher: "{{ upgrade_launcher }}"
         upgrade_containers: "{{ upgrade_containers }}"
         upgrade_php_apps: "{{ upgrade_php_apps }}"
@@ -23,19 +23,19 @@
   gather_facts: false
   become: true
   tasks:
-    - import_tasks: tasks/apt_upgrade.yml
-    - import_tasks: tasks/apt_post.yml
+    - ansible.builtin.import_tasks: tasks/apt_upgrade.yml
+    - ansible.builtin.import_tasks: tasks/apt_post.yml
     - name: Check if chrisx.xyz SSL cert exists
-      stat:
+      ansible.builtin.stat:
         path: /etc/ssl/chrisx.xyz
       register: ssl_check
-    - import_tasks: tasks/ssl_cert.yml
+    - ansible.builtin.import_tasks: tasks/ssl_cert.yml
       when: ssl_check.stat.exists
     - name: Check if arb.chrisx.xyz SSL cert exists
-      stat:
+      ansible.builtin.stat:
         path: /etc/ssl/arb.chrisx.xyz
       register: arb_ssl_check
-    - import_tasks: tasks/ssl_cert_arb.yml
+    - ansible.builtin.import_tasks: tasks/ssl_cert_arb.yml
       when: arb_ssl_check.stat.exists
 
 - name: Upgrade cert on storage
@@ -43,7 +43,8 @@
   gather_facts: false
   become: true
   tasks:
-    - import_role:
+    - name: Install SSL cert for Cockpit
+      ansible.builtin.import_role:
         name: storage
         tasks_from: cockpit_ssl.yml
 
@@ -53,11 +54,13 @@
   become: true
   become_user: postgres
   tasks:
-    - import_role:
+    - name: Set up Postgres databases for container apps
+      ansible.builtin.import_role:
         name: app/containers
         tasks_from: create_postgres_db.yml
       when: hostvars['localhost']['upgrade_containers'] == 'y'
-    - import_role:
+    - name: Set up Postgres databases for Firefly III
+      ansible.builtin.import_role:
         name: app/firefly-iii
         tasks_from: create_postgres_db.yml
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
@@ -66,11 +69,12 @@
   hosts: web-docker
   become: true
   tasks:
-    - import_role:
+    - name: Install container apps
+      ansible.builtin.import_role:
         name: app/containers
       when: hostvars['localhost']['upgrade_containers'] == 'y'
     - name: Reload Nginx
-      command: "docker exec nginx nginx -s reload"
+      ansible.builtin.command: "docker exec nginx nginx -s reload"
       when: hostvars['localhost']['upgrade_containers'] == 'y'
 
 - name: Upgrade PHP apps
@@ -78,13 +82,16 @@
   gather_facts: false
   become: true
   tasks:
-    - import_role:
+    - name: Install launcher
+      ansible.builtin.import_role:
         name: app/launcher
       when: hostvars['localhost']['upgrade_launcher'] == 'y'
-    - import_role:
+    - name: Install Composer
+      ansible.builtin.import_role:
         name: inf/apache_php
         tasks_from: composer.yml
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
-    - import_role:
+    - name: Install Firefly III
+      ansible.builtin.import_role:
         name: app/firefly-iii
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'

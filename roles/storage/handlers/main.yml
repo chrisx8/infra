@@ -1,5 +1,5 @@
 - name: Configure sshd for sftpusers group
-  lineinfile:
+  ansible.builtin.lineinfile:
     name: /etc/ssh/sshd_config
     line: "Match Group sftpusers\n
           ChrootDirectory /home\n
@@ -7,6 +7,6 @@
           AllowTcpForwarding no\n
           X11Forwarding no"
 - name: Restart sshd
-  systemd:
+  ansible.builtin.systemd:
     name: sshd
     state: restarted

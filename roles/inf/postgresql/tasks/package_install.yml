@@ -1,19 +1,19 @@
 - name: Add PostgreSQL repo keys
-  get_url:
+  ansible.builtin.get_url:
     url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
     dest: /etc/apt/trusted.gpg.d/postgresql.asc
     mode: 0644
 - name: Add PostgreSQL repo
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release|lower }}-pgdg main
     state: present
 - name: Install PostgreSQL 14
-  apt:
+  ansible.builtin.apt:
     name: postgresql-14
-    state: latest
+    state: present
     update_cache: true
 - name: Install dependencies for Ansible Postgres module
-  apt:
+  ansible.builtin.apt:
     name: [libpq-dev, python3-psycopg2]
-    state: latest
-- import_tasks: apt_post.yml
+    state: present
+- ansible.builtin.import_tasks: apt_post.yml

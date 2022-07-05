@@ -1,18 +1,18 @@
 - name: Get latest AdGuard Home version number from GitHub
-  uri:
+  ansible.builtin.uri:
     url: https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/latest
     method: GET
   register: adguard_info
 - name: Download latest AdGuard Home release from GitHub
-  unarchive:
+  ansible.builtin.unarchive:
     src: "https://github.com/AdguardTeam/AdGuardHome/releases/download/{{ item }}/AdGuardHome_linux_amd64.tar.gz"
     dest: /opt
     remote_src: true
   with_items:
     "{{ adguard_info['json']['tag_name'] }}"
 - name: Run AdGuard Home install
-  command: /opt/AdGuardHome/AdGuardHome -s install
+  ansible.builtin.command: /opt/AdGuardHome/AdGuardHome -s install
   changed_when: true
 - name: Prompt for AdGuard Home setup
-  pause:
+  ansible.builtin.pause:
     prompt: "Finish AdGuard Home setup in a web browser: <http://{{ ansible_host }}:3000>"

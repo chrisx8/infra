@@ -1,9 +1,9 @@
 - name: Install rclone and tree
-  apt:
+  ansible.builtin.apt:
     name: [rclone, tree]
     state: present
-- import_tasks: samba.yml
-- import_tasks: sftp.yml
-- import_tasks: cockpit.yml
-- import_tasks: cockpit_ssl.yml
-- import_tasks: cockpit_totp.yml
+- ansible.builtin.import_tasks: samba.yml
+- ansible.builtin.import_tasks: sftp.yml
+- ansible.builtin.import_tasks: cockpit.yml
+- ansible.builtin.import_tasks: cockpit_ssl.yml
+- ansible.builtin.import_tasks: cockpit_totp.yml

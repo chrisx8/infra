@@ -1,20 +1,21 @@
 - name: Get Composer installer checksum
-  uri:
+  ansible.builtin.uri:
     url: https://composer.github.io/installer.sig
     return_content: true
   register: checksum
 - name: Download Composer installer
-  get_url:
+  ansible.builtin.get_url:
     url: "https://getcomposer.org/installer"
     dest: /tmp/composer-setup.php
     checksum: "sha384:{{ checksum.content }}"
     mode: 0644
 
 - name: Install Composer to /usr/local/bin
-  command: "php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer"
+  ansible.builtin.command:
+    "php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer"
   changed_when: true
 
 - name: Delete Composer installer
-  file:
+  ansible.builtin.file:
     path: /tmp/composer-setup.php
     state: absent

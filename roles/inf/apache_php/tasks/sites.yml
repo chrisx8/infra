@@ -1,17 +1,17 @@
 - name: Load secret vars
-  include_vars: secrets.yml
+  ansible.builtin.include_vars: secrets.yml
 
 - name: Generate new OIDC crypto password
-  set_fact:
+  ansible.builtin.set_fact:
     oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
 - name: Configure Apache site
-  template:
+  ansible.builtin.template:
     src: webapps.conf.j2
     dest: /etc/apache2/sites-enabled/webapps.conf
     mode: 0644
 
 - name: Copy html
-  copy:
+  ansible.builtin.copy:
     src: html
     dest: /var/www/
     owner: www-data
@@ -19,6 +19,6 @@
     mode: 0755
 
 - name: Reload Apache
-  systemd:
+  ansible.builtin.systemd:
     name: apache2
     state: reloaded

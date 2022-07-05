@@ -1,20 +1,20 @@
 - name: Install SAMBA
-  apt:
+  ansible.builtin.apt:
     name: samba
     state: present
-- import_tasks: apt_post.yml
+- ansible.builtin.import_tasks: apt_post.yml
 
 - name: Install SAMBA config
-  copy:
+  ansible.builtin.copy:
     src: smb.conf
     dest: /etc/samba/smb.conf
     mode: 0644
 
 - name: Restart smb service
-  systemd:
+  ansible.builtin.systemd:
     name: smbd
     state: restarted
 - name: Restart nmb service
-  systemd:
+  ansible.builtin.systemd:
     name: nmbd
     state: restarted

@@ -1,14 +1,13 @@
 - name: Load version info vars
-  include_vars: versions.yml
+  ansible.builtin.include_vars: versions.yml
 - name: Load secret vars
-  include_vars: secrets.yml
+  ansible.builtin.include_vars: secrets.yml
 
-
-- import_tasks: configure_containers.yml
-- import_tasks: launch_containers.yml
+- ansible.builtin.import_tasks: configure_containers.yml
+- ansible.builtin.import_tasks: launch_containers.yml
 
 - name: Install logrotate config for Nginx
-  copy:
+  ansible.builtin.copy:
     src: logrotate/nginx-docker
     dest: /etc/logrotate.d/
     mode: 0644

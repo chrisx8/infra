@@ -1,11 +1,11 @@
 - name: Download and extract latest Nextcloud release tarball
-  unarchive:
+  ansible.builtin.unarchive:
     src: https://download.nextcloud.com/server/releases/latest.tar.bz2
     dest: /var/www
     remote_src: true
 
 - name: Change Nextcloud directory permission
-  file:
+  ansible.builtin.file:
     path: /var/www/nextcloud
     state: directory
     recurse: true
@@ -14,23 +14,23 @@
 
 - name: Prompt for Nextcloud setup
   when: not nextcloud_exist.stat.exists
-  pause:
+  ansible.builtin.pause:
     prompt: "Finish Nextcloud installation in a web browser \n
              Database: PostgreSQL on {{ hostvars['db-postgres']['fqdn'] }} \n
              DB Name: nextcloud \n
              DB Username: nextcloud \n
-             DB Password: {{ {{ hostvars['db-postgres']['postgres_nextcloud_password'] }} }} \n\n
+             DB Password: {{ hostvars['db-postgres']['postgres_nextcloud_password'] }} \n\n
             "
 
 - name: Update database credential
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /var/www/nextcloud/config/config.php
     regexp: 'dbpassword'
     line: "'dbpassword' => '{{ hostvars['db-postgres']['postgres_nextcloud_password'] }}',"
 
 - name: Inject extra Nextcloud config options
   when: not nextcloud_exist.stat.exists
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /var/www/nextcloud/config/config.php
     regexp: 'installed'
     line: "'installed' => 'true',\n
@@ -43,17 +43,18 @@
 
 - name: Update htaccess
   become_user: www-data
-  command: "php --define apc.enable_cli=1 /var/www/nextcloud/occ maintenance:update:htaccess"
+  ansible.builtin.command:
+    "php --define apc.enable_cli=1 /var/www/nextcloud/occ maintenance:update:htaccess"
   changed_when: true
 
 - name: Configure crontab for www-data
-  cron:
+  ansible.builtin.cron:
     env: true
     name: MAILTO
     user: www-data
     job: ""
 - name: Install Nextcloud cron job
-  cron:
+  ansible.builtin.cron:
     name: "Nextcloud background jobs"
     minute: "*/5"
     user: www-data

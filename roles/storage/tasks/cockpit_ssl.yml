@@ -1,15 +1,15 @@
 - name: Install arb.chrisx.xyz/fullchain.pem for Cockpit
-  copy:
+  ansible.builtin.copy:
     src: certbot/config/live/arb.chrisx.xyz/fullchain.pem
     dest: /etc/cockpit/ws-certs.d/arb.cert
     mode: 0400
 - name: Install arb.chrisx.xyz/privkey.pem for Cockpit
-  copy:
+  ansible.builtin.copy:
     src: certbot/config/live/arb.chrisx.xyz/privkey.pem
     dest: /etc/cockpit/ws-certs.d/arb.key
     mode: 0400
 - name: Restart Cockpit socket
-  systemd:
+  ansible.builtin.systemd:
     name: cockpit.socket
     enabled: true
     state: restarted

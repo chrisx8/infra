@@ -1,28 +1,28 @@
 - name: Install software-properties-common
-  apt:
+  ansible.builtin.apt:
     name: software-properties-common
     state: present
 - name: Add ppa:ondrej/php
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: ppa:ondrej/php
     state: present
 
 - name: Install php8.0-fpm
-  apt:
+  ansible.builtin.apt:
     name: php8.0-fpm
     state: present
 
 - name: Set php8.0-fpm max POST size
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/php/8.0/fpm/php.ini
     regexp: '^post_max_size'
     line: 'post_max_size = 21M'
 - name: Set php8.0-fpm max upload size
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/php/8.0/fpm/php.ini
     regexp: '^upload_max_filesize'
     line: 'upload_max_filesize = 20M'
 - name: Restart PHP
-  systemd:
+  ansible.builtin.systemd:
     name: php8.0-fpm
     state: restarted

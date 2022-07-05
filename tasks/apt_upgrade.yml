@@ -1,11 +1,11 @@
 - name: apt dist-upgrade
-  apt:
+  ansible.builtin.apt:
     update_cache: true
     upgrade: dist
 - name: Check if reboot is required
-  stat:
+  ansible.builtin.stat:
     path: /var/run/reboot-required
   register: reboot_required
 - name: Reboot
-  reboot:
+  ansible.builtin.reboot:
   when: reboot_required.stat.exists

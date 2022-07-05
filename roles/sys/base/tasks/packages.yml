@@ -1,7 +1,7 @@
-- import_tasks: tasks/apt_upgrade.yml
+- ansible.builtin.import_tasks: tasks/apt_upgrade.yml
 - name: Install additional packages
-  apt:
-    name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git, 
+  ansible.builtin.apt:
+    name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git,
            gnupg, psmisc, vim, unzip]
     state: present
-- import_tasks: apt_post.yml
+- ansible.builtin.import_tasks: apt_post.yml

@@ -1,58 +1,59 @@
 - name: Set hostname
-  hostname:
+  ansible.builtin.hostname:
     name: "{{ ansible_host }}"
     use: systemd
 - name: Set timezone
-  command: "timedatectl set-timezone {{ hostvars[ansible_hostname].timezone }}"
+  ansible.builtin.command:
+    "timedatectl set-timezone {{ hostvars[ansible_hostname].timezone }}"
   when: hostvars[ansible_hostname].timezone is defined
 
 - name: Set authorized key for {{ ansible_user }} from ~/.ssh/id_ed25519.pub
-  authorized_key:
+  ansible.builtin.authorized_key:
     user: "{{ ansible_user }}"
     state: present
     key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_ed25519.pub') }}"
 
 - name: Remove DSA and ECDSA SSH host keys
-  file:
-    path: [/etc/ssh/ssh_host_ecdsa_key, /etc/ssh/ssh_host_ecdsa_key.pub, 
+  ansible.builtin.file:
+    path: [/etc/ssh/ssh_host_ecdsa_key, /etc/ssh/ssh_host_ecdsa_key.pub,
            /etc/ssh/ssh_host_dsa_key, /etc/ssh/ssh_host_dsa_key.pub]
     state: absent
 - name: Configure OpenSSH client
-  copy:
+  ansible.builtin.copy:
     src: ssh_config
     dest: /etc/ssh/ssh_config
     mode: 0644
 - name: Configure OpenSSH server
-  copy:
+  ansible.builtin.copy:
     src: sshd_config
     dest: /etc/ssh/sshd_config
     mode: 0644
 - name: Restart OpenSSH server (sshd)
-  systemd:
+  ansible.builtin.systemd:
     name: sshd
     state: restarted
     daemon_reload: true
 
 - name: Limit systemd-journald
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/systemd/journald.conf"
     regex: "SystemMaxUse="
     line: "SystemMaxUse=10M"
 
 - name: Set default text editor to vim
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/bash.bashrc
     regex: "^export EDITOR="
     line: export EDITOR=vim
 
 - name: Configure vim
-  copy:
+  ansible.builtin.copy:
     src: vimrc
     dest: /etc/vim/vimrc
     mode: 0644
 
 - name: Configure crontab
-  cron:
+  ansible.builtin.cron:
     name: MAILTO
     env: true
     job: ""

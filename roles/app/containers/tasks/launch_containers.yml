@@ -1,41 +1,41 @@
 - name: Create containers directory
-  file:
+  ansible.builtin.file:
     path: ~/containers
     state: directory
     mode: 0700
 - name: Create Nginx logs directory
-  file:
+  ansible.builtin.file:
     path: ~/log/nginx
     state: directory
     mode: 0700
 
 - name: Get latest cloudflared version number from GitHub
-  uri:
+  ansible.builtin.uri:
     url: https://api.github.com/repos/cloudflare/cloudflared/releases/latest
     method: GET
   register: cloudflared_info
 - name: Install docker-compose.yml
-  template:
+  ansible.builtin.template:
     src: docker-compose.yml
     dest: ~/containers/docker-compose.yml
     mode: 0644
 
 - name: Pull container images (docker-compose)
-  command:
+  ansible.builtin.command:
     chdir: ~/containers
     cmd: "docker-compose pull"
   changed_when: true
 - name: Start containers (docker-compose)
-  command:
+  ansible.builtin.command:
     chdir: ~/containers
     cmd: "docker-compose up -d --build --remove-orphans"
   changed_when: true
 - name: Clean up container storage
-  command: "docker system prune -af"
+  ansible.builtin.command: "docker system prune -af"
   changed_when: true
 
 - name: Change owner of vaultwarden data volume
-  file:
+  ansible.builtin.file:
     path: /var/lib/docker/volumes/containers_vaultwarden_data/_data
     state: directory
     recurse: true

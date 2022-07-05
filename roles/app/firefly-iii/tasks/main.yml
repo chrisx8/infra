@@ -1,6 +1,6 @@
 - name: Install PHP extensions
-  apt:
+  ansible.builtin.apt:
     name: [php8.0-bcmath, php8.0-curl, php8.0-gd, php8.0-intl, php8.0-pgsql, php8.0-xml]
     state: present
-- import_tasks: apt_post.yml
-- import_tasks: firefly.yml
+- ansible.builtin.import_tasks: apt_post.yml
+- ansible.builtin.import_tasks: firefly.yml

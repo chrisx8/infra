@@ -1,12 +1,12 @@
 - name: Generate new password for PostgreSQL nextcloud user
-  set_fact:
+  ansible.builtin.set_fact:
     postgres_nextcloud_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
 - name: Create nextcloud database
-  postgresql_db:
+  community.postgresql.postgresql_db:
     name: nextcloud
     state: present
 - name: Create PostgreSQL nextcloud user
-  postgresql_user:
+  community.postgresql.postgresql_user:
     db: nextcloud
     name: nextcloud
     password: "{{ postgres_nextcloud_password }}"

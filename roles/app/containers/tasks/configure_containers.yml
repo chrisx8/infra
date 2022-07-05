@@ -1,42 +1,42 @@
 # Gitea uses port 22/tcp, so system SSH needs to be moved to port 2201
 - name: Switch SSH to port 2201
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/ssh/sshd_config"
     regex: "^Port "
     line: "Port 2201"
 - name: Restart sshd
-  systemd:
+  ansible.builtin.systemd:
     name: sshd
     state: restarted
 
 - name: Install Gitea env file
-  template:
+  ansible.builtin.template:
     src: gitea.env.j2
     dest: ~/containers/gitea.env
     mode: 0644
 - name: Install Keycloak env file
-  template:
+  ansible.builtin.template:
     src: keycloak.env.j2
     dest: ~/containers/keycloak.env
     mode: 0644
 - name: Install Miniflux env file
-  template:
+  ansible.builtin.template:
     src: miniflux.env.j2
     dest: ~/containers/miniflux.env
     mode: 0644
 - name: Install Vaultwarden env file
-  template:
+  ansible.builtin.template:
     src: vaultwarden.env.j2
     dest: ~/containers/vaultwarden.env
     mode: 0644
 
 - name: Install Gitea templates
-  copy:
+  ansible.builtin.copy:
     src: gitea
     dest: ~/containers
     mode: 0644
 - name: Install Nginx files
-  copy:
+  ansible.builtin.copy:
     src: nginx
     dest: ~/containers
     mode: 0644

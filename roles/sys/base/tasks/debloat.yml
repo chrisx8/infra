@@ -1,45 +1,45 @@
 - name: Remove default user account (ubuntu) 1/3
-  user:
+  ansible.builtin.user:
     name: ubuntu
     state: absent
     remove: true
 - name: Remove default user account (debian) 2/3
-  user:
+  ansible.builtin.user:
     name: debian
     state: absent
     remove: true
 - name: Remove default user account (admin) 3/3
-  user:
+  ansible.builtin.user:
     name: admin
     state: absent
     remove: true
 
 - name: Remove Ubuntu motd config 1/3
   when: ansible_distribution == 'Ubuntu'
-  file:
+  ansible.builtin.file:
     path: /etc/update-motd.d/10-help-text
     state: absent
 - name: Remove Ubuntu motd config 2/3
   when: ansible_distribution == 'Ubuntu'
-  file:
+  ansible.builtin.file:
     path: /etc/update-motd.d/50-motd-news
     state: absent
 - name: Remove Ubuntu motd config 3/3
   when: ansible_distribution == 'Ubuntu'
-  file:
+  ansible.builtin.file:
     path: /etc/update-motd.d/51-cloudguest
     state: absent
 - name: Remove Ubuntu motd package
   when: ansible_distribution == 'Ubuntu'
-  apt:
+  ansible.builtin.apt:
     name: motd-news-config
     state: absent
     purge: true
 
 - name: Remove garbage packages
-  apt:
+  ansible.builtin.apt:
     name: [joe, python, python-minimal, python2, python2-minimal, snapd,
-           accountsservice, cloud-init, command-not-found, fwupd, lxcfs, 
+           accountsservice, cloud-init, command-not-found, fwupd, lxcfs,
            open-iscsi, open-vm-tools, os-prober, packagekit, plymouth, postfix,
            popularity-contest, software-properties-common, ssh-import-id,
            sosreport, telnet, ufw]

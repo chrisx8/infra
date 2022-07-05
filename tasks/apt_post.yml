@@ -1,7 +1,7 @@
 - name: apt autopurge
-  apt:
+  ansible.builtin.apt:
     autoremove: true
     purge: true
 - name: apt clean
-  command: "apt-get clean"
+  ansible.builtin.command: "apt-get clean"
   changed_when: false

@@ -1,29 +1,26 @@
 - name: Add Docker repo keys
-  get_url:
+  ansible.builtin.get_url:
     url: "https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg"
     dest: /etc/apt/trusted.gpg.d/docker.asc
     mode: 0644
 - name: Add Docker repo
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} stable
     state: present
 - name: Install Docker
-  apt:
-    name: 
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
+  ansible.builtin.apt:
+    name: [docker-ce, docker-ce-cli, containerd.io]
     state: present
     update_cache: true
-- import_tasks: apt_post.yml
+- ansible.builtin.import_tasks: apt_post.yml
 
 - name: Get latest Docker Compose version number from GitHub
-  uri:
+  ansible.builtin.uri:
     url: https://api.github.com/repos/docker/compose/releases/latest
     method: GET
   register: docker_compose_info
 - name: Download latest Docker Compose release from GitHub
-  get_url:
+  ansible.builtin.get_url:
     url: "https://github.com/docker/compose/releases/download/{{ item }}/docker-compose-linux-x86_64"
     dest: /usr/local/bin/docker-compose
     checksum: sha256:https://github.com/docker/compose/releases/download/{{ item }}/docker-compose-linux-x86_64.sha256

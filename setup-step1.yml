@@ -6,7 +6,8 @@
   roles:
     - sys/proxmox
   tasks:
-    - import_role:
+    - name: Configure PVE for Tailscale
+      ansible.builtin.import_role:
         name: inf/tailscale
         tasks_from: proxmox_config.yml
 

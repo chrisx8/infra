@@ -1,28 +1,28 @@
 - name: Install system dependencies
-  apt:
+  ansible.builtin.apt:
     name: [imagemagick, libmagickcore-6.q16-6-extra]
     state: present
 - name: Install PHP extensions
-  apt:
-    name: [php8.0-apcu, php8.0-bcmath, php8.0-curl, php8.0-gd, php8.0-gmp, 
+  ansible.builtin.apt:
+    name: [php8.0-apcu, php8.0-bcmath, php8.0-curl, php8.0-gd, php8.0-gmp,
            php8.0-imagick, php8.0-intl, php8.0-mbstring, php8.0-pgsql,
            php8.0-xml, php8.0-zip]
     state: present
-- import_tasks: apt_post.yml
+- ansible.builtin.import_tasks: apt_post.yml
 
 - name: Install Apache site configuration
-  copy:
+  ansible.builtin.copy:
     src: nextcloud.conf
     dest: /etc/apache2/sites-enabled/nextcloud.conf
     mode: 0644
 - name: Reload Apache
-  systemd:
+  ansible.builtin.systemd:
     name: apache2
     state: reloaded
 
 - name: Check if Nextcloud is installed
-  stat:
+  ansible.builtin.stat:
     path: /var/www/nextcloud/config/config.php
   register: nextcloud_exist
-- import_tasks: php_config.yml
-- import_tasks: nc.yml
+- ansible.builtin.import_tasks: php_config.yml
+- ansible.builtin.import_tasks: nc.yml

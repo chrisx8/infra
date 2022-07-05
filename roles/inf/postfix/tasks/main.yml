@@ -1,25 +1,25 @@
 - name: Install postfix
-  apt:
+  ansible.builtin.apt:
     name: postfix
-    state: latest
+    state: present
 
 - name: Load AWS SES credential
-  include_vars: secrets.yml
+  ansible.builtin.include_vars: secrets.yml
 
 - name: Install postfix main.cf
-  template:
+  ansible.builtin.template:
     src: main.cf.j2
     dest: /etc/postfix/main.cf
     mode: 0644
 - name: Add SES credentials
-  template:
+  ansible.builtin.template:
     src: sasl_passwd.j2
     dest: /etc/postfix/sasl_passwd
     mode: 0600
 - name: Process credential DB
-  command: postmap /etc/postfix/sasl_passwd
+  ansible.builtin.command: postmap /etc/postfix/sasl_passwd
   changed_when: true
 - name: Restart Postfix
-  systemd:
+  ansible.builtin.systemd:
     name: postfix.service
     state: restarted

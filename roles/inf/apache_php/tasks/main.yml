@@ -1,8 +1,9 @@
-- import_tasks: ssl_cert.yml
-- import_tasks: apache.yml
-- import_tasks: php.yml
-- import_tasks: composer.yml
-- import_tasks: sites.yml
-- import_role:
-    name: postfix
-- import_tasks: apt_post.yml
+- ansible.builtin.import_tasks: ssl_cert.yml
+- ansible.builtin.import_tasks: apache.yml
+- ansible.builtin.import_tasks: php.yml
+- ansible.builtin.import_tasks: composer.yml
+- ansible.builtin.import_tasks: sites.yml
+- name: Set up Postfix
+  ansible.builtin.import_role:
+    name: inf/postfix
+- ansible.builtin.import_tasks: apt_post.yml

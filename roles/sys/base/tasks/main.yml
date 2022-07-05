@@ -1,5 +1,5 @@
-- import_tasks: debloat.yml
-- import_tasks: packages.yml
-- import_tasks: system_config.yml
+- ansible.builtin.import_tasks: debloat.yml
+- ansible.builtin.import_tasks: packages.yml
+- ansible.builtin.import_tasks: system_config.yml
 - name: Reboot
-  reboot:
+  ansible.builtin.reboot:

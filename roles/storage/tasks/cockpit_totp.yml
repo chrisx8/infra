@@ -1,16 +1,16 @@
 - name: Install TOTP PAM module
-  apt:
+  ansible.builtin.apt:
     name: libpam-google-authenticator
     state: present
 
 - name: Require TOTP PAM for Cockpit
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/pam.d/cockpit
     regexp: "pam_google_authenticator\\.so"
     line: "auth required pam_google_authenticator.so nullok"
 - name: TOTP setup reminder
-  pause:
+  ansible.builtin.pause:
     prompt: "*** TOTP Setup ***\n
-      Don't forget to set up TOTP for Cockpit users! To set up, run 
+      Don't forget to set up TOTP for Cockpit users! To set up, run
       `google-authenticator` as the Cockpit user.\n
       Press Enter to continue"
