@@ -2,7 +2,9 @@
 
 A self-hosted virtualized Linux environment, deployed and managed with Ansible and Docker.
 
-## Tools used
+## Repo setup
+
+### Tools used
 
 - [Ansible](https://docs.ansible.com/ansible/latest/index.html)
 - [Docker](https://docs.docker.com/engine/)
@@ -14,6 +16,19 @@ Ansible roles here depend on `ansible.posix` and `community.postgresql` modules.
 
 ```bash
 ansible-galaxy collection install ansible.posix community.postgresql
+```
+
+### Pre-commit hooks
+
+Pre-commit hooks are [configured](.pre-commit-config.yaml). To use them, you need to install [pre-commit](https://pre-commit.com/).
+
+After installing pre-commit, set up Git hook scripts:
+
+```bash
+# install Git hook scripts
+pre-commit install
+# auto-update hooks
+pre-commit autoupdate
 ```
 
 ## Hardware
