@@ -4,6 +4,4 @@
     state: present
 - ansible.builtin.import_tasks: samba.yml
 - ansible.builtin.import_tasks: sftp.yml
-- ansible.builtin.import_tasks: cockpit.yml
-- ansible.builtin.import_tasks: cockpit_ssl.yml
-- ansible.builtin.import_tasks: cockpit_totp.yml
+- ansible.builtin.import_tasks: cockpit_modules.yml

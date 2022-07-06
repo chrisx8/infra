@@ -32,4 +32,5 @@
   roles:
     - sys/base_vm
     - sys/base
-    - storage
+    - app/file_shares
+    - inf/cockpit

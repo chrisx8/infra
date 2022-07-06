@@ -8,12 +8,7 @@
     repo: deb https://repo.45drives.com/debian focal main
     state: present
 
-- name: Install Cockpit
-  ansible.builtin.apt:
-    name: cockpit
-    state: present
-    install-recommends: false
-- name: Install Cockpit modules
+- name: Install Cockpit storage modules
   ansible.builtin.apt:
     name: [cockpit-storaged, cockpit-file-sharing]
     state: present

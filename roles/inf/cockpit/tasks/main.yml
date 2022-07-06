@@ -1,0 +1,7 @@
+- name: Install Cockpit
+  ansible.builtin.apt:
+    name: cockpit
+    state: present
+    install-recommends: false
+- ansible.builtin.import_tasks: ssl.yml
+- ansible.builtin.import_tasks: totp.yml
