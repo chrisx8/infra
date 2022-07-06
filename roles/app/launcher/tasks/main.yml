@@ -37,7 +37,7 @@
       - "fontawesome-free-{{ item }}-web/webfonts/fa-solid-900.woff2"
       - "fontawesome-free-{{ item }}-web/LICENSE.txt"
   with_items:
-    - "{{ FONT_AWESOME_VERSION }}"
+    - "{{ font_awesome_version }}"
 
 - name: Generate Launcher
   block:

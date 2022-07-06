@@ -1,3 +1,7 @@
+- name: Install ssl-cert packages
+  ansible.builtin.apt:
+    name: ssl-cert
+    state: present
 - name: Create /etc/ssl/chrisx.xyz
   ansible.builtin.file:
     path: /etc/ssl/chrisx.xyz

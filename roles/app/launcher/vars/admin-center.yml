@@ -14,12 +14,12 @@ services:
   - name: Applications
     icon: fa-solid fa-rocket
     apps:
-      - name: Admin Docs
-        icon: fa-solid fa-file-lines
-        url: /docs/_admin/
+      - name: Identity Management
+        icon: fa-solid fa-user-gear
+        url: https://net-ipa.arb.chrisx.xyz/ipa/ui/
         newtab: true
       - name: Keycloak Admin Console
-        icon: fa-solid fa-users-gear
+        icon: fa-solid fa-user-gear
         url: https://sso.chrisx.xyz/admin/chrisx/console/
         newtab: true
       - name: Vaultwarden Admin Panel
@@ -37,13 +37,17 @@ services:
         icon: fa-solid fa-wifi
         url: https://openwrt.arb.chrisx.xyz
         newtab: true
-      - name: Tailscale Admin Console
+      - name: Tailscale
         icon: fa-solid fa-globe
         url: https://login.tailscale.com/welcome
         newtab: true
   - name: Systems
     icon: fa-solid fa-microchip
     apps:
+      - name: Healthchecks
+        icon: fa-solid fa-heart-pulse
+        url: https://healthchecks.chrisx.xyz
+        newtab: true
       - name: Proxmox VE
         icon: fa-solid fa-server
         url: https://proxmox1.arb.chrisx.xyz:8006
@@ -55,6 +59,13 @@ services:
       - name: Storage (Cockpit)
         icon: fa-solid fa-hard-drive
         url: https://storage.arb.chrisx.xyz:9090
+        newtab: true
+  - name: Resources
+    icon: fa-solid fa-info
+    apps:
+      - name: Admin Docs
+        icon: fa-solid fa-file-lines
+        url: /docs/_admin/
         newtab: true
 
 # [OPTIONAL] button in the footer
