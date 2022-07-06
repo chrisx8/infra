@@ -2,5 +2,8 @@
   ansible.builtin.apt:
     name: [php8.0-bcmath, php8.0-curl, php8.0-gd, php8.0-intl, php8.0-pgsql, php8.0-xml]
     state: present
-- ansible.builtin.import_tasks: apt_post.yml
+- name: Post-run apt cleanup
+  ansible.builtin.import_role:
+    name: sys/base
+    tasks_from: apt_post.yml
 - ansible.builtin.import_tasks: firefly.yml

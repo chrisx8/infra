@@ -7,6 +7,9 @@
   ansible.builtin.apt:
     name: ssl-cert
     state: present
+- name: Install arb cert
+  ansible.builtin.import_role:
+    name: ssl
+    tasks_from: arb.yml
 
-- ansible.builtin.import_tasks: ssl_cert_arb.yml
 - ansible.builtin.import_tasks: adguard-home.yml

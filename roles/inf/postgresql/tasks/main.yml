@@ -1,3 +1,6 @@
+- name: Install arb cert
+  ansible.builtin.import_role:
+    name: ssl
+    tasks_from: arb.yml
 - ansible.builtin.import_tasks: package_install.yml
-- ansible.builtin.import_tasks: ssl_cert_arb.yml
 - ansible.builtin.import_tasks: postgres_config.yml

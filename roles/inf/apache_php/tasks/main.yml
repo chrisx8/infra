@@ -1,9 +1,17 @@
-- ansible.builtin.import_tasks: ssl_cert.yml
+- name: Install chrisx cert
+  ansible.builtin.import_role:
+    name: ssl
+    tasks_from: chrisx.yml
+- name: Set up Postfix
+  ansible.builtin.import_role:
+    name: inf/postfix
+
 - ansible.builtin.import_tasks: apache.yml
 - ansible.builtin.import_tasks: php.yml
 - ansible.builtin.import_tasks: composer.yml
 - ansible.builtin.import_tasks: sites.yml
-- name: Set up Postfix
+
+- name: Post-run apt cleanup
   ansible.builtin.import_role:
-    name: inf/postfix
-- ansible.builtin.import_tasks: apt_post.yml
+    name: sys/base
+    tasks_from: apt_post.yml

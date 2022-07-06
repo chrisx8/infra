@@ -1,7 +1,13 @@
-- ansible.builtin.import_tasks: tasks/apt_upgrade.yml
+- name: Upgrade packages
+  ansible.builtin.import_role:
+    name: sys/base
+    tasks_from: apt_upgrade.yml
 - name: Install additional packages
   ansible.builtin.apt:
     name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git,
            gnupg, psmisc, vim, unzip]
     state: present
-- ansible.builtin.import_tasks: apt_post.yml
+- name: Post-run apt cleanup
+  ansible.builtin.import_role:
+    name: sys/base
+    tasks_from: apt_post.yml

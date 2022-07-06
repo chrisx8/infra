@@ -16,4 +16,7 @@
   ansible.builtin.apt:
     name: [libpq-dev, python3-psycopg2]
     state: present
-- ansible.builtin.import_tasks: apt_post.yml
+- name: Post-run apt cleanup
+  ansible.builtin.import_role:
+    name: sys/base
+    tasks_from: apt_post.yml

@@ -12,7 +12,10 @@
     name: [docker-ce, docker-ce-cli, containerd.io]
     state: present
     update_cache: true
-- ansible.builtin.import_tasks: apt_post.yml
+- name: Post-run apt cleanup
+  ansible.builtin.import_role:
+    name: sys/base
+    tasks_from: apt_post.yml
 
 - name: Get latest Docker Compose version number from GitHub
   ansible.builtin.uri:

@@ -1,4 +1,7 @@
-- ansible.builtin.import_tasks: tasks/apt_upgrade.yml
+- name: Upgrade packages
+  ansible.builtin.import_role:
+    name: sys/base
+    tasks_from: apt_upgrade.yml
 - name: Install extra Debian packages
   ansible.builtin.apt:
     name: [vim, libsasl2-modules, lm-sensors]
@@ -8,7 +11,10 @@
   ansible.builtin.apt:
     name: proxmox-backup-server
     state: present
-- ansible.builtin.import_tasks: apt_post.yml
+- name: Post-run apt cleanup
+  ansible.builtin.import_role:
+    name: sys/base
+    tasks_from: apt_post.yml
 
 - name: Set GRUB timeout
   ansible.builtin.lineinfile:

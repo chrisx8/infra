@@ -18,7 +18,10 @@
     name: tailscale
     state: present
     update_cache: true
-- ansible.builtin.import_tasks: apt_post.yml
+- name: Post-run apt cleanup
+  ansible.builtin.import_role:
+    name: sys/base
+    tasks_from: apt_post.yml
 
 - name: Change sysctl configs
   ansible.posix.sysctl:
