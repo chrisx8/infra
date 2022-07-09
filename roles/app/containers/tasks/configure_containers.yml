@@ -1,13 +1,8 @@
-# Gitea uses port 22/tcp, so system SSH needs to be moved to port 2201
-- name: Switch SSH to port 2201
-  ansible.builtin.lineinfile:
-    dest: "/etc/ssh/sshd_config"
-    regex: "^Port "
-    line: "Port 2201"
-- name: Restart sshd
-  ansible.builtin.systemd:
-    name: sshd
-    state: restarted
+- name: Create container directory
+  ansible.builtin.file:
+    path: ~/containers
+    mode: 0755
+    state: directory
 
 - name: Install Gitea env file
   ansible.builtin.template:

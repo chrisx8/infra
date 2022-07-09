@@ -9,7 +9,7 @@ services:
       - all
     security_opt:
       - no-new-privileges
-    restart: unless-stopped
+    restart: always
   nginx:
     container_name: nginx
     image: nginx:alpine
@@ -17,12 +17,11 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ~/log/nginx:/var/log/nginx
-      - /etc/hosts:/etc/hosts:ro
-      - /etc/ssl:/etc/ssl:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/www:/var/www:ro
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ~/log/nginx:/var/log/nginx:z
+      - /etc/ssl:/etc/ssl:z
+      - ./nginx/conf.d:/etc/nginx/conf.d:Z
+      - ./nginx/www:/var/www:Z
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:Z
     depends_on:
       - gitea
       - keycloak
@@ -30,18 +29,15 @@ services:
       - vaultwarden
     security_opt:
       - no-new-privileges
-    restart: unless-stopped
+    restart: always
 
   gitea:
     container_name: gitea
     image: gitea/gitea:1
     env_file: ./gitea.env
-    ports:
-      - 22:22
     volumes:
-      - gitea_data:/data
-      - ./gitea/templates:/data/gitea/templates:ro
-      - /etc/timezone:/etc/timezone:ro
+      - gitea_data:/data:Z
+      - ./gitea/templates:/data/gitea/templates:Z
       - /etc/localtime:/etc/localtime:ro
     security_opt:
       - no-new-privileges
@@ -71,7 +67,7 @@ services:
     env_file: ./vaultwarden.env
     user: nobody:nogroup
     volumes:
-      - vaultwarden_data:/data
+      - vaultwarden_data:/data:Z
     cap_drop:
       - all
     security_opt:

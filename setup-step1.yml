@@ -30,7 +30,6 @@
   hosts: storage
   become: true
   roles:
-    - sys/base_vm
     - sys/base
     - inf/cockpit
     - app/file_shares

@@ -2,7 +2,7 @@
   ansible.builtin.file:
     path: /etc/ssl/arb.chrisx.xyz
     state: directory
-    mode: 0700
+    mode: 0750
     owner: root
     group: root
 - name: Install arb.chrisx.xyz/fullchain.pem

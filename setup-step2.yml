@@ -20,13 +20,17 @@
         tasks_from: create_postgres_db.yml
 
 - name: Set up containers
-  hosts: web-docker
+  hosts: web-container
   become: true
   roles:
-    - sys/base_vm
     - sys/base
-    - sys/docker
+    - sys/podman
     - app/containers
+  tasks:
+    - name: Install ssl cert
+      ansible.builtin.import_role:
+        name: inf/ssl
+        tasks_from: chrisx.yml
 
 - name: Set up Apache + PHP
   hosts: web-php

@@ -86,7 +86,7 @@
       when: hostvars['localhost']['upgrade_php_apps'] == 'y'
 
 - name: Upgrade containers
-  hosts: web-docker
+  hosts: web-container
   become: true
   tasks:
     - name: Install container apps
@@ -94,7 +94,7 @@
         name: app/containers
       when: hostvars['localhost']['upgrade_containers'] == 'y'
     - name: Reload Nginx
-      ansible.builtin.command: "docker exec nginx nginx -s reload"
+      ansible.builtin.command: "podman exec nginx nginx -s reload"
       when: hostvars['localhost']['upgrade_containers'] == 'y'
 
 - name: Upgrade PHP apps
