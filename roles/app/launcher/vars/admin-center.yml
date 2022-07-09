@@ -46,7 +46,7 @@ services:
     apps:
       - name: Healthchecks
         icon: fa-solid fa-heart-pulse
-        url: https://healthchecks.chrisx.xyz
+        url: https://healthchecks.io
         newtab: true
       - name: Proxmox VE
         icon: fa-solid fa-server

@@ -31,7 +31,7 @@ services:
     apps:
       - name: Home Assistant
         icon: fa-solid fa-house
-        url: https://chi-hass.chrisx.xyz
+        url: https://hass.arb.chrisx.xyz
         newtab: true
       - name: Firefly III
         icon: fa-solid fa-sack-dollar
