@@ -36,8 +36,8 @@
 
 - name: Change owner of vaultwarden data volume
   ansible.builtin.file:
-    path: /var/lib/docker/volumes/containers_vaultwarden_data/_data
+    path: /var/lib/containers/storage/volumes/containers_vaultwarden_data/_data
     state: directory
     recurse: true
     owner: nobody
-    group: nogroup
+    group: nobody

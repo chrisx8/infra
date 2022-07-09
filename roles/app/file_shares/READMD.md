@@ -7,4 +7,4 @@ Notes:
 - This role depends on the `inf/cockpit` role.
 - The Samba config will set up home directory shares for users.
 
-Supported OS: supported versions of Debian or Ubuntu
+Supported OS: RedHat-based Linux systems

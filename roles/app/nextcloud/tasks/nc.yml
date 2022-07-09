@@ -9,14 +9,14 @@
     path: /var/www/nextcloud
     state: directory
     recurse: true
-    owner: www-data
-    group: www-data
+    owner: apache
+    group: apache
 
 - name: Prompt for Nextcloud setup
   when: not nextcloud_exist.stat.exists
   ansible.builtin.pause:
     prompt: "Finish Nextcloud installation in a web browser \n
-             Database: PostgreSQL on {{ hostvars['db-postgres']['fqdn'] }} \n
+             Database: PostgreSQL on {{ hostvars['db-postgres']['ansible_host'] }} \n
              DB Name: nextcloud \n
              DB Username: nextcloud \n
              DB Password: {{ hostvars['db-postgres']['postgres_nextcloud_password'] }} \n\n
@@ -42,20 +42,20 @@
           "
 
 - name: Update htaccess
-  become_user: www-data
+  become_user: apache
   ansible.builtin.command:
     "php --define apc.enable_cli=1 /var/www/nextcloud/occ maintenance:update:htaccess"
   changed_when: true
 
-- name: Configure crontab for www-data
+- name: Configure crontab for apache user
   ansible.builtin.cron:
     env: true
     name: MAILTO
-    user: www-data
+    user: apache
     job: ""
 - name: Install Nextcloud cron job
   ansible.builtin.cron:
     name: "Nextcloud background jobs"
     minute: "*/5"
-    user: www-data
+    user: apache
     job: "php --define apc.enable_cli=1 -f /var/www/nextcloud/cron.php"

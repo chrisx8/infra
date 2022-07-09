@@ -8,9 +8,6 @@
 	Header always set Permissions-Policy "interest-cohort=()"
 	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
-	ErrorLog ${APACHE_LOG_DIR}/error.log
-	CustomLog ${APACHE_LOG_DIR}/access.log combined
-
 	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
 	OIDCClientID webapps.chrisx.xyz
 	OIDCClientSecret {{ webapps_client_secret }}

@@ -20,17 +20,25 @@
 
 - name: Upgrade system
   hosts: all
-  gather_facts: false
+  gather_facts: true
+  gather_subset: '!all'
   become: true
   tasks:
-    - name: Upgrade packages
-      ansible.builtin.import_role:
-        name: sys/base
-        tasks_from: apt_upgrade.yml
-    - name: Post-run apt cleanup
-      ansible.builtin.import_role:
-        name: sys/base
-        tasks_from: apt_post.yml
+    - name: Upgrade packages (apt)
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+      when: "ansible_os_family == 'Debian'"
+    - name: Upgrade packages (dnf)
+      ansible.builtin.dnf:
+        name: "*"
+        update_cache: true
+        state: latest
+      when: "ansible_os_family == 'RedHat'"
+    - name: Autoremove unneeded packages (dnf)
+      ansible.builtin.dnf:
+        autoremove: true
+      when: "ansible_os_family == 'RedHat'"
     - name: Check if chrisx.xyz SSL cert exists
       ansible.builtin.stat:
         path: /etc/ssl/chrisx.xyz

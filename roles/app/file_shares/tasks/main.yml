@@ -1,6 +1,6 @@
-- name: Install rclone and tree
-  ansible.builtin.apt:
-    name: [rclone, tree]
+- name: Install file syncing tools
+  ansible.builtin.dnf:
+    name: [rclone, rsync, tree]
     state: present
 - ansible.builtin.import_tasks: samba.yml
 - ansible.builtin.import_tasks: sftp.yml

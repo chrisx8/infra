@@ -1,13 +1,22 @@
-- name: Upgrade packages
-  ansible.builtin.import_role:
-    name: sys/base
-    tasks_from: apt_upgrade.yml
-- name: Install additional packages
-  ansible.builtin.apt:
-    name: [apt-transport-https, ca-certificates, curl, dnsutils, fail2ban, git,
-           gnupg, psmisc, vim, unzip]
+- name: Remove unneeded packages
+  ansible.builtin.dnf:
+    name: [cloud-init, command-not-found, open-iscsi, open-vm-tools, plymouth,
+           postfix, telnet]
+    state: absent
+
+- name: Install epel-release repo
+  ansible.builtin.dnf:
+    name: epel-release
     state: present
-- name: Post-run apt cleanup
-  ansible.builtin.import_role:
-    name: sys/base
-    tasks_from: apt_post.yml
+- name: Upgrade packages
+  ansible.builtin.dnf:
+    name: "*"
+    update_cache: true
+    state: latest
+- name: Install additional packages
+  ansible.builtin.dnf:
+    name: [bind-utils, curl, fail2ban, htop, git, psmisc, vim, tar, unzip, wget]
+    state: present
+- name: Autoremove unneeded packages
+  ansible.builtin.dnf:
+    autoremove: true

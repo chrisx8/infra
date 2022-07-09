@@ -1,29 +1,34 @@
+- name: Enable ssl
+  ansible.builtin.lineinfile:
+    path: /var/lib/pgsql/14/data/postgresql.conf
+    line: "ssl = on"
+    regex: "^#?ssl ="
 - name: Configure ssl_cert_file
   ansible.builtin.lineinfile:
-    path: /etc/postgresql/14/main/postgresql.conf
+    path: /var/lib/pgsql/14/data/postgresql.conf
     line: "ssl_cert_file = '/etc/ssl/arb.chrisx.xyz/fullchain.pem'"
     regex: "^#?ssl_cert_file ="
 - name: Configure ssl_key_file
   ansible.builtin.lineinfile:
-    path: /etc/postgresql/14/main/postgresql.conf
+    path: /var/lib/pgsql/14/data/postgresql.conf
     line: "ssl_key_file = '/etc/ssl/arb.chrisx.xyz/privkey.pem'"
     regex: "^#?ssl_key_file ="
 - name: Configure ssl_min_protocol_version
   ansible.builtin.lineinfile:
-    path: /etc/postgresql/14/main/postgresql.conf
+    path: /var/lib/pgsql/14/data/postgresql.conf
     line: "ssl_min_protocol_version = 'TLSv1.2'"
     regex: "^#?ssl_min_protocol_version ="
 - name: Configure listen_addresses
   ansible.builtin.lineinfile:
-    path: /etc/postgresql/14/main/postgresql.conf
+    path: /var/lib/pgsql/14/data/postgresql.conf
     line: "listen_addresses = '*'"
     regex: "^#?listen_addresses ="
 - name: Allow SSL access from local network
   ansible.builtin.lineinfile:
-    path: /etc/postgresql/14/main/pg_hba.conf
+    path: /var/lib/pgsql/14/data/pg_hba.conf
     line: "hostssl all             all             10.69.0.0/24            scram-sha-256"
     regex: "10\\.69\\.0\\.0\/24"
 - name: Restart postgresql
   ansible.builtin.systemd:
-    name: postgresql.service
+    name: postgresql-14.service
     state: restarted

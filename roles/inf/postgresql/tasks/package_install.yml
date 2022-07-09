@@ -1,22 +1,35 @@
-- name: Add PostgreSQL repo keys
-  ansible.builtin.get_url:
-    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-    dest: /etc/apt/trusted.gpg.d/postgresql.asc
-    mode: 0644
 - name: Add PostgreSQL repo
-  ansible.builtin.apt_repository:
-    repo: deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release|lower }}-pgdg main
+  ansible.builtin.dnf:
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+    disable_gpg_check: true
     state: present
 - name: Install PostgreSQL 14
-  ansible.builtin.apt:
-    name: postgresql-14
-    state: present
+  ansible.builtin.dnf:
+    name: [postgresql14-server, postgresql14-contrib]
     update_cache: true
-- name: Install dependencies for Ansible Postgres module
-  ansible.builtin.apt:
-    name: [libpq-dev, python3-psycopg2]
     state: present
-- name: Post-run apt cleanup
-  ansible.builtin.import_role:
-    name: sys/base
-    tasks_from: apt_post.yml
+- name: Install dependencies for Ansible Postgres module
+  ansible.builtin.dnf:
+    name: [libpq-devel, python3-psycopg2]
+    state: present
+
+- name: Initialize database
+  ansible.builtin.command: /usr/pgsql-14/bin/postgresql-14-setup initdb
+  register: initialize
+  failed_when: false
+  changed_when: initialize.rc == 0
+- name: Enable and start PostgreSQL server
+  ansible.builtin.systemd:
+    name: postgresql-14.service
+    enabled: true
+    state: started
+
+- name: Configure firewall
+  ansible.posix.firewalld:
+    service: postgresql
+    permanent: true
+    state: enabled
+- name: Reload firewall
+  ansible.builtin.systemd:
+    name: firewalld.service
+    state: reloaded

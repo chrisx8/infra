@@ -1,7 +1,7 @@
-- name: Upgrade packages
-  ansible.builtin.import_role:
-    name: sys/base
-    tasks_from: apt_upgrade.yml
+- name: apt dist-upgrade
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: dist
 - name: Install extra Debian packages
   ansible.builtin.apt:
     name: [vim, libsasl2-modules, lm-sensors]

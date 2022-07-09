@@ -1,15 +1,5 @@
-- name: Get 45Drives repo key
-  ansible.builtin.get_url:
-    url: https://repo.45drives.com/key/gpg.asc
-    dest: /etc/apt/trusted.gpg.d/45drives.asc
-    mode: 0644
-- name: Add 45Drives repo
-  ansible.builtin.apt_repository:
-    repo: deb https://repo.45drives.com/debian focal main
-    state: present
-
 - name: Install Cockpit storage modules
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name: [cockpit-storaged, cockpit-file-sharing]
     state: present
 - name: Restart Cockpit socket

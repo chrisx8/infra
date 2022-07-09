@@ -2,15 +2,15 @@
   ansible.builtin.file:
     path: /var/www/launcher
     state: directory
-    owner: www-data
-    group: www-data
+    owner: apache
+    group: apache
     mode: 0755
 - name: Copy Launcher assets
   ansible.builtin.copy:
     src: .
     dest: /var/www/launcher/
-    owner: www-data
-    group: www-data
+    owner: apache
+    group: apache
     mode: 0644
 
 - name: Download latest bulma.min.css
@@ -48,8 +48,8 @@
       ansible.builtin.template:
         src: launcher.html.j2
         dest: /var/www/launcher/index.html
-        owner: www-data
-        group: www-data
+        owner: apache
+        group: apache
         mode: 0644
 
 - name: Generate Admin Center
@@ -61,6 +61,6 @@
       ansible.builtin.template:
         src: launcher.html.j2
         dest: /var/www/launcher/admin.html
-        owner: www-data
-        group: www-data
+        owner: apache
+        group: apache
         mode: 0644

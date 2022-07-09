@@ -1,25 +1,21 @@
-- name: Install ssl-cert packages
-  ansible.builtin.apt:
-    name: ssl-cert
-    state: present
-- name: Create /etc/ssl/chrisx.xyz
+- name: Create /etc/ssl/arb.chrisx.xyz
   ansible.builtin.file:
-    path: /etc/ssl/chrisx.xyz
+    path: /etc/ssl/arb.chrisx.xyz
     state: directory
     mode: 0700
     owner: root
     group: root
-- name: Install chrisx.xyz/fullchain.pem
+- name: Install arb.chrisx.xyz/fullchain.pem
   ansible.builtin.copy:
-    src: certbot/config/live/chrisx.xyz/fullchain.pem
-    dest: /etc/ssl/chrisx.xyz
+    src: certbot/config/live/arb.chrisx.xyz/fullchain.pem
+    dest: /etc/ssl/arb.chrisx.xyz/fullchain.pem
     mode: 0400
     owner: root
     group: root
-- name: Install chrisx.xyz/privkey.pem
+- name: Install arb.chrisx.xyz/privkey.pem
   ansible.builtin.copy:
-    src: certbot/config/live/chrisx.xyz/privkey.pem
-    dest: /etc/ssl/chrisx.xyz
+    src: certbot/config/live/arb.chrisx.xyz/privkey.pem
+    dest: /etc/ssl/arb.chrisx.xyz/privkey.pem
     mode: 0400
     owner: root
     group: root

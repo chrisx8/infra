@@ -1,27 +1,24 @@
-- name: Disable systemd-resolved
-  ansible.builtin.systemd:
-    name: systemd-resolved.service
-    enabled: false
-    state: stopped
-
-- name: Add Tailscale repo keys
-  ansible.builtin.get_url:
-    url: "https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release|lower }}.noarmor.gpg"
-    dest: /etc/apt/trusted.gpg.d/tailscale.gpg
-    mode: 0644
 - name: Add Tailscale repo
-  ansible.builtin.apt_repository:
-    repo: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
-    state: present
-- name: Install Tailscale
-  ansible.builtin.apt:
+  ansible.builtin.yum_repository:
     name: tailscale
+    description: Tailscale stable
+    baseurl: https://pkgs.tailscale.com/stable/rhel/{{ ansible_distribution_major_version }}/$basearch
+    gpgkey: https://pkgs.tailscale.com/stable/rhel/{{ ansible_distribution_major_version }}/repo.gpg
+    async: false
+    gpgcheck: false
+    repo_gpgcheck: true
     state: present
+
+- name: Install Tailscale
+  ansible.builtin.dnf:
+    name: tailscale
     update_cache: true
-- name: Post-run apt cleanup
-  ansible.builtin.import_role:
-    name: sys/base
-    tasks_from: apt_post.yml
+    state: present
+- name: Enable and start tailscaled
+  ansible.builtin.systemd:
+    name: tailscaled.service
+    enabled: true
+    state: started
 
 - name: Change sysctl configs
   ansible.posix.sysctl:

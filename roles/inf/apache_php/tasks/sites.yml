@@ -7,18 +7,18 @@
 - name: Configure Apache site
   ansible.builtin.template:
     src: webapps.conf.j2
-    dest: /etc/apache2/sites-enabled/webapps.conf
+    dest: /etc/httpd/conf.d/webapps.conf
     mode: 0644
 
 - name: Copy html
   ansible.builtin.copy:
     src: html
     dest: /var/www/
-    owner: www-data
-    group: www-data
+    owner: apache
+    group: apache
     mode: 0755
 
 - name: Reload Apache
   ansible.builtin.systemd:
-    name: apache2
+    name: httpd
     state: reloaded

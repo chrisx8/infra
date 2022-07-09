@@ -27,4 +27,8 @@ smtp_use_tls = yes
 smtp_sasl_auth_enable = yes
 smtp_sasl_security_options =
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+{% if ansible_os_family == 'Debian' %}
 smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+{% elif ansible_os_family == 'RedHat' %}
+smtp_tls_CAfile = /etc/ssl/cert.pem
+{% endif %}

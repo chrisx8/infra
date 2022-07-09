@@ -1,7 +1,13 @@
+- name: Load secrets
+  ansible.builtin.include_vars: secrets.yml
+
 - name: Install Cockpit
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     name: cockpit
     state: present
-    install-recommends: false
+- name: Remove cockpit-packagekit
+  ansible.builtin.dnf:
+    name: cockpit-packagekit
+    state: absent
 - ansible.builtin.import_tasks: ssl.yml
-- ansible.builtin.import_tasks: totp.yml
+# - ansible.builtin.import_tasks: otp.yml

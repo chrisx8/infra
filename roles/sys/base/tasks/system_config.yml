@@ -1,3 +1,19 @@
+- name: Enable and start fail2ban
+  ansible.builtin.systemd:
+    name: fail2ban.service
+    enabled: true
+    state: started
+
+- name: Change sysctl configs
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: true
+    reload: true
+  with_dict: "{{ sysctl_config }}"
+  when: "is_vm is defined and is_vm"
+
 - name: Set hostname
   ansible.builtin.hostname:
     name: "{{ ansible_host }}"
@@ -6,12 +22,6 @@
   ansible.builtin.command:
     "timedatectl set-timezone {{ hostvars[ansible_hostname].timezone }}"
   when: hostvars[ansible_hostname].timezone is defined
-
-- name: Set authorized key for {{ ansible_user }} from ~/.ssh/id_ed25519.pub
-  ansible.builtin.authorized_key:
-    user: "{{ ansible_user }}"
-    state: present
-    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_ed25519.pub') }}"
 
 - name: Remove DSA and ECDSA SSH host keys
   ansible.builtin.file:
@@ -34,6 +44,12 @@
     state: restarted
     daemon_reload: true
 
+- name: Disable systemd coredump
+  ansible.builtin.lineinfile:
+    dest: "/etc/systemd/coredump.conf"
+    regex: "Storage="
+    line: "Storage=none"
+
 - name: Limit systemd-journald
   ansible.builtin.lineinfile:
     dest: "/etc/systemd/journald.conf"
@@ -42,14 +58,14 @@
 
 - name: Set default text editor to vim
   ansible.builtin.lineinfile:
-    dest: /etc/bash.bashrc
+    dest: /etc/bashrc
     regex: "^export EDITOR="
     line: export EDITOR=vim
 
 - name: Configure vim
   ansible.builtin.copy:
     src: vimrc
-    dest: /etc/vim/vimrc
+    dest: /etc/vimrc.local
     mode: 0644
 
 - name: Configure crontab

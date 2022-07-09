@@ -1,7 +1,13 @@
-- name: Install postfix
+- name: Install postfix (apt)
   ansible.builtin.apt:
     name: postfix
     state: present
+  when: ansible_os_family == 'Debian'
+- name: Install postfix (dnf)
+  ansible.builtin.dnf:
+    name: [postfix, cyrus-sasl, cyrus-sasl-plain]
+    state: present
+  when: ansible_os_family == 'RedHat'
 
 - name: Load AWS SES credential
   ansible.builtin.include_vars: secrets.yml
@@ -19,7 +25,8 @@
 - name: Process credential DB
   ansible.builtin.command: postmap /etc/postfix/sasl_passwd
   changed_when: true
-- name: Restart Postfix
+- name: Enable and restart Postfix
   ansible.builtin.systemd:
     name: postfix.service
+    enabled: true
     state: restarted
