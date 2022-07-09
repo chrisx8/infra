@@ -19,6 +19,13 @@
     - inf/tailscale
     - app/adguard-home
 
+- name: Set up IPA server
+  hosts: net-ipa
+  become: true
+  roles:
+    - sys/base
+    - app/ipa-server
+
 - name: Set up PostgreSQL server
   hosts: db-postgres
   become: true
