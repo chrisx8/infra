@@ -12,7 +12,7 @@
     sysctl_set: true
     reload: true
   with_dict: "{{ sysctl_config }}"
-  when: "is_vm is defined and is_vm"
+  when: ansible_virtualization_type == 'kvm'
 
 - name: Disable NetworkManager DNS management on LXC nodes
   ansible.builtin.copy:
