@@ -14,6 +14,18 @@
   with_dict: "{{ sysctl_config }}"
   when: "is_vm is defined and is_vm"
 
+- name: Disable NetworkManager DNS management on LXC nodes
+  ansible.builtin.copy:
+    content: "[main]\ndns=none\n"
+    dest: /etc/NetworkManager/conf.d/dns.conf
+    mode: 0644
+  when: ansible_virtualization_type == 'lxc'
+- name: Restart NetworkManager on LXC nodes
+  ansible.builtin.systemd:
+    name: NetworkManager.service
+    state: restarted
+  when: ansible_virtualization_type == 'lxc'
+
 - name: Set hostname
   ansible.builtin.hostname:
     name: "{{ ansible_host }}"
