@@ -1,3 +1,10 @@
+- name: Verify system environment
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution == 'Debian'
+      - ansible_virtualization_role == 'host'
+      - ansible_virtualization_type == 'kvm'
+
 - ansible.builtin.import_tasks: change_repos.yml
 - ansible.builtin.import_tasks: system.yml
 - ansible.builtin.import_tasks: software_config.yml
