@@ -2,11 +2,14 @@
   ansible.builtin.import_role:
     name: inf/ssl
     tasks_from: chrisx.yml
+  when: apache_minimal is undefined or not apache_minimal
 - name: Set up Postfix
   ansible.builtin.import_role:
     name: inf/postfix
+  when: apache_minimal is undefined or not apache_minimal
 
 - ansible.builtin.import_tasks: apache.yml
 - ansible.builtin.import_tasks: php.yml
 - ansible.builtin.import_tasks: composer.yml
+  when: apache_minimal is undefined or not apache_minimal
 - ansible.builtin.import_tasks: sites.yml

@@ -1,0 +1,68 @@
+- name: Load secret vars
+  ansible.builtin.include_vars: secrets.yml
+
+- name: Install PHP modules
+  ansible.builtin.dnf:
+    name: [php-pdo, php-xml, php-json, php-intl]
+
+- name: Install arb cert
+  ansible.builtin.import_role:
+    name: inf/ssl
+    tasks_from: arb.yml
+
+- name: Patch Apache defaults
+  ansible.builtin.replace:
+    path: /etc/httpd/conf.d/1_default.conf
+    regexp: "chrisx\\.xyz"
+    replace: "arb.chrisx.xyz"
+- name: Install Apache pihole config
+  ansible.builtin.template:
+    src: pihole.conf.j2
+    dest: /etc/httpd/conf.d/pihole.conf
+    mode: 0640
+- name: Reload Apache
+  ansible.builtin.systemd:
+    name: httpd
+    state: reloaded
+
+- name: Install Pihole installer wrapper
+  ansible.builtin.copy:
+    src: pihole_install.sh
+    dest: /tmp/pihole_install.sh
+    mode: 0750
+- name: Run Pihole install script
+  ansible.builtin.command: /tmp/pihole_install.sh
+  changed_when: true
+- name: Remove Pihole installer
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /tmp/pihole_install.sh
+    - /tmp/pihole_patched.sh
+
+- name: Add apache user to pihole group
+  ansible.builtin.user:
+    name: apache
+    groups: pihole
+- name: Fix sudoers
+  ansible.builtin.replace:
+    path: /etc/sudoers.d/pihole
+    regexp: lighttpd
+    replace: apache
+- name: Install dnsmasq config
+  ansible.builtin.copy:
+    src: 10-arb.conf
+    dest: /etc/dnsmasq.d/10-arb.conf
+    mode: 0644
+- name: Configure firewall
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+  with_items:
+    [http, https, dns]
+- name: Reload firewalld
+  ansible.builtin.systemd:
+    name: firewalld.service
+    state: reloaded

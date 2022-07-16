@@ -29,9 +29,9 @@ services:
   - name: Network
     icon: fa-solid fa-network-wired
     apps:
-      - name: AdGuard Home
-        icon: fa-solid fa-list
-        url: https://net-ingress.arb.chrisx.xyz
+      - name: Pi-hole
+        icon: fa-solid fa-asterisk
+        url: https://net-pihole.arb.chrisx.xyz/admin/
         newtab: true
       - name: OpenWrt
         icon: fa-solid fa-wifi

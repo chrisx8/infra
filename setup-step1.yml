@@ -11,13 +11,14 @@
         name: inf/tailscale
         tasks_from: proxmox_config.yml
 
-- name: Set up Ingress instance
-  hosts: net-ingress
+- name: Set up Pi-hole instance
+  hosts: net-pihole
   become: true
   roles:
     - sys/base
     - inf/tailscale
-    - app/adguard-home
+    - inf/apache_php
+    - app/pihole
 
 - name: Set up IPA server
   hosts: net-ipa

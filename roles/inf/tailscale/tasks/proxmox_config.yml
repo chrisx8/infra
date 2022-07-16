@@ -1,6 +1,6 @@
 - name: Get pve_id
   ansible.builtin.set_fact:
-    ct_id: "{{ hostvars['net-ingress']['pve_id'] }}"
+    ct_id: "{{ hostvars['net-pihole']['pve_id'] }}"
 - name: Allow CT {{ ct_id }} to access devices
   ansible.builtin.lineinfile:
     path: /etc/pve/lxc/{{ ct_id }}.conf
@@ -23,6 +23,6 @@
   timeout: 5
 - name: Wait for CT {{ ct_id }} to reboot
   ansible.builtin.wait_for:
-    host: "{{ hostvars['net-ingress']['ansible_host'] }}"
+    host: "{{ hostvars['net-pihole']['ansible_host'] }}"
     port: 22
     timeout: 60

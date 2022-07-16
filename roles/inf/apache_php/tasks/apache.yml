@@ -21,8 +21,8 @@
 
 - name: Add default site
   ansible.builtin.copy:
-    src: site_default.conf
-    dest: /etc/httpd/conf.d/site_default.conf
+    src: 1_default.conf
+    dest: /etc/httpd/conf.d/1_default.conf
     mode: 0644
 
 - name: Remove welcome site

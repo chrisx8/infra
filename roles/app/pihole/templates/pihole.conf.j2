@@ -1,0 +1,34 @@
+<VirtualHost *:443>
+	ServerName net-pihole.arb.chrisx.xyz
+	SSLEngine on
+	SSLCertificateFile /etc/ssl/arb.chrisx.xyz/fullchain.pem
+	SSLCertificateKeyFile /etc/ssl/arb.chrisx.xyz/privkey.pem
+	Protocols h2 http/1.1
+
+	Header always set Permissions-Policy "interest-cohort=()"
+	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
+	OIDCClientID net-pihole.arb.chrisx.xyz
+	OIDCClientSecret {{ pihole_client_secret }}
+	OIDCRemoteUserClaim sub
+	OIDCScope openid
+	OIDCRedirectURI https://net-pihole.arb.chrisx.xyz/auth/openid-connect
+	OIDCCryptoPassphrase {{ oidc_crypto }}
+	OIDCSessionInactivityTimeout 3600
+	OIDCStateMaxNumberOfCookies 2 true
+
+	DocumentRoot /var/www/html
+
+	<Location "/auth/openid-connect">
+		AuthType openid-connect
+		Require valid-user
+	</Location>
+
+	<Directory "/var/www/html/admin">
+		AuthType openid-connect
+		Require claim roles:admin
+	</Directory>
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet

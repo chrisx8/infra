@@ -53,8 +53,8 @@ pre-commit autoupdate
 
 ### Networking
 
-- [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome)
 - [OpenWrt](https://openwrt.org/)
+- [Pi-hole](https://pi-hole.net/)
 - [Tailscale](https://tailscale.com/)
 - [WireGuard](https://www.wireguard.com/)
 

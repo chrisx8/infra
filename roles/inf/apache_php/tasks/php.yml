@@ -1,6 +1,6 @@
 - name: Install php8.0-fpm
   ansible.builtin.dnf:
-    name: [php, php-fpm]
+    name: [php, php-cli, php-fpm]
     state: present
 
 - name: Set php8.0-fpm max POST size
