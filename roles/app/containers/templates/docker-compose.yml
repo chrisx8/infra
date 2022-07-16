@@ -33,7 +33,7 @@ services:
 
   gitea:
     container_name: gitea
-    image: gitea/gitea:1
+    image: gitea/gitea:latest
     env_file: ./gitea.env
     volumes:
       - gitea_data:/data:Z

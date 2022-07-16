@@ -22,6 +22,7 @@
 - name: Set up containers
   hosts: web-container
   become: true
+  gather_subset: 'virtualization_type'
   roles:
     - sys/base
     - sys/podman
@@ -35,6 +36,7 @@
 - name: Set up Apache + PHP
   hosts: web-php
   become: true
+  gather_subset: 'virtualization_type'
   roles:
     - sys/base
     - inf/apache_php

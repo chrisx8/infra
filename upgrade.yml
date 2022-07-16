@@ -74,6 +74,13 @@
   become: true
   become_user: postgres
   tasks:
+    - name: Set SSL cert permission
+      ansible.builtin.file:
+        path: /etc/ssl/arb.chrisx.xyz
+        owner: postgres
+        group: postgres
+        recurse: true
+      become_user: root
     - name: Set up Postgres databases for container apps
       ansible.builtin.import_role:
         name: app/containers
@@ -87,6 +94,7 @@
 
 - name: Upgrade containers
   hosts: web-container
+  gather_facts: false
   become: true
   tasks:
     - name: Install container apps
