@@ -1,0 +1,51 @@
+- name: Disable SELinux
+  ansible.builtin.lineinfile:
+    path: /etc/sysconfig/selinux
+    line: "SELINUX=disabled"
+    regexp: "^SELINUX="
+- name: Reboot
+  ansible.builtin.reboot:
+
+- name: Get latest Jellyfin version number from GitHub
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/jellyfin/jellyfin/releases/latest
+    method: GET
+  register: jellyfin_release
+
+- name: Install rpmfusion-free repo
+  ansible.builtin.dnf:
+    name: https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    state: present
+
+- name: Install ffmpeg
+  ansible.builtin.dnf:
+    name: ffmpeg
+    state: present
+
+- name: print debug
+  ansible.builtin.debug:
+    var: jellyfin_release['json']['name']
+- name: Install Jellfyin
+  ansible.builtin.dnf:
+    name:
+      - https://repo.jellyfin.org/releases/server/centos/stable/server/jellyfin-{{ item }}-1.el7.x86_64.rpm
+      - https://repo.jellyfin.org/releases/server/centos/stable/server/jellyfin-server-{{ item }}-1.el7.x86_64.rpm
+      - https://repo.jellyfin.org/releases/server/centos/stable/web/jellyfin-web-{{ item }}-1.el7.noarch.rpm
+  with_items:
+    - "{{ jellyfin_release['json']['name'] }}"
+
+- name: Configure firewall
+  ansible.posix.firewalld:
+    service: jellyfin
+    state: enabled
+    permanent: true
+- name: Reload firewall
+  ansible.builtin.systemd:
+    name: firewalld.service
+    state: reloaded
+
+- name: Enable and start Jellfyin service
+  ansible.builtin.systemd:
+    name: jellyfin.service
+    enabled: true
+    state: started

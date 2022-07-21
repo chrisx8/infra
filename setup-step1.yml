@@ -46,3 +46,4 @@
     - sys/base
     - inf/cockpit
     - app/file_shares
+    - app/jellyfin

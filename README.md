@@ -80,6 +80,7 @@ pre-commit autoupdate
 
 - [Firefly III](https://www.firefly-iii.org/)
 - [Gitea](https://gitea.io/)
+- [Jellyfin](https://jellyfin.org/)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
