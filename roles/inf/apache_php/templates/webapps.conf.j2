@@ -21,7 +21,6 @@
 	DocumentRoot /var/www/html
 
 	Alias "/docs" "/var/www/docs"
-	Alias "/firefly-iii" "/var/www/firefly-iii/public"
 	Alias "/launcher" "/var/www/launcher"
 
 	RedirectMatch "/docs/.*/_admin/" "/docs/_admin/"
@@ -52,17 +51,6 @@
 	<Directory "/var/www/docs/_internal">
 		AuthType openid-connect
 		Require claim roles:internal
-	</Directory>
-
-	<Directory "/var/www/firefly-iii/public">
-		AllowOverride All
-		AuthType openid-connect
-		Require claim roles:firefly-iii
-	</Directory>
-
-	<Directory "/var/www/firefly-iii">
-		AllowOverride None
-		Require all denied
 	</Directory>
 
 	<Directory "/var/www/launcher">

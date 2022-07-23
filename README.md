@@ -78,7 +78,6 @@ pre-commit autoupdate
 
 ### Web Apps
 
-- [Firefly III](https://www.firefly-iii.org/)
 - [Gitea](https://gitea.io/)
 - [Jellyfin](https://jellyfin.org/)
 - [Minflux](https://miniflux.app/)

@@ -33,13 +33,6 @@ services:
         icon: fa-solid fa-house
         url: https://hass.arb.chrisx.xyz
         newtab: true
-      - name: Firefly III
-        icon: fa-solid fa-sack-dollar
-        url: /firefly-iii/
-        newtab: true
-  - name: Media
-    icon: fa-solid fa-play
-    apps:
       - name: Jellyfin
         icon: fa-solid fa-film
         url: https://storage.arb.chrisx.xyz:8920

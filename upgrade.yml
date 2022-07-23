@@ -8,15 +8,11 @@
     - name: upgrade_containers
       prompt: "Upgrade containers? (y/n)"
       private: false
-    - name: upgrade_php_apps
-      prompt: "Upgrade PHP applications? (y/n)"
-      private: false
   tasks:
     - name: Store prompt inputs
       ansible.builtin.set_fact:
         upgrade_launcher: "{{ upgrade_launcher }}"
         upgrade_containers: "{{ upgrade_containers }}"
-        upgrade_php_apps: "{{ upgrade_php_apps }}"
 
 - name: Upgrade system
   hosts: all
@@ -86,11 +82,6 @@
         name: app/containers
         tasks_from: create_postgres_db.yml
       when: hostvars['localhost']['upgrade_containers'] == 'y'
-    - name: Set up Postgres databases for Firefly III
-      ansible.builtin.import_role:
-        name: app/firefly-iii
-        tasks_from: create_postgres_db.yml
-      when: hostvars['localhost']['upgrade_php_apps'] == 'y'
 
 - name: Upgrade containers
   hosts: web-container
@@ -114,12 +105,3 @@
       ansible.builtin.import_role:
         name: app/launcher
       when: hostvars['localhost']['upgrade_launcher'] == 'y'
-    - name: Install Composer
-      ansible.builtin.import_role:
-        name: inf/apache_php
-        tasks_from: composer.yml
-      when: hostvars['localhost']['upgrade_php_apps'] == 'y'
-    - name: Install Firefly III
-      ansible.builtin.import_role:
-        name: app/firefly-iii
-      when: hostvars['localhost']['upgrade_php_apps'] == 'y'

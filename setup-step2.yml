@@ -10,10 +10,6 @@
       ansible.builtin.import_role:
         name: app/containers
         tasks_from: create_postgres_db.yml
-    - name: Create Postgres database for Firefly III
-      ansible.builtin.import_role:
-        name: app/firefly-iii
-        tasks_from: create_postgres_db.yml
     - name: Create Postgres database for Nextcloud
       ansible.builtin.import_role:
         name: app/nextcloud
@@ -40,6 +36,5 @@
   roles:
     - sys/base
     - inf/apache_php
-    - app/firefly-iii
     - app/launcher
     - app/nextcloud
