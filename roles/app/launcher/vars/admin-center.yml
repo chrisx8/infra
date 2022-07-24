@@ -15,7 +15,7 @@ services:
     icon: fa-solid fa-rocket
     apps:
       - name: Identity Management
-        icon: fa-solid fa-user-gear
+        icon: fa-solid fa-id-badge
         url: https://net-ipa.arb.chrisx.xyz/ipa/ui/
         newtab: true
       - name: Keycloak Admin Console
@@ -44,10 +44,6 @@ services:
   - name: Systems
     icon: fa-solid fa-microchip
     apps:
-      - name: Healthchecks
-        icon: fa-solid fa-heart-pulse
-        url: https://healthchecks.io
-        newtab: true
       - name: Proxmox VE
         icon: fa-solid fa-server
         url: https://proxmox1.arb.chrisx.xyz:8006

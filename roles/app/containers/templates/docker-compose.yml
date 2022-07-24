@@ -38,14 +38,13 @@ services:
     volumes:
       - gitea_data:/data:Z
       - ./gitea/templates:/data/gitea/templates:Z
-      - /etc/localtime:/etc/localtime:ro
     security_opt:
       - no-new-privileges
     restart: unless-stopped
   keycloak:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:{{ keycloak_version }}
-    command: start --auto-build
+    command: start
     env_file: ./keycloak.env
     cap_drop:
       - all
