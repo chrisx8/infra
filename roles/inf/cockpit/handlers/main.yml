@@ -1,0 +1,4 @@
+- name: Restart Cockpit socket
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    state: restarted

@@ -1,0 +1,12 @@
+- name: Install Cockpit key
+  ansible.builtin.copy:
+    src: certbot/config/live/arb.chrisx.xyz/privkey.pem
+    dest: /etc/cockpit/ws-certs.d/arb.key
+    mode: 0400
+- name: Install Cockpit cert
+  ansible.builtin.copy:
+    src: certbot/config/live/arb.chrisx.xyz/fullchain.pem
+    dest: /etc/cockpit/ws-certs.d/arb.cert
+    mode: 0400
+  notify:
+    - Restart Cockpit socket

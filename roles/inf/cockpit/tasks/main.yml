@@ -9,5 +9,4 @@
   ansible.builtin.dnf:
     name: cockpit-packagekit
     state: absent
-- ansible.builtin.import_tasks: ssl.yml
-# - ansible.builtin.import_tasks: otp.yml
+- ansible.builtin.import_tasks: ssl_cert.yml

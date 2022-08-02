@@ -33,6 +33,7 @@
       - https://repo.jellyfin.org/releases/server/centos/stable/web/jellyfin-web-{{ item }}-1.el7.noarch.rpm
   with_items:
     - "{{ jellyfin_release['json']['name'] }}"
+- ansible.builtin.import_tasks: ssl_cert.yml
 
 - name: Configure firewall
   ansible.posix.firewalld:

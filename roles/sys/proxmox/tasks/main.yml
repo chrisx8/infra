@@ -8,6 +8,7 @@
 - ansible.builtin.import_tasks: change_repos.yml
 - ansible.builtin.import_tasks: system.yml
 - ansible.builtin.import_tasks: software_config.yml
+- ansible.builtin.import_tasks: ssl_cert.yml
 - name: Install Postfix
   ansible.builtin.import_role:
     name: inf/postfix
