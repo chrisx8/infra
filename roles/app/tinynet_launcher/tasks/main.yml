@@ -1,0 +1,39 @@
+- name: Create /var/www/launcher
+  ansible.builtin.file:
+    path: /var/www/launcher
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0755
+- name: Copy launch.html
+  ansible.builtin.copy:
+    src: launch.html
+    dest: /var/www/launcher/launch.html
+    owner: apache
+    group: apache
+    mode: 0644
+
+- name: Install Launcher
+  block:
+    - name: Load Launcher vars
+      ansible.builtin.include_vars:
+        file: launcher.yml
+    - name: Deploy
+      ansible.builtin.import_role:
+        name: app/LauncherTW
+      become: false
+      vars:
+        launchertw_operation: deploy
+        launchertw_deploy_target_dir: /var/www/launcher
+- name: Install Admin Center
+  block:
+    - name: Load Admin Center vars
+      ansible.builtin.include_vars:
+        file: admin-center.yml
+    - name: Deploy
+      ansible.builtin.import_role:
+        name: app/LauncherTW
+      become: false
+      vars:
+        launchertw_operation: deploy
+        launchertw_deploy_target_dir: /var/www/launcher/admin

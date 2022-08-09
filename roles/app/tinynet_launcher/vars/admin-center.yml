@@ -70,4 +70,4 @@ services:
 footer_link:
   name: Back to Launcher
   icon: fa-solid fa-angle-left
-  url: .
+  url: ../

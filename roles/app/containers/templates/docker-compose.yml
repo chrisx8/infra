@@ -74,6 +74,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  cloudflared:
   gitea_data:
   vaultwarden_data:

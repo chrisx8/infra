@@ -114,9 +114,8 @@
 - name: upgrade PHP apps
   hosts: web-php
   gather_facts: false
-  become: true
   tasks:
     - name: Install launcher
       ansible.builtin.import_role:
-        name: app/launcher
+        name: app/tinynet_launcher
       when: hostvars['localhost']['upgrade_launcher'] == 'y'

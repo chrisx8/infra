@@ -80,6 +80,7 @@ pre-commit autoupdate
 
 - [Gitea](https://gitea.io/)
 - [Jellyfin](https://jellyfin.org/)
+- [LauncherTW](https://github.com/chrisx8/LauncherTW) (another one of my projects)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)

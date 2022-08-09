@@ -36,5 +36,5 @@
   roles:
     - sys/base
     - inf/apache_php
-    - app/launcher
     - app/nextcloud
+    - app/tinynet_launcher

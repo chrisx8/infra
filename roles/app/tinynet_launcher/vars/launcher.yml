@@ -59,4 +59,4 @@ services:
 footer_link:
   name: Admin Center
   icon: fa-solid fa-lock
-  url: admin.html
+  url: admin/

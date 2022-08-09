@@ -4,7 +4,7 @@ This role installs SSL certificates.
 
 Notes:
 
-- Use Certbot on Ansible host to issue certificates.
+- Use Certbot on Ansible controller to issue certificates.
 - Select an appropriate task to install certificates.
 
 Supported OS: Linux
