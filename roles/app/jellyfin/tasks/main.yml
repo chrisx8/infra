@@ -22,15 +22,13 @@
     name: ffmpeg
     state: present
 
-- name: print debug
-  ansible.builtin.debug:
-    var: jellyfin_release['json']['name']
 - name: Install Jellfyin
   ansible.builtin.dnf:
     name:
       - https://repo.jellyfin.org/releases/server/centos/stable/server/jellyfin-{{ item }}-1.el7.x86_64.rpm
       - https://repo.jellyfin.org/releases/server/centos/stable/server/jellyfin-server-{{ item }}-1.el7.x86_64.rpm
       - https://repo.jellyfin.org/releases/server/centos/stable/web/jellyfin-web-{{ item }}-1.el7.noarch.rpm
+    disable_gpg_check: true
   with_items:
     - "{{ jellyfin_release['json']['name'] }}"
 - ansible.builtin.import_tasks: ssl_cert.yml

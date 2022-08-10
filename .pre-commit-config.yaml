@@ -16,6 +16,6 @@ repos:
       - id: check-vcs-permalinks
       - id: mixed-line-ending
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v6.3.0
+    rev: v6.4.0
     hooks:
       - id: ansible-lint

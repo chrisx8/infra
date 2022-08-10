@@ -2,6 +2,9 @@
   hosts: localhost
   gather_facts: false
   vars_prompt:
+    - name: upgrade_ssl_certs
+      prompt: "Upgrade SSL certs? (y/n)"
+      private: false
     - name: upgrade_launcher
       prompt: "Upgrade Launcher? (y/n)"
       private: false
@@ -11,6 +14,7 @@
   tasks:
     - name: Store prompt inputs
       ansible.builtin.set_fact:
+        upgrade_ssl_certs: "{{ upgrade_ssl_certs }}"
         upgrade_launcher: "{{ upgrade_launcher }}"
         upgrade_containers: "{{ upgrade_containers }}"
 
@@ -23,6 +27,7 @@
       ansible.builtin.import_role:
         name: sys/proxmox
         tasks_from: ssl_cert.yml
+      when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
 
 - name: cert on storage
   hosts: storage
@@ -33,10 +38,12 @@
       ansible.builtin.import_role:
         name: inf/cockpit
         tasks_from: ssl_cert.yml
+      when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
     - name: Install SSL cert for Jellyfin
       ansible.builtin.import_role:
         name: app/jellyfin
         tasks_from: ssl_cert.yml
+      when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
 
 - name: upgrade all
   hosts: all
@@ -44,31 +51,34 @@
   gather_subset: '!all'
   become: true
   tasks:
-    - name: Check if chrisx.xyz cert exists
-      ansible.builtin.stat:
-        path: /etc/ssl/chrisx.xyz
-      register: ssl_check
-    - name: Install chrisx.xyz cert
-      ansible.builtin.import_role:
-        name: inf/ssl
-        tasks_from: chrisx.yml
-      when: ssl_check.stat.exists
-    - name: Check if arb.chrisx.xyz cert exists
-      ansible.builtin.stat:
-        path: /etc/ssl/arb.chrisx.xyz
-      register: arb_ssl_check
-    - name: Install arb.chrisx.xyz cert
-      ansible.builtin.import_role:
-        name: inf/ssl
-        tasks_from: arb.yml
-      when: arb_ssl_check.stat.exists
-    - name: Fix cert permission on db-postgres
-      delegate_to: db-postgres
-      ansible.builtin.file:
-        path: /etc/ssl/arb.chrisx.xyz
-        owner: postgres
-        group: postgres
-        recurse: true
+    - name: Update SSL certs
+      block:
+        - name: Check if chrisx.xyz cert exists
+          ansible.builtin.stat:
+            path: /etc/ssl/chrisx.xyz
+          register: ssl_check
+        - name: Install chrisx.xyz cert
+          ansible.builtin.import_role:
+            name: inf/ssl
+            tasks_from: chrisx.yml
+          when: ssl_check.stat.exists
+        - name: Check if arb.chrisx.xyz cert exists
+          ansible.builtin.stat:
+            path: /etc/ssl/arb.chrisx.xyz
+          register: arb_ssl_check
+        - name: Install arb.chrisx.xyz cert
+          ansible.builtin.import_role:
+            name: inf/ssl
+            tasks_from: arb.yml
+          when: arb_ssl_check.stat.exists
+        - name: Fix cert permission on db-postgres
+          delegate_to: db-postgres
+          ansible.builtin.file:
+            path: /etc/ssl/arb.chrisx.xyz
+            owner: postgres
+            group: postgres
+            recurse: true
+      when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
 
     - name: Upgrade packages (apt)
       ansible.builtin.apt:
