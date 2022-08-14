@@ -3,23 +3,7 @@
     name: [httpd, mod_auth_openidc, mod_fcgid, mod_http2, mod_ssl]
     state: present
 
-- name: Disable Apache server signature (1/2)
-  ansible.builtin.lineinfile:
-    path: /etc/httpd/conf/httpd.conf
-    regex: "^ServerSignature"
-    line: "ServerSignature Off"
-- name: Disable Apache server signature (2/2)
-  ansible.builtin.lineinfile:
-    path: /etc/httpd/conf/httpd.conf
-    regex: "^ServerTokens"
-    line: "ServerTokens Prod"
-- name: Remove autoindex config
-  ansible.builtin.lineinfile:
-    path: /etc/httpd/conf/httpd.conf
-    regexp: "Options Indexes FollowSymLinks"
-    line: "Options FollowSymLinks"
-
-- name: Add default site
+- name: Add default config
   ansible.builtin.copy:
     src: 1_default.conf
     dest: /etc/httpd/conf.d/1_default.conf
