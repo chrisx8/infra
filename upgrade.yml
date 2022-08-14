@@ -5,18 +5,22 @@
     - name: upgrade_ssl_certs
       prompt: "Upgrade SSL certs? (y/n)"
       private: false
-    - name: upgrade_launcher
-      prompt: "Upgrade Launcher? (y/n)"
-      private: false
     - name: upgrade_containers
       prompt: "Upgrade containers? (y/n)"
+      private: false
+    - name: upgrade_jellyfin
+      prompt: "Upgrade Jellyfin? (y/n)"
+      private: false
+    - name: upgrade_launcher
+      prompt: "Upgrade Launcher? (y/n)"
       private: false
   tasks:
     - name: Store prompt inputs
       ansible.builtin.set_fact:
         upgrade_ssl_certs: "{{ upgrade_ssl_certs }}"
-        upgrade_launcher: "{{ upgrade_launcher }}"
         upgrade_containers: "{{ upgrade_containers }}"
+        upgrade_jellyfin: "{{ upgrade_jellyfin }}"
+        upgrade_launcher: "{{ upgrade_launcher }}"
 
 - name: cert on proxmox
   hosts: proxmox1
@@ -31,19 +35,25 @@
 
 - name: cert on storage
   hosts: storage
-  gather_facts: false
+  gather_facts: true
+  gather_subset: 'distribution'
   become: true
   tasks:
-    - name: Install SSL cert for Cockpit
-      ansible.builtin.import_role:
-        name: inf/cockpit
-        tasks_from: ssl_cert.yml
+    - name: Install certs
+      block:
+        - name: Install SSL cert for Cockpit
+          ansible.builtin.import_role:
+            name: inf/cockpit
+            tasks_from: ssl_cert.yml
+        - name: Install SSL cert for Jellyfin
+          ansible.builtin.import_role:
+            name: app/jellyfin
+            tasks_from: ssl_cert.yml
       when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
-    - name: Install SSL cert for Jellyfin
+    - name: Install Jellyfin
       ansible.builtin.import_role:
         name: app/jellyfin
-        tasks_from: ssl_cert.yml
-      when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
+      when: hostvars['localhost']['upgrade_jellyfin'] == 'y'
 
 - name: upgrade all
   hosts: all

@@ -1,3 +1,6 @@
+- name: Reboot
+  ansible.builtin.reboot:
+
 - name: Restart Jellyfin
   ansible.builtin.systemd:
     name: jellyfin.service

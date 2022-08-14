@@ -3,8 +3,8 @@
     path: /etc/sysconfig/selinux
     line: "SELINUX=disabled"
     regexp: "^SELINUX="
-- name: Reboot
-  ansible.builtin.reboot:
+  notify:
+    - Reboot
 
 - name: Get latest Jellyfin version number from GitHub
   ansible.builtin.uri:
@@ -31,7 +31,11 @@
     disable_gpg_check: true
   with_items:
     - "{{ jellyfin_release['json']['name'] }}"
+
 - ansible.builtin.import_tasks: ssl_cert.yml
+  when:
+    - hostvars['localhost']['upgrade_ssl_certs'] is defined
+    - hostvars['localhost']['upgrade_ssl_certs'] == 'y'
 
 - name: Configure firewall
   ansible.posix.firewalld:
