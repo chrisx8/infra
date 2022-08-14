@@ -7,12 +7,12 @@ A self-hosted virtualized Linux environment, deployed and managed with Ansible a
 ### Tools used
 
 - [Ansible](https://docs.ansible.com/ansible/latest/index.html)
-- [Docker](https://docs.docker.com/engine/)
-- [Docker Compose v2](https://docs.docker.com/compose/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Podman](https://podman.io/)
 
 ### Ansible Dependencies
 
-Ansible roles here depend on `ansible.posix` and `community.postgresql` modules. To install these dependencies, run:
+Ansible roles here depend on `ansible.posix` and `community.postgresql` collections. To install these, run:
 
 ```bash
 ansible-galaxy collection install ansible.posix community.postgresql
@@ -36,18 +36,20 @@ pre-commit autoupdate
 ### Server: HP EliteDesk 800 G2 Mini
 
 - Runs [Proxmox VE](https://www.proxmox.com/en/proxmox-ve)
-- Intel Core i5-6500T, with Intel vPro
+- Intel Core i5-6500T (quad-core)
 - 16GB DDR4 RAM (2 * 8GB)
-- 240GB NVMe SSD + 1TB SATA HDD
+- 240GB NVMe SSD + 8TB SATA HDD
 - Intel I219-LM Onboard Gigabit Ethernet
 - Intel Wireless-AC 8260 (dual-band 802.11ac Wi-Fi + Bluetooth 4.2)
 
-### Router & Wi-Fi AP: NETGEAR R6220
+### Router & Wi-Fi AP: Belkin RT3200
 
-- [OpenWrt wiki page](https://openwrt.org/toh/netgear/r6220)
 - Runs [OpenWrt](https://openwrt.org)
+  - [OpenWrt installer](https://github.com/dangowrt/owrt-ubi-installer)
+- [OpenWrt wiki page](https://openwrt.org/toh/linksys/e8450)
+  - FYI: Belkin RT3200 == Linksys E8450
 - 5 Gigabit Ethernet ports (1 WAN, 4 LAN)
-- 2x2 802.11ac Wi-Fi (300Mbps on 2.4GHz, 867Mbps on 5GHz)
+- Wi-Fi 6 (802.11ax) radio (3200Mbps, 4x4)
 
 ## Software
 
@@ -56,7 +58,6 @@ pre-commit autoupdate
 - [OpenWrt](https://openwrt.org/)
 - [Pi-hole](https://pi-hole.net/)
 - [Tailscale](https://tailscale.com/)
-- [WireGuard](https://www.wireguard.com/)
 
 ### Storage & Backup
 
@@ -89,4 +90,3 @@ pre-commit autoupdate
 
 - [How to Home Lab](https://www.dlford.io/tag/how-to-home-lab-series/)
 - [Postfix mail relay](https://www.howtoforge.com/tutorial/configure-postfix-to-use-gmail-as-a-mail-relay/)
-- [Setting up WireGuard](https://linuxize.com/post/how-to-set-up-wireguard-vpn-on-ubuntu-20-04/)
