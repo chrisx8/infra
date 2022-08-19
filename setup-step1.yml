@@ -3,14 +3,12 @@
 - name: Set up Proxmox VE
   hosts: proxmox1
   become: true
-  gather_subset: 'virtualization_role'
+  gather_subset:
+    - virtualization_role
+    - virtualization_type
   roles:
     - sys/proxmox
-  tasks:
-    - name: Configure PVE for Tailscale
-      ansible.builtin.import_role:
-        name: inf/tailscale
-        tasks_from: proxmox_config.yml
+    - inf/tailscale
 
 - name: Set up Pi-hole instance
   hosts: net-pihole
@@ -18,7 +16,6 @@
   gather_subset: 'virtualization_type'
   roles:
     - sys/base
-    - inf/tailscale
     - inf/apache_php
     - app/pihole
 

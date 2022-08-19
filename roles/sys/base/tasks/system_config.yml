@@ -11,7 +11,9 @@
     state: present
     sysctl_set: true
     reload: true
-  with_dict: "{{ sysctl_config }}"
+  with_dict:
+    kernel.dmesg_restrict: 1
+    kernel.sysrq: 0
   when: ansible_virtualization_type == 'kvm'
 
 - name: Disable NetworkManager DNS management on LXC nodes
