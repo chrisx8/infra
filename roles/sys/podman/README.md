@@ -1,5 +1,5 @@
 # TinyNET Ansible Role: `sys/podman`
 
-This role installs the latest version of Podman and `docker-compose`.
+This role installs the latest version of Podman.
 
-Supported OS: supported versions of Fedora or RHEL-based distros
+Supported OS: RedHat-based systems

@@ -7,12 +7,17 @@ A self-hosted virtualized Linux environment, deployed and managed with Ansible a
 ### Tools used
 
 - [Ansible](https://docs.ansible.com/ansible/latest/index.html)
-- [Docker Compose](https://docs.docker.com/compose/)
 - [Podman](https://podman.io/)
 
 ### Ansible Dependencies
 
-Ansible roles here depend on `ansible.posix` and `community.postgresql` collections. To install these, run:
+Some Ansible roles here depend on additional Ansible collections, including:
+
+- `ansible.posix`
+- `community.postgresql`
+- `containers.podman`
+
+To install these, run:
 
 ```bash
 ansible-galaxy collection install ansible.posix community.postgresql

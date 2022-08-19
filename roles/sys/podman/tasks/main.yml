@@ -12,19 +12,3 @@
     name: podman.socket
     enabled: true
     state: started
-
-# - name: Get latest Docker Compose version number from GitHub
-#   ansible.builtin.uri:
-#     url: https://api.github.com/repos/docker/compose/releases/latest
-#     method: GET
-#   register: docker_compose_info
-- name: Download latest Docker Compose release from GitHub
-  ansible.builtin.get_url:
-    url: "https://github.com/docker/compose/releases/download/{{ item }}/docker-compose-linux-x86_64"
-    dest: /usr/local/bin/docker-compose
-    checksum: sha256:https://github.com/docker/compose/releases/download/{{ item }}/docker-compose-linux-x86_64.sha256
-    mode: 0755
-  with_items:
-    - "1.29.2"
-    # Using 1.x now due to Podman bug
-    # "{{ docker_compose_info['json']['tag_name'] }}"

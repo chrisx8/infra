@@ -3,41 +3,119 @@
     path: ~/containers
     state: directory
     mode: 0700
+  register: containers_dir
 - name: Create Nginx logs directory
   ansible.builtin.file:
     path: ~/log/nginx
     state: directory
     mode: 0700
 
-- name: Get latest cloudflared version number from GitHub
-  ansible.builtin.uri:
-    url: https://api.github.com/repos/cloudflare/cloudflared/releases/latest
-    method: GET
-  register: cloudflared_info
-- name: Install docker-compose.yml
-  ansible.builtin.template:
-    src: docker-compose.yml
-    dest: ~/containers/docker-compose.yml
-    mode: 0644
+- name: Create container network
+  containers.podman.podman_network:
+    name: containers
+    state: present
 
-- name: Pull container images (docker-compose)
-  ansible.builtin.command:
-    chdir: ~/containers
-    cmd: "docker-compose pull"
-  changed_when: true
-- name: Start containers (docker-compose)
-  ansible.builtin.command:
-    chdir: ~/containers
-    cmd: "docker-compose up -d --build --remove-orphans"
-  changed_when: true
-- name: Clean up container storage
-  ansible.builtin.command: "docker system prune -af"
-  changed_when: true
-
+- name: Create gitea_data volume
+  containers.podman.podman_volume:
+    name: gitea_data
+    state: present
+- name: Create vaultwarden_data volume
+  containers.podman.podman_volume:
+    name: vaultwarden_data
+    state: present
 - name: Change owner of vaultwarden data volume
   ansible.builtin.file:
-    path: /var/lib/containers/storage/volumes/containers_vaultwarden_data/_data
+    path: /var/lib/containers/storage/volumes/vaultwarden_data/_data
     state: directory
     recurse: true
     owner: nobody
     group: nobody
+
+- name: Launch application containers
+  containers.podman.podman_containers:
+    containers:
+      - name: gitea
+        image: docker.io/gitea/gitea:latest
+        env_file: "{{ containers_dir.path }}/gitea.env"
+        network: containers
+        recreate: true
+        restart_policy: on-failure:5
+        volumes:
+          - gitea_data:/data:Z
+          - "{{ containers_dir.path }}/gitea/templates:/data/gitea/templates:Z"
+        security_opt:
+          - no-new-privileges
+        state: started
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:{{ keycloak_version }}
+        command: start
+        env_file: "{{ containers_dir.path }}/keycloak.env"
+        network: containers
+        recreate: true
+        restart_policy: on-failure:5
+        cap_drop:
+          - all
+        security_opt:
+          - no-new-privileges
+        state: started
+      - name: miniflux
+        image: docker.io/miniflux/miniflux:latest
+        env_file: "{{ containers_dir.path }}/miniflux.env"
+        network: containers
+        recreate: true
+        restart_policy: on-failure:5
+        cap_drop:
+          - all
+        security_opt:
+          - no-new-privileges
+        state: started
+      - name: vaultwarden
+        image: docker.io/vaultwarden/server:alpine
+        env_file: "{{ containers_dir.path }}/vaultwarden.env"
+        network: containers
+        recreate: true
+        restart_policy: on-failure:5
+        user: nobody:nogroup
+        volumes:
+          - vaultwarden_data:/data:Z
+        cap_drop:
+          - all
+        security_opt:
+          - no-new-privileges
+        state: started
+
+- name: Launche Nginx container
+  containers.podman.podman_container:
+    name: nginx
+    image: docker.io/nginx:alpine
+    network: containers
+    recreate: true
+    restart_policy: on-failure:5
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /root/log/nginx:/var/log/nginx:z
+      - /etc/ssl:/etc/ssl:z
+      - "{{ containers_dir.path }}/nginx/conf.d:/etc/nginx/conf.d:Z"
+      - "{{ containers_dir.path }}/nginx/www:/var/www:Z"
+      - "{{ containers_dir.path }}/nginx/nginx.conf:/etc/nginx/nginx.conf:Z"
+    security_opt:
+      - no-new-privileges
+    state: started
+- name: Launch cloudflared container
+  containers.podman.podman_container:
+    name: cloudflared
+    image: docker.io/cloudflare/cloudflared:latest
+    command: tunnel run --token {{ cloudflared_token }}
+    recreate: true
+    restart_policy: on-failure:5
+    cap_drop:
+      - all
+    security_opt:
+      - no-new-privileges
+    state: started
+
+- name: Clean up container storage
+  ansible.builtin.command: "podman system prune -af"
+  changed_when: true

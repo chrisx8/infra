@@ -9,4 +9,4 @@ This role installs all Dockerized apps, including:
 - [Nginx](https://nginx.org/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 
-Supported OS: Linux systems with `logrotate`, Docker, and `docker-compose`.
+Supported OS: Linux systems with `logrotate` and Podman.
