@@ -9,6 +9,7 @@
     regexp: "^deb https://pkg.tailscale.com/stable/"
     line: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
     create: true
+    mode: 0644
     state: present
   when: ansible_os_family == 'Debian'
 - name: Add Tailscale repo key (apt)

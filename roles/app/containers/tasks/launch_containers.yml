@@ -1,3 +1,12 @@
+- name: Set common container config
+  ansible.builtin.set_fact:
+    container_network: ct
+    container_systemd:
+      names: true
+      new: false
+      path: /etc/systemd/system
+      restart_policy: on-failure
+
 - name: Create containers directory
   ansible.builtin.file:
     path: ~/containers
@@ -12,7 +21,7 @@
 
 - name: Create container network
   containers.podman.podman_network:
-    name: containers
+    name: "{{ container_network }}"
     state: present
 
 - name: Create gitea_data volume
@@ -31,13 +40,13 @@
     owner: nobody
     group: nobody
 
-- name: Launch application containers
+- name: Create application containers
   containers.podman.podman_containers:
     containers:
       - name: gitea
         image: docker.io/gitea/gitea:latest
         env_file: "{{ containers_dir.path }}/gitea.env"
-        network: containers
+        network: "{{ container_network }}"
         recreate: true
         restart_policy: on-failure:5
         volumes:
@@ -45,34 +54,37 @@
           - "{{ containers_dir.path }}/gitea/templates:/data/gitea/templates:Z"
         security_opt:
           - no-new-privileges
-        state: started
+        generate_systemd: "{{ container_systemd }}"
+        state: created
       - name: keycloak
         image: quay.io/keycloak/keycloak:{{ keycloak_version }}
         command: start
         env_file: "{{ containers_dir.path }}/keycloak.env"
-        network: containers
+        network: "{{ container_network }}"
         recreate: true
         restart_policy: on-failure:5
         cap_drop:
           - all
         security_opt:
           - no-new-privileges
-        state: started
+        generate_systemd: "{{ container_systemd }}"
+        state: created
       - name: miniflux
         image: docker.io/miniflux/miniflux:latest
         env_file: "{{ containers_dir.path }}/miniflux.env"
-        network: containers
+        network: "{{ container_network }}"
         recreate: true
         restart_policy: on-failure:5
         cap_drop:
           - all
         security_opt:
           - no-new-privileges
-        state: started
+        generate_systemd: "{{ container_systemd }}"
+        state: created
       - name: vaultwarden
         image: docker.io/vaultwarden/server:alpine
         env_file: "{{ containers_dir.path }}/vaultwarden.env"
-        network: containers
+        network: "{{ container_network }}"
         recreate: true
         restart_policy: on-failure:5
         user: nobody:nogroup
@@ -82,13 +94,14 @@
           - all
         security_opt:
           - no-new-privileges
-        state: started
+        generate_systemd: "{{ container_systemd }}"
+        state: created
 
-- name: Launche Nginx container
+- name: Create Nginx container
   containers.podman.podman_container:
     name: nginx
     image: docker.io/nginx:alpine
-    network: containers
+    network: "{{ container_network }}"
     recreate: true
     restart_policy: on-failure:5
     ports:
@@ -102,8 +115,9 @@
       - "{{ containers_dir.path }}/nginx/nginx.conf:/etc/nginx/nginx.conf:Z"
     security_opt:
       - no-new-privileges
-    state: started
-- name: Launch cloudflared container
+    generate_systemd: "{{ container_systemd }}"
+    state: created
+- name: Create cloudflared container
   containers.podman.podman_container:
     name: cloudflared
     image: docker.io/cloudflare/cloudflared:latest
@@ -114,7 +128,22 @@
       - all
     security_opt:
       - no-new-privileges
+    generate_systemd: "{{ container_systemd }}"
+    state: created
+
+- name: Enable and start systemd services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    daemon_reload: true
     state: started
+  with_items:
+    - container-cloudflared
+    - container-gitea
+    - container-keycloak
+    - container-miniflux
+    - container-nginx
+    - container-vaultwarden
 
 - name: Clean up container storage
   ansible.builtin.command: "podman system prune -af"
