@@ -127,9 +127,6 @@
       ansible.builtin.import_role:
         name: app/containers
       when: hostvars['localhost']['upgrade_containers'] == 'y'
-    - name: Reload Nginx
-      ansible.builtin.command: "podman exec nginx nginx -s reload"
-      when: hostvars['localhost']['upgrade_containers'] == 'y'
 
 - name: upgrade PHP apps
   hosts: web-php

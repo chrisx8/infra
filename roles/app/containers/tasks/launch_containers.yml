@@ -55,7 +55,7 @@
         security_opt:
           - no-new-privileges
         generate_systemd: "{{ container_systemd }}"
-        state: created
+        state: started
       - name: keycloak
         image: quay.io/keycloak/keycloak:{{ keycloak_version }}
         command: start
@@ -68,7 +68,7 @@
         security_opt:
           - no-new-privileges
         generate_systemd: "{{ container_systemd }}"
-        state: created
+        state: started
       - name: miniflux
         image: docker.io/miniflux/miniflux:latest
         env_file: "{{ containers_dir.path }}/miniflux.env"
@@ -80,7 +80,7 @@
         security_opt:
           - no-new-privileges
         generate_systemd: "{{ container_systemd }}"
-        state: created
+        state: started
       - name: vaultwarden
         image: docker.io/vaultwarden/server:alpine
         env_file: "{{ containers_dir.path }}/vaultwarden.env"
@@ -95,7 +95,7 @@
         security_opt:
           - no-new-privileges
         generate_systemd: "{{ container_systemd }}"
-        state: created
+        state: started
 
 - name: Create Nginx container
   containers.podman.podman_container:
@@ -116,7 +116,7 @@
     security_opt:
       - no-new-privileges
     generate_systemd: "{{ container_systemd }}"
-    state: created
+    state: started
 - name: Create cloudflared container
   containers.podman.podman_container:
     name: cloudflared
@@ -129,9 +129,9 @@
     security_opt:
       - no-new-privileges
     generate_systemd: "{{ container_systemd }}"
-    state: created
+    state: started
 
-- name: Enable and start systemd services
+- name: Enable and start container systemd services
   ansible.builtin.systemd:
     name: "{{ item }}"
     enabled: true
