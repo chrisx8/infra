@@ -14,9 +14,9 @@ services:
   - name: Applications
     icon: fa-solid fa-rocket
     apps:
-      - name: Identity Management
+      - name: LDAP Account Console
         icon: fa-solid fa-id-badge
-        url: https://net-ipa.arb.chrisx.xyz/ipa/ui/
+        url: https://lldap.arb.chrisx.xyz
         newtab: true
       - name: Keycloak Admin Console
         icon: fa-solid fa-user-gear
@@ -33,9 +33,9 @@ services:
         icon: fa-solid fa-asterisk
         url: https://net-pihole.arb.chrisx.xyz/admin/
         newtab: true
-      - name: OpenWrt
+      - name: OpenWrt (RT3200)
         icon: fa-solid fa-wifi
-        url: https://openwrt.arb.chrisx.xyz
+        url: https://openwrt-rt3200.arb.chrisx.xyz
         newtab: true
       - name: Tailscale
         icon: fa-solid fa-globe

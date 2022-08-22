@@ -22,7 +22,7 @@
         upgrade_jellyfin: "{{ upgrade_jellyfin }}"
         upgrade_launcher: "{{ upgrade_launcher }}"
 
-- name: cert on proxmox
+- name: upgrade proxmox
   hosts: proxmox1
   gather_facts: false
   become: true
@@ -33,7 +33,7 @@
         tasks_from: ssl_cert.yml
       when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
 
-- name: cert on storage
+- name: upgrade storage
   hosts: storage
   gather_facts: true
   gather_subset: 'distribution'
@@ -89,7 +89,6 @@
             group: postgres
             recurse: true
       when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
-
     - name: Upgrade packages (apt)
       ansible.builtin.apt:
         update_cache: true
@@ -128,7 +127,7 @@
         name: app/containers
       when: hostvars['localhost']['upgrade_containers'] == 'y'
 
-- name: upgrade PHP apps
+- name: upgrade php apps
   hosts: web-php
   gather_facts: false
   tasks:

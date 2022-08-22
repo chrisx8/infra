@@ -1,29 +1,34 @@
 - name: Create container directory
   ansible.builtin.file:
     path: ~/containers
-    mode: 0755
+    mode: 0750
     state: directory
 
 - name: Install Gitea env file
   ansible.builtin.template:
     src: gitea.env.j2
     dest: ~/containers/gitea.env
-    mode: 0644
+    mode: 0640
 - name: Install Keycloak env file
   ansible.builtin.template:
     src: keycloak.env.j2
     dest: ~/containers/keycloak.env
-    mode: 0644
+    mode: 0640
+- name: Install LLDAP env file
+  ansible.builtin.template:
+    src: lldap.env.j2
+    dest: ~/containers/lldap.env
+    mode: 0640
 - name: Install Miniflux env file
   ansible.builtin.template:
     src: miniflux.env.j2
     dest: ~/containers/miniflux.env
-    mode: 0644
+    mode: 0640
 - name: Install Vaultwarden env file
   ansible.builtin.template:
     src: vaultwarden.env.j2
     dest: ~/containers/vaultwarden.env
-    mode: 0644
+    mode: 0640
 
 - name: Install Gitea templates
   ansible.builtin.copy:

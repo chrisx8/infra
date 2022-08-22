@@ -4,6 +4,7 @@
     container_systemd:
       names: true
       new: false
+      container_prefix: c
       path: /etc/systemd/system
       restart_policy: on-failure
 
@@ -27,6 +28,10 @@
 - name: Create gitea_data volume
   containers.podman.podman_volume:
     name: gitea_data
+    state: present
+- name: Create lldap_data volume
+  containers.podman.podman_volume:
+    name: lldap_data
     state: present
 - name: Create vaultwarden_data volume
   containers.podman.podman_volume:
@@ -65,6 +70,22 @@
         restart_policy: on-failure:5
         cap_drop:
           - all
+        security_opt:
+          - no-new-privileges
+        generate_systemd: "{{ container_systemd }}"
+        state: started
+      - name: lldap
+        image: docker.io/nitnelave/lldap:stable
+        env_file: "{{ containers_dir.path }}/lldap.env"
+        network: "{{ container_network }}"
+        recreate: true
+        restart_policy: on-failure:5
+        user: "33:33"
+        ports:
+          - 6360:6360
+        volumes:
+          - lldap_data:/data:Z
+          - /etc/ssl/arb.chrisx.xyz:/etc/ssl/arb.chrisx.xyz:z
         security_opt:
           - no-new-privileges
         generate_systemd: "{{ container_systemd }}"
@@ -138,12 +159,13 @@
     daemon_reload: true
     state: started
   with_items:
-    - container-cloudflared
-    - container-gitea
-    - container-keycloak
-    - container-miniflux
-    - container-nginx
-    - container-vaultwarden
+    - c-cloudflared
+    - c-gitea
+    - c-keycloak
+    - c-lldap
+    - c-miniflux
+    - c-nginx
+    - c-vaultwarden
 
 - name: Clean up container storage
   ansible.builtin.command: "podman system prune -af"

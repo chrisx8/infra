@@ -78,8 +78,8 @@ pre-commit autoupdate
 
 ### Identity Management & Single Sign-On
 
-- [FreeIPA](https://www.freeipa.org/)
 - [Keycloak](https://www.keycloak.org/)
+- [nitnelave/lldap](https://github.com/nitnelave/lldap)
 - [mod_auth_openidc](https://github.com/zmartzone/mod_auth_openidc)
 
 ### Web Apps

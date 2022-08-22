@@ -19,14 +19,6 @@
     - inf/apache_php
     - app/pihole
 
-- name: Set up IPA server
-  hosts: net-ipa
-  become: true
-  gather_subset: 'virtualization_type'
-  roles:
-    - sys/base
-    - app/ipa-server
-
 - name: Set up PostgreSQL server
   hosts: db-postgres
   become: true
