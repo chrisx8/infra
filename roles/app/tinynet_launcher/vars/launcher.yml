@@ -39,7 +39,7 @@ services:
         newtab: true
       - name: Miniflux
         icon: fa-solid fa-book-open-reader
-        url: https://miniflux.chrisx.xyz
+        url: https://miniflux.arb.chrisx.xyz
         newtab: true
   - name: Resources
     icon: fa-solid fa-info
