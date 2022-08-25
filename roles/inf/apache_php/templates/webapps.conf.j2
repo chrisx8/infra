@@ -65,13 +65,9 @@
 		Require claim roles:access
 	</Directory>
 
-	<Directory "/var/www/launcher/admin.html">
+	<Directory "/var/www/launcher/admin">
 		AuthType openid-connect
 		Require claim roles:admin
-	</Directory>
-
-	<Directory "/var/www/launcher/launch.html">
-		Require all granted
 	</Directory>
 
 	<Directory "/var/www/launcher/img">

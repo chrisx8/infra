@@ -5,13 +5,6 @@
     owner: apache
     group: apache
     mode: 0755
-- name: Copy launch.html
-  ansible.builtin.copy:
-    src: launch.html
-    dest: /var/www/launcher/launch.html
-    owner: apache
-    group: apache
-    mode: 0644
 
 - name: Install Launcher
   block:
