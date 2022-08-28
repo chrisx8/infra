@@ -31,7 +31,7 @@ services:
     apps:
       - name: Home Assistant
         icon: fa-solid fa-house
-        url: https://hass.arb.chrisx.xyz
+        url: https://arb-hass.chrisx.xyz
         newtab: true
       - name: Jellyfin
         icon: fa-solid fa-film

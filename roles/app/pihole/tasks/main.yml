@@ -52,8 +52,8 @@
     replace: apache
 - name: Install dnsmasq config
   ansible.builtin.copy:
-    src: 10-arb.conf
-    dest: /etc/dnsmasq.d/10-arb.conf
+    src: 00-no-hosts.conf
+    dest: /etc/dnsmasq.d/00-no-hosts.conf
     mode: 0644
 - name: Configure firewall
   ansible.posix.firewalld:
