@@ -14,11 +14,6 @@
     src: keycloak.env.j2
     dest: ~/containers/keycloak.env
     mode: 0640
-- name: Install LLDAP env file
-  ansible.builtin.template:
-    src: lldap.env.j2
-    dest: ~/containers/lldap.env
-    mode: 0640
 - name: Install Miniflux env file
   ansible.builtin.template:
     src: miniflux.env.j2

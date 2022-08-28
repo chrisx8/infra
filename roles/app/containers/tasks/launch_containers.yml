@@ -29,10 +29,6 @@
   containers.podman.podman_volume:
     name: gitea_data
     state: present
-- name: Create lldap_data volume
-  containers.podman.podman_volume:
-    name: lldap_data
-    state: present
 - name: Create vaultwarden_data volume
   containers.podman.podman_volume:
     name: vaultwarden_data
@@ -70,22 +66,6 @@
         restart_policy: on-failure:5
         cap_drop:
           - all
-        security_opt:
-          - no-new-privileges
-        generate_systemd: "{{ container_systemd }}"
-        state: started
-      - name: lldap
-        image: docker.io/nitnelave/lldap:stable
-        env_file: "{{ containers_dir.path }}/lldap.env"
-        network: "{{ container_network }}"
-        recreate: true
-        restart_policy: on-failure:5
-        user: "33:33"
-        ports:
-          - 6360:6360
-        volumes:
-          - lldap_data:/data:Z
-          - /etc/ssl/arb.chrisx.xyz:/etc/ssl/arb.chrisx.xyz:z
         security_opt:
           - no-new-privileges
         generate_systemd: "{{ container_systemd }}"
@@ -162,7 +142,6 @@
     - c-cloudflared
     - c-gitea
     - c-keycloak
-    - c-lldap
     - c-miniflux
     - c-nginx
     - c-vaultwarden

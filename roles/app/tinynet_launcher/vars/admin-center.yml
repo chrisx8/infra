@@ -14,10 +14,6 @@ services:
   - name: Applications
     icon: fa-solid fa-rocket
     apps:
-      - name: LDAP Account Console
-        icon: fa-solid fa-id-badge
-        url: https://lldap.arb.chrisx.xyz
-        newtab: true
       - name: Keycloak Admin Console
         icon: fa-solid fa-user-gear
         url: https://sso.chrisx.xyz/admin/chrisx/console/
