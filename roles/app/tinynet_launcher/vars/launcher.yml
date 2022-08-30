@@ -48,9 +48,13 @@ services:
         icon: fa-solid fa-download
         url: /docs/downloads.html
         newtab: true
-      - name: Docs
-        icon: fa-solid fa-file
+      - name: Public Docs
+        icon: fa-solid fa-file-lines
         url: /docs/
+        newtab: true
+      - name: Internal User Docs
+        icon: fa-solid fa-file-lines
+        url: /docs/_internal/
         newtab: true
 
 # [OPTIONAL] button in the footer

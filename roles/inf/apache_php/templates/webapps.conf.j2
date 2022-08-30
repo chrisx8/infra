@@ -23,10 +23,6 @@
 	Alias "/docs" "/var/www/docs"
 	Alias "/launcher" "/var/www/launcher"
 
-	RedirectMatch "/docs/.*/_admin/" "/docs/_admin/"
-	RedirectMatch "/docs/.*/_internal/" "/docs/_internal/"
-	RedirectMatch "/docs/.*/_public/" "/docs/"
-
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
 		Require valid-user
