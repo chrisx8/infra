@@ -1,6 +1,6 @@
 # See /usr/share/postfix/main.cf.dist for a commented, more complete version
 
-myhostname={{ ansible_fqdn }}
+myhostname={{ ansible_facts.fqdn }}
 
 smtpd_banner = $myhostname ESMTP $mail_name
 biff = no
@@ -27,8 +27,8 @@ smtp_use_tls = yes
 smtp_sasl_auth_enable = yes
 smtp_sasl_security_options =
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-{% if ansible_os_family == 'Debian' %}
+{% if ansible_facts.os_family == 'Debian' %}
 smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-{% elif ansible_os_family == 'RedHat' %}
+{% elif ansible_facts.os_family == 'RedHat' %}
 smtp_tls_CAfile = /etc/ssl/cert.pem
 {% endif %}

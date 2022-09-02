@@ -1,20 +1,20 @@
 - name: Assert that it's not on a LXC container
   ansible.builtin.assert:
     that:
-      - ansible_virtualization_type != 'lxc'
+      - ansible_facts.virtualization_type != 'lxc'
 
 - name: Add Tailscale repo (apt)
   ansible.builtin.lineinfile:
     path: /etc/apt/sources.list.d/tailscale.list
     regexp: "^deb https://pkg.tailscale.com/stable/"
-    line: "deb https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} main"
+    line: "deb https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution|lower }} {{ ansible_facts.distribution_release|lower }} main"
     create: true
     mode: 0644
     state: present
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
 - name: Add Tailscale repo key (apt)
   ansible.builtin.get_url:
-    url: "https://pkgs.tailscale.com/stable/{{ ansible_distribution|lower }}/{{ ansible_distribution_release|lower }}.noarmor.gpg"
+    url: "https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution|lower }}/{{ ansible_facts.distribution_release|lower }}.noarmor.gpg"
     dest: /etc/apt/trusted.gpg.d/tailscale-archive-keyring.gpg
     mode: 0644
 
@@ -22,26 +22,26 @@
   ansible.builtin.yum_repository:
     name: tailscale
     description: Tailscale stable
-    baseurl: https://pkgs.tailscale.com/stable/rhel/{{ ansible_distribution_major_version }}/$basearch
-    gpgkey: https://pkgs.tailscale.com/stable/rhel/{{ ansible_distribution_major_version }}/repo.gpg
+    baseurl: https://pkgs.tailscale.com/stable/rhel/{{ ansible_facts.distribution_major_version }}/$basearch
+    gpgkey: https://pkgs.tailscale.com/stable/rhel/{{ ansible_facts.distribution_major_version }}/repo.gpg
     async: false
     gpgcheck: false
     repo_gpgcheck: true
     state: present
-  when: ansible_os_family == 'RedHat'
+  when: ansible_facts.os_family == 'RedHat'
 
 - name: Install Tailscale (apt)
   ansible.builtin.apt:
     name: tailscale
     update_cache: true
     state: present
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
 - name: Install Tailscale (dnf)
   ansible.builtin.dnf:
     name: tailscale
     update_cache: true
     state: present
-  when: ansible_os_family == 'RedHat'
+  when: ansible_facts.os_family == 'RedHat'
 
 - name: Enable and start tailscaled
   ansible.builtin.systemd:

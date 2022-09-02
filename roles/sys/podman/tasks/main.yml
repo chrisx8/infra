@@ -1,7 +1,7 @@
 - name: Verify system environment
   ansible.builtin.assert:
     that:
-      - ansible_virtualization_type == 'kvm'
+      - ansible_facts.virtualization_type == 'kvm'
 
 - name: Install Podman
   ansible.builtin.dnf:

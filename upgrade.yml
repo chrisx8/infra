@@ -93,17 +93,17 @@
       ansible.builtin.apt:
         update_cache: true
         upgrade: dist
-      when: "ansible_os_family == 'Debian'"
+      when: "ansible_facts.os_family == 'Debian'"
     - name: Upgrade packages (dnf)
       ansible.builtin.dnf:
         name: "*"
         update_cache: true
         state: latest
-      when: "ansible_os_family == 'RedHat'"
+      when: "ansible_facts.os_family == 'RedHat'"
     - name: Autoremove unneeded packages (dnf)
       ansible.builtin.dnf:
         autoremove: true
-      when: "ansible_os_family == 'RedHat'"
+      when: "ansible_facts.os_family == 'RedHat'"
 
 - name: roll postgres databases
   hosts: db-postgres

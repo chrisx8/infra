@@ -14,19 +14,19 @@
   with_dict:
     kernel.dmesg_restrict: 1
     kernel.sysrq: 0
-  when: ansible_virtualization_type == 'kvm'
+  when: ansible_facts.virtualization_type == 'kvm'
 
 - name: Disable NetworkManager DNS management on LXC nodes
   ansible.builtin.copy:
     content: "[main]\ndns=none\n"
     dest: /etc/NetworkManager/conf.d/dns.conf
     mode: 0644
-  when: ansible_virtualization_type == 'lxc'
+  when: ansible_facts.virtualization_type == 'lxc'
 - name: Restart NetworkManager on LXC nodes
   ansible.builtin.systemd:
     name: NetworkManager.service
     state: restarted
-  when: ansible_virtualization_type == 'lxc'
+  when: ansible_facts.virtualization_type == 'lxc'
 
 - name: Set hostname
   ansible.builtin.hostname:
@@ -34,8 +34,8 @@
     use: systemd
 - name: Set timezone
   ansible.builtin.command:
-    "timedatectl set-timezone {{ hostvars[ansible_hostname].timezone }}"
-  when: hostvars[ansible_hostname].timezone is defined
+    "timedatectl set-timezone {{ timezone }}"
+  when: timezone is defined
 
 - name: Remove DSA and ECDSA SSH host keys
   ansible.builtin.file:

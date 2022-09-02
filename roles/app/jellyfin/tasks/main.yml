@@ -14,7 +14,7 @@
 
 - name: Install rpmfusion-free repo
   ansible.builtin.dnf:
-    name: https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    name: https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm
     state: present
 
 - name: Install ffmpeg
