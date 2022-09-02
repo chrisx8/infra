@@ -61,7 +61,9 @@
     permanent: true
     state: enabled
   with_items:
-    [http, https, dns]
+    - http
+    - https
+    - dns
 - name: Reload firewalld
   ansible.builtin.systemd:
     name: firewalld.service

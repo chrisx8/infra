@@ -5,11 +5,11 @@
     - name: upgrade_ssl_certs
       prompt: "Upgrade SSL certs? (y/n)"
       private: false
-    - name: upgrade_containers
-      prompt: "Upgrade containers? (y/n)"
-      private: false
     - name: upgrade_jellyfin
       prompt: "Upgrade Jellyfin? (y/n)"
+      private: false
+    - name: upgrade_containers
+      prompt: "Upgrade containers? (y/n)"
       private: false
     - name: upgrade_launcher
       prompt: "Upgrade Launcher? (y/n)"

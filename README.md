@@ -85,6 +85,7 @@ pre-commit autoupdate
 
 - [Gitea](https://gitea.io/)
 - [Jellyfin](https://jellyfin.org/)
+  - With [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
 - [LauncherTW](https://github.com/chrisx8/LauncherTW) (another one of my projects)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)

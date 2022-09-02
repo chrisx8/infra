@@ -32,6 +32,29 @@
   with_items:
     - "{{ jellyfin_release['json']['name'] }}"
 
+- name: Get latest jellyfin-plugin-keycloak-auth version number from GitHub
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/Ugrend/jellyfin-plugin-keycloak-auth/releases/latest
+    method: GET
+  register: keycloak_auth_release
+- name: Create dir for jellyfin-plugin-keycloak-auth
+  ansible.builtin.file:
+    path: /var/lib/jellyfin/plugins/keycloak-auth
+    state: directory
+    mode: 0755
+    owner: jellyfin
+    group: jellyfin
+- name: Install keycloak authentication plugin
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: /var/lib/jellyfin/plugins/keycloak-auth
+    mode: 0644
+    owner: jellyfin
+    group: jellyfin
+  loop:
+    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ keycloak_auth_release['json']['name'] }}/Jellyfin.Plugin.Keycloak.dll
+    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ keycloak_auth_release['json']['name'] }}/JWT.dll
+
 - ansible.builtin.import_tasks: ssl_cert.yml
   when:
     - hostvars['localhost']['upgrade_ssl_certs'] is defined
