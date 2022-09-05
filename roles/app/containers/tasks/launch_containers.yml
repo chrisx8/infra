@@ -1,6 +1,6 @@
 - name: Create container network
   containers.podman.podman_network:
-    name: "{{ container_network }}"
+    name: "{{ container_defaults.network }}"
     state: present
 
 - name: Create gitea_data volume
@@ -31,7 +31,7 @@
 
 - name: Enable and start container systemd services
   ansible.builtin.systemd:
-    name: "{{ container_systemd.container_prefix }}-{{ item.name }}"
+    name: "{{ container_defaults.generate_systemd.container_prefix }}-{{ item.name }}"
     enabled: true
     daemon_reload: true
     state: started

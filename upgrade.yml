@@ -1,4 +1,4 @@
-- name: prompts
+- name: Prompt
   hosts: localhost
   gather_facts: false
   vars_prompt:
@@ -22,7 +22,7 @@
         upgrade_jellyfin: "{{ upgrade_jellyfin }}"
         upgrade_launcher: "{{ upgrade_launcher }}"
 
-- name: upgrade proxmox
+- name: Upgrade proxmox
   hosts: proxmox1
   gather_facts: false
   become: true
@@ -33,7 +33,7 @@
         tasks_from: ssl_cert.yml
       when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
 
-- name: upgrade storage
+- name: Upgrade storage
   hosts: storage
   gather_facts: true
   gather_subset: 'distribution'
@@ -55,7 +55,7 @@
         name: app/jellyfin
       when: hostvars['localhost']['upgrade_jellyfin'] == 'y'
 
-- name: upgrade all
+- name: Upgrade all
   hosts: all
   gather_facts: true
   gather_subset: '!all'
@@ -105,7 +105,7 @@
         autoremove: true
       when: "ansible_facts.os_family == 'RedHat'"
 
-- name: roll postgres databases
+- name: Roll postgres databases
   hosts: db-postgres
   gather_facts: false
   become: true
@@ -117,7 +117,7 @@
         tasks_from: create_postgres_db.yml
       when: hostvars['localhost']['upgrade_containers'] == 'y'
 
-- name: upgrade containers
+- name: Upgrade containers
   hosts: web-container
   gather_facts: false
   become: true
@@ -127,7 +127,7 @@
         name: app/containers
       when: hostvars['localhost']['upgrade_containers'] == 'y'
 
-- name: upgrade php apps
+- name: Upgrade php apps
   hosts: web-php
   gather_facts: false
   tasks:

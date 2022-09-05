@@ -10,12 +10,6 @@
     state: directory
     mode: 0700
 
-- name: Remove existing containers
-  containers.podman.podman_container:
-    name: "{{ item.name }}"
-    state: absent
-  loop: "{{ container_specs }}"
-
 - name: Install Gitea env file
   ansible.builtin.template:
     src: gitea.env.j2
