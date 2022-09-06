@@ -1,4 +1,4 @@
-/root/log/nginx/*.log {
+{{ nginx_log_dir.path }}/*.log {
 	daily
 	missingok
 	rotate 30
@@ -8,6 +8,6 @@
 	create 644 root root
 	sharedscripts
 	postrotate
-		docker exec nginx nginx -s reload
+		podman exec nginx nginx -s reload
 	endscript
 }

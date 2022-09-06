@@ -81,14 +81,6 @@
             name: inf/ssl
             tasks_from: arb.yml
           when: arb_ssl_check.stat.exists
-        - name: Fix cert permission on db-postgres
-          delegate_to: db-postgres
-          ansible.builtin.file:
-            path: /etc/ssl/arb.chrisx.xyz
-            owner: postgres
-            group: postgres
-            recurse: true
-      when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
     - name: Upgrade packages (apt)
       ansible.builtin.apt:
         update_cache: true
@@ -111,6 +103,13 @@
   become: true
   become_user: postgres
   tasks:
+    - name: Fix cert permission on db-postgres
+      ansible.builtin.file:
+        path: /etc/ssl/arb.chrisx.xyz
+        owner: postgres
+        group: postgres
+        recurse: true
+      when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
     - name: Set up Postgres databases for container apps
       ansible.builtin.import_role:
         name: app/containers

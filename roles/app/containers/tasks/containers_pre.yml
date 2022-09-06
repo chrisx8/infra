@@ -1,0 +1,50 @@
+- name: Create containers directory
+  ansible.builtin.file:
+    path: ~/containers
+    state: directory
+    mode: 0700
+  register: containers_dir
+- name: Create Nginx logs directory
+  ansible.builtin.file:
+    path: "{{ containers_dir.path }}/log/nginx"
+    state: directory
+    mode: 0700
+  register: nginx_log_dir
+
+- name: Install logrotate config
+  ansible.builtin.template:
+    src: logrotate.conf.j2
+    dest: "{{ containers_dir.path }}/log/logrotate.conf"
+    mode: 0644
+
+- name: Configure crontab
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+- name: Set up logrotate cron job
+  ansible.builtin.cron:
+    name: container logrotate
+    job: "logrotate -s {{ containers_dir.path }}/log/logrotate.state {{ containers_dir.path }}/log/logrotate.conf"
+    hour: 2
+    minute: 0
+    state: present
+
+- name: Install env files
+  ansible.builtin.template:
+    src: "{{ item }}.env.j2"
+    dest: "~/containers/{{ item }}.env"
+    mode: 0640
+  loop:
+    - gitea
+    - keycloak
+    - miniflux
+    - vaultwarden
+- name: Install container directories
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: ~/containers
+    mode: 0644
+  loop:
+    - gitea
+    - nginx

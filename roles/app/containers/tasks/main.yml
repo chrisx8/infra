@@ -3,6 +3,14 @@
 - name: Load secret vars
   ansible.builtin.include_vars: secrets.yml
 
-- ansible.builtin.import_tasks: pre_launch.yml
-- ansible.builtin.import_tasks: launch_containers.yml
-- ansible.builtin.import_tasks: post_launch.yml
+- name: Install ssl cert (1/2)
+  ansible.builtin.import_role:
+    name: inf/ssl
+    tasks_from: arb.yml
+- name: Install ssl cert (2/2)
+  ansible.builtin.import_role:
+    name: inf/ssl
+    tasks_from: chrisx.yml
+
+- ansible.builtin.import_tasks: containers_pre.yml
+- ansible.builtin.import_tasks: containers.yml

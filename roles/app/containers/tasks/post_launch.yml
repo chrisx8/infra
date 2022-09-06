@@ -1,9 +1,0 @@
-- name: Clean up container storage
-  ansible.builtin.command: "podman system prune -af"
-  changed_when: false
-
-- name: Install logrotate config for Nginx
-  ansible.builtin.copy:
-    src: logrotate/nginx-docker
-    dest: /etc/logrotate.d/
-    mode: 0644

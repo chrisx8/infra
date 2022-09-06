@@ -11,13 +11,6 @@
   containers.podman.podman_volume:
     name: vaultwarden_data
     state: present
-- name: Change owner of vaultwarden data volume
-  ansible.builtin.file:
-    path: /var/lib/containers/storage/volumes/vaultwarden_data/_data
-    state: directory
-    recurse: true
-    owner: nobody
-    group: nobody
 
 - name: Pull container images
   containers.podman.podman_image:
@@ -25,14 +18,17 @@
     pull: true
     state: present
   loop: "{{ container_specs }}"
-- name: Launch containers
+- name: Create containers
   containers.podman.podman_container: "{{ item }}"
   loop: "{{ container_specs }}"
-
 - name: Enable and start container systemd services
   ansible.builtin.systemd:
     name: "{{ container_defaults.generate_systemd.container_prefix }}-{{ item.name }}"
     enabled: true
     daemon_reload: true
-    state: started
+    state: restarted
   loop: "{{ container_specs }}"
+
+- name: Clean up container storage
+  ansible.builtin.command: "podman system prune -af"
+  changed_when: false

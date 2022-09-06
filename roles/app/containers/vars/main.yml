@@ -3,9 +3,7 @@ container_defaults: &container_defaults
     new: true
     container_prefix: c
     path: /etc/systemd/system
-    restart_policy: on-failure
   network: ct
-  recreate: true
   rm: true
   security_opt:
     - no-new-privileges
@@ -35,7 +33,6 @@ container_specs:
   - name: vaultwarden
     image: docker.io/vaultwarden/server:testing-alpine
     env_file: "{{ containers_dir.path }}/vaultwarden.env"
-    user: nobody:nogroup
     volumes:
       - vaultwarden_data:/data:Z
     cap_drop:
@@ -47,11 +44,11 @@ container_specs:
       - 80:80
       - 443:443
     volumes:
-      - /root/log/nginx:/var/log/nginx:z
-      - /etc/ssl:/etc/ssl:z
       - "{{ containers_dir.path }}/nginx/conf.d:/etc/nginx/conf.d:Z"
       - "{{ containers_dir.path }}/nginx/www:/var/www:Z"
       - "{{ containers_dir.path }}/nginx/nginx.conf:/etc/nginx/nginx.conf:Z"
+      - "{{ nginx_log_dir.path }}:/var/log/nginx:z"
+      - "/etc/ssl:/etc/ssl:z"
     <<: *container_defaults
   - name: cloudflared
     image: docker.io/cloudflare/cloudflared:latest
