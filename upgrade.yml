@@ -101,7 +101,6 @@
   hosts: db-postgres
   gather_facts: false
   become: true
-  become_user: postgres
   tasks:
     - name: Fix cert permission on db-postgres
       ansible.builtin.file:
@@ -114,6 +113,7 @@
       ansible.builtin.import_role:
         name: app/containers
         tasks_from: create_postgres_db.yml
+      become_user: postgres
       when: hostvars['localhost']['upgrade_containers'] == 'y'
 
 - name: Upgrade containers
