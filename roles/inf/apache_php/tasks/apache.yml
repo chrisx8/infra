@@ -3,12 +3,6 @@
     name: [httpd, mod_auth_openidc, mod_fcgid, mod_http2, mod_ssl]
     state: present
 
-- name: Add default config
-  ansible.builtin.copy:
-    src: 1_default.conf
-    dest: /etc/httpd/conf.d/1_default.conf
-    mode: 0644
-
 - name: Remove welcome site
   ansible.builtin.file:
     path: /etc/httpd/conf.d/welcome.conf
@@ -17,6 +11,19 @@
   ansible.builtin.file:
     path: /var/www/cgi-bin
     state: absent
+
+- name: Add default config
+  ansible.builtin.copy:
+    src: 1_default.conf
+    dest: /etc/httpd/conf.d/1_default.conf
+    mode: 0644
+- name: Copy html
+  ansible.builtin.copy:
+    src: html
+    dest: /var/www/
+    owner: apache
+    group: apache
+    mode: 0755
 
 - name: Configure firewall rules
   ansible.posix.firewalld:

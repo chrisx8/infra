@@ -15,6 +15,7 @@
 - name: Pull container images
   containers.podman.podman_image:
     name: "{{ item.image }}"
+    force: true
     pull: true
     state: present
   loop: "{{ container_specs }}"

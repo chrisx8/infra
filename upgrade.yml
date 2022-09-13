@@ -108,7 +108,6 @@
         owner: postgres
         group: postgres
         recurse: true
-      when: hostvars['localhost']['upgrade_ssl_certs'] == 'y'
     - name: Set up Postgres databases for container apps
       ansible.builtin.import_role:
         name: app/containers

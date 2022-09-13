@@ -1,34 +1,3 @@
-- name: Load secret vars
-  ansible.builtin.include_vars: secrets.yml
-
-- name: Install PHP modules
-  ansible.builtin.dnf:
-    name: [php-pdo, php-xml, php-json, php-intl]
-
-- name: Install arb cert
-  ansible.builtin.import_role:
-    name: inf/ssl
-    tasks_from: arb.yml
-- name: Remove chrisx cert
-  ansible.builtin.file:
-    path: /etc/ssl/chrisx.xyz
-    state: absent
-
-- name: Patch Apache defaults
-  ansible.builtin.replace:
-    path: /etc/httpd/conf.d/1_default.conf
-    regexp: "chrisx\\.xyz"
-    replace: "arb.chrisx.xyz"
-- name: Install Apache pihole config
-  ansible.builtin.template:
-    src: pihole.conf.j2
-    dest: /etc/httpd/conf.d/pihole.conf
-    mode: 0640
-- name: Reload Apache
-  ansible.builtin.systemd:
-    name: httpd
-    state: reloaded
-
 - name: Install Pihole installer wrapper
   ansible.builtin.copy:
     src: pihole_install.sh
@@ -45,10 +14,13 @@
     - /tmp/pihole_install.sh
     - /tmp/pihole_patched.sh
 
+- name: Configure Apache site for WebUI
+  ansible.builtin.import_tasks: webui.yml
 - name: Add apache user to pihole group
   ansible.builtin.user:
     name: apache
     groups: pihole
+
 - name: Fix sudoers
   ansible.builtin.replace:
     path: /etc/sudoers.d/pihole
@@ -59,6 +31,7 @@
     src: 00-arb.conf
     dest: /etc/dnsmasq.d/00-arb.conf
     mode: 0644
+
 - name: Configure firewall
   ansible.posix.firewalld:
     service: "{{ item }}"

@@ -11,4 +11,3 @@
 - ansible.builtin.import_tasks: php.yml
 - ansible.builtin.import_tasks: composer.yml
   when: apache_minimal is undefined or not apache_minimal
-- ansible.builtin.import_tasks: sites.yml

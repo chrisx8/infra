@@ -30,3 +30,21 @@
       vars:
         launchertw_operation: deploy
         launchertw_deploy_target_dir: /var/www/launcher/admin
+
+- name: Create /var/www/html
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0755
+- name: Copy index html
+  ansible.builtin.copy:
+    src: index.html
+    dest: /var/www/html/index.html
+    owner: apache
+    group: apache
+    mode: 0755
+
+- name: Configure Apache site
+  ansible.builtin.import_tasks: apache_site.yml
