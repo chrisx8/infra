@@ -1,3 +1,8 @@
+- name: Verify system
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version == '9'
+
 - name: Disable SELinux
   ansible.builtin.lineinfile:
     path: /etc/sysconfig/selinux
@@ -11,6 +16,10 @@
     url: https://api.github.com/repos/jellyfin/jellyfin/releases/latest
     method: GET
   register: jellyfin_release
+
+- name: Enable CRB repo
+  ansible.builtin.command: dnf config-manager --set-enabled crb
+  changed_when: true
 
 - name: Install rpmfusion-free repo
   ansible.builtin.dnf:

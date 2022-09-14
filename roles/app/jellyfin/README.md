@@ -7,4 +7,4 @@ Notes:
 - SELinux will be **Disabled**
 - The latest Jellyfin will be installed with the official RPM
 
-Supported OS: RHEL-based Linux system
+Supported OS: RHEL-based Linux system, version 9
