@@ -1,17 +1,17 @@
 container_defaults: &container_defaults
   generate_systemd:
-    new: true
     container_prefix: c
     path: /etc/systemd/system
+    restart_policy: on-abnormal
   network: ct
-  rm: true
+  recreate: true
   security_opt:
     - no-new-privileges
   state: present
 
 container_specs:
   - name: gitea
-    image: docker.io/gitea/gitea:latest
+    image: docker.io/gitea/gitea:1
     env_file: "{{ containers_dir.path }}/gitea.env"
     volumes:
       - gitea_data:/data:Z
@@ -31,8 +31,9 @@ container_specs:
       - all
     <<: *container_defaults
   - name: vaultwarden
-    image: docker.io/vaultwarden/server:testing-alpine
+    image: docker.io/vaultwarden/server:testing
     env_file: "{{ containers_dir.path }}/vaultwarden.env"
+    user: nobody
     volumes:
       - vaultwarden_data:/data:Z
     cap_drop:

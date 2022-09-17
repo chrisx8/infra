@@ -32,14 +32,11 @@
 
 - name: Install env files
   ansible.builtin.template:
-    src: "{{ item }}.env.j2"
-    dest: "~/containers/{{ item }}.env"
+    src: "{{ item.name }}.env.j2"
+    dest: "{{ item.env_file }}"
     mode: 0640
-  loop:
-    - gitea
-    - keycloak
-    - miniflux
-    - vaultwarden
+  loop: "{{ container_specs }}"
+  when: item.env_file is defined
 - name: Install container directories
   ansible.builtin.copy:
     src: "{{ item }}"
