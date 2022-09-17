@@ -15,7 +15,7 @@
     state: latest
 - name: Install additional packages
   ansible.builtin.dnf:
-    name: [bind-utils, curl, fail2ban, htop, git, psmisc, vim, tar, unzip, wget]
+    name: [bind-utils, cronie, curl, fail2ban, htop, git, psmisc, vim, tar, unzip, wget]
     state: present
 - name: Autoremove unneeded packages
   ansible.builtin.dnf:

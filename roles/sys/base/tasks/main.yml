@@ -1,8 +1,8 @@
-- name: Check distro
+- name: Verify system
   ansible.builtin.assert:
     that:
-      - "ansible_facts.os_family == 'RedHat'"
-      - "ansible_facts.distribution_major_version >= '8'"
+      - ansible_facts.os_family == 'RedHat'
+      - ansible_facts.distribution_major_version|int >= 8
 
 - ansible.builtin.import_tasks: packages.yml
 - ansible.builtin.import_tasks: system_config.yml
