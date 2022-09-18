@@ -12,9 +12,7 @@
     name: proxmox-backup-server
     state: present
 - name: Post-run apt cleanup
-  ansible.builtin.import_role:
-    name: sys/base
-    tasks_from: apt_post.yml
+  ansible.builtin.import_tasks: apt_post.yml
 
 - name: Set GRUB timeout
   ansible.builtin.lineinfile:

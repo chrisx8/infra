@@ -27,6 +27,14 @@
   gather_facts: false
   become: true
   tasks:
+    - name: Upgrade packages (apt)
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: dist
+    - name: Post-run apt cleanup
+      ansible.builtin.import_role:
+        name: sys/proxmox
+        tasks_from: apt_post.yml
     - name: Install SSL cert for Proxmox
       ansible.builtin.import_role:
         name: sys/proxmox
@@ -81,11 +89,6 @@
             name: inf/ssl
             tasks_from: arb.yml
           when: arb_ssl_check.stat.exists
-    - name: Upgrade packages (apt)
-      ansible.builtin.apt:
-        update_cache: true
-        upgrade: dist
-      when: "ansible_facts.os_family == 'Debian'"
     - name: Upgrade packages (dnf)
       ansible.builtin.dnf:
         name: "*"

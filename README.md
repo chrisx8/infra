@@ -1,5 +1,7 @@
 # TinyNET Infrastructure Repo
 
+[![pre-commit checks](https://github.com/chrisx8/tinynet-infra/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/chrisx8/tinynet-infra/actions/workflows/pre-commit.yml)
+
 A self-hosted virtualized Linux environment, deployed and managed with Ansible and Docker.
 
 ## Repo setup

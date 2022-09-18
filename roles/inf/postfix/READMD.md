@@ -2,4 +2,7 @@
 
 This role installs the Postfix mail transport agent.
 
-Supported OS: Supported versions of Debian and Ubuntu.
+Supported OS:
+
+- Supported versions of Debian and Ubuntu, or
+- RHEL-like systems, version 8 or newer
