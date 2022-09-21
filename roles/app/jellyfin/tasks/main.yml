@@ -24,7 +24,7 @@
 
 - name: Install rpmfusion-free repo
   ansible.builtin.dnf:
-    name: https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm
+    name: https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm  # yamllint disable-line rule:line-length
     state: present
 
 - name: Install ffmpeg
@@ -46,7 +46,7 @@
   ansible.builtin.uri:
     url: https://api.github.com/repos/Ugrend/jellyfin-plugin-keycloak-auth/releases/latest
     method: GET
-  register: keycloak_auth_release
+  register: kc_auth_release
 - name: Create dir for jellyfin-plugin-keycloak-auth
   ansible.builtin.file:
     path: /var/lib/jellyfin/plugins/keycloak-auth
@@ -62,8 +62,8 @@
     owner: jellyfin
     group: jellyfin
   loop:
-    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ keycloak_auth_release['json']['name'] }}/Jellyfin.Plugin.Keycloak.dll
-    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ keycloak_auth_release['json']['name'] }}/JWT.dll
+    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/Jellyfin.Plugin.Keycloak.dll  # yamllint disable-line rule:line-length
+    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/JWT.dll  # yamllint disable-line rule:line-length
 
 - ansible.builtin.import_tasks: ssl_cert.yml
   when:

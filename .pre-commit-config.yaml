@@ -15,7 +15,11 @@ repos:
       - id: check-symlinks
       - id: check-vcs-permalinks
       - id: mixed-line-ending
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.28.0
+    hooks:
+      - id: yamllint
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v6.5.2
+    rev: v6.6.1
     hooks:
       - id: ansible-lint

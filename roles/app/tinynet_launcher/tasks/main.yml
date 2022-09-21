@@ -13,7 +13,7 @@
         file: launcher.yml
     - name: Deploy
       ansible.builtin.import_role:
-        name: app/LauncherTW
+        name: app/launcher_tw
       become: false
       vars:
         launchertw_operation: deploy
@@ -25,7 +25,7 @@
         file: admin-center.yml
     - name: Deploy
       ansible.builtin.import_role:
-        name: app/LauncherTW
+        name: app/launcher_tw
       become: false
       vars:
         launchertw_operation: deploy
