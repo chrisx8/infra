@@ -1,7 +1,3 @@
-- name: Upgrade packages (dist-upgrade)
-  ansible.builtin.apt:
-    update_cache: true
-    upgrade: dist
 - name: Install extra Debian packages
   ansible.builtin.apt:
     name: [vim, libsasl2-modules, lm-sensors]
@@ -11,8 +7,28 @@
   ansible.builtin.apt:
     name: proxmox-backup-server
     state: present
-- name: Post-run apt cleanup
-  ansible.builtin.import_tasks: apt_post.yml
+
+- name: Configure OpenSSH client
+  ansible.builtin.copy:
+    src: ssh_config
+    dest: /etc/ssh/ssh_config
+    mode: 0644
+- name: Configure OpenSSH server
+  ansible.builtin.copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    mode: 0644
+- name: Restart OpenSSH server (sshd)
+  ansible.builtin.systemd:
+    name: sshd
+    state: restarted
+    daemon_reload: true
+
+- name: Install vimrc
+  ansible.builtin.copy:
+    src: vimrc
+    dest: /etc/vim/vimrc
+    mode: 0644
 
 - name: Set GRUB timeout
   ansible.builtin.lineinfile:

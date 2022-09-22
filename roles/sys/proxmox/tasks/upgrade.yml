@@ -1,3 +1,7 @@
+- name: Upgrade packages (dist-upgrade)
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: dist
 - name: Autoremove unneeded packages
   ansible.builtin.apt:
     autoremove: true
