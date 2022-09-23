@@ -22,7 +22,7 @@
     - name: Generate pfx on localhost
       ansible.builtin.command:
         chdir: "{{ _temp_dir.path }}"
-        cmd: "openssl pkcs12 -export -out arb.pfx -inkey privkey.pem -in fullchain.pem"
+        cmd: "openssl pkcs12 -export -passout pass: -out arb.pfx -inkey privkey.pem -in fullchain.pem"
       changed_when: false
 
 - name: Install pfx for Jellyfin
