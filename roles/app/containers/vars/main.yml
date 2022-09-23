@@ -13,6 +13,8 @@ container_specs:
   - name: gitea
     image: docker.io/gitea/gitea:1
     env_file: "{{ containers_dir.path }}/gitea.env"
+    ports:
+      - "2022:22"
     volumes:
       - gitea_data:/data:Z
       - "{{ containers_dir.path }}/gitea/templates:/data/gitea/templates:Z"
@@ -42,8 +44,8 @@ container_specs:
   - name: nginx
     image: docker.io/library/nginx:alpine
     ports:
-      - 80:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     volumes:
       - "{{ containers_dir.path }}/nginx/conf.d:/etc/nginx/conf.d:Z"
       - "{{ containers_dir.path }}/nginx/www:/var/www:Z"
