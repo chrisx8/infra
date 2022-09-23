@@ -7,14 +7,14 @@
     group: root
 - name: Install chrisx.xyz/fullchain.pem
   ansible.builtin.copy:
-    src: certbot/config/live/chrisx.xyz/fullchain.pem
+    src: certbot.d/config/live/chrisx.xyz/fullchain.pem
     dest: /etc/ssl/chrisx.xyz
     mode: 0400
     owner: root
     group: root
 - name: Install chrisx.xyz/privkey.pem
   ansible.builtin.copy:
-    src: certbot/config/live/chrisx.xyz/privkey.pem
+    src: certbot.d/config/live/chrisx.xyz/privkey.pem
     dest: /etc/ssl/chrisx.xyz
     mode: 0400
     owner: root

@@ -9,13 +9,13 @@
       changed_when: false
     - name: Copy cert to temp dir
       ansible.builtin.copy:
-        src: certbot/config/live/arb.chrisx.xyz/fullchain.pem
+        src: certbot.d/config/live/arb.chrisx.xyz/fullchain.pem
         dest: "{{ _temp_dir.path }}"
         mode: 0600
       changed_when: false
     - name: Copy key to temp dir
       ansible.builtin.copy:
-        src: certbot/config/live/arb.chrisx.xyz/privkey.pem
+        src: certbot.d/config/live/arb.chrisx.xyz/privkey.pem
         dest: "{{ _temp_dir.path }}"
         mode: 0600
       changed_when: false
