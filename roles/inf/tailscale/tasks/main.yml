@@ -1,6 +1,7 @@
 - name: Verify system
   ansible.builtin.assert:
     that:
+      - ansible_facts.distribution != 'Fedora'
       - ansible_facts.os_family == 'Debian' or ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_type != 'lxc'
 
@@ -11,17 +12,19 @@
       ansible.builtin.lineinfile:
         path: /etc/apt/sources.list.d/tailscale.list
         regexp: "^deb https://pkg.tailscale.com/stable/"
-        line: "deb https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution|lower }} {{ ansible_facts.distribution_release|lower }} main"  # yamllint disable-line rule:line-length
+        # yamllint disable-line rule:line-length
+        line: "deb https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution|lower }} {{ ansible_facts.distribution_release|lower }} main"
         create: true
         mode: 0644
         state: present
     - name: Add Tailscale repo key (apt)
       ansible.builtin.get_url:
-        url: "https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution|lower }}/{{ ansible_facts.distribution_release|lower }}.noarmor.gpg"  # yamllint disable-line rule:line-length
+        # yamllint disable-line rule:line-length
+        url: "https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution|lower }}/{{ ansible_facts.distribution_release|lower }}.noarmor.gpg"
         dest: /etc/apt/trusted.gpg.d/tailscale-archive-keyring.gpg
         mode: 0644
 
-- name: Add Tailscale repo (yum)
+- name: Add Tailscale repo (dnf)
   ansible.builtin.yum_repository:
     name: tailscale
     description: Tailscale stable

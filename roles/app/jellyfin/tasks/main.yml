@@ -1,6 +1,7 @@
 - name: Verify system
   ansible.builtin.assert:
     that:
+      - ansible_facts.distribution != 'Fedora'
       - ansible_facts.distribution_major_version == '9'
       - ansible_facts.os_family == 'RedHat'
 
@@ -25,7 +26,8 @@
 
 - name: Install rpmfusion-free repo
   ansible.builtin.dnf:
-    name: https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm  # yamllint disable-line rule:line-length
+    # yamllint disable-line rule:line-length
+    name: https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm
     state: present
 
 - name: Install ffmpeg
@@ -64,8 +66,10 @@
     owner: jellyfin
     group: jellyfin
   loop:
-    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/Jellyfin.Plugin.Keycloak.dll  # yamllint disable-line rule:line-length
-    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/JWT.dll  # yamllint disable-line rule:line-length
+    # yamllint disable-line rule:line-length
+    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/Jellyfin.Plugin.Keycloak.dll
+    # yamllint disable-line rule:line-length
+    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/JWT.dll
 
 - name: Install SSL cert
   ansible.builtin.import_tasks: ssl_cert.yml

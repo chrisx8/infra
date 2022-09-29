@@ -1,11 +1,7 @@
-- name: Verify system
-  ansible.builtin.assert:
-    that:
-      - ansible_facts.os_family == 'RedHat'
-
 - name: Add PostgreSQL repo
   ansible.builtin.dnf:
-    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_facts.distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm  # yamllint disable-line rule:line-length
+    # yamllint disable-line rule:line-length
+    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_facts.distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm
     disable_gpg_check: true
     state: present
 - name: Install PostgreSQL 14

@@ -11,7 +11,8 @@
   register: _mod_auth_openidc_release
 - name: Install mod_auth_openidc
   ansible.builtin.dnf:
-    name: https://github.com/zmartzone/mod_auth_openidc/releases/download/v{{ item }}/mod_auth_openidc-{{ item }}-1.el9.x86_64.rpm  # yamllint disable-line rule:line-length
+    # yamllint disable-line rule:line-length
+    name: https://github.com/zmartzone/mod_auth_openidc/releases/download/v{{ item }}/mod_auth_openidc-{{ item }}-1.el9.x86_64.rpm
     disable_gpg_check: true
     state: present
   with_items:

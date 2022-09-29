@@ -8,6 +8,7 @@
   ansible.builtin.dnf:
     name: epel-release
     state: present
+  when: ansible_facts.distribution != 'Fedora'
 - name: Upgrade packages
   ansible.builtin.dnf:
     name: "*"

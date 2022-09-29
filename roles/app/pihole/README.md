@@ -11,4 +11,4 @@ Notes:
 
 Required facts: None
 
-Supported OS: RedHat-based Linux systems
+Supported OS: RedHat-based Linux systems, version 8 or newer
