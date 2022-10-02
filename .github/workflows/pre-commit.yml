@@ -7,9 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: set PY
+        run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Install pre-commit
         run: |
           sudo pip install pre-commit
-          pre-commit autoupdate
+          pre-commit install --install-hooks
       - name: Run pre-commit checks on all files
         run: pre-commit run --all-files
