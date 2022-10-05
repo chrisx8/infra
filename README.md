@@ -34,8 +34,6 @@ After installing pre-commit, set up Git hook scripts:
 ```bash
 # install Git hook scripts
 pre-commit install
-# auto-update hooks
-pre-commit autoupdate
 ```
 
 ## Hardware
@@ -55,7 +53,6 @@ pre-commit autoupdate
   - [OpenWrt installer](https://github.com/dangowrt/owrt-ubi-installer)
 - [OpenWrt wiki page](https://openwrt.org/toh/linksys/e8450)
   - FYI: Belkin RT3200 == Linksys E8450
-- 5 Gigabit Ethernet ports (1 WAN, 4 LAN)
 - Wi-Fi 6 (802.11ax) radio (3200Mbps, 4x4)
 
 ## Software
@@ -75,7 +72,6 @@ pre-commit autoupdate
 
 - [Home Assistant](https://www.home-assistant.io)
   - [My Home Assistant Add-ons](https://github.com/chrisx8/home-assistant-addons)
-  - [My Home Assistant config](https://github.com/chrisx8/home-assistant-config)
   - [HACS](https://hacs.xyz)
 
 ### Identity Management & Single Sign-On
@@ -87,7 +83,7 @@ pre-commit autoupdate
 
 - [Gitea](https://gitea.io/)
 - [Jellyfin](https://jellyfin.org/)
-  - With [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
+  - [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
 - [LauncherTW](https://github.com/chrisx8/LauncherTW) (another one of my projects)
 - [Minflux](https://miniflux.app/)
 - [Nextcloud](https://nextcloud.com/)
