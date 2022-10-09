@@ -11,7 +11,7 @@
     - inf/tailscale
 
 - name: Set up Pi-hole instance
-  hosts: net-pihole
+  hosts: pihole
   become: true
   gather_subset: 'virtualization_type'
   roles:

@@ -17,8 +17,8 @@
 - name: Patch Apache defaults
   ansible.builtin.replace:
     path: /etc/httpd/conf.d/1_default.conf
-    regexp: "chrisx\\.xyz"
-    replace: "arb.chrisx.xyz"
+    regexp: "\/chrisx\\.xyz"
+    replace: "\/arb.chrisx.xyz"
 
 - name: Install index html
   ansible.builtin.copy:

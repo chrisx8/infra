@@ -27,7 +27,7 @@ services:
     apps:
       - name: Pi-hole
         icon: fa-solid fa-asterisk
-        url: https://net-pihole.arb.chrisx.xyz/admin/
+        url: https://pihole.arb.chrisx.xyz/admin/
         newtab: true
       - name: OpenWrt (RT3200)
         icon: fa-solid fa-wifi
