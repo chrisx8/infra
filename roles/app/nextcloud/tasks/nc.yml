@@ -1,45 +1,60 @@
-- name: Download and extract latest Nextcloud release tarball
-  ansible.builtin.unarchive:
-    src: https://download.nextcloud.com/server/releases/latest.tar.bz2
-    dest: /var/www
-    remote_src: true
+- name: Check if Nextcloud is installed
+  ansible.builtin.stat:
+    path: /var/www/nextcloud/config/config.php
+  register: nextcloud_exist
 
-- name: Change Nextcloud directory permission
-  ansible.builtin.file:
-    path: /var/www/nextcloud
-    state: directory
-    recurse: true
-    owner: apache
-    group: apache
-
-- name: Prompt for Nextcloud setup
-  when: not nextcloud_exist.stat.exists
+- name: Prompt if Nextcloud is already installed
   ansible.builtin.pause:
-    prompt: "Finish Nextcloud installation in a web browser \n
-             Database: PostgreSQL on {{ hostvars['db-postgres']['ansible_host'] }} \n
-             DB Name: nextcloud \n
-             DB Username: nextcloud \n
-             DB Password: {{ hostvars['db-postgres']['postgres_nextcloud_password'] }} \n\n
-            "
+    prompt: |
+      ====== Nextcloud is already installed! ======
+      - To update, run the built-in updater (/settings/admin/overview).
+      - To reinstall, back up /var/www/nextcloud/config/config.php, delete it, then rerun the playbook.
+      ======
+      Press Enter to continue...
+
+- name: Install Nextcloud
+  when: not nextcloud_exist.stat.exists
+  block:
+    - name: Download and extract latest Nextcloud release tarball
+      ansible.builtin.unarchive:
+        src: https://download.nextcloud.com/server/releases/latest.tar.bz2
+        dest: /var/www
+        remote_src: true
+    - name: Change Nextcloud directory ownership
+      ansible.builtin.file:
+        path: /var/www/nextcloud
+        state: directory
+        recurse: true
+        owner: apache
+        group: apache
+    - name: Prompt for Nextcloud setup
+      ansible.builtin.pause:
+        prompt: |
+          ====== Finish Nextcloud installation in a web browser ======
+          Database: PostgreSQL
+          DB Host: {{ hostvars['db-postgres']['ansible_host'] }}
+          DB Name: nextcloud
+          DB Username: nextcloud
+          DB Password: {{ hostvars['db-postgres']['postgres_nextcloud_password'] }}
+          ======
+          When complete, press Enter to continue...
+    - name: Inject extra Nextcloud config options
+      ansible.builtin.lineinfile:
+        path: /var/www/nextcloud/config/config.php
+        regexp: 'installed'
+        line: |
+          'installed' => 'true',
+          'overwrite.cli.url' => 'https://nextcloud.chrisx.xyz',
+          'htaccess.RewriteBase' => '/',
+          'auth.webauthn.enabled' => false,
+          'default_phone_region' => 'US',
+          'memcache.local' => '\\OC\\Memcache\\APCu',
 
 - name: Update database credential
   ansible.builtin.lineinfile:
     path: /var/www/nextcloud/config/config.php
     regexp: 'dbpassword'
     line: "'dbpassword' => '{{ hostvars['db-postgres']['postgres_nextcloud_password'] }}',"
-
-- name: Inject extra Nextcloud config options
-  when: not nextcloud_exist.stat.exists
-  ansible.builtin.lineinfile:
-    path: /var/www/nextcloud/config/config.php
-    regexp: 'installed'
-    line: "'installed' => 'true',\n
-           'overwrite.cli.url' => 'https://nextcloud.chrisx.xyz',\n
-           'htaccess.RewriteBase' => '/',\n
-           'auth.webauthn.enabled' => false,\n
-           'default_phone_region' => 'US',\n
-           'memcache.local' => '\\OC\\Memcache\\APCu',
-          "
 
 - name: Update htaccess
   become_user: apache

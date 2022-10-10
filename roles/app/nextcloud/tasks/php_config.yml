@@ -1,35 +1,20 @@
-- name: Configure php8.0-fpm env
-  when: not nextcloud_exist.stat.exists
-  ansible.builtin.lineinfile:
-    path: /etc/php-fpm.d/www.conf
-    line: "env[HOSTNAME] = $HOSTNAME\n
-          env[PATH] = /usr/local/bin:/usr/bin:/bin\n
-          env[TMP] = /tmp\n
-          env[TMPDIR] = /tmp\n
-          env[TEMP] = /tmp\n
-          "
-- name: Set php8.0-fpm memory limit
+- name: Set php memory_limit
   ansible.builtin.lineinfile:
     path: /etc/php.ini
     regexp: '^memory_limit'
     line: 'memory_limit = 512M'
-- name: Set php8.0-fpm max POST size
+- name: Set php post_max_size
   ansible.builtin.lineinfile:
     path: /etc/php.ini
     regexp: '^post_max_size'
     line: 'post_max_size = 5G'
-- name: Set php8.0-fpm max upload size
+- name: Set php upload_max_filesize
   ansible.builtin.lineinfile:
     path: /etc/php.ini
     regexp: '^upload_max_filesize'
     line: 'upload_max_filesize = 5G'
-- name: Set php8.0-fpm OPCache string buffer size
-  ansible.builtin.lineinfile:
-    path: /etc/php.ini
-    regexp: 'opcache\.interned_strings_buffer'
-    line: 'opcache.interned_strings_buffer=32'
 
-- name: Restart PHP
+- name: Restart php-fpm
   ansible.builtin.systemd:
     name: php-fpm
     state: restarted

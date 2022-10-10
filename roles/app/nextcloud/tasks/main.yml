@@ -23,9 +23,5 @@
     name: httpd
     state: reloaded
 
-- name: Check if Nextcloud is installed
-  ansible.builtin.stat:
-    path: /var/www/nextcloud/config/config.php
-  register: nextcloud_exist
 - ansible.builtin.import_tasks: php_config.yml
 - ansible.builtin.import_tasks: nc.yml
