@@ -1,6 +1,6 @@
-# TinyNET Ansible Role: `sys/docker`
+# TinyNET Ansible Role: `app/containers`
 
-This role installs all Dockerized apps, including:
+This role installs all containerized apps, including:
 
 - [cloudflared](https://github.com/cloudflare/cloudflared)
 - [Gitea](https://gitea.io/)

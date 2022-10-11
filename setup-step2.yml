@@ -6,10 +6,6 @@
   become: true
   become_user: postgres
   tasks:
-    - name: Create Postgres databases for container apps
-      ansible.builtin.import_role:
-        name: app/containers
-        tasks_from: create_postgres_db.yml
     - name: Create Postgres database for Nextcloud
       ansible.builtin.import_role:
         name: app/nextcloud

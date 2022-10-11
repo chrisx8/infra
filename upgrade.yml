@@ -77,11 +77,6 @@
         owner: postgres
         group: postgres
         recurse: true
-    - name: Set up Postgres databases for container apps
-      ansible.builtin.import_role:
-        name: app/containers
-        tasks_from: create_postgres_db.yml
-      become_user: postgres
 
 - name: Upgrade containers
   hosts: web-container
