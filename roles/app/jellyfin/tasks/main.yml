@@ -65,10 +65,8 @@
     - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/Jellyfin.Plugin.Keycloak.dll  # yamllint disable-line rule:line-length
     - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/JWT.dll  # yamllint disable-line rule:line-length
 
-- ansible.builtin.import_tasks: ssl_cert.yml
-  when:
-    - hostvars['localhost']['upgrade_ssl_certs'] is defined
-    - hostvars['localhost']['upgrade_ssl_certs'] == 'y'
+- name: Install SSL cert
+  ansible.builtin.import_tasks: ssl_cert.yml
 
 - name: Configure firewall
   ansible.posix.firewalld:
