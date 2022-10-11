@@ -35,7 +35,7 @@
           DB Host: {{ hostvars['db-postgres']['ansible_host'] }}
           DB Name: nextcloud
           DB Username: nextcloud
-          DB Password: {{ hostvars['db-postgres']['postgres_nextcloud_password'] }}
+          DB Password: {{ postgres_nextcloud_password }}
           ======
           When complete, press Enter to continue...
     - name: Inject extra Nextcloud config options
@@ -54,12 +54,12 @@
   ansible.builtin.lineinfile:
     path: /var/www/nextcloud/config/config.php
     regexp: 'dbpassword'
-    line: "'dbpassword' => '{{ hostvars['db-postgres']['postgres_nextcloud_password'] }}',"
+    line: "'dbpassword' => '{{ postgres_nextcloud_password }}',"
 
 - name: Update htaccess
   become_user: apache
   ansible.builtin.command:
-    "php --define apc.enable_cli=1 /var/www/nextcloud/occ maintenance:update:htaccess"
+    cmd: "php --define apc.enable_cli=1 /var/www/nextcloud/occ maintenance:update:htaccess"
   changed_when: true
 
 - name: Configure crontab for apache user

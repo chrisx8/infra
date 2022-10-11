@@ -1,3 +1,13 @@
+- name: Install Apache site configuration
+  ansible.builtin.copy:
+    src: nextcloud.conf
+    dest: /etc/httpd/conf.d/nextcloud.conf
+    mode: 0644
+- name: Reload Apache
+  ansible.builtin.systemd:
+    name: httpd
+    state: reloaded
+
 - name: Set php memory_limit
   ansible.builtin.lineinfile:
     path: /etc/php.ini
@@ -13,7 +23,6 @@
     path: /etc/php.ini
     regexp: '^upload_max_filesize'
     line: 'upload_max_filesize = 5G'
-
 - name: Restart php-fpm
   ansible.builtin.systemd:
     name: php-fpm

@@ -13,15 +13,9 @@
     name: bzip2
     state: present
 
-- name: Install Apache site configuration
-  ansible.builtin.copy:
-    src: nextcloud.conf
-    dest: /etc/httpd/conf.d/nextcloud.conf
-    mode: 0644
-- name: Reload Apache
-  ansible.builtin.systemd:
-    name: httpd
-    state: reloaded
+- ansible.builtin.import_tasks: postgres_db.yml
+  become_user: postgres
+  delegate_to: db-postgres
 
-- ansible.builtin.import_tasks: php_config.yml
+- ansible.builtin.import_tasks: apache_php_config.yml
 - ansible.builtin.import_tasks: nc.yml

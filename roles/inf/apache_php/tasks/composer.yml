@@ -12,7 +12,7 @@
 
 - name: Install Composer to /usr/local/bin
   ansible.builtin.command:
-    "php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer"
+    cmd: "php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer"
   changed_when: true
 
 - name: Delete Composer installer
