@@ -1,5 +1,3 @@
-# Set up physical hosts and everything that doesn't depend on any local services
-
 - name: Set up Proxmox VE
   hosts: proxmox1
   become: true
@@ -36,3 +34,22 @@
     - inf/cockpit
     - app/file_shares
     - app/jellyfin
+
+- name: Set up containers
+  hosts: web-container
+  become: true
+  gather_subset: 'virtualization_type'
+  roles:
+    - sys/base
+    - sys/podman
+    - app/containers
+
+- name: Set up Apache + PHP
+  hosts: web-php
+  become: true
+  gather_subset: 'virtualization_type'
+  roles:
+    - sys/base
+    - inf/apache_php
+    - app/nextcloud
+    - app/tinynet_launcher
