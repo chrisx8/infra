@@ -4,14 +4,24 @@
 
 A self-hosted virtualized Linux environment, deployed and managed with Ansible and Docker.
 
-## Repo setup
-
-### Tools used
+## Tools used
 
 - [Ansible](https://docs.ansible.com/ansible/latest/index.html)
 - [Podman](https://podman.io/)
 
-### Ansible Dependencies
+## Setup
+
+### Install dependencies
+
+First, make sure you have [Ansible](https://docs.ansible.com/ansible/latest/index.html), `ansible-lint`, and [pre-commit](https://pre-commit.com/) installed.
+
+Then, install repo dependencies, including Ansible collections and pre-commit hooks:
+
+```bash
+make envsetup
+```
+
+### Ansible Collections
 
 Some Ansible roles here depend on additional Ansible collections, including:
 
@@ -19,15 +29,9 @@ Some Ansible roles here depend on additional Ansible collections, including:
 - `community.postgresql`
 - `containers.podman`
 
-To install these, run:
-
-```bash
-ansible-galaxy collection install ansible.posix community.postgresql
-```
-
 ### Pre-commit hooks
 
-Pre-commit hooks are [configured](.pre-commit-config.yaml). To use them, you need to install [pre-commit](https://pre-commit.com/).
+Pre-commit hooks are [configured](.pre-commit-config.yaml).
 
 After installing pre-commit, set up Git hook scripts:
 
@@ -35,6 +39,18 @@ After installing pre-commit, set up Git hook scripts:
 # install Git hook scripts
 pre-commit install
 ```
+
+## Makefile
+
+You may run Ansible playbooks, and several repo-related tasks, with `make`.
+
+Some `make` commands:
+
+- `make check`: run pre-commit checks on all files.
+- `make envsetup`: set up local Ansible environment, including Ansible collections and pre-commit.
+- `make setup-all`: run `setup.yml` playbook against all hosts.
+- `make upgrade-all`: run `upgrade.yml` playbook against all hosts.
+- There are more `make` commands. To learn more, see [Makefile](Makefile).
 
 ## Hardware
 
