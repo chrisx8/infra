@@ -48,8 +48,11 @@
   hosts: web-php
   become: true
   gather_subset: 'virtualization_type'
+  vars:
+    php_composer: true
   roles:
     - sys/base
     - inf/apache_php
+    - inf/postfix
     - app/nextcloud
     - app/tinynet_launcher
