@@ -1,5 +1,5 @@
 - name: Upgrade proxmox
-  hosts: proxmox1
+  hosts: proxmox
   gather_facts: false
   become: true
   tasks:
@@ -12,21 +12,8 @@
         name: sys/proxmox
         tasks_from: ssl_cert.yml
 
-- name: Upgrade storage
-  hosts: storage
-  gather_facts: true
-  gather_subset: 'distribution'
-  become: true
-  roles:
-    - app/jellyfin
-  tasks:
-    - name: Install SSL cert for Cockpit
-      ansible.builtin.import_role:
-        name: inf/cockpit
-        tasks_from: ssl_cert.yml
-
-- name: Upgrade RHEL
-  hosts: all
+- name: Upgrade guests
+  hosts: guests
   gather_facts: true
   gather_subset: '!all'
   become: true
@@ -66,17 +53,30 @@
         tasks_from: arb.yml
       when: arb_ssl_check.stat.exists
 
-- name: Roll postgres databases
+- name: Fix db-postgres
   hosts: db-postgres
   gather_facts: false
   become: true
   tasks:
-    - name: Fix cert permission on db-postgres
+    - name: Fix cert permission
       ansible.builtin.file:
         path: /etc/ssl/arb.chrisx.xyz
         owner: postgres
         group: postgres
         recurse: true
+
+- name: Upgrade storage
+  hosts: storage
+  gather_facts: true
+  gather_subset: 'distribution'
+  become: true
+  roles:
+    - app/jellyfin
+  tasks:
+    - name: Install SSL cert for Cockpit
+      ansible.builtin.import_role:
+        name: inf/cockpit
+        tasks_from: ssl_cert.yml
 
 - name: Upgrade containers
   hosts: web-container
@@ -88,5 +88,7 @@
 - name: Upgrade php apps
   hosts: web-php
   gather_facts: false
+  become: true
   roles:
+    - app/nextcloud
     - app/tinynet_launcher
