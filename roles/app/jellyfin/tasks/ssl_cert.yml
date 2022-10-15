@@ -1,12 +1,13 @@
 - name: Generate pfx on localhost
-  delegate_to: localhost
   become: false
+  check_mode: false
+  delegate_to: localhost
   block:
     - name: Create temp dir
       ansible.builtin.tempfile:
         state: directory
-      register: _temp_dir
       changed_when: false
+      register: _temp_dir
     - name: Copy cert to temp dir
       ansible.builtin.copy:
         src: certbot.d/config/live/arb.chrisx.xyz/fullchain.pem

@@ -2,6 +2,7 @@
   ansible.builtin.uri:
     url: https://composer.github.io/installer.sig
     return_content: true
+  check_mode: false
   register: checksum
 - name: Download Composer installer
   ansible.builtin.get_url:

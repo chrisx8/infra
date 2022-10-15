@@ -11,7 +11,7 @@
 - name: Set up all guests
   hosts: guests
   become: true
-  gather_subset: min
+  gather_subset: 'virtualization_type'
   roles:
     - sys/base
 

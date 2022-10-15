@@ -16,6 +16,7 @@
   ansible.builtin.uri:
     url: https://api.github.com/repos/jellyfin/jellyfin/releases/latest
     method: GET
+  check_mode: false
   register: jellyfin_release
 
 - name: Enable CRB repo
@@ -46,6 +47,7 @@
   ansible.builtin.uri:
     url: https://api.github.com/repos/Ugrend/jellyfin-plugin-keycloak-auth/releases/latest
     method: GET
+  check_mode: false
   register: kc_auth_release
 - name: Create dir for jellyfin-plugin-keycloak-auth
   ansible.builtin.file:
