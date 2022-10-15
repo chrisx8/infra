@@ -6,4 +6,6 @@ Role vars:
 
 - `php_composer`: if defined and true, the latest version of Composer will be installed.
 
+Required facts: None
+
 Supported OS: RedHat-based Linux systems

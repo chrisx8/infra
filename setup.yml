@@ -1,9 +1,8 @@
 - name: Set up Proxmox VE
   hosts: proxmox
   become: true
-  gather_subset:
-    - virtualization_role
-    - virtualization_type
+  gather_facts: true
+  gather_subset: ['min', 'virtualization_role', 'virtualization_type']
   roles:
     - sys/proxmox
     - inf/tailscale
@@ -11,14 +10,14 @@
 - name: Set up all guests
   hosts: guests
   become: true
-  gather_subset: 'virtualization_type'
+  gather_facts: true
+  gather_subset: ['!min', 'distribution', 'virtualization_type']
   roles:
     - sys/base
 
 - name: Set up Pi-hole instance
   hosts: pihole
   become: true
-  gather_facts: false
   roles:
     - inf/apache_php
     - app/pihole
@@ -26,14 +25,16 @@
 - name: Set up PostgreSQL server
   hosts: db-postgres
   become: true
-  gather_subset: 'min'
+  gather_facts: true
+  gather_subset: ['!min', 'distribution']
   roles:
     - inf/postgresql
 
 - name: Set up storage server
   hosts: storage
   become: true
-  gather_subset: 'min'
+  gather_facts: true
+  gather_subset: ['!min', 'distribution']
   roles:
     - inf/cockpit
     - app/file_shares
@@ -42,7 +43,8 @@
 - name: Set up containers
   hosts: web-container
   become: true
-  gather_subset: 'virtualization_type'
+  gather_facts: true
+  gather_subset: ['!min', 'virtualization_type']
   roles:
     - sys/podman
     - app/containers
@@ -50,7 +52,8 @@
 - name: Set up Apache + PHP
   hosts: web-php
   become: true
-  gather_subset: 'min'
+  gather_facts: true
+  gather_subset: ['min']
   vars:
     php_composer: true
   roles:

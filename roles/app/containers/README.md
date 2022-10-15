@@ -9,4 +9,6 @@ This role installs all containerized apps, including:
 - [Nginx](https://nginx.org/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 
+Required facts: None
+
 Supported OS: Linux systems with `logrotate` and Podman.

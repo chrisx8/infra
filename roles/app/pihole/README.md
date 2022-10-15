@@ -9,4 +9,6 @@ Notes:
 - In order to perform a non-interactive install, there is a hacky wrapper script
   for the official Pi-hole install script.
 
+Required facts: None
+
 Supported OS: RedHat-based Linux systems

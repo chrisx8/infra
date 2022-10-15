@@ -1,6 +1,5 @@
 - name: Upgrade proxmox
   hosts: proxmox
-  gather_facts: false
   become: true
   tasks:
     - name: Upgrade
@@ -15,7 +14,7 @@
 - name: Upgrade guests
   hosts: guests
   gather_facts: true
-  gather_subset: '!all'
+  gather_subset: ['!min', 'distribution']
   become: true
   tasks:
     - name: Upgrade packages (dnf)
@@ -31,7 +30,6 @@
 
 - name: Deploy SSL certs
   hosts: all
-  gather_facts: false
   become: true
   tasks:
     - name: Check if chrisx.xyz cert exists
@@ -55,7 +53,6 @@
 
 - name: Fix db-postgres
   hosts: db-postgres
-  gather_facts: false
   become: true
   tasks:
     - name: Fix cert permission
@@ -68,7 +65,7 @@
 - name: Upgrade storage
   hosts: storage
   gather_facts: true
-  gather_subset: 'distribution'
+  gather_subset: ['!min', 'distribution']
   become: true
   roles:
     - app/jellyfin
@@ -80,14 +77,12 @@
 
 - name: Upgrade containers
   hosts: web-container
-  gather_facts: false
   become: true
   roles:
     - app/containers
 
 - name: Upgrade php apps
   hosts: web-php
-  gather_facts: false
   become: true
   roles:
     - app/nextcloud
