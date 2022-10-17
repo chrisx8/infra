@@ -20,15 +20,12 @@
 
 	DocumentRoot /var/www/html
 
-	Alias "/docs" "/var/www/docs"
-	Alias "/launcher" "/var/www/launcher"
-
 	<Location "/auth/openid-connect">
 		AuthType openid-connect
 		Require valid-user
 	</Location>
 
-	<Directory "/var/www/docs">
+	<Directory "/var/www/html/docs">
 		Header set Cache-Control "no-cache"
 		Header set Referrer-Policy "no-referrer"
 		Header set X-Content-Type-Options "nosniff"
@@ -39,17 +36,17 @@
 		Require claim roles:access
 	</Directory>
 
-	<Directory "/var/www/docs/_admin">
+	<Directory "/var/www/html/docs/_admin">
 		AuthType openid-connect
 		Require claim roles:admin
 	</Directory>
 
-	<Directory "/var/www/docs/_internal">
+	<Directory "/var/www/html/docs/_internal">
 		AuthType openid-connect
 		Require claim roles:internal
 	</Directory>
 
-	<Directory "/var/www/launcher">
+	<Directory "/var/www/html/launcher">
 		Header set Cache-Control "no-cache"
 		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'none';"
 		Header set Referrer-Policy "no-referrer"
@@ -61,12 +58,12 @@
 		Require claim roles:access
 	</Directory>
 
-	<Directory "/var/www/launcher/admin">
+	<Directory "/var/www/html/launcher/admin">
 		AuthType openid-connect
 		Require claim roles:admin
 	</Directory>
 
-	<Directory "/var/www/launcher/img">
+	<Directory "/var/www/html/launcher/img">
 		Require all granted
 	</Directory>
 

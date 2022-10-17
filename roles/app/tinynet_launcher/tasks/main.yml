@@ -1,9 +1,7 @@
-- name: Create /var/www/launcher
+- name: Create /var/www/html/launcher
   ansible.builtin.file:
-    path: /var/www/launcher
+    path: /var/www/html/launcher
     state: directory
-    owner: apache
-    group: apache
     mode: 0755
 
 - name: Install Launcher
@@ -17,7 +15,7 @@
       become: false
       vars:
         launchertw_operation: deploy
-        launchertw_deploy_target_dir: /var/www/launcher
+        launchertw_deploy_target_dir: /var/www/html/launcher
 - name: Install Admin Center
   block:
     - name: Load Admin Center vars
@@ -29,22 +27,13 @@
       become: false
       vars:
         launchertw_operation: deploy
-        launchertw_deploy_target_dir: /var/www/launcher/admin
+        launchertw_deploy_target_dir: /var/www/html/launcher/admin
 
-- name: Create /var/www/html
-  ansible.builtin.file:
-    path: /var/www/html
-    state: directory
-    owner: apache
-    group: apache
-    mode: 0755
 - name: Copy index html
   ansible.builtin.copy:
     src: index.html
     dest: /var/www/html/index.html
-    owner: apache
-    group: apache
-    mode: 0755
+    mode: 0644
 
 - name: Configure Apache site
   ansible.builtin.import_tasks: apache_site.yml

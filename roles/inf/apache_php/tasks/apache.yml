@@ -26,18 +26,16 @@
     path: /var/www/cgi-bin
     state: absent
 
-- name: Add default config
+- name: Copy default config
   ansible.builtin.copy:
     src: 1_default.conf
     dest: /etc/httpd/conf.d/1_default.conf
     mode: 0644
-- name: Copy html
+- name: Copy robots.txt
   ansible.builtin.copy:
-    src: html
-    dest: /var/www/
-    owner: apache
-    group: apache
-    mode: 0755
+    src: robots.txt
+    dest: /var/www/html/robots.txt
+    mode: 0644
 
 - name: Configure firewall rules
   ansible.posix.firewalld:

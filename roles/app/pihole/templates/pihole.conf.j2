@@ -29,6 +29,10 @@
 		AuthType openid-connect
 		Require claim roles:admin
 	</Directory>
+
+	<Directory "/var/www/html/admin/img/favicons">
+		Require all granted
+	</Directory>
 </VirtualHost>
 
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
