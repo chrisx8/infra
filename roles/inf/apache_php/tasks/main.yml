@@ -1,3 +1,9 @@
+- name: Verify system
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version == '9'
+      - ansible_facts.os_family == 'RedHat'
+
 - name: Generate self-signed ssl cert
   ansible.builtin.import_role:
     name: inf/ssl

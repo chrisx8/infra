@@ -17,6 +17,8 @@
 - name: Set up Pi-hole instance
   hosts: pihole
   become: true
+  gather_facts: true
+  gather_subset: ['!min', 'distribution']
   roles:
     - inf/apache_php
     - app/pihole

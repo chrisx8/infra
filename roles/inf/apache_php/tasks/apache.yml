@@ -1,7 +1,21 @@
 - name: Install Apache httpd
   ansible.builtin.dnf:
-    name: [httpd, mod_auth_openidc, mod_fcgid, mod_http2, mod_ssl]
+    name: [httpd, mod_fcgid, mod_http2, mod_ssl]
     state: present
+
+- name: Get latest mod_auth_openidc version number from GitHub
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/zmartzone/mod_auth_openidc/releases/latest
+    method: GET
+  check_mode: false
+  register: _mod_auth_openidc_release
+- name: Install mod_auth_openidc
+  ansible.builtin.dnf:
+    name: https://github.com/zmartzone/mod_auth_openidc/releases/download/v{{ item }}/mod_auth_openidc-{{ item }}-1.el9.x86_64.rpm  # yamllint disable-line rule:line-length
+    disable_gpg_check: true
+    state: present
+  with_items:
+    - "{{ _mod_auth_openidc_release.json.tag_name|replace('v', '') }}"
 
 - name: Remove welcome site
   ansible.builtin.file:
