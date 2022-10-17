@@ -1,3 +1,8 @@
+- name: Install chrisx cert
+  ansible.builtin.import_role:
+    name: inf/ssl
+    tasks_from: chrisx.yml
+
 - name: Install Apache site configuration
   ansible.builtin.copy:
     src: nextcloud.conf

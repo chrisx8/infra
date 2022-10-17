@@ -27,6 +27,9 @@ setup-container:
 setup-php:
 	ansible-playbook setup.yml --limit web-php
 
+setup-pihole:
+	ansible-playbook setup.yml --limit pihole
+
 setup-postgres:
 	ansible-playbook setup.yml --limit db-postgres
 

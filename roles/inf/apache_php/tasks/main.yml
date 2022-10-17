@@ -1,7 +1,7 @@
-- name: Install chrisx cert
+- name: Generate self-signed ssl cert
   ansible.builtin.import_role:
     name: inf/ssl
-    tasks_from: chrisx.yml
+    tasks_from: self.yml
 
 - ansible.builtin.import_tasks: apache.yml
 - ansible.builtin.import_tasks: php.yml

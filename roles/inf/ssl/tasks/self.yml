@@ -1,0 +1,12 @@
+- name: Create self-signed cert dir
+  ansible.builtin.file:
+    path: /etc/ssl/self
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+- name: Generate self-signed ssl cert
+  ansible.builtin.command:
+    cmd: "openssl req -x509 -nodes -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365 -subj '/CN={{ inventory_hostname }}'"  # yamllint disable-line rule:line-length
+    chdir: /etc/ssl/self
+  changed_when: true
