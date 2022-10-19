@@ -25,7 +25,8 @@
 - name: Set up logrotate cron job
   ansible.builtin.cron:
     name: container logrotate
-    job: "logrotate -s {{ containers_dir.path }}/log/logrotate.state {{ containers_dir.path }}/log/logrotate.conf"
+    # yamllint disable-line rule:line-length
+    job: "/usr/sbin/logrotate -s {{ containers_dir.path }}/log/logrotate.state {{ containers_dir.path }}/log/logrotate.conf"
     hour: 2
     minute: 0
     state: present
