@@ -15,5 +15,7 @@
     group: postgres
     recurse: true
 
-- ansible.builtin.import_tasks: package_install.yml
-- ansible.builtin.import_tasks: postgres_config.yml
+- name: Install packages
+  ansible.builtin.import_tasks: package_install.yml
+- name: Configure PostgreSQL server
+  ansible.builtin.import_tasks: postgres_config.yml

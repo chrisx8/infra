@@ -14,4 +14,6 @@
   ansible.builtin.dnf:
     name: cockpit-packagekit
     state: absent
-- ansible.builtin.import_tasks: ssl_cert.yml
+
+- name: Install SSL cert for Cockpit
+  ansible.builtin.import_tasks: ssl_cert.yml

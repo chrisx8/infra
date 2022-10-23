@@ -5,10 +5,14 @@
       - ansible_facts.virtualization_role == 'host'
       - ansible_facts.virtualization_type == 'kvm'
 
-- ansible.builtin.import_tasks: change_repos.yml
-- ansible.builtin.import_tasks: upgrade.yml
-- ansible.builtin.import_tasks: system.yml
-- ansible.builtin.import_tasks: ssl_cert.yml
+- name: Configure repos
+  ansible.builtin.import_tasks: change_repos.yml
+- name: Upgrade system
+  ansible.builtin.import_tasks: upgrade.yml
+- name: Configure system
+  ansible.builtin.import_tasks: system.yml
+- name: Install SSL cert
+  ansible.builtin.import_tasks: ssl_cert.yml
 - name: Install Postfix
   ansible.builtin.import_role:
     name: inf/postfix

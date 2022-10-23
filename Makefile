@@ -8,6 +8,11 @@ envsetup:
 	ansible-galaxy collection install ansible.posix community.postgresql containers.podman
 	pre-commit install
 
+# Update Ansible environment
+# Auto-updates all pre-commit hooks
+envupdate:
+	pre-commit autoupdate
+
 ## The following tasks runs Ansible playbooks
 ## Naming: playbook-(all|group|host)
 ## Order in Makefile: all, groups, nodes

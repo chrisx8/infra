@@ -14,9 +14,12 @@
     name: inf/ssl
     tasks_from: chrisx.yml
 
-- ansible.builtin.import_tasks: postgres_db.yml
+- name: Set up Postgres DBs
+  ansible.builtin.import_tasks: postgres_db.yml
   become_user: postgres
   delegate_to: db-postgres
 
-- ansible.builtin.import_tasks: containers_pre.yml
-- ansible.builtin.import_tasks: containers.yml
+- name: Install container configs
+  ansible.builtin.import_tasks: containers_pre.yml
+- name: Launch containers
+  ansible.builtin.import_tasks: containers.yml

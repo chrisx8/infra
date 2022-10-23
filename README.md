@@ -40,6 +40,15 @@ After installing pre-commit, set up Git hook scripts:
 pre-commit install
 ```
 
+To update pre-commit hooks, run:
+
+```bash
+# use makefile
+make envupdate
+# or, update manually
+pre-commit autoupdate
+```
+
 ## Makefile
 
 You may run Ansible playbooks, and several repo-related tasks, with `make`.

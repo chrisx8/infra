@@ -10,7 +10,10 @@
     name: inf/ssl
     tasks_from: self.yml
 
-- ansible.builtin.import_tasks: apache.yml
-- ansible.builtin.import_tasks: php.yml
-- ansible.builtin.import_tasks: composer.yml
+- name: Set up Apache httpd
+  ansible.builtin.import_tasks: apache.yml
+- name: Set up PHP
+  ansible.builtin.import_tasks: php.yml
+- name: Set up Composer
+  ansible.builtin.import_tasks: composer.yml
   when: php_composer is defined and php_composer

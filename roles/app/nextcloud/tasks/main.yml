@@ -13,9 +13,12 @@
     name: bzip2
     state: present
 
-- ansible.builtin.import_tasks: postgres_db.yml
+- name: Set up Postgres DB
+  ansible.builtin.import_tasks: postgres_db.yml
   become_user: postgres
   delegate_to: db-postgres
 
-- ansible.builtin.import_tasks: apache_php_config.yml
-- ansible.builtin.import_tasks: nc.yml
+- name: Configure Apache & PHP
+  ansible.builtin.import_tasks: apache_php_config.yml
+- name: Install Nextcloud
+  ansible.builtin.import_tasks: nc.yml
