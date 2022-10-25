@@ -16,7 +16,12 @@ BLOCKING_ENABLED=true
 QUERY_LOGGING=false
 DNS_FQDN_REQUIRED=false
 DNS_BOGUS_PRIV=true
+REV_SERVER=true
+REV_SERVER_CIDR=10.69.0.0/16
+REV_SERVER_TARGET=10.69.0.1
+REV_SERVER_DOMAIN=arb.chrisx.xyz
 WEBTHEME=default-auto
+WEBPASSWORD=
 EOF
 
 # Modify the official install script to disable dialog
@@ -29,6 +34,3 @@ curl -sSL https://install.pi-hole.net >> /tmp/pihole_patched.sh
 
 # launch install
 bash /tmp/pihole_patched.sh --unattended
-
-# remove password
-echo | pihole -a -p
