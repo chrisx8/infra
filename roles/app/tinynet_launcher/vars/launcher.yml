@@ -37,17 +37,9 @@ services:
         icon: fa-solid fa-film
         url: https://storage.arb.chrisx.xyz:8920
         newtab: true
-      - name: Miniflux
-        icon: fa-solid fa-book-open-reader
-        url: https://miniflux.arb.chrisx.xyz
-        newtab: true
   - name: Resources
     icon: fa-solid fa-info
     apps:
-      - name: Downloads
-        icon: fa-solid fa-download
-        url: /docs/downloads.html
-        newtab: true
       - name: Public Docs
         icon: fa-solid fa-file-lines
         url: /docs/

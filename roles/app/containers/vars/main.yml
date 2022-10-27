@@ -26,12 +26,6 @@ container_specs:
     cap_drop:
       - all
     <<: *container_defaults
-  - name: miniflux
-    image: docker.io/miniflux/miniflux:latest
-    env_file: "{{ containers_dir.path }}/miniflux.env"
-    cap_drop:
-      - all
-    <<: *container_defaults
   - name: vaultwarden
     image: docker.io/vaultwarden/server:testing
     env_file: "{{ containers_dir.path }}/vaultwarden.env"
