@@ -20,23 +20,19 @@
     - /tmp/pihole_install.sh
     - /tmp/pihole_patched.sh
 
-- name: Configure Apache site for WebUI
-  ansible.builtin.import_tasks: webui.yml
-- name: Add apache user to pihole group
-  ansible.builtin.user:
-    name: apache
-    groups: pihole
-
-- name: Fix sudoers
-  ansible.builtin.replace:
-    path: /etc/sudoers.d/pihole
-    regexp: lighttpd
-    replace: apache
 - name: Install dnsmasq config
   ansible.builtin.copy:
     src: 00-arb.conf
     dest: /etc/dnsmasq.d/00-arb.conf
     mode: 0644
+
+- name: Configure crontab
+  ansible.builtin.cron:
+    name: Update Pi-hole Gravity lists
+    job: pihole -g
+    hour: 7
+    minute: 0
+    state: present
 
 - name: Configure firewall
   ansible.posix.firewalld:
@@ -51,3 +47,6 @@
   ansible.builtin.systemd:
     name: firewalld.service
     state: reloaded
+
+- name: Configure Apache site for WebUI
+  ansible.builtin.import_tasks: webui.yml
