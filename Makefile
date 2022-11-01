@@ -13,7 +13,18 @@ envsetup:
 envupdate:
 	pre-commit autoupdate
 
-## The following tasks runs Ansible playbooks
+## The following tasks run the certbot helper script
+## Naming: certbot-(issue|renew)
+CERTBOT_SCRIPT=files/certbot.sh
+CERTBOT_WORKDIR=files/certbot.d
+
+certbot-issue:
+	$(CERTBOT_SCRIPT) $(CERTBOT_WORKDIR) issue
+
+certbot-renew:
+	$(CERTBOT_SCRIPT) $(CERTBOT_WORKDIR) renew
+
+## The following tasks run Ansible playbooks
 ## Naming: playbook-(all|group|host)
 ## Order in Makefile: all, groups, nodes
 

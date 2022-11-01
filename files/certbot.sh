@@ -1,13 +1,14 @@
 #!/bin/bash
 set -e
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+WORKDIR="$1"
+OP="$2"
 
 ################################################################################
 # REQUIRED CONFIGURATION
-# 1. In certbot.d/env
+# 1. In $WORKDIR/env
 #    EMAIL = Let's Encrypt email address
 #    DOMAINS = domains to issue certs for
-# 2. In certbot.d/cloudflare.ini
+# 2. In $WORKDIR/cloudflare.ini
 #    dns_cloudflare_api_token = Cloudflare API token
 ################################################################################
 
@@ -16,54 +17,56 @@ function setup() {
 	echo "    tinynet-infra certbot utilities"
 	echo "#####################################################################"
 	echo
-	echo "This will install certbot to /tmp/certbot.env, and issue/renew certs."
-	read -p "Press Enter to continue..."
-	echo
 	echo "Creating certbot environment..."
-	python3 -m venv /tmp/certbot.env
-	source "/tmp/certbot.env/bin/activate"
+	python3 -m venv "$WORKDIR/venv"
+	source "$WORKDIR/venv/bin/activate"
 	echo
 	echo "Installing certbot..."
 	pip install -U pip wheel
-	pip install certbot-dns-cloudflare
+	pip install -U certbot-dns-cloudflare
 	echo
 }
 
 function issue() {
-	echo "Loading config from $SCRIPT_DIR/certbot.d/env"
-	source "$SCRIPT_DIR/certbot.d/env"
+	echo "Loading config from $WORKDIR/env"
+	source "$WORKDIR/env"
 	echo "Issuing certs with certbot..."
 	for DOMAIN in $DOMAINS; do
 		certbot certonly \
-			--config-dir "$SCRIPT_DIR/certbot.d/config" \
-			--logs-dir "$SCRIPT_DIR/certbot.d/log" \
-			--work-dir "$SCRIPT_DIR/certbot.d/workdir" \
+			--config-dir "$WORKDIR/config" \
+			--logs-dir "$WORKDIR/log" \
+			--work-dir "$WORKDIR/workdir" \
 			--no-eff-email --email "$EMAIL" \
 			-d "$DOMAIN" \
 			--dns-cloudflare \
-			--dns-cloudflare-credentials "$SCRIPT_DIR/certbot.d/cloudflare.ini"
+			--dns-cloudflare-credentials "$WORKDIR/cloudflare.ini"
 	done
 }
 
 function renew() {
 	echo "Renewing certs with certbot..."
 	certbot renew \
-		--config-dir "$SCRIPT_DIR/certbot.d/config" \
-		--logs-dir "$SCRIPT_DIR/certbot.d/log" \
-		--work-dir "$SCRIPT_DIR/certbot.d/workdir"
+		--config-dir "$WORKDIR/config" \
+		--logs-dir "$WORKDIR/log" \
+		--work-dir "$WORKDIR/workdir"
 }
 
-case "$1" in
+if [ -z "$WORKDIR" ]; then
+	echo "Usage: certbot.sh WORKDIR (issue|renew)"
+	exit 1
+fi
+
+case "$OP" in
 	"issue")
-		setup
+        setup
 		issue
 		;;
 	"renew")
-		setup
+        setup
 		renew
 		;;
 	*)
-		echo "Usage: certbot.sh (issue|renew)"
+		echo "Usage: certbot.sh WORKDIR (issue|renew)"
 		exit 1
 		;;
 esac
