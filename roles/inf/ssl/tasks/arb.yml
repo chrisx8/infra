@@ -2,20 +2,16 @@
   ansible.builtin.file:
     path: /etc/ssl/arb.chrisx.xyz
     state: directory
-    mode: 0750
+    mode: 0700
     owner: root
     group: root
-- name: Install arb.chrisx.xyz/fullchain.pem
+- name: Install cert for arb.chrisx.xyz
   ansible.builtin.copy:
-    src: certbot.d/config/live/arb.chrisx.xyz/fullchain.pem
-    dest: /etc/ssl/arb.chrisx.xyz/fullchain.pem
+    src: "certbot.d/config/live/arb.chrisx.xyz/{{ item }}"
+    dest: /etc/ssl/arb.chrisx.xyz
     mode: 0400
     owner: root
     group: root
-- name: Install arb.chrisx.xyz/privkey.pem
-  ansible.builtin.copy:
-    src: certbot.d/config/live/arb.chrisx.xyz/privkey.pem
-    dest: /etc/ssl/arb.chrisx.xyz/privkey.pem
-    mode: 0400
-    owner: root
-    group: root
+  loop:
+    - fullchain.pem
+    - privkey.pem

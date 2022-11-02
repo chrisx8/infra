@@ -1,6 +1,6 @@
 # TinyNET Ansible Role: `app/containers`
 
-This role installs all containerized apps, including:
+This role installs Podman and containerized apps, including:
 
 - [cloudflared](https://github.com/cloudflare/cloudflared)
 - [Gitea](https://gitea.io/)
@@ -8,6 +8,6 @@ This role installs all containerized apps, including:
 - [Nginx](https://nginx.org/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 
-Required facts: None
+Required facts: `distribution`, `virtualization_type`
 
-Supported OS: Linux systems with `logrotate` and Podman.
+Supported OS: RHEL-like systems, version 8 or newer

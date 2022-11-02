@@ -45,9 +45,8 @@
   hosts: web-container
   become: true
   gather_facts: true
-  gather_subset: ['!min', 'virtualization_type']
+  gather_subset: ['!min', 'distribution', 'virtualization_type']
   roles:
-    - sys/podman
     - app/containers
     - inf/tailscale
 

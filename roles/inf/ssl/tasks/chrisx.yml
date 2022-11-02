@@ -5,17 +5,13 @@
     mode: 0700
     owner: root
     group: root
-- name: Install chrisx.xyz/fullchain.pem
+- name: Install cert for chrisx.xyz
   ansible.builtin.copy:
-    src: certbot.d/config/live/chrisx.xyz/fullchain.pem
+    src: "certbot.d/config/live/chrisx.xyz/{{ item }}"
     dest: /etc/ssl/chrisx.xyz
     mode: 0400
     owner: root
     group: root
-- name: Install chrisx.xyz/privkey.pem
-  ansible.builtin.copy:
-    src: certbot.d/config/live/chrisx.xyz/privkey.pem
-    dest: /etc/ssl/chrisx.xyz
-    mode: 0400
-    owner: root
-    group: root
+  loop:
+    - fullchain.pem
+    - privkey.pem

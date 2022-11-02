@@ -1,18 +1,26 @@
+- name: Verify system
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+      - ansible_facts.virtualization_type == 'kvm'
+
 - name: Load secret vars
   ansible.builtin.include_vars: secrets.yml
 
-- name: Generate self-signed cert
-  ansible.builtin.import_role:
+- name: Install Podman
+  ansible.builtin.dnf:
+    name: podman
+    state: present
+
+- name: Install ssl certs
+  ansible.builtin.include_role:
     name: inf/ssl
-    tasks_from: self.yml
-- name: Install arb cert
-  ansible.builtin.import_role:
-    name: inf/ssl
-    tasks_from: arb.yml
-- name: Install chrisx cert
-  ansible.builtin.import_role:
-    name: inf/ssl
-    tasks_from: chrisx.yml
+    tasks_from: "{{ item }}.yml"
+  loop:
+    - arb
+    - chrisx
+    - self
 
 - name: Set up Postgres DBs
   ansible.builtin.import_tasks: postgres_db.yml

@@ -1,4 +1,12 @@
-container_defaults: &container_defaults
+container_ssl_domains:
+  - arb.chrisx.xyz
+  - chrisx.xyz
+
+container_volumes:
+  - gitea_data
+  - vaultwarden_data
+
+container_specs_defaults: &container_specs_defaults
   generate_systemd:
     container_prefix: c
     path: /etc/systemd/system
@@ -18,14 +26,14 @@ container_specs:
     volumes:
       - gitea_data:/data:Z
       - "{{ containers_dir.path }}/gitea/templates:/data/gitea/templates:Z"
-    <<: *container_defaults
+    <<: *container_specs_defaults
   - name: keycloak
     image: quay.io/keycloak/keycloak:20.0.0
     command: start
     env_file: "{{ containers_dir.path }}/keycloak.env"
     cap_drop:
       - all
-    <<: *container_defaults
+    <<: *container_specs_defaults
   - name: vaultwarden
     image: docker.io/vaultwarden/server:testing
     env_file: "{{ containers_dir.path }}/vaultwarden.env"
@@ -34,7 +42,7 @@ container_specs:
       - vaultwarden_data:/data:Z
     cap_drop:
       - all
-    <<: *container_defaults
+    <<: *container_specs_defaults
   - name: nginx
     image: docker.io/library/nginx:alpine
     ports:
@@ -46,10 +54,10 @@ container_specs:
       - "{{ containers_dir.path }}/nginx/nginx.conf:/etc/nginx/nginx.conf:Z"
       - "{{ nginx_log_dir.path }}:/var/log/nginx:z"
       - "/etc/ssl:/etc/ssl:z"
-    <<: *container_defaults
+    <<: *container_specs_defaults
   - name: cloudflared
     image: docker.io/cloudflare/cloudflared:latest
     command: tunnel run --token {{ cloudflared_token }}
     cap_drop:
       - all
-    <<: *container_defaults
+    <<: *container_specs_defaults
