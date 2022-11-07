@@ -45,12 +45,6 @@
   with_items:
     - "{{ jellyfin_release['json']['name'] }}"
 
-- name: Get latest jellyfin-plugin-keycloak-auth version number from GitHub
-  ansible.builtin.uri:
-    url: https://api.github.com/repos/Ugrend/jellyfin-plugin-keycloak-auth/releases/latest
-    method: GET
-  check_mode: false
-  register: kc_auth_release
 - name: Create dir for jellyfin-plugin-keycloak-auth
   ansible.builtin.file:
     path: /var/lib/jellyfin/plugins/keycloak-auth
@@ -66,10 +60,8 @@
     owner: jellyfin
     group: jellyfin
   loop:
-    # yamllint disable-line rule:line-length
-    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/Jellyfin.Plugin.Keycloak.dll
-    # yamllint disable-line rule:line-length
-    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/download/{{ kc_auth_release['json']['name'] }}/JWT.dll
+    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/latest/download/Jellyfin.Plugin.Keycloak.dll
+    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/latest/download/JWT.dll
 
 - name: Install SSL cert
   ansible.builtin.import_tasks: ssl_cert.yml

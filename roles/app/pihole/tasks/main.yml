@@ -29,7 +29,7 @@
 - name: Configure crontab
   ansible.builtin.cron:
     name: Update Pi-hole Gravity lists
-    job: pihole -g
+    job: /usr/local/bin/pihole -g
     hour: 7
     minute: 0
     state: present
