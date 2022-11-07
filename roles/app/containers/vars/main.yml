@@ -28,7 +28,7 @@ container_specs:
       - "{{ containers_dir.path }}/gitea/templates:/data/gitea/templates:Z"
     <<: *container_specs_defaults
   - name: keycloak
-    image: quay.io/keycloak/keycloak:20.0.0
+    image: quay.io/keycloak/keycloak:20.0.1
     command: start
     env_file: "{{ containers_dir.path }}/keycloak.env"
     cap_drop:
