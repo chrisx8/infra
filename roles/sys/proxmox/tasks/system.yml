@@ -3,10 +3,6 @@
     name: [vim, libsasl2-modules, lm-sensors]
     install_recommends: false
     state: present
-- name: Install Proxmox Backup Server
-  ansible.builtin.apt:
-    name: proxmox-backup-server
-    state: present
 
 - name: Configure OpenSSH client
   ansible.builtin.copy:

@@ -14,20 +14,3 @@
     group: www-data
   notify:
     - Restart pveproxy
-
-- name: Install proxmox-backup/proxy.key
-  ansible.builtin.copy:
-    src: certbot.d/config/live/arb.chrisx.xyz/privkey.pem
-    dest: /etc/proxmox-backup/proxy.key
-    mode: 0640
-    owner: root
-    group: backup
-- name: Install proxmox-backup/proxy.pem
-  ansible.builtin.copy:
-    src: certbot.d/config/live/arb.chrisx.xyz/fullchain.pem
-    dest: /etc/proxmox-backup/proxy.pem
-    mode: 0640
-    owner: root
-    group: backup
-  notify:
-    - Restart proxmox-backup-proxy

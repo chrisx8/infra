@@ -91,7 +91,6 @@ Some `make` commands:
 ### Storage & Backup
 
 - Per-user file shares, accessible via Samba and SFTP
-- [Proxmox Backup Server](https://pbs.proxmox.com/docs/)
 
 ### Home Automation
 

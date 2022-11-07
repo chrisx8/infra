@@ -2,7 +2,3 @@
   ansible.builtin.systemd:
     name: pveproxy.service
     state: restarted
-- name: Restart proxmox-backup-proxy
-  ansible.builtin.systemd:
-    name: proxmox-backup-proxy.service
-    state: restarted

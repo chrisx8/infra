@@ -14,6 +14,10 @@ services:
   - name: Applications
     icon: fa-solid fa-rocket
     apps:
+      - name: Admin Docs
+        icon: fa-solid fa-file-lines
+        url: /docs/_admin/
+        newtab: true
       - name: Keycloak Admin Console
         icon: fa-solid fa-user-gear
         url: https://sso.chrisx.xyz/admin/chrisx/console/
@@ -44,20 +48,9 @@ services:
         icon: fa-solid fa-server
         url: https://proxmox1.arb.chrisx.xyz:8006
         newtab: true
-      - name: Proxmox Backup Server
-        icon: fa-solid fa-database
-        url: https://proxmox1.arb.chrisx.xyz:8007
-        newtab: true
       - name: Storage (Cockpit)
         icon: fa-solid fa-hard-drive
         url: https://storage.arb.chrisx.xyz:9090
-        newtab: true
-  - name: Resources
-    icon: fa-solid fa-info
-    apps:
-      - name: Admin Docs
-        icon: fa-solid fa-file-lines
-        url: /docs/_admin/
         newtab: true
 
 # [OPTIONAL] button in the footer
