@@ -1,0 +1,26 @@
+- name: Copy logrotate config
+  ansible.builtin.template:
+    src: logrotate.conf.j2
+    dest: "{{ containers_dir.path }}/log/logrotate.conf"
+    mode: 0644
+- name: Set up logrotate cron job
+  ansible.builtin.cron:
+    name: container logrotate
+    # yamllint disable-line rule:line-length
+    job: "/usr/sbin/logrotate -s {{ containers_dir.path }}/log/logrotate.state {{ containers_dir.path }}/log/logrotate.conf"
+    hour: 2
+    minute: 0
+    state: present
+
+- name: Copy backup script
+  ansible.builtin.template:
+    src: backup.sh
+    dest: ~/backup.sh
+    mode: 0700
+- name: Set up backup cron job
+  ansible.builtin.cron:
+    name: container backup
+    job: "bash ~/backup.sh"
+    hour: 22
+    minute: 12
+    state: present

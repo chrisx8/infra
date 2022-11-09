@@ -11,21 +11,6 @@
     mode: 0700
   register: nginx_log_dir
 
-- name: Copy logrotate config
-  ansible.builtin.template:
-    src: logrotate.conf.j2
-    dest: "{{ containers_dir.path }}/log/logrotate.conf"
-    mode: 0644
-
-- name: Set up logrotate cron job
-  ansible.builtin.cron:
-    name: container logrotate
-    # yamllint disable-line rule:line-length
-    job: "/usr/sbin/logrotate -s {{ containers_dir.path }}/log/logrotate.state {{ containers_dir.path }}/log/logrotate.conf"
-    hour: 2
-    minute: 0
-    state: present
-
 - name: Create container volumes
   containers.podman.podman_volume:
     name: "{{ item }}"
