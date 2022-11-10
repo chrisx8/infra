@@ -13,6 +13,3 @@
   ansible.builtin.import_tasks: system.yml
 - name: Install SSL cert
   ansible.builtin.import_tasks: ssl_cert.yml
-- name: Install Postfix
-  ansible.builtin.import_role:
-    name: inf/postfix

@@ -59,6 +59,5 @@
     php_composer: true
   roles:
     - inf/apache_php
-    - inf/postfix
     - app/nextcloud
     - app/tinynet_launcher
