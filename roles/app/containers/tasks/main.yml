@@ -25,9 +25,11 @@
 - name: Set up Postgres DBs
   ansible.builtin.import_tasks: postgres_db.yml
   become_user: postgres
-  delegate_to: db-postgres
+  delegate_to: c-lapp
 
-- name: Install container configs
+- name: Pre-launch setup
   ansible.builtin.import_tasks: containers_pre.yml
-- name: Launch containers
+- name: Launch
   ansible.builtin.import_tasks: containers.yml
+- name: Post-launch
+  ansible.builtin.import_tasks: containers_post.yml

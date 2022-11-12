@@ -16,7 +16,7 @@
 - name: Set up Postgres DB
   ansible.builtin.import_tasks: postgres_db.yml
   become_user: postgres
-  delegate_to: db-postgres
+  delegate_to: c-lapp
 
 - name: Configure Apache & PHP
   ansible.builtin.import_tasks: apache_php_config.yml

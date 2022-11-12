@@ -51,17 +51,6 @@
         tasks_from: arb.yml
       when: arb_ssl_check.stat.exists
 
-- name: Fix db-postgres
-  hosts: db-postgres
-  become: true
-  tasks:
-    - name: Fix cert permission
-      ansible.builtin.file:
-        path: /etc/ssl/arb.chrisx.xyz
-        owner: postgres
-        group: postgres
-        recurse: true
-
 - name: Upgrade storage
   hosts: storage
   gather_facts: true
@@ -76,7 +65,7 @@
         tasks_from: ssl_cert.yml
 
 - name: Upgrade containers
-  hosts: web-container
+  hosts: v-containers
   become: true
   gather_facts: true
   gather_subset: ['!min', 'distribution', 'virtualization_type']
@@ -84,8 +73,15 @@
     - app/containers
 
 - name: Upgrade php apps
-  hosts: web-php
+  hosts: c-lapp
   become: true
   roles:
     - app/nextcloud
     - app/tinynet_launcher
+  tasks:
+    - name: Fix cert permission
+      ansible.builtin.file:
+        path: /etc/ssl/arb.chrisx.xyz
+        owner: postgres
+        group: postgres
+        recurse: true

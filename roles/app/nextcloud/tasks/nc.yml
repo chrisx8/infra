@@ -23,7 +23,7 @@
         prompt: |
           ====== Finish Nextcloud installation in a web browser ======
           Database: PostgreSQL
-          DB Host: {{ hostvars['db-postgres']['ansible_host'] }}
+          DB Host: {{ hostvars['c-lapp']['ansible_host'] }}
           DB Name: nextcloud
           DB Username: nextcloud
           DB Password: {{ postgres_nextcloud_password }}

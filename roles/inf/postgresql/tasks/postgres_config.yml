@@ -28,7 +28,3 @@
     path: /var/lib/pgsql/14/data/pg_hba.conf
     line: "hostssl all             all             10.69.0.0/24            scram-sha-256"
     regex: "10\\.69\\.0\\.0\/24"
-- name: Restart postgresql
-  ansible.builtin.systemd:
-    name: postgresql-14.service
-    state: restarted

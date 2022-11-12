@@ -23,14 +23,6 @@
     - inf/apache_php
     - app/pihole
 
-- name: Set up PostgreSQL server
-  hosts: db-postgres
-  become: true
-  gather_facts: true
-  gather_subset: ['!min', 'distribution']
-  roles:
-    - inf/postgresql
-
 - name: Set up storage server
   hosts: storage
   become: true
@@ -41,17 +33,8 @@
     - app/file_shares
     - app/jellyfin
 
-- name: Set up containers
-  hosts: web-container
-  become: true
-  gather_facts: true
-  gather_subset: ['!min', 'distribution', 'virtualization_type']
-  roles:
-    - app/containers
-    - inf/tailscale
-
-- name: Set up Apache + PHP
-  hosts: web-php
+- name: Set up Apache + PHP + Postgres
+  hosts: c-lapp
   become: true
   gather_facts: true
   gather_subset: ['min']
@@ -59,5 +42,15 @@
     php_composer: true
   roles:
     - inf/apache_php
+    - inf/postgresql
     - app/nextcloud
     - app/tinynet_launcher
+
+- name: Set up containers
+  hosts: v-containers
+  become: true
+  gather_facts: true
+  gather_subset: ['!min', 'distribution', 'virtualization_type']
+  roles:
+    - app/containers
+    - inf/tailscale

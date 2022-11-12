@@ -4,6 +4,11 @@
       - ansible_facts.distribution != 'Fedora'
       - ansible_facts.os_family == 'RedHat'
 
+- name: Install packages
+  ansible.builtin.import_tasks: package_install.yml
+- name: Configure PostgreSQL server
+  ansible.builtin.import_tasks: postgres_config.yml
+
 - name: Install arb cert
   ansible.builtin.import_role:
     name: inf/ssl
@@ -15,7 +20,8 @@
     group: postgres
     recurse: true
 
-- name: Install packages
-  ansible.builtin.import_tasks: package_install.yml
-- name: Configure PostgreSQL server
-  ansible.builtin.import_tasks: postgres_config.yml
+- name: Enable and restart postgresql
+  ansible.builtin.systemd:
+    name: postgresql-14.service
+    enabled: true
+    state: restarted
