@@ -1,3 +1,6 @@
+- name: Load secret vars
+  ansible.builtin.include_vars: secrets.yml
+
 - name: Create /var/www/html/launcher
   ansible.builtin.file:
     path: /var/www/html/launcher

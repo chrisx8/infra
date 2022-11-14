@@ -37,7 +37,7 @@ setup-guests:
 setup-proxmox:
 	ansible-playbook setup.yml --limit proxmox
 
-setup-container:
+setup-containers:
 	ansible-playbook setup.yml --limit v-containers
 
 setup-lapp:
@@ -58,7 +58,7 @@ upgrade-guests:
 upgrade-proxmox:
 	ansible-playbook upgrade.yml --limit proxmox
 
-upgrade-container:
+upgrade-containers:
 	ansible-playbook upgrade.yml --limit v-containers
 
 upgrade-lapp:

@@ -1,6 +1,3 @@
-- name: Load secret vars
-  ansible.builtin.include_vars: secrets.yml
-
 - name: Install PHP modules
   ansible.builtin.dnf:
     name: [php-pdo, php-xml, php-json, php-intl]

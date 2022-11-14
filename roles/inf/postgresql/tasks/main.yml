@@ -4,10 +4,15 @@
       - ansible_facts.distribution != 'Fedora'
       - ansible_facts.os_family == 'RedHat'
 
+- name: Load secrets
+  ansible.builtin.include_vars: secrets.yml
+
 - name: Install packages
   ansible.builtin.import_tasks: package_install.yml
 - name: Configure PostgreSQL server
   ansible.builtin.import_tasks: postgres_config.yml
+- name: Configure cron jobs
+  ansible.builtin.import_tasks: cron.yml
 
 - name: Install arb cert
   ansible.builtin.import_role:
