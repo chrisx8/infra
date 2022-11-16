@@ -1,18 +1,23 @@
-- name: Install php8.0-fpm
+- name: Install php-fpm
   ansible.builtin.dnf:
     name: [php, php-cli, php-fpm]
     state: present
 
-- name: Set php8.0-fpm max POST size
+- name: Set php max POST size
   ansible.builtin.lineinfile:
     path: /etc/php.ini
-    regexp: '^post_max_size'
-    line: 'post_max_size = 21M'
-- name: Set php8.0-fpm max upload size
+    regexp: "^post_max_size"
+    line: "post_max_size = 21M"
+- name: Set php max upload size
   ansible.builtin.lineinfile:
     path: /etc/php.ini
-    regexp: '^upload_max_filesize'
-    line: 'upload_max_filesize = 20M'
+    regexp: "^upload_max_filesize"
+    line: "upload_max_filesize = 20M"
+- name: Set php expose_php
+  ansible.builtin.lineinfile:
+    path: /etc/php.ini
+    regexp: "^expose_php"
+    line: "expose_php = Off"
 
 - name: Enable and restart php-fpm
   ansible.builtin.systemd:

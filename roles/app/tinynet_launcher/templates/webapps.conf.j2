@@ -5,8 +5,13 @@
 	SSLCertificateKeyFile /etc/ssl/chrisx.xyz/privkey.pem
 	Protocols h2 http/1.1
 
-	Header always set Permissions-Policy "interest-cohort=()"
 	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	Header set Cache-Control "no-cache"
+	Header set Referrer-Policy "no-referrer"
+	Header set X-Content-Type-Options "nosniff"
+	Header set X-Frame-Options "DENY"
+	Header set X-Robots-Tag "none"
+	Header set X-XSS-Protection "1; mode=block"
 
 	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
 	OIDCClientID webapps.chrisx.xyz
@@ -26,12 +31,6 @@
 	</Location>
 
 	<Directory "/var/www/html/docs">
-		Header set Cache-Control "no-cache"
-		Header set Referrer-Policy "no-referrer"
-		Header set X-Content-Type-Options "nosniff"
-		Header set X-Frame-Options "DENY"
-		Header set X-Robots-Tag "none"
-		Header set X-XSS-Protection "1; mode=block"
 		AuthType openid-connect
 		Require claim roles:access
 	</Directory>
@@ -47,13 +46,7 @@
 	</Directory>
 
 	<Directory "/var/www/html/launcher">
-		Header set Cache-Control "no-cache"
 		Header set Content-Security-Policy "base-uri 'none'; object-src 'none'; script-src 'none';"
-		Header set Referrer-Policy "no-referrer"
-		Header set X-Content-Type-Options "nosniff"
-		Header set X-Frame-Options "DENY"
-		Header set X-Robots-Tag "none"
-		Header set X-XSS-Protection "1; mode=block"
 		AuthType openid-connect
 		Require claim roles:access
 	</Directory>
