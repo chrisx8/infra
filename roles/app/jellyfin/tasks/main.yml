@@ -66,16 +66,6 @@
 - name: Install SSL cert
   ansible.builtin.import_tasks: ssl_cert.yml
 
-- name: Configure firewall
-  ansible.posix.firewalld:
-    service: jellyfin
-    state: enabled
-    permanent: true
-- name: Reload firewall
-  ansible.builtin.systemd:
-    name: firewalld.service
-    state: reloaded
-
 - name: Enable and start Jellfyin service
   ansible.builtin.systemd:
     name: jellyfin.service

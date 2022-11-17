@@ -44,7 +44,7 @@ setup-lapp:
 	ansible-playbook setup.yml --limit c-lapp
 
 setup-pihole:
-	ansible-playbook setup.yml --limit pihole
+	ansible-playbook setup.yml --limit c-pihole
 
 setup-storage:
 	ansible-playbook setup.yml --limit storage

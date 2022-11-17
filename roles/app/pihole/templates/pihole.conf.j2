@@ -1,5 +1,5 @@
 <VirtualHost *:443>
-	ServerName pihole.arb.chrisx.xyz
+	ServerName c-pihole.arb.chrisx.xyz
 	SSLEngine on
 	SSLCertificateFile /etc/ssl/arb.chrisx.xyz/fullchain.pem
 	SSLCertificateKeyFile /etc/ssl/arb.chrisx.xyz/privkey.pem
@@ -13,11 +13,11 @@
 	Header set X-XSS-Protection "1; mode=block"
 
 	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
-	OIDCClientID pihole.arb.chrisx.xyz
+	OIDCClientID c-pihole.arb.chrisx.xyz
 	OIDCClientSecret {{ pihole_client_secret }}
 	OIDCRemoteUserClaim sub
 	OIDCScope openid
-	OIDCRedirectURI https://pihole.arb.chrisx.xyz/auth/openid-connect
+	OIDCRedirectURI https://c-pihole.arb.chrisx.xyz/auth/openid-connect
 	OIDCCryptoPassphrase {{ oidc_crypto }}
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true

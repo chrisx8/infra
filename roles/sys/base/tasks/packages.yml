@@ -1,7 +1,13 @@
 - name: Remove unneeded packages
   ansible.builtin.dnf:
-    name: [cloud-init, command-not-found, open-iscsi, open-vm-tools, plymouth,
-           postfix, telnet]
+    name:
+      - cloud-init
+      - command-not-found
+      - open-iscsi
+      - open-vm-tools
+      - plymouth
+      - postfix
+      - telnet
     state: absent
 
 - name: Install epel-release repo
@@ -16,7 +22,17 @@
     state: latest
 - name: Install additional packages
   ansible.builtin.dnf:
-    name: [bind-utils, cronie, curl, fail2ban, htop, git, psmisc, vim, tar, unzip, wget]
+    name:
+      - bind-utils
+      - cronie
+      - curl
+      - htop
+      - git
+      - psmisc
+      - vim
+      - tar
+      - unzip
+      - wget
     state: present
 - name: Autoremove unneeded packages
   ansible.builtin.dnf:

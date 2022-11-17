@@ -31,11 +31,11 @@ services:
     apps:
       - name: Pi-hole
         icon: fa-solid fa-asterisk
-        url: https://pihole.arb.chrisx.xyz/admin/
+        url: https://c-pihole.arb.chrisx.xyz/admin/
         newtab: true
-      - name: OpenWrt (RT3200)
+      - name: RT3200 (OpenWrt)
         icon: fa-solid fa-wifi
-        url: https://openwrt-rt3200.arb.chrisx.xyz
+        url: https://n-rt3200.arb.chrisx.xyz
         newtab: true
       - name: Tailscale
         icon: fa-solid fa-globe

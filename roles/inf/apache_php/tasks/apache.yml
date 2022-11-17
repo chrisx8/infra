@@ -38,19 +38,6 @@
     dest: /var/www/html/robots.txt
     mode: 0644
 
-- name: Configure firewall rules
-  ansible.posix.firewalld:
-    service: "{{ item }}"
-    permanent: true
-    state: enabled
-  with_items:
-    - http
-    - https
-- name: Reload firewall
-  ansible.builtin.systemd:
-    name: firewalld.service
-    state: reloaded
-
 - name: Enable and restart Apache httpd
   ansible.builtin.systemd:
     name: httpd

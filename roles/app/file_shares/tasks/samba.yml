@@ -9,16 +9,6 @@
     dest: /etc/samba/smb.conf
     mode: 0644
 
-- name: Configure firewall
-  ansible.posix.firewalld:
-    service: samba
-    permanent: true
-    state: enabled
-- name: Reload firewall
-  ansible.builtin.systemd:
-    name: firewalld.service
-    state: reloaded
-
 - name: Configure SELinux
   ansible.posix.seboolean:
     name: "{{ item }}"

@@ -1,9 +1,3 @@
-- name: Enable and start fail2ban
-  ansible.builtin.systemd:
-    name: fail2ban.service
-    enabled: true
-    state: started
-
 - name: Change sysctl configs on KVM nodes
   ansible.posix.sysctl:
     name: "{{ item.key }}"

@@ -24,13 +24,3 @@
     name: postgresql-14.service
     enabled: true
     state: started
-
-- name: Configure firewall
-  ansible.posix.firewalld:
-    service: postgresql
-    permanent: true
-    state: enabled
-- name: Reload firewall
-  ansible.builtin.systemd:
-    name: firewalld.service
-    state: reloaded
