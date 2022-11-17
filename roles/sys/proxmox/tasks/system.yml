@@ -1,30 +1,45 @@
 - name: Install extra Debian packages
   ansible.builtin.apt:
-    name: [vim, libsasl2-modules, lm-sensors]
+    name:
+      - lm-sensors
+      - vim
     install_recommends: false
     state: present
 
-- name: Configure OpenSSH client
-  ansible.builtin.copy:
-    src: ssh_config
-    dest: /etc/ssh/ssh_config
-    mode: 0644
-- name: Configure OpenSSH server
-  ansible.builtin.copy:
-    src: sshd_config
-    dest: /etc/ssh/sshd_config
-    mode: 0644
-- name: Restart OpenSSH server (sshd)
-  ansible.builtin.systemd:
-    name: sshd
-    state: restarted
-    daemon_reload: true
+- name: Change sysctl configs
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: true
+    reload: true
+  with_dict:
+    kernel.dmesg_restrict: 1
+    kernel.sysrq: 0
 
-- name: Install vimrc
+- name: Configure crontab
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+
+- name: Configure vim
   ansible.builtin.copy:
     src: vimrc
     dest: /etc/vim/vimrc
     mode: 0644
+
+- name: Limit systemd-journald
+  ansible.builtin.lineinfile:
+    dest: "/etc/systemd/journald.conf"
+    regex: "SystemMaxUse="
+    line: "SystemMaxUse=50M"
+
+- name: Set default text editor to vim
+  ansible.builtin.lineinfile:
+    dest: /etc/bash.bashrc
+    regex: "^export EDITOR="
+    line: export EDITOR=vim
 
 - name: Set GRUB timeout
   ansible.builtin.lineinfile:
@@ -39,6 +54,3 @@
 - name: Update GRUB config
   ansible.builtin.command: update-grub2
   changed_when: true
-
-- name: Reboot
-  ansible.builtin.reboot:

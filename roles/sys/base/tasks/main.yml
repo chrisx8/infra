@@ -6,7 +6,9 @@
 
 - name: Install/upgrade packages
   ansible.builtin.import_tasks: packages.yml
+- name: Configure ssh
+  ansible.builtin.import_tasks: ssh.yml
 - name: Configure system
-  ansible.builtin.import_tasks: system_config.yml
+  ansible.builtin.import_tasks: system.yml
 - name: Reboot
   ansible.builtin.reboot:
