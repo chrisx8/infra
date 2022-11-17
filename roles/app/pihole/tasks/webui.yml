@@ -1,6 +1,11 @@
 - name: Install PHP modules
   ansible.builtin.dnf:
-    name: [php-pdo, php-xml, php-json, php-intl]
+    name:
+      - php-intl
+      - php-json
+      - php-pdo
+      - php-xml
+    state: present
 
 - name: Install arb cert
   ansible.builtin.import_role:
