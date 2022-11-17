@@ -3,7 +3,7 @@
     name: samba
     state: present
 
-- name: Install SAMBA config
+- name: Install Samba config
   ansible.builtin.copy:
     src: smb.conf
     dest: /etc/samba/smb.conf
@@ -18,6 +18,14 @@
   ansible.builtin.systemd:
     name: firewalld.service
     state: reloaded
+
+- name: Configure SELinux
+  ansible.posix.seboolean:
+    name: "{{ item }}"
+    state: true
+  loop:
+    - samba_enable_home_dirs
+    - samba_export_all_rw
 
 - name: Enable and restart smb service
   ansible.builtin.systemd:

@@ -5,7 +5,5 @@
 
 - name: Install Samba
   ansible.builtin.import_tasks: samba.yml
-- name: Set up SFTP
-  ansible.builtin.import_tasks: sftp.yml
 - name: Install Cockpit modules
   ansible.builtin.import_tasks: cockpit_modules.yml

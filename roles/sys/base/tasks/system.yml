@@ -4,7 +4,7 @@
     enabled: true
     state: started
 
-- name: Change sysctl configs
+- name: Change sysctl configs on KVM nodes
   ansible.posix.sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"
@@ -14,6 +14,12 @@
   with_dict:
     kernel.dmesg_restrict: 1
     kernel.sysrq: 0
+  when: ansible_facts.virtualization_type == 'kvm'
+
+- name: Set SELinux Enforcing on KVM nodes
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing
   when: ansible_facts.virtualization_type == 'kvm'
 
 - name: Disable NetworkManager DNS management on LXC nodes
