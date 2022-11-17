@@ -2,6 +2,7 @@
   ansible.builtin.apt:
     name:
       - lm-sensors
+      - powertop
       - vim
     install_recommends: false
     state: present
@@ -22,6 +23,12 @@
     name: MAILTO
     env: true
     job: ""
+- name: Run powertop auto-tune on boot
+  ansible.builtin.cron:
+    name: Run powertop auto-tune on boot
+    job: "sleep 60 && /usr/sbin/powertop --auto-tune"
+    special_time: reboot
+    state: present
 
 - name: Configure vim
   ansible.builtin.copy:
