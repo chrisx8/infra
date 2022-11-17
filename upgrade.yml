@@ -28,29 +28,6 @@
         autoremove: true
       when: "ansible_facts.os_family == 'RedHat'"
 
-- name: Deploy SSL certs
-  hosts: all
-  become: true
-  tasks:
-    - name: Check if chrisx.xyz cert exists
-      ansible.builtin.stat:
-        path: /etc/ssl/chrisx.xyz
-      register: ssl_check
-    - name: Check if arb.chrisx.xyz cert exists
-      ansible.builtin.stat:
-        path: /etc/ssl/arb.chrisx.xyz
-      register: arb_ssl_check
-    - name: Install chrisx.xyz cert
-      ansible.builtin.import_role:
-        name: inf/ssl
-        tasks_from: chrisx.yml
-      when: ssl_check.stat.exists
-    - name: Install arb.chrisx.xyz cert
-      ansible.builtin.import_role:
-        name: inf/ssl
-        tasks_from: arb.yml
-      when: arb_ssl_check.stat.exists
-
 - name: Upgrade storage
   hosts: storage
   gather_facts: true
@@ -79,6 +56,10 @@
     - app/nextcloud
     - app/tinynet_launcher
   tasks:
+    - name: Install arb cert
+      ansible.builtin.import_role:
+        name: inf/ssl
+        tasks_from: arb.yml
     - name: Fix cert permission
       ansible.builtin.file:
         path: /etc/ssl/arb.chrisx.xyz
