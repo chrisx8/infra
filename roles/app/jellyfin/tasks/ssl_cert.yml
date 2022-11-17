@@ -29,12 +29,11 @@
 - name: Install pfx for Jellyfin
   ansible.builtin.copy:
     src: "{{ _temp_dir.path }}/arb.pfx"
-    dest: /etc/jellyfin/arb.pfx
+    dest: "{{ jellyfin_config_dir }}/arb.pfx"
     mode: 0400
-    owner: jellyfin
-    group: jellyfin
-  notify:
-    - Restart Jellyfin
+    owner: nobody
+    group: nobody
+
 - name: Delete temp dir
   delegate_to: localhost
   become: false

@@ -1,12 +1,11 @@
 # TinyNET Ansible Role: `app/jellyfin`
 
-This role installs a Jellyfin server.
+This role installs a Jellyfin server with Podman.
 
 Notes:
 
-- SELinux will be **Disabled**
-- The latest Jellyfin will be installed with the official RPM
+- The latest Jellyfin container will be installed with Podman
 
 Required facts: `distribution`
 
-Supported OS: RHEL-based Linux system, version 9
+Supported OS: RHEL-based Linux system with Podman

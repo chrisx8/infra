@@ -1,73 +1,27 @@
 - name: Verify system
   ansible.builtin.assert:
     that:
-      - ansible_facts.distribution != 'Fedora'
-      - ansible_facts.distribution_major_version == '9'
       - ansible_facts.os_family == 'RedHat'
 
-- name: Disable SELinux
-  ansible.builtin.lineinfile:
-    path: /etc/sysconfig/selinux
-    line: "SELINUX=disabled"
-    regexp: "^SELINUX="
-  notify:
-    - Reboot
-
-- name: Get latest Jellyfin version number from GitHub
-  ansible.builtin.uri:
-    url: https://api.github.com/repos/jellyfin/jellyfin/releases/latest
-    method: GET
-  check_mode: false
-  register: jellyfin_release
-
-- name: Enable CRB repo
-  ansible.builtin.command: dnf config-manager --set-enabled crb
-  changed_when: true
-
-- name: Install rpmfusion-free repo
+- name: Install Podman
   ansible.builtin.dnf:
-    # yamllint disable-line rule:line-length
-    name: https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-{{ ansible_facts.distribution_major_version }}.noarch.rpm
+    name: podman
     state: present
 
-- name: Install ffmpeg
-  ansible.builtin.dnf:
-    name: ffmpeg
-    state: present
-
-- name: Install Jellfyin
-  ansible.builtin.dnf:
-    name:
-      - https://repo.jellyfin.org/releases/server/centos/stable/server/jellyfin-{{ item }}-1.el7.x86_64.rpm
-      - https://repo.jellyfin.org/releases/server/centos/stable/server/jellyfin-server-{{ item }}-1.el7.x86_64.rpm
-      - https://repo.jellyfin.org/releases/server/centos/stable/web/jellyfin-web-{{ item }}-1.el7.noarch.rpm
-    disable_gpg_check: true
-  with_items:
-    - "{{ jellyfin_release['json']['name'] }}"
-
-- name: Create dir for jellyfin-plugin-keycloak-auth
-  ansible.builtin.file:
-    path: /var/lib/jellyfin/plugins/keycloak-auth
-    state: directory
-    mode: 0755
-    owner: jellyfin
-    group: jellyfin
-- name: Install keycloak authentication plugin
-  ansible.builtin.get_url:
-    url: "{{ item }}"
-    dest: /var/lib/jellyfin/plugins/keycloak-auth
-    mode: 0644
-    owner: jellyfin
-    group: jellyfin
-  loop:
-    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/latest/download/Jellyfin.Plugin.Keycloak.dll
-    - https://github.com/Ugrend/jellyfin-plugin-keycloak-auth/releases/latest/download/JWT.dll
-
+- name: Create container
+  ansible.builtin.import_tasks: container.yml
+- name: Install plugins
+  ansible.builtin.import_tasks: plugins.yml
 - name: Install SSL cert
   ansible.builtin.import_tasks: ssl_cert.yml
 
-- name: Enable and start Jellfyin service
+- name: Enable and restart Jellyfin service
   ansible.builtin.systemd:
-    name: jellyfin.service
+    name: "{{ jellyfin_container.systemd_prefix }}-{{ jellyfin_container.name }}"
     enabled: true
-    state: started
+    daemon_reload: true
+    state: restarted
+
+- name: Clean up container storage
+  ansible.builtin.command: "podman system prune -af"
+  changed_when: false
