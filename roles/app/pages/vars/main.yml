@@ -1,7 +1,7 @@
 header_links:
   - name: Account Console
     icon: fa-solid fa-user
-    url: https://sso.chrisx.xyz/realms/chrisx/account/?referrer=webapps.chrisx.xyz
+    url: https://sso.chrisx.xyz/realms/chrisx/account/?referrer=pages.chrisx.xyz
     newtab: true
   - name: Log out
     icon: fa-solid fa-right-from-bracket

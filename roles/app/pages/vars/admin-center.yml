@@ -14,10 +14,6 @@ services:
   - name: Applications
     icon: fa-solid fa-rocket
     apps:
-      - name: Admin Docs
-        icon: fa-solid fa-file-lines
-        url: /docs/_admin/
-        newtab: true
       - name: Keycloak Admin Console
         icon: fa-solid fa-user-gear
         url: https://sso.chrisx.xyz/admin/chrisx/console/

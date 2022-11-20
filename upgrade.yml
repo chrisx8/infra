@@ -54,7 +54,7 @@
   become: true
   roles:
     - app/nextcloud
-    - app/tinynet_launcher
+    - app/pages
   tasks:
     - name: Install arb cert
       ansible.builtin.import_role:

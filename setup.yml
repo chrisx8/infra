@@ -44,7 +44,7 @@
     - inf/apache_php
     - inf/postgresql
     - app/nextcloud
-    - app/tinynet_launcher
+    - app/pages
 
 - name: Set up containers
   hosts: v-containers

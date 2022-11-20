@@ -37,17 +37,6 @@ services:
         icon: fa-solid fa-film
         url: https://storage.arb.chrisx.xyz:8920
         newtab: true
-  - name: Resources
-    icon: fa-solid fa-info
-    apps:
-      - name: Public Docs
-        icon: fa-solid fa-file-lines
-        url: /docs/
-        newtab: true
-      - name: Internal User Docs
-        icon: fa-solid fa-file-lines
-        url: /docs/_internal/
-        newtab: true
 
 # [OPTIONAL] button in the footer
 # Required: name, icon, url
