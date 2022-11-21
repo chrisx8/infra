@@ -13,21 +13,21 @@
     name: httpd
     state: reloaded
 
-- name: Set php memory_limit
+- name: Set PHP memory_limit
   ansible.builtin.lineinfile:
     path: /etc/php.ini
-    regexp: '^memory_limit'
-    line: 'memory_limit = 512M'
-- name: Set php post_max_size
+    regexp: "^memory_limit"
+    line: "memory_limit = 512M"
+- name: Set PHP post_max_size
   ansible.builtin.lineinfile:
     path: /etc/php.ini
-    regexp: '^post_max_size'
-    line: 'post_max_size = 5G'
-- name: Set php upload_max_filesize
+    regexp: "^post_max_size"
+    line: "post_max_size = 5G"
+- name: Set PHP upload_max_filesize
   ansible.builtin.lineinfile:
     path: /etc/php.ini
-    regexp: '^upload_max_filesize'
-    line: 'upload_max_filesize = 5G'
+    regexp: "^upload_max_filesize"
+    line: "upload_max_filesize = 5G"
 - name: Restart php-fpm
   ansible.builtin.systemd:
     name: php-fpm

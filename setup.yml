@@ -2,7 +2,7 @@
   hosts: proxmox
   become: true
   gather_facts: true
-  gather_subset: ['min', 'virtualization_role', 'virtualization_type']
+  gather_subset: ["min", "virtualization_role", "virtualization_type"]
   roles:
     - sys/proxmox
 
@@ -10,7 +10,7 @@
   hosts: guests
   become: true
   gather_facts: true
-  gather_subset: ['!min', 'distribution', 'virtualization_type']
+  gather_subset: ["!min", "distribution", "virtualization_type"]
   roles:
     - sys/base
 
@@ -18,7 +18,7 @@
   hosts: c-pihole
   become: true
   gather_facts: true
-  gather_subset: ['!min', 'distribution']
+  gather_subset: ["!min", "distribution"]
   roles:
     - inf/apache_php
     - app/pihole
@@ -27,7 +27,7 @@
   hosts: storage
   become: true
   gather_facts: true
-  gather_subset: ['!min', 'distribution']
+  gather_subset: ["!min", "distribution"]
   roles:
     - inf/cockpit
     - app/file_shares
@@ -37,7 +37,7 @@
   hosts: c-lapp
   become: true
   gather_facts: true
-  gather_subset: ['min']
+  gather_subset: ["min"]
   vars:
     php_composer: true
   roles:
@@ -50,7 +50,7 @@
   hosts: v-containers
   become: true
   gather_facts: true
-  gather_subset: ['!min', 'distribution', 'virtualization_type']
+  gather_subset: ["!min", "distribution", "virtualization_type"]
   roles:
     - app/containers
     - inf/tailscale

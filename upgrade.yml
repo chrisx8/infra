@@ -14,7 +14,7 @@
 - name: Upgrade guests
   hosts: guests
   gather_facts: true
-  gather_subset: ['!min', 'distribution']
+  gather_subset: ["!min", "distribution"]
   become: true
   tasks:
     - name: Upgrade packages (dnf)
@@ -31,7 +31,7 @@
 - name: Upgrade storage
   hosts: storage
   gather_facts: true
-  gather_subset: ['!min', 'distribution']
+  gather_subset: ["!min", "distribution"]
   become: true
   roles:
     - app/jellyfin
@@ -45,7 +45,7 @@
   hosts: v-containers
   become: true
   gather_facts: true
-  gather_subset: ['!min', 'distribution', 'virtualization_type']
+  gather_subset: ["!min", "distribution", "virtualization_type"]
   roles:
     - app/containers
 

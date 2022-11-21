@@ -32,7 +32,7 @@
     - name: Inject extra Nextcloud config options
       ansible.builtin.lineinfile:
         path: /var/www/nextcloud/config/config.php
-        regexp: 'installed'
+        regexp: "installed"
         line: |
           'installed' => 'true',
           'overwrite.cli.url' => 'https://nextcloud.chrisx.xyz',
@@ -44,7 +44,7 @@
 - name: Update database credential
   ansible.builtin.lineinfile:
     path: /var/www/nextcloud/config/config.php
-    regexp: 'dbpassword'
+    regexp: "dbpassword"
     line: "'dbpassword' => '{{ postgres_nextcloud_password }}',"
 
 - name: Update htaccess
