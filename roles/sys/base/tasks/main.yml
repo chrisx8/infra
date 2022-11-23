@@ -2,13 +2,20 @@
   ansible.builtin.assert:
     that:
       - ansible_facts.os_family == 'RedHat'
-      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.distribution_major_version == '9'
 
 - name: Install/upgrade packages
   ansible.builtin.import_tasks: packages.yml
 - name: Configure ssh
   ansible.builtin.import_tasks: ssh.yml
 - name: Configure system
-  ansible.builtin.import_tasks: system.yml
+  ansible.builtin.import_tasks: system_all.yml
+- name: Configure KVM systems
+  ansible.builtin.import_tasks: system_kvm.yml
+  when: ansible_facts.virtualization_type == 'kvm'
+- name: Configure LXC systems
+  ansible.builtin.import_tasks: system_lxc.yml
+  when: ansible_facts.virtualization_type == 'lxc'
+
 - name: Reboot
   ansible.builtin.reboot:

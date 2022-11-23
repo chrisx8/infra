@@ -5,4 +5,4 @@ It should be run on all standardized RHEL-like systems, including LXC containers
 
 Required facts: `distribution`, `virtualization_type`
 
-Supported OS: RHEL-like systems, version 8 or newer.
+Supported OS: RHEL-like systems, version 9.
