@@ -1,6 +1,6 @@
 # Ansible Role: `inf/apache_php`
 
-This role installs Apache Web Server 2.4.x, PHP 8.0, and optionally, the latest version of Composer.
+This role installs Apache Web Server 2.4.x, PHP 8.1, and optionally, Composer.
 
 Role vars:
 

@@ -4,9 +4,20 @@
     state: present
 - name: Install PHP extensions
   ansible.builtin.dnf:
-    name: [php-apcu, php-bcmath, php-curl, php-gd, php-gmp, php-intl,
-           php-mbstring, php-pecl-imagick, php-pgsql, php-process, php-sodium,
-           php-xml, php-zip]
+    name:
+      - php-apcu
+      - php-bcmath
+      - php-curl
+      - php-gd
+      - php-gmp
+      - php-intl
+      - php-mbstring
+      - php-pecl-imagick
+      - php-pgsql
+      - php-process
+      - php-sodium
+      - php-xml
+      - php-zip
     state: present
 - name: Install bzip2
   ansible.builtin.dnf:

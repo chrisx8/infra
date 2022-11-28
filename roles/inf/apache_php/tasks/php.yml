@@ -1,19 +1,39 @@
-- name: Install php-fpm
+- name: Enable CRB repo
+  ansible.builtin.command:
+    cmd: "dnf config-manager --set-enabled crb"
+  changed_when: true
+
+- name: Install Remi repo
   ansible.builtin.dnf:
-    name: [php, php-cli, php-fpm]
+    name: https://rpms.remirepo.net/enterprise/remi-release-9.rpm
     state: present
 
-- name: Set php max POST size
+- name: Install PHP 8.1
+  ansible.builtin.dnf:
+    name:
+      - "@php:remi-8.1"
+      - php-cli
+      - php-fpm
+      - php-opcache
+    state: present
+
+- name: Install Composer
+  ansible.builtin.dnf:
+    name: "@composer:2"
+    state: present
+  when: php_composer is defined and php_composer
+
+- name: Set PHP max POST size
   ansible.builtin.lineinfile:
     path: /etc/php.ini
     regexp: "^post_max_size"
     line: "post_max_size = 21M"
-- name: Set php max upload size
+- name: Set PHP max upload size
   ansible.builtin.lineinfile:
     path: /etc/php.ini
     regexp: "^upload_max_filesize"
     line: "upload_max_filesize = 20M"
-- name: Set php expose_php
+- name: Set PHP expose_php
   ansible.builtin.lineinfile:
     path: /etc/php.ini
     regexp: "^expose_php"
