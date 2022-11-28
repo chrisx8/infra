@@ -31,7 +31,6 @@
   ansible.builtin.blockinfile:
     path: /etc/pihole/pihole-FTL.conf
     block: |
-      BLOCK_ESNI=false
       BLOCK_ICLOUD_PR=false
       CHECK_LOAD=false
       MOZILLA_CANARY=true
