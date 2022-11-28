@@ -19,7 +19,8 @@ function setup() {
 	echo
 	echo "Creating certbot environment..."
 	python3 -m venv "$WORKDIR/venv"
-	source "$WORKDIR/venv/bin/activate"
+    # shellcheck source=/dev/null
+    source "$WORKDIR/venv/bin/activate"
 	echo
 	echo "Installing certbot..."
 	pip install -U pip wheel
@@ -30,6 +31,7 @@ function setup() {
 function issue() {
     DOMAINS=""
 	echo "Loading config from $WORKDIR/env"
+    # shellcheck source=/dev/null
 	source "$WORKDIR/env"
 	echo "Issuing certs with certbot..."
 	for DOMAIN in $DOMAINS; do
