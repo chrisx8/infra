@@ -28,6 +28,7 @@ function setup() {
 }
 
 function issue() {
+    DOMAINS=""
 	echo "Loading config from $WORKDIR/env"
 	source "$WORKDIR/env"
 	echo "Issuing certs with certbot..."
