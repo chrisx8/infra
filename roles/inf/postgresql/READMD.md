@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `inf/postgresql`
+# Ansible Role: `inf/postgresql`
 
 This role installs PostgreSQL 14.
 

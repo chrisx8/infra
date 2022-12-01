@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `sys/proxmox`
+# Ansible Role: `sys/proxmox`
 
 This role provides base configuration. Similar to `sys/base`, it should be run on all Proxmox systems.
 

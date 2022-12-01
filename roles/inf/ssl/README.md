@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `inf/ssl`
+# Ansible Role: `inf/ssl`
 
 This role installs SSL certificates.
 

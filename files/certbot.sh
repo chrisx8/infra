@@ -14,7 +14,7 @@ OP="$2"
 
 function setup() {
 	echo "#####################################################################"
-	echo "    tinynet-infra certbot utilities"
+	echo "    chrisx8/infra certbot utilities"
 	echo "#####################################################################"
 	echo
 	echo "Creating certbot environment..."

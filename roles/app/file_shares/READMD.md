@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `app/file_shares`
+# Ansible Role: `app/file_shares`
 
 This role installs and configures Samba and OpenSSh for file sharing.
 

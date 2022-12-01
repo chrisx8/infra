@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `inf/cockpit`
+# Ansible Role: `inf/cockpit`
 
 This role installs Cockpit and sets up TLS.
 

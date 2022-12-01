@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `app/nextcloud`
+# Ansible Role: `app/nextcloud`
 
 This role installs the latest version of Nextcloud to `/var/www/nextcloud`.
 

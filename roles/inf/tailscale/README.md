@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `inf/tailscale`
+# Ansible Role: `inf/tailscale`
 
 This role installs Tailscale.
 

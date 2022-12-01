@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `app/pages`
+# Ansible Role: `app/pages`
 
 This role installs [LauncherTW](https://github.com/chrisx8/LauncherTW), a homelab launcher powered by TailwindCSS and Ansible.
 

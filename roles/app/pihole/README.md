@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `app/pihole`
+# Ansible Role: `app/pihole`
 
 This role installs Pi-hole.
 

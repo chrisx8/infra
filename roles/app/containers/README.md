@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `app/containers`
+# Ansible Role: `app/containers`
 
 This role installs Podman and containerized apps, including:
 

@@ -1,4 +1,4 @@
-# TinyNET Ansible Role: `app/jellyfin`
+# Ansible Role: `app/jellyfin`
 
 This role installs a Jellyfin server with Podman.
 
