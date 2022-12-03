@@ -1,26 +1,26 @@
-RemoteIPHeader X-Forwarded-For
-RemoteIPTrustedProxy 10.69.0.11
-
+ServerName {{ inventory_hostname }}
 ServerSignature Off
 ServerTokens Prod
 
+RemoteIPHeader X-Forwarded-For
+RemoteIPTrustedProxy 10.69.0.11
+
 SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1 -TLSv1.2
-SSLHonorCipherOrder off
-SSLSessionTickets off
+SSLHonorCipherOrder Off
+SSLSessionTickets Off
 SSLUseStapling On
 SSLStaplingCache "shmcb:logs/ssl_stapling(32768)"
 
 <VirtualHost *:80>
-	ServerName .
 	RewriteEngine On
 	RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [R=301,L]
 </VirtualHost>
 
 <VirtualHost *:443>
-	ServerName .
-	SSLEngine on
+	SSLEngine On
 	SSLCertificateFile /etc/ssl/self/cert.pem
 	SSLCertificateKeyFile /etc/ssl/self/key.pem
+	SSLUseStapling Off
 	Protocols h2 http/1.1
 
 	RedirectMatch 404 ^/

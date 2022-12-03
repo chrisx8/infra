@@ -32,8 +32,8 @@
     state: absent
 
 - name: Copy default config
-  ansible.builtin.copy:
-    src: 1_default.conf
+  ansible.builtin.template:
+    src: 1_default.conf.j2
     dest: /etc/httpd/conf.d/1_default.conf
     mode: 0644
 - name: Copy robots.txt
