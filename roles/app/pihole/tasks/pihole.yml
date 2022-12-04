@@ -40,8 +40,8 @@
 
 - name: Copy dnsmasq config
   ansible.builtin.copy:
-    src: 00-arb.conf
-    dest: /etc/dnsmasq.d/00-arb.conf
+    src: 99-custom.conf
+    dest: /etc/dnsmasq.d/99-custom.conf
     mode: 0644
 
 - name: Configure crontab - daily Gravity update
