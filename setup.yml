@@ -40,6 +40,7 @@
   gather_subset: ["min"]
   vars:
     php_composer: true
+    php_use_remi: true
   roles:
     - inf/apache_php
     - inf/postgresql

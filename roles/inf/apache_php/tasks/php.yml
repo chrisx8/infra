@@ -1,17 +1,28 @@
-- name: Enable CRB repo
-  ansible.builtin.command:
-    cmd: "dnf config-manager --set-enabled crb"
-  changed_when: true
-
-- name: Install Remi repo
+- name: Install PHP 8.1 from AppStream
   ansible.builtin.dnf:
-    name: https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+    name: "@php:8.1"
     state: present
+  when: php_use_remi is undefined or not php_use_remi
 
-- name: Install PHP 8.1
+- name: Install PHP 8.1 from Remi Modular repo
+  when: php_use_remi is defined and php_use_remi
+  block:
+    - name: Enable CRB repo
+      ansible.builtin.command:
+        cmd: "dnf config-manager --set-enabled crb"
+      changed_when: true
+    - name: Install Remi repo
+      ansible.builtin.dnf:
+        name: https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+        state: present
+    - name: Install PHP 8.1 from Remi
+      ansible.builtin.dnf:
+        name: "@php:remi-8.1"
+        state: present
+
+- name: Install PHP components
   ansible.builtin.dnf:
     name:
-      - "@php:remi-8.1"
       - php-cli
       - php-fpm
       - php-opcache
@@ -19,7 +30,7 @@
 
 - name: Install Composer
   ansible.builtin.dnf:
-    name: "@composer:2"
+    name: composer
     state: present
   when: php_composer is defined and php_composer
 
