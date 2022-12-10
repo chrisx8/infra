@@ -15,7 +15,7 @@
     - sys/base
 
 - name: Set up Pi-hole instance
-  hosts: c-pihole
+  hosts: pihole
   become: true
   gather_facts: true
   gather_subset: ["!min", "distribution"]
