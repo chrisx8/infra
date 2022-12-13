@@ -53,7 +53,6 @@
   hosts: c-lapp
   become: true
   roles:
-    - app/nextcloud
     - app/pages
   tasks:
     - name: Install arb cert

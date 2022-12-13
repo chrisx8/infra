@@ -14,10 +14,6 @@ services:
   - name: Core
     icon: fa-solid fa-cubes
     apps:
-      - name: Nextcloud
-        icon: fa-solid fa-cloud
-        url: https://nextcloud.chrisx.xyz
-        newtab: true
       - name: Gitea
         icon: fa-solid fa-code-branch
         url: https://gitea.chrisx.xyz

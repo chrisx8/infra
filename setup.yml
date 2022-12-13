@@ -44,7 +44,6 @@
   roles:
     - inf/apache_php
     - inf/postgresql
-    - app/nextcloud
     - app/pages
 
 - name: Set up containers

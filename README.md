@@ -98,7 +98,6 @@ make envupdate
 - [Jellyfin](https://jellyfin.org/)
   - [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
 - [LauncherTW](https://github.com/chrisx8/LauncherTW) (another one of my projects)
-- [Nextcloud](https://nextcloud.com/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 
 ## Resources
