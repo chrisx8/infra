@@ -1,9 +1,0 @@
-- name: Install file syncing tools
-  ansible.builtin.dnf:
-    name: [rclone, rsync, tree]
-    state: present
-
-- name: Install Samba
-  ansible.builtin.import_tasks: samba.yml
-- name: Install Cockpit modules
-  ansible.builtin.import_tasks: cockpit_modules.yml

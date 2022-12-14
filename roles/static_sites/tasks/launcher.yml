@@ -1,0 +1,31 @@
+- name: Create /var/www/html/launcher
+  ansible.builtin.file:
+    path: /var/www/html/launcher
+    state: directory
+    mode: 0755
+
+- name: Install Launcher
+  block:
+    - name: Load Launcher vars
+      ansible.builtin.include_vars:
+        file: launcher.yml
+    - name: Deploy
+      ansible.builtin.import_role:
+        name: launcher_tw
+      become: false
+      vars:
+        launchertw_operation: deploy
+        launchertw_deploy_target_dir: /var/www/html/launcher
+
+- name: Install Admin Center
+  block:
+    - name: Load Admin Center vars
+      ansible.builtin.include_vars:
+        file: admin-center.yml
+    - name: Deploy
+      ansible.builtin.import_role:
+        name: launcher_tw
+      become: false
+      vars:
+        launchertw_operation: deploy
+        launchertw_deploy_target_dir: /var/www/html/launcher/admin

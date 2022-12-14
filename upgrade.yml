@@ -4,11 +4,11 @@
   tasks:
     - name: Upgrade
       ansible.builtin.import_role:
-        name: sys/proxmox
+        name: system_pve
         tasks_from: upgrade.yml
     - name: Install SSL cert for Proxmox
       ansible.builtin.import_role:
-        name: sys/proxmox
+        name: system_pve
         tasks_from: ssl_cert.yml
 
 - name: Upgrade guests
@@ -38,7 +38,7 @@
   tasks:
     - name: Install SSL cert for Cockpit
       ansible.builtin.import_role:
-        name: inf/cockpit
+        name: cockpit
         tasks_from: ssl_cert.yml
 
 - name: Upgrade containers
@@ -53,11 +53,11 @@
   hosts: c-lapp
   become: true
   roles:
-    - app/pages
+    - static_sites
   tasks:
     - name: Install arb cert
       ansible.builtin.import_role:
-        name: inf/ssl
+        name: sslcert
         tasks_from: arb.yml
     - name: Fix cert permission
       ansible.builtin.file:

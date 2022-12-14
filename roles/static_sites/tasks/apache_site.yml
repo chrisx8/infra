@@ -1,0 +1,18 @@
+- name: Generate new OIDC crypto password
+  ansible.builtin.set_fact:
+    oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
+- name: Configure Apache site
+  ansible.builtin.template:
+    src: pages.conf.j2
+    dest: /etc/httpd/conf.d/pages.conf
+    mode: 0644
+
+- name: Install chrisx cert
+  ansible.builtin.import_role:
+    name: sslcert
+    tasks_from: chrisx.yml
+
+- name: Reload Apache
+  ansible.builtin.systemd:
+    name: httpd
+    state: reloaded

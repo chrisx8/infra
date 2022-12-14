@@ -1,0 +1,12 @@
+- name: Install Cockpit storage modules
+  ansible.builtin.dnf:
+    name:
+      - cockpit-storaged
+      - cockpit-file-sharing
+    state: present
+
+- name: Enable and restart Cockpit socket
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    enabled: true
+    state: restarted

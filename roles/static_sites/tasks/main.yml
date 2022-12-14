@@ -1,0 +1,13 @@
+- name: Load secret vars
+  ansible.builtin.include_vars: secrets.yml
+
+- name: Configure Apache site
+  ansible.builtin.import_tasks: apache_site.yml
+- name: Install Launcher
+  ansible.builtin.import_tasks: launcher.yml
+
+- name: Copy index html
+  ansible.builtin.copy:
+    src: index.html
+    dest: /var/www/html/index.html
+    mode: 0644

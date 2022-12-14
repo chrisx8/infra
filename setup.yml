@@ -4,7 +4,7 @@
   gather_facts: true
   gather_subset: ["min", "virtualization_role", "virtualization_type"]
   roles:
-    - sys/proxmox
+    - system_pve
 
 - name: Set up all guests
   hosts: guests
@@ -12,7 +12,7 @@
   gather_facts: true
   gather_subset: ["!min", "distribution", "virtualization_type"]
   roles:
-    - sys/base
+    - system_el
 
 - name: Set up Pi-hole instance
   hosts: pihole
@@ -22,8 +22,8 @@
   vars:
     php_enable: true
   roles:
-    - inf/apache_php
-    - app/pihole
+    - apache_php
+    - pihole
 
 - name: Set up storage server
   hosts: storage
@@ -31,8 +31,8 @@
   gather_facts: true
   gather_subset: ["!min", "distribution"]
   roles:
-    - inf/cockpit
-    - app/file_shares
+    - cockpit
+    - samba_share
     - app/jellyfin
 
 - name: Set up Apache + PHP + Postgres
@@ -41,9 +41,9 @@
   gather_facts: true
   gather_subset: ["min"]
   roles:
-    - inf/apache_php
-    - inf/postgresql
-    - app/pages
+    - apache_php
+    - postgresql
+    - static_sites
 
 - name: Set up containers
   hosts: v-containers

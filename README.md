@@ -56,10 +56,10 @@ make envupdate
 
 - Runs [Proxmox VE](https://www.proxmox.com/en/proxmox-ve)
 - Intel Core i5-6500T (quad-core)
-- 16GB DDR4 RAM (2 * 8GB)
+- 16GB DDR4 RAM
 - 240GB NVMe SSD + 8TB SATA HDD
-- Intel I219-LM Onboard Gigabit Ethernet
-- Intel Wireless-AC 8260 (dual-band 802.11ac Wi-Fi + Bluetooth 4.2)
+- Intel Gigabit Ethernet
+- Intel Wireless-AC 9260 (802.11ac Wi-Fi + Bluetooth 5.1)
 
 ### Router & Wi-Fi AP: Belkin RT3200
 
@@ -77,10 +77,6 @@ make envupdate
 - [Pi-hole](https://pi-hole.net/)
 - [Tailscale](https://tailscale.com/)
 
-### Storage & Backup
-
-- Per-user file shares, accessible via Samba and SFTP
-
 ### Home Automation
 
 - [Home Assistant](https://www.home-assistant.io)
@@ -92,11 +88,17 @@ make envupdate
 - [Keycloak](https://www.keycloak.org/)
 - [mod_auth_openidc](https://github.com/zmartzone/mod_auth_openidc)
 
+### Storage and Media
+
+- [Cockpit](https://cockpit-project.org/)
+- [File Browser](https://github.com/filebrowser/filebrowser)
+- [Jellyfin](https://jellyfin.org/)
+  - [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
+- Per-user file shares, accessible via Samba and SFTP
+
 ### Web Apps
 
 - [Gitea](https://gitea.io/)
-- [Jellyfin](https://jellyfin.org/)
-  - [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
 - [LauncherTW](https://github.com/chrisx8/LauncherTW) (another one of my projects)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 

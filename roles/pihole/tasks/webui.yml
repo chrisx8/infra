@@ -1,0 +1,42 @@
+- name: Install PHP modules
+  ansible.builtin.dnf:
+    name:
+      - php-intl
+      - php-json
+      - php-pdo
+      - php-xml
+    state: present
+
+- name: Install arb cert
+  ansible.builtin.import_role:
+    name: sslcert
+    tasks_from: arb.yml
+
+- name: Install index html
+  ansible.builtin.copy:
+    src: index.html
+    dest: /var/www/html/index.html
+    mode: 0644
+
+- name: Generate new OIDC crypto password
+  ansible.builtin.set_fact:
+    oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
+- name: Install Apache pihole config
+  ansible.builtin.template:
+    src: pihole.conf.j2
+    dest: /etc/httpd/conf.d/pihole.conf
+    mode: 0640
+- name: Reload Apache
+  ansible.builtin.systemd:
+    name: httpd
+    state: reloaded
+
+- name: Add apache user to pihole group
+  ansible.builtin.user:
+    name: apache
+    groups: pihole
+- name: Fix sudoers for apache
+  ansible.builtin.replace:
+    path: /etc/sudoers.d/pihole
+    regexp: lighttpd
+    replace: apache
