@@ -19,6 +19,8 @@
   become: true
   gather_facts: true
   gather_subset: ["!min", "distribution"]
+  vars:
+    php_enable: true
   roles:
     - inf/apache_php
     - app/pihole
@@ -38,9 +40,6 @@
   become: true
   gather_facts: true
   gather_subset: ["min"]
-  vars:
-    php_composer: true
-    php_use_remi: true
   roles:
     - inf/apache_php
     - inf/postgresql

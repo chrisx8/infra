@@ -32,7 +32,7 @@
   ansible.builtin.dnf:
     name: composer
     state: present
-  when: php_composer is defined and php_composer
+  when: php_use_composer is defined and php_use_composer
 
 - name: Set PHP max POST size
   ansible.builtin.lineinfile:

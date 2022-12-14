@@ -14,3 +14,4 @@
   ansible.builtin.import_tasks: apache.yml
 - name: Set up PHP
   ansible.builtin.import_tasks: php.yml
+  when: php_enable is defined and php_enable
