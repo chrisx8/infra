@@ -24,6 +24,7 @@
   roles:
     - apache_php
     - pihole
+    - static_sites
 
 - name: Set up storage server
   hosts: storage
@@ -44,7 +45,6 @@
   roles:
     - apache_php
     - postgresql
-    - static_sites
 
 - name: Set up containers
   hosts: v-containers

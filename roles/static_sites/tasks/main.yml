@@ -9,5 +9,5 @@
 - name: Copy index html
   ansible.builtin.copy:
     src: index.html
-    dest: /var/www/html/index.html
+    dest: /var/www/pages/index.html
     mode: 0644

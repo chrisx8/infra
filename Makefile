@@ -64,5 +64,8 @@ upgrade-containers:
 upgrade-lapp:
 	ansible-playbook upgrade.yml --limit c-lapp
 
+upgrade-pihole:
+	ansible-playbook upgrade.yml --limit pihole
+
 upgrade-storage:
 	ansible-playbook upgrade.yml --limit storage

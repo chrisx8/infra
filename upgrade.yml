@@ -49,11 +49,15 @@
   roles:
     - containers_web
 
-- name: Upgrade php apps
-  hosts: c-lapp
+- name: Upgrade pihole
+  hosts: pihole
   become: true
   roles:
     - static_sites
+
+- name: Upgrade php apps
+  hosts: c-lapp
+  become: true
   tasks:
     - name: Install arb cert
       ansible.builtin.import_role:

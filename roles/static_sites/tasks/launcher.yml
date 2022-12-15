@@ -1,6 +1,6 @@
-- name: Create /var/www/html/launcher
+- name: Create /var/www/pages/launcher
   ansible.builtin.file:
-    path: /var/www/html/launcher
+    path: /var/www/pages/launcher
     state: directory
     mode: 0755
 
@@ -15,7 +15,7 @@
       become: false
       vars:
         launchertw_operation: deploy
-        launchertw_deploy_target_dir: /var/www/html/launcher
+        launchertw_deploy_target_dir: /var/www/pages/launcher
 
 - name: Install Admin Center
   block:
@@ -28,4 +28,4 @@
       become: false
       vars:
         launchertw_operation: deploy
-        launchertw_deploy_target_dir: /var/www/html/launcher/admin
+        launchertw_deploy_target_dir: /var/www/pages/launcher/admin
