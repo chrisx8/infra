@@ -29,11 +29,12 @@
   hosts: storage
   become: true
   gather_facts: true
-  gather_subset: ["!min", "distribution"]
+  gather_subset: ["!min", "distribution", "virtualization_type"]
   roles:
     - cockpit
     - samba_share
-    - app/jellyfin
+    - apache_php
+    - containers_storage
 
 - name: Set up Apache + PHP + Postgres
   hosts: c-lapp

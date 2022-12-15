@@ -1,0 +1,25 @@
+container_specs:
+  - name: filebrowser
+    image: docker.io/filebrowser/filebrowser:latest
+    ports:
+      - "127.0.0.1:58001:8080"
+    volumes:
+      - "{{ _filebrowser_user.home }}/filebrowser.db:/.filebrowser.db:Z"
+      - "{{ _filebrowser_user.home }}/filebrowser.json:/.filebrowser.json:Z"
+      - "{{ _filebrowser_user.home }}/data:/srv:z"
+    healthcheck: "curl -f http://localhost:8080/health"
+    network: podman
+    user: "{{ _filebrowser_user.uid }}:{{ _filebrowser_user.group }}"
+  - name: jellyfin
+    image: docker.io/jellyfin/jellyfin:latest
+    ports:
+      - "127.0.0.1:58096:8096"
+    volumes:
+      - "jellyfin_config:/config:Z"
+      - "/mnt/media:/media:z"
+    network: podman
+    user: "65534:65534"
+
+container_volumes:
+  - name: jellyfin_config
+    backup: true

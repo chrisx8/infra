@@ -1,6 +1,0 @@
-jellyfin_container:
-  config_volume: jellyfin_config
-  media_path: /mnt/media
-  image: docker.io/jellyfin/jellyfin:latest
-  name: jellyfin
-  systemd_prefix: c

@@ -1,4 +1,4 @@
-# Ansible Role: `app/containers`
+# Ansible Role: `containers`
 
 This role is a generic role for installing Podman and containerized apps.
 

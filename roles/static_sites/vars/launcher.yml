@@ -29,9 +29,13 @@ services:
         icon: fa-solid fa-house
         url: https://hass.arb.chrisx.xyz:8123
         newtab: true
+      - name: File Browser
+        icon: fa-solid fa-floppy-disk
+        url: https://storage.arb.chrisx.xyz
+        newtab: true
       - name: Jellyfin
         icon: fa-solid fa-film
-        url: https://storage.arb.chrisx.xyz:8920
+        url: https://storage.arb.chrisx.xyz:8443
         newtab: true
 
 # [OPTIONAL] button in the footer

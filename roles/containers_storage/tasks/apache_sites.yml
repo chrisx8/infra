@@ -1,0 +1,29 @@
+- name: Copy httpd conf.d
+  ansible.builtin.copy:
+    src: httpd/conf.d
+    dest: /etc/httpd
+    mode: 0644
+
+- name: Generate new OIDC crypto password
+  ansible.builtin.set_fact:
+    oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
+- name: Copy OIDC config
+  ansible.builtin.template:
+    src: auth_openidc.j2
+    dest: /etc/httpd/conf.d/auth_openidc
+    mode: 0640
+
+- name: Copy arb ssl cert
+  ansible.builtin.include_role:
+    name: sslcert
+    tasks_from: arb.yml
+
+- name: Configure SELinux httpd_can_network_connect
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: true
+
+- name: Restart httpd
+  ansible.builtin.systemd:
+    name: httpd
+    state: restarted

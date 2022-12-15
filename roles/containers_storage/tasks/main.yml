@@ -1,0 +1,19 @@
+- name: Load secret vars
+  ansible.builtin.include_vars: secrets.yml
+- name: Set Jellyfin config dir
+  ansible.builtin.set_fact:
+    _jellyfin_config_dir: /var/lib/containers/storage/volumes/jellyfin_config/_data
+
+- name: FileBrowser config
+  ansible.builtin.import_tasks: filebrowser.yml
+- name: Jellyfin config
+  ansible.builtin.import_tasks: jellyfin.yml
+
+- name: Launch containers
+  ansible.builtin.import_role:
+    name: containers
+
+- name: Copy helper scripts
+  ansible.builtin.import_tasks: scripts.yml
+- name: Apache sites config
+  ansible.builtin.import_tasks: apache_sites.yml
