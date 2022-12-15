@@ -1,6 +1,6 @@
-# Ansible Role: `app/containers`
+# Ansible Role: `containers_web`
 
-This role installs Podman and containerized apps, including:
+This role provides role variables for `containers` role and installs containerized web apps, including:
 
 - [cloudflared](https://github.com/cloudflare/cloudflared)
 - [Gitea](https://gitea.io/)

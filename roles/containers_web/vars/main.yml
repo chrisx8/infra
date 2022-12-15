@@ -1,0 +1,102 @@
+container_volumes:
+  - name: gitea_data
+  - name: vaultwarden_data
+    owner: nobody
+    group: nobody
+
+container_specs:
+  - name: gitea
+    image: docker.io/gitea/gitea:1
+    network: ct
+    env:
+      GITEA__database__DB_TYPE: "postgres"
+      GITEA__database__HOST: "c-lapp.arb.chrisx.xyz:5432"
+      GITEA__database__SSL_MODE: "verify-full"
+      GITEA__database__NAME: "gitea"
+      GITEA__database__USER: "gitea"
+      GITEA__database__PASSWD: "{{ postgres_gitea_password }}"
+      GITEA__federation__ENABLED: "false"
+      GITEA__federation__SHARE_USER_STATISTICS: "false"
+      GITEA__oauth2_client__ENABLE_AUTO_REGISTRATION: "true"
+      GITEA__oauth2_client__ACCOUNT_LINKING: "login"
+      GITEA__other__SHOW_FOOTER_BRANDING: "true"
+      GITEA__other__SHOW_FOOTER_TEMPLATE_LOAD_TIME: "false"
+      GITEA__picture__DISABLE_GRAVATAR: "true"
+      GITEA__picture__ENABLE_FEDERATED_AVATAR: "false"
+      GITEA__security__INSTALL_LOCK: "true"
+      GITEA__security__REVERSE_PROXY_TRUSTED_PROXIES: "10.89.0.0/24"
+      GITEA__server__DOMAIN: "gitea.chrisx.xyz"
+      GITEA__server__SSH_DOMAIN: "gitea.chrisx.xyz"
+      GITEA__server__SSH_PORT: "2022"
+      GITEA__server__ROOT_URL: "https://gitea.chrisx.xyz/"
+      GITEA__server__OFFLINE_MODE: "true"
+      GITEA__service__REQUIRE_SIGNIN_VIEW: "true"
+      GITEA__service__ENABLE_BASIC_AUTHENTICATION: "false"
+      GITEA__service__DISABLE_REGISTRATION: "false"
+      GITEA__service__ALLOW_ONLY_EXTERNAL_REGISTRATION: "true"
+      GITEA__service__REGISTER_MANUAL_CONFIRM: "true"
+      GITEA__service__ENABLE_CAPTCHA: "true"
+      GITEA__service__CAPTCHA_TYPE: "image"
+      GITEA__service__REQUIRE_EXTERNAL_REGISTRATION_CAPTCHA: "true"
+      GITEA__service__MINIMUM_KEY_SIZE_CHECK: "true"
+      GITEA__service__DEFAULT_KEEP_EMAIL_PRIVATE: "true"
+      GITEA__service__DEFAULT_USER_IS_RESTRICTED: "true"
+      GITEA__session__COOKIE_SECURE: "true"
+      GITEA__session__SAME_SITE: "lax"
+      GITEA__ssh_0X2E_minimum_key_sizes__DSA: "-1"
+      GITEA__ssh_0X2E_minimum_key_sizes__ECDSA: "-1"
+    ports:
+      - "2022:22"
+    volumes:
+      - gitea_data:/data:Z
+      - "{{ _containers_dir.path }}/gitea/templates:/data/gitea/templates:Z"
+  - name: keycloak
+    image: quay.io/keycloak/keycloak:20.0.2
+    command: start
+    network: ct
+    env:
+      KC_DB: "postgres"
+      # yamllint disable-line rule:line-length
+      KC_DB_URL: "jdbc:postgresql://c-lapp.arb.chrisx.xyz:5432/keycloak?ssl=true&sslmode=require&sslcert=/etc/ssl/certs/ca-bundle.crt"
+      KC_DB_USERNAME: "keycloak"
+      KC_DB_PASSWORD: "{{ postgres_keycloak_password }}"
+      KC_HOSTNAME: "sso.chrisx.xyz"
+      KC_PROXY: "edge"
+    cap_drop:
+      - all
+  - name: vaultwarden
+    image: docker.io/vaultwarden/server:testing
+    network: ct
+    user: nobody
+    env:
+      # yamllint disable-line rule:line-length
+      DATABASE_URL: "postgres://vaultwarden:{{ postgres_vaultwarden_password }}@c-lapp.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt"
+      DOMAIN: "https://vaultwarden.chrisx.xyz"
+      EMAIL_ATTEMPTS_LIMIT: 3
+      IP_HEADER: "X-Forwarded-For"
+      SIGNUPS_ALLOWED: false
+      SIGNUPS_VERIFY: true
+      SIGNUPS_VERIFY_RESEND_LIMIT: 3
+      ROCKET_PORT: 8288
+      WEBSOCKET_ENABLED: true
+    volumes:
+      - vaultwarden_data:/data:Z
+    cap_drop:
+      - all
+  - name: nginx
+    image: docker.io/library/nginx:alpine
+    network: ct
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "{{ _containers_dir.path }}/nginx/conf.d:/etc/nginx/conf.d:Z"
+      - "{{ _containers_dir.path }}/nginx/www:/var/www:Z"
+      - "{{ _containers_dir.path }}/nginx/nginx.conf:/etc/nginx/nginx.conf:Z"
+      - "{{ _nginx_log_dir.path }}:/var/log/nginx:z"
+      - "/etc/ssl:/etc/ssl:z"
+  - name: cloudflared
+    image: docker.io/cloudflare/cloudflared:latest
+    command: tunnel run --token {{ cloudflared_token }}
+    cap_drop:
+      - all

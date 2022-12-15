@@ -1,0 +1,65 @@
+- name: Verify system
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+      - ansible_facts.virtualization_type == 'kvm'
+
+- name: Install Podman
+  ansible.builtin.dnf:
+    name: podman
+    state: present
+
+- name: Create container volumes
+  containers.podman.podman_volume:
+    name: "{{ item.name }}"
+    state: present
+  loop: "{{ container_volumes }}"
+- name: Change container volume ownership
+  ansible.builtin.file:
+    path: "/var/lib/containers/storage/volumes/{{ item.name }}/_data"
+    state: directory
+    recurse: true
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+  loop: "{{ container_volumes }}"
+  when: item.owner is defined and item.group is defined
+
+- name: Build container images
+  containers.podman.podman_image:
+    name: "{{ item.name }}"
+    path: "{{ item.path }}"
+    state: build
+  loop: "{{ container_build_images }}"
+  when: container_build_images is defined
+
+- name: Pull container images
+  containers.podman.podman_image:
+    name: "{{ item.image }}"
+    force: true
+    pull: true
+    state: present
+  loop: "{{ container_specs }}"
+  when: "'localhost/' not in item.image"
+
+- name: Create containers
+  containers.podman.podman_container: "{{ container_defaults | combine(item) }}"
+  loop: "{{ container_specs }}"
+
+- name: Enable and start container systemd services
+  ansible.builtin.systemd:
+    name: "{{ container_defaults.generate_systemd.container_prefix }}-{{ item.name }}"
+    enabled: true
+    daemon_reload: true
+    state: restarted
+  loop: "{{ container_specs }}"
+
+- name: Clean up container storage
+  ansible.builtin.command: "podman system prune -af"
+  changed_when: false
+
+- name: Generate ct_util
+  ansible.builtin.template:
+    src: ct_util.j2
+    dest: /usr/local/bin/ct_util
+    mode: 0755

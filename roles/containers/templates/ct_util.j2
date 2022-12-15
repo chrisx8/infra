@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+
+OP="$1"  # Operation = restart, start, stop
+CONTAINERS="{% for ct in container_specs %} {{ ct.name }} {% endfor %}"
+
+for ct in $CONTAINERS; do
+    case "$OP" in
+        restart)
+            echo "Restarting $ct"
+	        systemctl enable "c-$ct"
+	        systemctl restart "c-$ct"
+            ;;
+        start)
+            echo "Starting $ct"
+            systemctl enable --now "c-$ct"
+            ;;
+        stop)
+            echo "Stopping $ct"
+            systemctl disable --now "c-$ct"
+            ;;
+        *)
+            echo "Usage: $0 (restart|start|stop)"
+            exit 1
+            ;;
+    esac
+done

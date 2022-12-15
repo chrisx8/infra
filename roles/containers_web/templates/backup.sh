@@ -9,5 +9,5 @@ done
 echo "Listing backups..."
 ls -lh /tmp/*.tgz
 
-curl "{{ containers_cron_ping_url }}"
+curl "{{ containers_web_cron_ping_url }}"
 echo

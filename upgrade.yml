@@ -47,7 +47,7 @@
   gather_facts: true
   gather_subset: ["!min", "distribution", "virtualization_type"]
   roles:
-    - app/containers
+    - containers_web
 
 - name: Upgrade php apps
   hosts: c-lapp

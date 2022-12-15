@@ -51,5 +51,5 @@
   gather_facts: true
   gather_subset: ["!min", "distribution", "virtualization_type"]
   roles:
-    - app/containers
+    - containers_web
     - inf/tailscale
