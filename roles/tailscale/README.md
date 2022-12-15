@@ -1,4 +1,4 @@
-# Ansible Role: `inf/tailscale`
+# Ansible Role: `tailscale`
 
 This role installs Tailscale.
 

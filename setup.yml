@@ -53,4 +53,4 @@
   gather_subset: ["!min", "distribution", "virtualization_type"]
   roles:
     - containers_web
-    - inf/tailscale
+    - tailscale
