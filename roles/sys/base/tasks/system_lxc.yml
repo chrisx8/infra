@@ -5,5 +5,5 @@
     mode: 0644
 - name: Restart NetworkManager
   ansible.builtin.systemd:
-    name: NetworkManager.service
+    name: NetworkManager
     state: restarted
