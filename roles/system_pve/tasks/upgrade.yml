@@ -6,6 +6,6 @@
   ansible.builtin.apt:
     autoremove: true
     purge: true
-- name: Run apt clean
-  ansible.builtin.command: "apt-get clean"
-  changed_when: false
+- name: Clean apt packages
+  ansible.builtin.apt:
+    clean: true
