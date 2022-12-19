@@ -20,7 +20,7 @@
     disable_gpg_check: true
     state: present
   with_items:
-    - "{{ _mod_auth_openidc_release.json.tag_name|replace('v', '') }}"
+    - "{{ _mod_auth_openidc_release.json.tag_name | replace('v', '') }}"
 
 - name: Remove welcome site
   ansible.builtin.file:
