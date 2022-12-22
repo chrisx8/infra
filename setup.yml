@@ -44,19 +44,6 @@
   roles:
     - postgresql
 
-- name: Set up storage server
-  hosts: storage
-  become: true
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - "distribution"
-    - "virtualization_type"
-  roles:
-    - samba_share
-    - httpd
-    - containers_storage
-
 - name: Set up containers
   hosts: v-containers
   become: true
@@ -68,3 +55,15 @@
   roles:
     - containers_web
     - tailscale
+
+- name: Set up storage server
+  hosts: storage
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - "distribution"
+    - "virtualization_type"
+  roles:
+    - containers_storage
+    - samba_share

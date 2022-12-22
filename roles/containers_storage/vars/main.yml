@@ -1,24 +1,34 @@
+container_network: ct
+
 container_specs:
   - name: filebrowser
     image: docker.io/filebrowser/filebrowser:latest
-    ports:
-      - "127.0.0.1:58001:8080"
+    network: "{{ container_network }}"
     volumes:
       - "/opt/filebrowser.db:/database.db:z"
       - "/home:/srv:ro"
     security_opt:
       - label:disable
       - no-new-privileges
-    network: podman
   - name: jellyfin
     image: docker.io/jellyfin/jellyfin:latest
-    ports:
-      - "127.0.0.1:58096:8096"
+    network: "{{ container_network }}"
     volumes:
       - "jellyfin_config:/config:Z"
       - "/mnt/media:/media:z"
-    network: podman
-    user: "65534:65534"
+    user: "nobody:nogroup"
+  - name: apache
+    image: ghcr.io/chrisx8/apache-openidc:latest
+    network: "{{ container_network }}"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8443:8443"
+    volumes:
+      - "/etc/ssl/arb.chrisx.xyz:/etc/ssl/arb.chrisx.xyz:ro,z"
+      - "/opt/apache/conf.d:/etc/apache2/sites-enabled:ro,z"
+      - "/opt/apache/log:/var/log/apache2:z"
+      - "/opt/apache/www:/var/www:ro,z"
 
 container_volumes:
   - name: jellyfin_config

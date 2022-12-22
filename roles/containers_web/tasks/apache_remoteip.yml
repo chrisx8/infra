@@ -1,0 +1,9 @@
+- name: Copy Apache RemoteIP config
+  ansible.builtin.template:
+    src: "1_remoteip.conf.j2"
+    dest: "/opt/apache/conf.d/1_remoteip.conf"
+    mode: 0640
+
+- name: Reload Apache
+  ansible.builtin.command: "podman exec apache apache2ctl graceful"
+  changed_when: false

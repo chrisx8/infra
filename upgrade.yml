@@ -39,17 +39,6 @@
         name: postgresql
         tasks_from: sslcert.yml
 
-- name: Upgrade storage
-  hosts: storage
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - "distribution"
-    - "virtualization_type"
-  become: true
-  roles:
-    - containers_storage
-
 - name: Upgrade containers
   hosts: v-containers
   become: true
@@ -60,3 +49,14 @@
     - "virtualization_type"
   roles:
     - containers_web
+
+- name: Upgrade storage
+  hosts: storage
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - "distribution"
+    - "virtualization_type"
+  roles:
+    - containers_storage

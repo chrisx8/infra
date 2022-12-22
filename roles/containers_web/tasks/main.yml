@@ -1,28 +1,26 @@
 - name: Load secret vars
   ansible.builtin.include_vars: secrets.yml
 
-- name: Create containers directory
-  ansible.builtin.file:
-    path: ~/containers
-    state: directory
-    mode: 0700
-  register: _containers_dir
+- name: Copy ssl certs
+  ansible.builtin.import_role:
+    name: sslcert
+    tasks_from: chrisx.xyz
 
-- name: Configure Nginx
-  ansible.builtin.import_tasks: nginx.yml
-- name: Copy helper scripts
-  ansible.builtin.import_tasks: scripts.yml
+- name: Configure Apache
+  ansible.builtin.import_tasks: apache.yml
 
 - name: Set up Postgres DBs
   ansible.builtin.import_tasks: postgres_db.yml
   become_user: postgres
   delegate_to: postgres
 
-- name: Create container network
-  containers.podman.podman_network:
-    name: ct
-    state: present
-
 - name: Launch containers
   ansible.builtin.import_role:
     name: containers
+
+- name: Configure Apache RemoteIP
+  ansible.builtin.import_tasks: apache_remoteip.yml
+- name: Install static sites
+  ansible.builtin.import_tasks: pages.yml
+- name: Copy helper scripts
+  ansible.builtin.import_tasks: scripts.yml

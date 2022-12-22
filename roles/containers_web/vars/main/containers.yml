@@ -1,3 +1,5 @@
+container_network: ct
+
 container_volumes:
   - name: gitea_conf
     owner: 1000
@@ -10,9 +12,15 @@ container_volumes:
     group: nobody
 
 container_specs:
+  - name: cloudflared
+    image: docker.io/cloudflare/cloudflared:latest
+    network: "{{ container_network }}"
+    command: tunnel run --token {{ cloudflared_token }}
+    cap_drop:
+      - all
   - name: gitea
     image: docker.io/gitea/gitea:1-rootless
-    network: ct
+    network: "{{ container_network }}"
     env:
       GITEA____APP_NAME: "Gitea"
       GITEA__cache__ENABLED: "true"
@@ -33,7 +41,7 @@ container_specs:
       GITEA__picture__DISABLE_GRAVATAR: "true"
       GITEA__picture__ENABLE_FEDERATED_AVATAR: "false"
       GITEA__security__INSTALL_LOCK: "true"
-      GITEA__security__REVERSE_PROXY_TRUSTED_PROXIES: "10.88.0.0/24"
+      GITEA__security__REVERSE_PROXY_TRUSTED_PROXIES: "10.88.0.1"
       GITEA__server__DOMAIN: "gitea.chrisx.xyz"
       GITEA__server__LANDING_PAGE: "login"
       GITEA__server__OFFLINE_MODE: "true"
@@ -63,7 +71,7 @@ container_specs:
   - name: keycloak
     image: quay.io/keycloak/keycloak:20.0.3
     command: start
-    network: ct
+    network: "{{ container_network }}"
     env:
       KC_DB: "postgres"
       # yamllint disable-line rule:line-length
@@ -76,41 +84,43 @@ container_specs:
       - all
   - name: vaultwarden
     image: docker.io/vaultwarden/server:latest
-    network: ct
+    network: "{{ container_network }}"
     user: nobody
     env:
       # yamllint disable-line rule:line-length
       DATABASE_URL: "postgres://vaultwarden:{{ postgres_vaultwarden_password }}@postgres.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt"
+      DISABLE_ADMIN_TOKEN: "true"
       DOMAIN: "https://vaultwarden.chrisx.xyz"
       EVENTS_DAYS_RETAIN: "30"
       IP_HEADER: "X-Forwarded-For"
       ORG_EVENTS_ENABLED: "true"
+      PASSWORD_HINTS_ALLOWED: "false"
       PASSWORD_ITERATIONS: "200000"
       ROCKET_PORT: "8288"
       SIGNUPS_ALLOWED: "false"
       SIGNUPS_VERIFY: "true"
       SIGNUPS_VERIFY_RESEND_LIMIT: "3"
-      SMTP_PORT: "465"
-      SMTP_SECURITY: "force_tls"
       WEBSOCKET_ENABLED: "true"
+      SMTP_SECURITY: "force_tls"
+      SMTP_FROM: "{{ vaultwarden_env.SMTP_FROM }}"
+      SMTP_HOST: "{{ vaultwarden_env.SMTP_HOST }}"
+      SMTP_PORT: "{{ vaultwarden_env.SMTP_PORT }}"
+      SMTP_USERNAME: "{{ vaultwarden_env.SMTP_USERNAME }}"
+      SMTP_PASSWORD: "{{ vaultwarden_env.SMTP_PASSWORD }}"
+      YUBICO_CLIENT_ID: "{{ vaultwarden_env.YUBICO_CLIENT_ID }}"
+      YUBICO_SECRET_KEY: "{{ vaultwarden_env.YUBICO_SECRET_KEY }}"
     volumes:
       - vaultwarden_data:/data:Z
     cap_drop:
       - all
-  - name: nginx
-    image: docker.io/library/nginx:alpine
-    network: ct
+  - name: apache
+    image: ghcr.io/chrisx8/apache-openidc:latest
+    network: "{{ container_network }}"
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - "{{ _containers_dir.path }}/nginx/conf.d:/etc/nginx/conf.d:Z"
-      - "{{ _containers_dir.path }}/nginx/www:/var/www:Z"
-      - "{{ _containers_dir.path }}/nginx/nginx.conf:/etc/nginx/nginx.conf:Z"
-      - "{{ _nginx_log_dir.path }}:/var/log/nginx:z"
-      - "/etc/ssl:/etc/ssl:z"
-  - name: cloudflared
-    image: docker.io/cloudflare/cloudflared:latest
-    command: tunnel run --token {{ cloudflared_token }}
-    cap_drop:
-      - all
+      - "/etc/ssl/chrisx.xyz:/etc/ssl/chrisx.xyz:ro,z"
+      - "/opt/apache/conf.d:/etc/apache2/sites-enabled:ro,z"
+      - "/opt/apache/log:/var/log/apache2:z"
+      - "/opt/apache/www:/var/www:ro,z"

@@ -15,11 +15,11 @@
 	RequestHeader set X-Forwarded-Port "443"
 
 	ProxyPreserveHost On
-	ProxyPass "/" "http://127.0.0.1:58001/"
-	ProxyPassReverse "/" "http://127.0.0.1:58001/"
+	ProxyPass "/" "http://filebrowser:80/"
+	ProxyPassReverse "/" "http://filebrowser:80/"
 
-	ErrorLog /var/log/httpd/filebrowser_error_log
-	CustomLog /var/log/httpd/filebrowser_access_log combined
+	ErrorLog /var/log/apache2/filebrowser_error.log
+	CustomLog /var/log/apache2/filebrowser_access.log combined
 
 	OIDCClientID {{ storage_oidc.client_id }}
 	OIDCClientSecret {{ storage_oidc.client_secret }}

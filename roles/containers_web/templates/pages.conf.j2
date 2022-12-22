@@ -25,6 +25,9 @@
 	DocumentRoot /var/www/pages
 	Alias /robots.txt /var/www/html/robots.txt
 
+	ErrorLog /var/log/apache2/pages_error.log
+	CustomLog /var/log/apache2/pages_access.log combined
+
 	<Location "/openid-connect">
 		AuthType openid-connect
 		Require valid-user

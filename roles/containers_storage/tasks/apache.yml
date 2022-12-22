@@ -1,0 +1,28 @@
+- name: Create Apache dirs
+  ansible.builtin.file:
+    path: "{{ item }}"
+    mode: 0755
+    state: directory
+  loop:
+    - /opt/apache/log
+    - /opt/apache/www
+
+- name: Copy Apache conf.d
+  ansible.builtin.copy:
+    src: apache/conf.d
+    dest: /opt/apache
+    mode: 0640
+
+- name: Generate OIDC crypto password
+  ansible.builtin.set_fact:
+    oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
+- name: Copy filebrowser site config
+  ansible.builtin.template:
+    src: filebrowser.conf.j2
+    dest: /opt/apache/conf.d/filebrowser.conf
+    mode: 0640
+
+- name: Copy arb ssl cert
+  ansible.builtin.import_role:
+    name: sslcert
+    tasks_from: arb.yml

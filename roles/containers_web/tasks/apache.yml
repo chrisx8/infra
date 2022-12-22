@@ -1,0 +1,32 @@
+- name: Create Apache dirs
+  ansible.builtin.file:
+    path: "{{ item }}"
+    mode: 0755
+    state: directory
+  loop:
+    - /opt/apache/log
+    - /opt/apache/www
+
+- name: Copy Apache conf.d
+  ansible.builtin.copy:
+    src: apache/conf.d
+    dest: /opt/apache
+    mode: 0640
+- name: Copy Apache html
+  ansible.builtin.copy:
+    src: apache/html
+    dest: /opt/apache/www
+    mode: 0644
+
+- name: Generate OIDC crypto password
+  ansible.builtin.set_fact:
+    oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
+- name: Copy templated Apache config
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "/opt/apache/conf.d/{{ item }}"
+    mode: 0640
+  loop:
+    - go.conf
+    - pages.conf
+    - vaultwarden.conf

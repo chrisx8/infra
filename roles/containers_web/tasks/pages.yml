@@ -9,7 +9,7 @@
       become: false
       vars:
         launchertw_operation: deploy
-        launchertw_deploy_target_dir: /var/www/pages/launcher
+        launchertw_deploy_target_dir: /opt/apache/www/pages/launcher
 
 - name: Install Admin Center
   block:
@@ -22,4 +22,10 @@
       become: false
       vars:
         launchertw_operation: deploy
-        launchertw_deploy_target_dir: /var/www/pages/launcher/admin
+        launchertw_deploy_target_dir: /opt/apache/www/pages/launcher/admin
+
+- name: Copy index html
+  ansible.builtin.copy:
+    src: pages/index.html
+    dest: /opt/apache/www/pages/index.html
+    mode: 0644

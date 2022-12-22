@@ -10,7 +10,7 @@
     name: podman
     state: present
 
-- name: Create contianer network
+- name: Create container network
   containers.podman.podman_network:
     name: "{{ container_network }}"
     state: present

@@ -8,8 +8,9 @@ for v in $VOLUMES; do
 	tar czf "/home/chrisx/Backup/arb.chrisx.xyz/$v.tgz" "/var/lib/containers/storage/volumes/$v/_data/"
 done
 
-echo "Listing backups..."
+echo "====== List of backups ======"
 ls -lh /home/chrisx/Backup/arb.chrisx.xyz/*.tgz
+echo "============================="
 
 curl "{{ containers_storage_cron_ping_url }}"
 echo

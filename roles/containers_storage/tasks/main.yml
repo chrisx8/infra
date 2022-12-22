@@ -6,14 +6,11 @@
 
 - name: Configure apps
   ansible.builtin.import_tasks: apps.yml
+- name: Configure Apache
+  ansible.builtin.import_tasks: apache.yml
 - name: Copy helper scripts
   ansible.builtin.import_tasks: scripts.yml
 
 - name: Launch containers
   ansible.builtin.import_role:
     name: containers
-
-- name: Copy helper scripts
-  ansible.builtin.import_tasks: scripts.yml
-- name: Apache sites config
-  ansible.builtin.import_tasks: apache_sites.yml
