@@ -13,15 +13,15 @@
 	Header set X-Robots-Tag "none"
 	Header set X-XSS-Protection "1; mode=block"
 
-	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
 	OIDCClientID pages.chrisx.xyz
 	OIDCClientSecret {{ pages_client_secret }}
-	OIDCRemoteUserClaim sub
-	OIDCScope openid
+	OIDCPassClaimsAs none
+	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
 	OIDCRedirectURI https://pages.chrisx.xyz/auth/openid-connect
-	OIDCCryptoPassphrase {{ oidc_crypto }}
+	OIDCScope openid
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true
+	OIDCCryptoPassphrase {{ oidc_crypto }}
 
 	DocumentRoot /var/www/pages
 	Alias /robots.txt /var/www/html/robots.txt
