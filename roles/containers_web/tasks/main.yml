@@ -7,26 +7,11 @@
     state: directory
     mode: 0700
   register: _containers_dir
-- name: Create Nginx logs directory
-  ansible.builtin.file:
-    path: "{{ _containers_dir.path }}/log/nginx"
-    state: directory
-    mode: 0700
-  register: _nginx_log_dir
 
-- name: Copy container files
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "{{ _containers_dir.path }}"
-    mode: 0644
-  loop:
-    - gitea
-    - nginx
-
-- name: Copy chrisx ssl certs
-  ansible.builtin.include_role:
-    name: sslcert
-    tasks_from: chrisx.yml
+- name: Configure Nginx
+  ansible.builtin.import_tasks: nginx.yml
+- name: Copy helper scripts
+  ansible.builtin.import_tasks: scripts.yml
 
 - name: Set up Postgres DBs
   ansible.builtin.import_tasks: postgres_db.yml
@@ -41,6 +26,3 @@
 - name: Launch containers
   ansible.builtin.import_role:
     name: containers
-
-- name: Copy helper scripts
-  ansible.builtin.import_tasks: scripts.yml
