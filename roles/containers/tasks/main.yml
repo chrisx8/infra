@@ -15,15 +15,20 @@
     name: "{{ item.name }}"
     state: present
   loop: "{{ container_volumes }}"
-- name: Change container volume ownership
+  loop_control:
+    label: "{{ item.name }}"
+  register: _container_volumes_create
+- name: Change ownership of container volumes
   ansible.builtin.file:
-    path: "/var/lib/containers/storage/volumes/{{ item.name }}/_data"
+    path: "{{ item.volume.Mountpoint }}"
     state: directory
     recurse: true
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
-  loop: "{{ container_volumes }}"
-  when: item.owner is defined and item.group is defined
+    owner: "{{ item.item.owner }}"
+    group: "{{ item.item.group }}"
+  loop: "{{ _container_volumes_create.results }}"
+  loop_control:
+    label: "{{ item.item.name }}"
+  when: item.changed and item.item.owner is defined and item.item.group is defined
 
 - name: Build container images
   containers.podman.podman_image:
@@ -40,11 +45,15 @@
     pull: true
     state: present
   loop: "{{ container_specs }}"
+  loop_control:
+    label: "{{ item.image }}"
   when: "'localhost/' not in item.image"
 
 - name: Create containers
   containers.podman.podman_container: "{{ container_defaults | combine(item) }}"
   loop: "{{ container_specs }}"
+  loop_control:
+    label: "{{ item.name }}"
 
 - name: Enable and start container systemd services
   ansible.builtin.systemd:
@@ -53,6 +62,8 @@
     daemon_reload: true
     state: restarted
   loop: "{{ container_specs }}"
+  loop_control:
+    label: "{{ item.name }}"
 
 - name: Clean up container storage
   ansible.builtin.command: "podman system prune -af"
