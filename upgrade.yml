@@ -55,8 +55,8 @@
   roles:
     - static_sites
 
-- name: Upgrade php apps
-  hosts: c-lapp
+- name: Upgrade postgres
+  hosts: postgres
   become: true
   tasks:
     - name: Install arb cert

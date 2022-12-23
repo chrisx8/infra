@@ -31,7 +31,7 @@
 - name: Set up Postgres DBs
   ansible.builtin.import_tasks: postgres_db.yml
   become_user: postgres
-  delegate_to: c-lapp
+  delegate_to: postgres
 
 - name: Create container network
   containers.podman.podman_network:

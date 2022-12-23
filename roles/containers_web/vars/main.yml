@@ -10,7 +10,7 @@ container_specs:
     network: ct
     env:
       GITEA__database__DB_TYPE: "postgres"
-      GITEA__database__HOST: "c-lapp.arb.chrisx.xyz:5432"
+      GITEA__database__HOST: "postgres.arb.chrisx.xyz:5432"
       GITEA__database__SSL_MODE: "verify-full"
       GITEA__database__NAME: "gitea"
       GITEA__database__USER: "gitea"
@@ -57,7 +57,7 @@ container_specs:
     env:
       KC_DB: "postgres"
       # yamllint disable-line rule:line-length
-      KC_DB_URL: "jdbc:postgresql://c-lapp.arb.chrisx.xyz:5432/keycloak?ssl=true&sslmode=require&sslcert=/etc/ssl/certs/ca-bundle.crt"
+      KC_DB_URL: "jdbc:postgresql://postgres.arb.chrisx.xyz:5432/keycloak?ssl=true&sslmode=require&sslcert=/etc/ssl/certs/ca-bundle.crt"
       KC_DB_USERNAME: "keycloak"
       KC_DB_PASSWORD: "{{ postgres_keycloak_password }}"
       KC_HOSTNAME: "sso.chrisx.xyz"
@@ -70,9 +70,10 @@ container_specs:
     user: nobody
     env:
       # yamllint disable-line rule:line-length
-      DATABASE_URL: "postgres://vaultwarden:{{ postgres_vaultwarden_password }}@c-lapp.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt"
+      DATABASE_URL: "postgres://vaultwarden:{{ postgres_vaultwarden_password }}@postgres.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt"
       DOMAIN: "https://vaultwarden.chrisx.xyz"
       IP_HEADER: "X-Forwarded-For"
+      PASSWORD_ITERATIONS: "200000"
       ROCKET_PORT: "8288"
       SIGNUPS_ALLOWED: "false"
       SIGNUPS_VERIFY: "true"

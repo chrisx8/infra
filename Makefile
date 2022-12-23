@@ -40,8 +40,8 @@ setup-proxmox:
 setup-containers:
 	ansible-playbook setup.yml --limit v-containers
 
-setup-lapp:
-	ansible-playbook setup.yml --limit c-lapp
+setup-postgres:
+	ansible-playbook setup.yml --limit postgres
 
 setup-pihole:
 	ansible-playbook setup.yml --limit pihole
@@ -61,8 +61,8 @@ upgrade-proxmox:
 upgrade-containers:
 	ansible-playbook upgrade.yml --limit v-containers
 
-upgrade-lapp:
-	ansible-playbook upgrade.yml --limit c-lapp
+upgrade-postgres:
+	ansible-playbook upgrade.yml --limit postgres
 
 upgrade-pihole:
 	ansible-playbook upgrade.yml --limit pihole
