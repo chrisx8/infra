@@ -5,7 +5,7 @@
   ansible.builtin.template:
     src: pages.conf.j2
     dest: /etc/httpd/conf.d/pages.conf
-    mode: 0644
+    mode: 0640
 
 - name: Install chrisx cert
   ansible.builtin.import_role:

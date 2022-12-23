@@ -28,10 +28,9 @@
   gather_subset:
     - "!min"
     - "distribution"
-  vars:
-    php_enable: true
   roles:
-    - apache_php
+    - httpd
+    - php_fpm
     - pihole
     - static_sites
 
@@ -46,7 +45,7 @@
   roles:
     - cockpit
     - samba_share
-    - apache_php
+    - httpd
     - containers_storage
 
 - name: Set up PostgreSQL

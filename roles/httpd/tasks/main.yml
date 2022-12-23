@@ -1,3 +1,10 @@
+- name: Verify system
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution != 'Fedora'
+      - ansible_facts.distribution_major_version == '9'
+      - ansible_facts.os_family == 'RedHat'
+
 - name: Install Apache httpd
   ansible.builtin.dnf:
     name:
@@ -22,18 +29,24 @@
   with_items:
     - "{{ _mod_auth_openidc_release.json.tag_name | replace('v', '') }}"
 
-- name: Remove welcome site
+- name: Remove unused Apache config
   ansible.builtin.file:
-    path: /etc/httpd/conf.d/welcome.conf
+    path: /etc/httpd/conf.d/{{ item }}
     state: absent
+  loop:
+    - autoindex.conf
+    - fcgid.conf
+    - userdir.conf
+    - welcome.conf
+
 - name: Remove built-in cgi-bin
   ansible.builtin.file:
     path: /var/www/cgi-bin
     state: absent
 
 - name: Copy default config
-  ansible.builtin.template:
-    src: 1_default.conf.j2
+  ansible.builtin.copy:
+    src: 1_default.conf
     dest: /etc/httpd/conf.d/1_default.conf
     mode: 0644
 - name: Copy robots.txt
@@ -41,6 +54,11 @@
     src: robots.txt
     dest: /var/www/html/robots.txt
     mode: 0644
+
+- name: Generate self-signed ssl cert
+  ansible.builtin.import_role:
+    name: sslcert
+    tasks_from: self.yml
 
 - name: Enable and restart Apache httpd
   ansible.builtin.systemd:

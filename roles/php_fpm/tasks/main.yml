@@ -1,3 +1,10 @@
+- name: Verify system
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution != 'Fedora'
+      - ansible_facts.distribution_major_version == '9'
+      - ansible_facts.os_family == 'RedHat'
+
 - name: Install PHP 8.1 from AppStream
   ansible.builtin.dnf:
     name: "@php:8.1"
@@ -32,23 +39,16 @@
   ansible.builtin.dnf:
     name: composer
     state: present
-  when: php_use_composer is defined and php_use_composer
+  when: php_install_composer is defined and php_install_composer
 
-- name: Set PHP max POST size
-  ansible.builtin.lineinfile:
+- name: Configure PHP
+  ansible.builtin.blockinfile:
     path: /etc/php.ini
-    regexp: "^post_max_size"
-    line: "post_max_size = 21M"
-- name: Set PHP max upload size
-  ansible.builtin.lineinfile:
-    path: /etc/php.ini
-    regexp: "^upload_max_filesize"
-    line: "upload_max_filesize = 20M"
-- name: Set PHP expose_php
-  ansible.builtin.lineinfile:
-    path: /etc/php.ini
-    regexp: "^expose_php"
-    line: "expose_php = Off"
+    state: present
+    block: |
+      expose_php = Off
+      post_max_size = 20M
+      upload_max_filesize = 20M
 
 - name: Enable and restart php-fpm
   ansible.builtin.systemd:
