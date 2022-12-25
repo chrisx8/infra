@@ -52,6 +52,12 @@
     minute: 0
     state: present
 
+- name: Copy update script
+  ansible.builtin.copy:
+    src: pihole_update.sh
+    dest: /usr/local/bin
+    mode: 0755
+
 - name: Restart Pi-hole
   ansible.builtin.command:
     cmd: "pihole restartdns"

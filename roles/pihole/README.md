@@ -9,6 +9,6 @@ Notes:
 - In order to perform a non-interactive install, there is a hacky wrapper script
   for the official Pi-hole install script.
 
-Required facts: None
+Required facts: `distribution`
 
 Supported OS: RedHat-based Linux systems, version 8 or newer
