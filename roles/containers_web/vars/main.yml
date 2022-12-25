@@ -65,14 +65,16 @@ container_specs:
     cap_drop:
       - all
   - name: vaultwarden
-    image: docker.io/vaultwarden/server:testing
+    image: docker.io/vaultwarden/server:latest
     network: ct
     user: nobody
     env:
       # yamllint disable-line rule:line-length
       DATABASE_URL: "postgres://vaultwarden:{{ postgres_vaultwarden_password }}@postgres.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt"
       DOMAIN: "https://vaultwarden.chrisx.xyz"
+      EVENTS_DAYS_RETAIN: "30"
       IP_HEADER: "X-Forwarded-For"
+      ORG_EVENTS_ENABLED: "true"
       PASSWORD_ITERATIONS: "200000"
       ROCKET_PORT: "8288"
       SIGNUPS_ALLOWED: "false"
