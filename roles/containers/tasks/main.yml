@@ -34,8 +34,11 @@
   containers.podman.podman_image:
     name: "{{ item.name }}"
     path: "{{ item.path }}"
+    force: true
     state: build
   loop: "{{ container_build_images }}"
+  loop_control:
+    label: "{{ item.name }}"
   when: container_build_images is defined
 
 - name: Pull container images

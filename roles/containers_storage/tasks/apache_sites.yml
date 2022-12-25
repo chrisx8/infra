@@ -21,6 +21,7 @@
 - name: Configure SELinux httpd_can_network_connect
   ansible.posix.seboolean:
     name: httpd_can_network_connect
+    persistent: true
     state: true
 
 - name: Restart httpd
