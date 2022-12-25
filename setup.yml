@@ -2,7 +2,11 @@
   hosts: proxmox
   become: true
   gather_facts: true
-  gather_subset: ["min", "virtualization_role", "virtualization_type"]
+  gather_subset:
+    - "!min"
+    - "distribution"
+    - "virtualization_role"
+    - "virtualization_type"
   roles:
     - system_pve
 
@@ -10,7 +14,10 @@
   hosts: guests
   become: true
   gather_facts: true
-  gather_subset: ["!min", "distribution", "virtualization_type"]
+  gather_subset:
+    - "!min"
+    - "distribution"
+    - "virtualization_type"
   roles:
     - system_el
 
@@ -18,7 +25,9 @@
   hosts: pihole
   become: true
   gather_facts: true
-  gather_subset: ["!min", "distribution"]
+  gather_subset:
+    - "!min"
+    - "distribution"
   vars:
     php_enable: true
   roles:
@@ -30,7 +39,10 @@
   hosts: storage
   become: true
   gather_facts: true
-  gather_subset: ["!min", "distribution", "virtualization_type"]
+  gather_subset:
+    - "!min"
+    - "distribution"
+    - "virtualization_type"
   roles:
     - cockpit
     - samba_share
@@ -41,7 +53,9 @@
   hosts: postgres
   become: true
   gather_facts: true
-  gather_subset: ["min"]
+  gather_subset:
+    - "!min"
+    - "distribution"
   roles:
     - postgresql
 
@@ -49,7 +63,10 @@
   hosts: v-containers
   become: true
   gather_facts: true
-  gather_subset: ["!min", "distribution", "virtualization_type"]
+  gather_subset:
+    - "!min"
+    - "distribution"
+    - "virtualization_type"
   roles:
     - containers_web
     - tailscale
