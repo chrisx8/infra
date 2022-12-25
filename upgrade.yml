@@ -30,6 +30,21 @@
         autoremove: true
       when: ansible_facts.os_family == 'RedHat'
 
+- name: Upgrade pihole
+  hosts: pihole
+  become: true
+  roles:
+    - static_sites
+
+- name: Upgrade postgres
+  hosts: postgres
+  become: true
+  tasks:
+    - name: Install ssl cert
+      ansible.builtin.import_role:
+        name: postgresql
+        tasks_from: sslcert.yml
+
 - name: Upgrade storage
   hosts: storage
   gather_facts: true
@@ -56,18 +71,3 @@
     - "virtualization_type"
   roles:
     - containers_web
-
-- name: Upgrade pihole
-  hosts: pihole
-  become: true
-  roles:
-    - static_sites
-
-- name: Upgrade postgres
-  hosts: postgres
-  become: true
-  tasks:
-    - name: Install ssl cert
-      ansible.builtin.import_role:
-        name: postgresql
-        tasks_from: sslcert.yml

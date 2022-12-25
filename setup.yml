@@ -34,6 +34,16 @@
     - pihole
     - static_sites
 
+- name: Set up PostgreSQL
+  hosts: postgres
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - "distribution"
+  roles:
+    - postgresql
+
 - name: Set up storage server
   hosts: storage
   become: true
@@ -47,16 +57,6 @@
     - samba_share
     - httpd
     - containers_storage
-
-- name: Set up PostgreSQL
-  hosts: postgres
-  become: true
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - "distribution"
-  roles:
-    - postgresql
 
 - name: Set up containers
   hosts: v-containers

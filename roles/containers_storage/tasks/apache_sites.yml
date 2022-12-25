@@ -14,7 +14,7 @@
     mode: 0640
 
 - name: Copy arb ssl cert
-  ansible.builtin.include_role:
+  ansible.builtin.import_role:
     name: sslcert
     tasks_from: arb.yml
 
