@@ -5,6 +5,7 @@
     owner: postgres
     group: postgres
     mode: 0750
+
 - name: Set up backup cron job
   ansible.builtin.cron:
     name: container backup

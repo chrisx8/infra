@@ -1,0 +1,20 @@
+- name: Create /var/lib/pgsql/ssl
+  ansible.builtin.file:
+    path: /var/lib/pgsql/ssl
+    state: directory
+    mode: 0700
+    owner: postgres
+    group: postgres
+
+- name: Install ssl cert
+  ansible.builtin.copy:
+    src: "certbot.d/config/live/arb.chrisx.xyz/{{ item }}"
+    dest: /var/lib/pgsql/ssl
+    mode: 0400
+    owner: postgres
+    group: postgres
+  loop:
+    - fullchain.pem
+    - privkey.pem
+  notify:
+    - Restart postgresql

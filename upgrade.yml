@@ -67,13 +67,7 @@
   hosts: postgres
   become: true
   tasks:
-    - name: Install arb cert
+    - name: Install ssl cert
       ansible.builtin.import_role:
-        name: sslcert
-        tasks_from: arb.yml
-    - name: Fix cert permission
-      ansible.builtin.file:
-        path: /etc/ssl/arb.chrisx.xyz
-        owner: postgres
-        group: postgres
-        recurse: true
+        name: postgresql
+        tasks_from: sslcert.yml

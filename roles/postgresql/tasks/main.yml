@@ -7,26 +7,11 @@
 - name: Load secrets
   ansible.builtin.include_vars: secrets.yml
 
-- name: Install packages
-  ansible.builtin.import_tasks: package_install.yml
-- name: Configure PostgreSQL server
-  ansible.builtin.import_tasks: postgres_config.yml
+- name: Install PostgreSQL
+  ansible.builtin.import_tasks: install.yml
+- name: Configure PostgreSQL
+  ansible.builtin.import_tasks: configure.yml
+- name: Install ssl cert
+  ansible.builtin.import_tasks: sslcert.yml
 - name: Configure cron jobs
   ansible.builtin.import_tasks: cron.yml
-
-- name: Install arb cert
-  ansible.builtin.import_role:
-    name: sslcert
-    tasks_from: arb.yml
-- name: Fix cert permission
-  ansible.builtin.file:
-    path: /etc/ssl/arb.chrisx.xyz
-    owner: postgres
-    group: postgres
-    recurse: true
-
-- name: Enable and restart postgresql
-  ansible.builtin.systemd:
-    name: postgresql-14.service
-    enabled: true
-    state: restarted
