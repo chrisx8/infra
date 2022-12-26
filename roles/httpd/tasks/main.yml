@@ -9,7 +9,6 @@
   ansible.builtin.dnf:
     name:
       - httpd
-      - mod_fcgid
       - mod_http2
       - mod_ssl
     state: present
@@ -35,7 +34,6 @@
     state: absent
   loop:
     - autoindex.conf
-    - fcgid.conf
     - userdir.conf
     - welcome.conf
 

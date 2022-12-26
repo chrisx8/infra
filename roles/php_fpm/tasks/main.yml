@@ -30,6 +30,7 @@
 - name: Install PHP components
   ansible.builtin.dnf:
     name:
+      - mod_fcgid
       - php-cli
       - php-fpm
       - php-opcache
