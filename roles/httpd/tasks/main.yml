@@ -53,11 +53,6 @@
     dest: /var/www/html/robots.txt
     mode: 0644
 
-- name: Generate self-signed ssl cert
-  ansible.builtin.import_role:
-    name: sslcert
-    tasks_from: self.yml
-
 - name: Enable and restart Apache httpd
   ansible.builtin.systemd:
     name: httpd
