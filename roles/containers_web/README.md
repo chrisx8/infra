@@ -10,4 +10,9 @@ This role provides role variables for `containers` role and installs containeriz
 
 Required facts: `distribution`, `virtualization_type`
 
+Required role vars:
+
+- `cloudflared_token`: Cloudflare Tunnel token.
+- `containers_web_cron_ping_url`: Webhook URL for cron job.
+
 Supported OS: RHEL-like systems, version 8 or newer

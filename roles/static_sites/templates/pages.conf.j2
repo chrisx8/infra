@@ -13,8 +13,8 @@
 	Header set X-Robots-Tag "none"
 	Header set X-XSS-Protection "1; mode=block"
 
-	OIDCClientID pages.chrisx.xyz
-	OIDCClientSecret {{ pages_client_secret }}
+	OIDCClientID {{ pages_oidc.client_id }}
+	OIDCClientSecret {{ pages_oidc.client_secret }}
 	OIDCPassClaimsAs none
 	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
 	OIDCRedirectURI https://pages.chrisx.xyz/auth/openid-connect

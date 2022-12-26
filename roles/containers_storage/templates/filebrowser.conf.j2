@@ -22,8 +22,8 @@
 	ErrorLog /var/log/httpd/filebrowser_error_log
 	CustomLog /var/log/httpd/filebrowser_access_log combined
 
-	OIDCClientID storage.arb.chrisx.xyz
-	OIDCClientSecret {{ storage_client_secret }}
+	OIDCClientID {{ storage_oidc.client_id }}
+	OIDCClientSecret {{ storage_oidc.client_secret }}
 	OIDCPassClaimsAs headers
 	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
 	OIDCRedirectURI https://storage.arb.chrisx.xyz/auth/openid-connect

@@ -8,4 +8,8 @@ Notes:
 
 Required facts: `distribution`
 
+Required role vars:
+
+- `postgres_cron_ping_url`: Webhook URL for cron job.
+
 Supported OS: Supported versions of RHEL-based OS.

@@ -11,4 +11,8 @@ Notes:
 
 Required facts: `distribution`
 
+Required role vars:
+
+- `pihole_oidc`: OIDC client credentials, requires `client_id` and `client_secret`.
+
 Supported OS: RedHat-based Linux systems, version 8 or newer

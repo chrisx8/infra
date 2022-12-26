@@ -11,7 +11,7 @@
 - name: Configure system
   ansible.builtin.import_tasks: system_all.yml
 - name: Configure KVM systems
-  ansible.builtin.include_role: system_kvm.yml
+  ansible.builtin.include_tasks: system_kvm.yml
   when: ansible_facts.virtualization_type == 'kvm'
 - name: Configure LXC systems
   ansible.builtin.include_tasks: system_lxc.yml

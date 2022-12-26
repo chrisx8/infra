@@ -4,7 +4,7 @@ This role installs [LauncherTW](https://github.com/chrisx8/LauncherTW), a homela
 
 Required role vars:
 
-- `pages_client_secret`: OIDC client secret
+- `pages_oidc`: OIDC client credentials, requires `client_id` and `client_secret`.
 
 Required facts: None
 

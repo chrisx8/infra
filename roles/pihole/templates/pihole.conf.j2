@@ -13,8 +13,8 @@
 	Header set X-XSS-Protection "1; mode=block"
 
 	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
-	OIDCClientID pihole.arb.chrisx.xyz
-	OIDCClientSecret {{ pihole_client_secret }}
+	OIDCClientID {{ pihole_oidc.client_id }}
+	OIDCClientSecret {{ pihole_oidc.client_secret }}
 	OIDCRemoteUserClaim sub
 	OIDCScope openid
 	OIDCRedirectURI https://pihole.arb.chrisx.xyz/auth/openid-connect
