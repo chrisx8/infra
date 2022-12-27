@@ -1,3 +1,5 @@
+CERTBOT_SCRIPT = files/certbot.sh
+CERTBOT_WORKDIR = files/certbot.d
 # Run pre-commit checks on all files
 check:
 	pre-commit run --all-files
@@ -5,18 +7,11 @@ check:
 # Set up Ansible environment
 # Includes required Ansible collections and pre-commit hooks
 envsetup:
-	ansible-galaxy collection install ansible.posix community.postgresql containers.podman
+	ansible-galaxy collection install --upgrade -r requirements.yml
 	pre-commit install
-
-# Update Ansible environment
-# Auto-updates all pre-commit hooks
-envupdate:
-	pre-commit autoupdate
 
 ## The following tasks run the certbot helper script
 ## Naming: certbot-(issue|renew)
-CERTBOT_SCRIPT=files/certbot.sh
-CERTBOT_WORKDIR=files/certbot.d
 
 certbot-issue:
 	$(CERTBOT_SCRIPT) $(CERTBOT_WORKDIR) issue

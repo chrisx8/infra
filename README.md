@@ -34,20 +34,16 @@ Some `make` commands:
 
 ### Ansible Collections
 
-Some Ansible roles here depend on additional Ansible collections:
-
-- `ansible.posix`
-- `community.postgresql`
-- `containers.podman`
+Some Ansible roles here depend on additional Ansible collections. See [`requirements.yml`](requirements.yml) for details.
 
 ### Pre-commit hooks
 
-Pre-commit hooks are configured. See [here](.pre-commit-config.yaml) for details.
+Pre-commit hooks are configured. See [`.pre-commit-config.yaml`](.pre-commit-config.yaml) for details.
 
 To update pre-commit hooks, run:
 
 ```bash
-make envupdate
+pre-commit autoupdate
 ```
 
 ## Hardware
