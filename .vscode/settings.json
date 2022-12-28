@@ -1,5 +1,8 @@
 {
+  "cSpell.spellCheckOnlyWorkspaceFiles": true,
   "files.associations": {
-    "*.yml": "ansible"
+    "*.yml": "ansible",
+    "**/vars/*.yml": "yaml",
+    "tmp*.yml": "yaml"
   }
 }
