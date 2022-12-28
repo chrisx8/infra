@@ -4,12 +4,12 @@ container_specs:
     ports:
       - "127.0.0.1:58001:8080"
     volumes:
-      - "{{ _filebrowser_user.home }}/filebrowser.db:/.filebrowser.db:Z"
-      - "{{ _filebrowser_user.home }}/filebrowser.json:/.filebrowser.json:Z"
-      - "{{ _filebrowser_user.home }}/data:/srv:z"
-    healthcheck: "curl -f http://localhost:8080/health"
+      - "/opt/filebrowser.db:/database.db:z"
+      - "/home:/srv:ro"
+    security_opt:
+      - label:disable
+      - no-new-privileges
     network: podman
-    user: "{{ _filebrowser_user.uid }}:{{ _filebrowser_user.group }}"
   - name: jellyfin
     image: docker.io/jellyfin/jellyfin:latest
     ports:

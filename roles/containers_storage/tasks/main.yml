@@ -4,10 +4,10 @@
   ansible.builtin.set_fact:
     _jellyfin_config_dir: /var/lib/containers/storage/volumes/jellyfin_config/_data
 
-- name: FileBrowser config
-  ansible.builtin.import_tasks: filebrowser.yml
-- name: Jellyfin config
-  ansible.builtin.import_tasks: jellyfin.yml
+- name: Configure apps
+  ansible.builtin.import_tasks: apps.yml
+- name: Copy helper scripts
+  ansible.builtin.import_tasks: scripts.yml
 
 - name: Launch containers
   ansible.builtin.import_role:
