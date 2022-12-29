@@ -44,10 +44,6 @@ services:
         icon: fa-solid fa-server
         url: https://proxmox1.arb.chrisx.xyz:8006
         newtab: true
-      - name: Storage (Cockpit)
-        icon: fa-solid fa-hard-drive
-        url: https://storage.arb.chrisx.xyz:9090
-        newtab: true
 
 # [OPTIONAL] button in the footer
 # Required: name, icon, url

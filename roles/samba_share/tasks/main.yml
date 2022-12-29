@@ -13,6 +13,31 @@
     state: present
 
 - name: Install Samba
-  ansible.builtin.import_tasks: samba.yml
-- name: Install Cockpit modules
-  ansible.builtin.import_tasks: cockpit_modules.yml
+  ansible.builtin.dnf:
+    name: samba
+    state: present
+
+- name: Copy Samba config
+  ansible.builtin.copy:
+    src: smb.conf
+    dest: /etc/samba/smb.conf
+    mode: 0644
+
+- name: Configure SELinux
+  ansible.posix.seboolean:
+    name: "{{ item }}"
+    state: true
+  loop:
+    - samba_enable_home_dirs
+    - samba_export_all_rw
+
+- name: Enable and restart smb service
+  ansible.builtin.systemd:
+    name: smb
+    enabled: true
+    state: restarted
+- name: Enable and restart nmb service
+  ansible.builtin.systemd:
+    name: nmb
+    enabled: true
+    state: restarted

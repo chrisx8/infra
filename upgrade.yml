@@ -55,11 +55,6 @@
   become: true
   roles:
     - containers_storage
-  tasks:
-    - name: Install SSL cert for Cockpit
-      ansible.builtin.import_role:
-        name: cockpit
-        tasks_from: ssl_cert.yml
 
 - name: Upgrade containers
   hosts: v-containers

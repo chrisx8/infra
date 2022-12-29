@@ -86,7 +86,6 @@ pre-commit autoupdate
 
 ### Storage and Media
 
-- [Cockpit](https://cockpit-project.org/)
 - [File Browser](https://github.com/filebrowser/filebrowser)
 - [Jellyfin](https://jellyfin.org/)
   - [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
