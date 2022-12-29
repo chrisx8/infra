@@ -11,13 +11,14 @@ container_volumes:
 
 container_specs:
   - name: gitea
-    image: docker.io/gitea/gitea:1.17.4-rootless
+    image: docker.io/gitea/gitea:1-rootless
     network: ct
     env:
       GITEA____APP_NAME: "Gitea"
       GITEA__cache__ENABLED: "true"
       GITEA__cache_0X2E_last_commit__ENABLED: "true"
       GITEA__database__DB_TYPE: "postgres"
+      GITEA__database__LOG_SQL: "false"
       GITEA__database__HOST: "postgres.arb.chrisx.xyz:5432"
       GITEA__database__NAME: "gitea"
       GITEA__database__SSL_MODE: "verify-full"
