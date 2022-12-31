@@ -7,7 +7,7 @@ check:
 # Set up Ansible environment
 # Includes required Ansible collections and pre-commit hooks
 envsetup:
-	ansible-galaxy collection install --upgrade -r requirements.yml
+	ansible-galaxy collection install -U -r requirements.yml
 	pre-commit install
 
 ## The following tasks run the certbot helper script
