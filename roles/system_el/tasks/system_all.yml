@@ -20,9 +20,9 @@
 
 - name: Set default text editor to vim
   ansible.builtin.lineinfile:
-    dest: /etc/bashrc
-    regex: "^export EDITOR="
-    line: export EDITOR=vim
+    dest: /etc/environment
+    regex: "^EDITOR="
+    line: EDITOR=vim
 - name: Configure vim
   ansible.builtin.copy:
     src: vimrc

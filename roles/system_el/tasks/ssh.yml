@@ -10,13 +10,13 @@
 
 - name: Configure OpenSSH client
   ansible.builtin.copy:
-    src: ssh_config
-    dest: /etc/ssh/ssh_config
+    src: ssh.conf
+    dest: /etc/ssh/ssh_config.d
     mode: 0644
 - name: Configure OpenSSH server
   ansible.builtin.copy:
-    src: sshd_config
-    dest: /etc/ssh/sshd_config
+    src: sshd.conf
+    dest: /etc/ssh/sshd_config.d
     mode: 0644
 
 - name: Restart OpenSSH server

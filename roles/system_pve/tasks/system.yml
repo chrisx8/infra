@@ -44,9 +44,9 @@
 
 - name: Set default text editor to vim
   ansible.builtin.lineinfile:
-    dest: /etc/bash.bashrc
-    regex: "^export EDITOR="
-    line: export EDITOR=vim
+    dest: /etc/environment
+    regex: "^EDITOR="
+    line: EDITOR=vim
 
 - name: Set GRUB timeout
   ansible.builtin.lineinfile:
