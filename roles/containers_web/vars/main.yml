@@ -58,6 +58,8 @@ container_specs:
     volumes:
       - gitea_conf:/etc/gitea:Z
       - gitea_data:/var/lib/gitea:Z
+    cap_drop:
+      - all
   - name: keycloak
     image: quay.io/keycloak/keycloak:20.0.2
     command: start
