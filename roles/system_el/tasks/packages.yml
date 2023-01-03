@@ -27,7 +27,6 @@
       - cronie
       - curl
       - htop
-      - git
       - psmisc
       - vim
       - tar
