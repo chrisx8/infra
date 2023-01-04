@@ -1,73 +1,39 @@
-ANSIBLE_VAULT_FLAGS = --vault-password-file files/bw_vault_password.sh
-CERTBOT_SCRIPT = files/certbot.sh
-CERTBOT_WORKDIR = files/certbot.d
+ANSIBLE_VAULT_ARGS = --vault-password-file files/bw_vault_password.sh
 EDITOR = code --wait
 
-# Run pre-commit checks on all files
-check:
-	pre-commit run --all-files
+# Set variable `checkdiff` to run Ansible with `--check --diff`
+# Example: `make setup checkdiff=yes`
+ifdef checkdiff
+	ANSIBLE_ARGS += --check --diff
+endif
+
+# Set variable `limit` to limit run to specified host(s)
+# Example: `make setup limit=guests`
+ifdef limit
+	ANSIBLE_ARGS += --limit "$(limit)"
+endif
+
+# hack: placeholder task
+_:
+
+# Run any Ansible playbook
+%.yml: _
+	ansible-playbook $(ANSIBLE_VAULT_ARGS) $(ANSIBLE_ARGS) $@
+
+## Run the certbot helper script
+certbot-%: _
+	files/certbot.sh files/certbot.d $@
 
 # Set up Ansible environment
 # Includes required Ansible collections and pre-commit hooks
 envsetup:
 	ansible-galaxy collection install -U -r requirements.yml
-	pre-commit install
+	pre-commit install --install-hooks
+
+# Run pre-commit checks on all files
+pre-commit:
+	pre-commit run --all-files
 
 # Edit Ansible Vault
 vaultedit:
-	env EDITOR="$(EDITOR)" ansible-vault edit $(ANSIBLE_VAULT_FLAGS) vars/secrets.yml
-
-## The following tasks run the certbot helper script
-## Naming: certbot-(issue|renew)
-
-certbot-issue:
-	$(CERTBOT_SCRIPT) $(CERTBOT_WORKDIR) issue
-
-certbot-renew:
-	$(CERTBOT_SCRIPT) $(CERTBOT_WORKDIR) renew
-
-## The following tasks run Ansible playbooks
-## Naming: playbook-(all|group|host)
-## Order in Makefile: all, groups, nodes
-
-setup-all:
-	ansible-playbook setup.yml $(ANSIBLE_VAULT_FLAGS)
-
-setup-guests:
-	ansible-playbook setup.yml $(ANSIBLE_VAULT_FLAGS) --limit guests
-
-setup-proxmox:
-	ansible-playbook setup.yml $(ANSIBLE_VAULT_FLAGS) --limit proxmox
-
-setup-containers:
-	ansible-playbook setup.yml $(ANSIBLE_VAULT_FLAGS) --limit v-containers
-
-setup-postgres:
-	ansible-playbook setup.yml $(ANSIBLE_VAULT_FLAGS) --limit postgres
-
-setup-pihole:
-	ansible-playbook setup.yml $(ANSIBLE_VAULT_FLAGS) --limit pihole
-
-setup-storage:
-	ansible-playbook setup.yml $(ANSIBLE_VAULT_FLAGS) --limit storage
-
-upgrade-all:
-	ansible-playbook upgrade.yml $(ANSIBLE_VAULT_FLAGS)
-
-upgrade-guests:
-	ansible-playbook upgrade.yml $(ANSIBLE_VAULT_FLAGS) --limit guests
-
-upgrade-proxmox:
-	ansible-playbook upgrade.yml $(ANSIBLE_VAULT_FLAGS) --limit proxmox
-
-upgrade-containers:
-	ansible-playbook upgrade.yml $(ANSIBLE_VAULT_FLAGS) --limit v-containers
-
-upgrade-postgres:
-	ansible-playbook upgrade.yml $(ANSIBLE_VAULT_FLAGS) --limit postgres
-
-upgrade-pihole:
-	ansible-playbook upgrade.yml $(ANSIBLE_VAULT_FLAGS) --limit pihole
-
-upgrade-storage:
-	ansible-playbook upgrade.yml $(ANSIBLE_VAULT_FLAGS) --limit storage
+	ansible-vault edit $(ANSIBLE_VAULT_ARGS) vars/secrets.yml

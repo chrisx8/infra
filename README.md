@@ -20,13 +20,20 @@ make envsetup
 
 You may run Ansible playbooks, and several repo-related tasks, with `make`.
 
-Some `make` commands:
+Available `make` commands:
 
-- `make check`: run pre-commit checks on all files.
+- `make *.yml`: run a given playbook against all hosts.
+- `make certbot-*`: run the [certbot helper script](files/certbot.sh).
 - `make envsetup`: set up local Ansible environment, including Ansible collections and pre-commit.
-- `make setup-all`: run `setup.yml` playbook against all hosts.
-- `make upgrade-all`: run `upgrade.yml` playbook against all hosts.
-- There are more `make` commands. To learn more, see [Makefile](Makefile).
+- `make pre-commit`: run pre-commit checks on all files.
+- `make vaultedit`: edit Ansible Vault.
+
+Optional `make` args:
+
+- `checkdiff`: run Ansible with `--check --diff`
+  - Example: `make setup checkdiff=yes`
+- `limit`: limit playbook run to specified host(s)
+  - Example: `make setup limit=guests`
 
 ## Dependencies
 
@@ -57,11 +64,11 @@ pre-commit autoupdate
 
 ### Router & Wi-Fi AP: Belkin RT3200
 
+- Wi-Fi 6 (AX3200)
 - Runs [OpenWrt](https://openwrt.org)
   - [OpenWrt installer](https://github.com/dangowrt/owrt-ubi-installer)
 - [OpenWrt wiki page](https://openwrt.org/toh/linksys/e8450)
-  - FYI: Belkin RT3200 == Linksys E8450
-- Wi-Fi 6 (802.11ax) radio (3200Mbps, 4x4)
+  - Note: Belkin RT3200 == Linksys E8450
 
 ## Software
 

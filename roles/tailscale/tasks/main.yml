@@ -68,7 +68,7 @@
 - name: Prompt for Tailscale auth key
   ansible.builtin.pause:
     echo: false
-    prompt: |
+    prompt: |-
       ###### Tailscale - ACTION REQUIRED ######
       Generate a single-use, pre-authorized Tailscale auth key at https://login.tailscale.com/admin/settings/keys
       Enter Tailscale auth key
@@ -76,10 +76,12 @@
 
 - name: Bring up Tailscale
   ansible.builtin.command:
-    cmd: >
+    cmd: >-
       tailscale up
       --auth-key {{ _ts_auth_key.user_input }}
-      --accept-dns=false --accept-routes=false
+      --accept-dns=false
+      --accept-routes=false
       --advertise-exit-node
-      --advertise-routes=10.69.0.0/16 --snat-subnet-routes=false
+      --advertise-routes=10.69.0.0/24,10.69.100.0/24
+      --snat-subnet-routes=false
   changed_when: false

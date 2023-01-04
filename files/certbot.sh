@@ -12,6 +12,11 @@ OP="$2"
 #    dns_cloudflare_api_token = Cloudflare API token
 ################################################################################
 
+function fail() {
+	echo "Usage: certbot.sh WORKDIR certbot-(issue|renew)" 1>&2
+	exit 1
+}
+
 function setup() {
 	echo "#####################################################################"
 	echo "    chrisx8/infra certbot utilities"
@@ -54,22 +59,28 @@ function renew() {
 		--work-dir "$WORKDIR/workdir"
 }
 
-if [ -z "$WORKDIR" ]; then
-	echo "Usage: certbot.sh WORKDIR (issue|renew)"
-	exit 1
+[ "$#" != "2" ] && fail
+
+if [ ! -d "$WORKDIR" ]; then
+	echo "$WORKDIR is not a valid directory."
+	read -r -p "Create? (y/n) " create_dir
+	if [ "$create_dir" == "y" ]; then
+		mkdir -p "$WORKDIR"
+	else
+		exit 1
+	fi
 fi
 
 case "$OP" in
-	"issue")
+	"certbot-issue")
         setup
 		issue
 		;;
-	"renew")
+	"certbot-renew")
         setup
 		renew
 		;;
 	*)
-		echo "Usage: certbot.sh WORKDIR (issue|renew)"
-		exit 1
+		fail
 		;;
 esac
