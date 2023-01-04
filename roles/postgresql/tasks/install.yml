@@ -1,9 +1,19 @@
-- name: Add PostgreSQL repo
-  ansible.builtin.dnf:
-    # yamllint disable-line rule:line-length
-    name: https://download.postgresql.org/pub/repos/yum/reporpms/EL-{{ ansible_facts.distribution_major_version }}-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-    disable_gpg_check: true
-    state: present
+- name: Add pgdg-common repo
+  ansible.builtin.yum_repository:
+    name: pgdg-common
+    description: PostgreSQL common RPMs
+    baseurl: https://download.postgresql.org/pub/repos/yum/common/redhat/rhel-$releasever-$basearch
+    gpgkey: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG
+    gpgcheck: true
+    repo_gpgcheck: true
+- name: Add pgdg14 repo
+  ansible.builtin.yum_repository:
+    name: pgdg14
+    description: PostgreSQL 14
+    baseurl: https://download.postgresql.org/pub/repos/yum/14/redhat/rhel-$releasever-$basearch
+    gpgkey: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG
+    gpgcheck: true
+    repo_gpgcheck: true
 
 - name: Install PostgreSQL 14
   ansible.builtin.dnf:
