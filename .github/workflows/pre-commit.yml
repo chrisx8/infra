@@ -1,15 +1,16 @@
 name: pre-commit checks
 on:
   pull_request:
-  push:
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: set PY
+      - name: Get Python version
         run: echo "PY=$(python -V | sed 's/ //g')" >> $GITHUB_ENV
-      - uses: actions/cache@v3
+      - name: Check out repo
+        uses: actions/checkout@v3
+      - name: Set up pre-commit cache
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
@@ -18,4 +19,5 @@ jobs:
           sudo pip install pre-commit
           pre-commit install --install-hooks
       - name: Run pre-commit checks on all files
-        run: pre-commit run --all-files
+        run: |
+          pre-commit run --all-files

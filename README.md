@@ -1,7 +1,5 @@
 # chrisx8/infra
 
-[![pre-commit checks](https://github.com/chrisx8/infra/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/chrisx8/infra/actions/workflows/pre-commit.yml)
-
 This repo is an Ansible monorepo for my self-hosted Linux environment. It contains what I'm using to manage [my home servers](#hardware) and [software running on them](#software).
 
 I use [Ansible](https://docs.ansible.com/ansible/latest/index.html) and [Podman](https://podman.io/) extensively to manage my systems.
