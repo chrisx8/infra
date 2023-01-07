@@ -1,9 +1,9 @@
 <VirtualHost *:443>
 	ServerName pages.chrisx.xyz
+
 	SSLEngine on
 	SSLCertificateFile /etc/ssl/chrisx.xyz/fullchain.pem
 	SSLCertificateKeyFile /etc/ssl/chrisx.xyz/privkey.pem
-	Protocols h2 http/1.1
 
 	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 	Header set Referrer-Policy "no-referrer"

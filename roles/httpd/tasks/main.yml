@@ -9,7 +9,6 @@
   ansible.builtin.dnf:
     name:
       - httpd
-      - mod_http2
       - mod_ssl
     state: present
 
@@ -36,21 +35,32 @@
     - autoindex.conf
     - userdir.conf
     - welcome.conf
-
+- name: Remove unused Apache modules config
+  ansible.builtin.file:
+    path: /etc/httpd/conf.modules.d/{{ item }}
+    state: absent
+  loop:
+    - 00-dav.conf
+    - 01-cgi.conf
 - name: Remove built-in cgi-bin
   ansible.builtin.file:
     path: /var/www/cgi-bin
     state: absent
 
-- name: Copy default config
+- name: Copy Apache config
   ansible.builtin.copy:
-    src: 1_default.conf
-    dest: /etc/httpd/conf.d/1_default.conf
+    src: conf.d
+    dest: /etc/httpd
     mode: 0644
-- name: Copy robots.txt
+- name: Copy Apache modules config
   ansible.builtin.copy:
-    src: robots.txt
-    dest: /var/www/html/robots.txt
+    src: conf.modules.d
+    dest: /etc/httpd
+    mode: 0644
+- name: Copy html
+  ansible.builtin.copy:
+    src: html
+    dest: /var/www
     mode: 0644
 
 - name: Enable and restart Apache httpd
