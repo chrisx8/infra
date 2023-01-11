@@ -4,7 +4,12 @@ This role installs [LauncherTW](https://github.com/chrisx8/LauncherTW), a homela
 
 Required role vars:
 
+- `golinks`: List of golinks. For each list element, include
+  - `src`: Golink alias. For example, a value of `alias` refers to the URL `go/alias`.
+  - `dst`: Full destination URL.
+  - The golink endpoint redirects `go/src` to `dst`.
 - `pages_oidc`: OIDC client credentials, requires `client_id` and `client_secret`.
+- [LauncherTW role vars](https://github.com/chrisx8/LauncherTW#configuration)
 
 Required facts: None
 

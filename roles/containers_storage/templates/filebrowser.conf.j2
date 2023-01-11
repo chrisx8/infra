@@ -26,13 +26,13 @@
 	OIDCClientSecret {{ storage_oidc.client_secret }}
 	OIDCPassClaimsAs headers
 	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
-	OIDCRedirectURI https://storage.arb.chrisx.xyz/auth/openid-connect
+	OIDCRedirectURI https://storage.arb.chrisx.xyz/openid-connect
 	OIDCScope "openid profile"
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true
 	OIDCCryptoPassphrase {{ oidc_crypto }}
 
-	<Location "/auth/openid-connect">
+	<Location "/openid-connect">
 		AuthType openid-connect
 		Require valid-user
 	</Location>
