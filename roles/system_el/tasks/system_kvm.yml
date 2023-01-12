@@ -42,7 +42,7 @@
     name: systemd-resolved
     enabled: true
     state: restarted
-- name: Use stub resolver
+- name: Use systemd stub resolver
   ansible.builtin.file:
     src: /run/systemd/resolve/stub-resolv.conf
     dest: /etc/resolv.conf

@@ -13,9 +13,6 @@
 - name: Configure KVM systems
   ansible.builtin.include_tasks: system_kvm.yml
   when: ansible_facts.virtualization_type == 'kvm'
-- name: Configure LXC systems
-  ansible.builtin.include_tasks: system_lxc.yml
-  when: ansible_facts.virtualization_type == 'lxc'
 
 - name: Reboot
   ansible.builtin.reboot:

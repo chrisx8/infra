@@ -1,9 +1,0 @@
-- name: Disable NetworkManager DNS management
-  ansible.builtin.copy:
-    content: "[main]\ndns=none\n"
-    dest: /etc/NetworkManager/conf.d/dns.conf
-    mode: 0644
-- name: Restart NetworkManager
-  ansible.builtin.systemd:
-    name: NetworkManager
-    state: restarted
