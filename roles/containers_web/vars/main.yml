@@ -61,7 +61,7 @@ container_specs:
     cap_drop:
       - all
   - name: keycloak
-    image: quay.io/keycloak/keycloak:20.0.2
+    image: quay.io/keycloak/keycloak:20.0.3
     command: start
     network: ct
     env:
