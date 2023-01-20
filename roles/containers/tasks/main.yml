@@ -10,6 +10,12 @@
     name: podman
     state: present
 
+- name: Create contianer network
+  containers.podman.podman_network:
+    name: "{{ container_network }}"
+    state: present
+  when: container_network is defined
+
 - name: Create container volumes
   containers.podman.podman_volume:
     name: "{{ item.name }}"
