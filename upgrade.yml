@@ -24,12 +24,6 @@
       ansible.builtin.dnf:
         autoremove: true
 
-- name: Upgrade pihole
-  hosts: pihole
-  become: true
-  roles:
-    - static_sites
-
 - name: Upgrade postgres
   hosts: postgres
   become: true

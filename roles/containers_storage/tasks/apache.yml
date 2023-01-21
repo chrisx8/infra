@@ -7,6 +7,20 @@
     - /opt/apache/log
     - /opt/apache/www
 
+- name: Create Apache ssl dir
+  ansible.builtin.file:
+    path: "/opt/apache/ssl/{{ ssl_domain }}"
+    state: directory
+    mode: 0700
+- name: Copy ssl cert for {{ ssl_domain }}
+  ansible.builtin.copy:
+    src: "certbot.d/config/live/{{ ssl_domain }}/{{ item }}"
+    dest: "/opt/apache/ssl/{{ ssl_domain }}"
+    mode: 0400
+  loop:
+    - fullchain.pem
+    - privkey.pem
+
 - name: Copy Apache conf.d
   ansible.builtin.copy:
     src: apache/conf.d
@@ -21,8 +35,3 @@
     src: filebrowser.conf.j2
     dest: /opt/apache/conf.d/filebrowser.conf
     mode: 0640
-
-- name: Copy arb ssl cert
-  ansible.builtin.import_role:
-    name: sslcert
-    tasks_from: arb.yml

@@ -1,11 +1,6 @@
 - name: Load secret vars
   ansible.builtin.include_vars: secrets.yml
 
-- name: Copy ssl certs
-  ansible.builtin.import_role:
-    name: sslcert
-    tasks_from: chrisx.xyz
-
 - name: Configure Apache
   ansible.builtin.import_tasks: apache.yml
 

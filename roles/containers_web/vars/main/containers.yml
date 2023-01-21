@@ -1,3 +1,4 @@
+ssl_domain: chrisx.xyz
 container_network: ct
 
 container_volumes:
@@ -120,7 +121,7 @@ container_specs:
       - "80:80"
       - "443:443"
     volumes:
-      - "/etc/ssl/chrisx.xyz:/etc/ssl/chrisx.xyz:ro,z"
       - "/opt/apache/conf.d:/etc/apache2/sites-enabled:ro,z"
       - "/opt/apache/log:/var/log/apache2:z"
+      - "/opt/apache/ssl:/etc/apache2/ssl:ro,z"
       - "/opt/apache/www:/var/www:ro,z"
