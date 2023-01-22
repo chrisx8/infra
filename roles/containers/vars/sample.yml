@@ -1,6 +1,4 @@
-container_build_images:
-  - name: local_image
-    path: /path/to/container/dir
+container_network: net
 
 container_specs:
   - name: local
@@ -12,8 +10,6 @@ container_specs:
       - "443:443"
     volumes:
       - "/etc/ssl:/etc/ssl:ro"
-
-container_network: net
 
 container_volumes:
   - name: vol1

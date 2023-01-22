@@ -14,6 +14,7 @@
   containers.podman.podman_network:
     name: "{{ container_network }}"
     state: present
+  register: _container_network
   when: container_network is defined
 
 - name: Create container volumes
@@ -24,6 +25,7 @@
   loop_control:
     label: "{{ item.name }}"
   register: _container_volumes_create
+
 - name: Change ownership of container volumes
   ansible.builtin.file:
     path: "{{ item.volume.Mountpoint }}"
@@ -36,17 +38,6 @@
     label: "{{ item.item.name }}"
   when: item.changed and item.item.owner is defined and item.item.group is defined
 
-- name: Build container images
-  containers.podman.podman_image:
-    name: "{{ item.name }}"
-    path: "{{ item.path }}"
-    force: true
-    state: build
-  loop: "{{ container_build_images }}"
-  loop_control:
-    label: "{{ item.name }}"
-  when: container_build_images is defined
-
 - name: Pull container images
   containers.podman.podman_image:
     name: "{{ item.image }}"
@@ -56,7 +47,6 @@
   loop: "{{ container_specs }}"
   loop_control:
     label: "{{ item.image }}"
-  when: "'localhost/' not in item.image"
 
 - name: Create containers
   containers.podman.podman_container: "{{ container_defaults | combine(item) }}"
