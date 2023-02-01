@@ -17,9 +17,6 @@
 	RequestHeader set X-Forwarded-Port "443"
 	RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 
-	ErrorLog /var/log/apache2/filebrowser_error.log
-	CustomLog /var/log/apache2/filebrowser_access.log combined
-
 	OIDCClientID {{ storage_oidc.client_id }}
 	OIDCClientSecret {{ storage_oidc.client_secret }}
 	OIDCPassClaimsAs headers
@@ -45,4 +42,7 @@
 	<LocationMatch "^/(share|static)/">
 		Require all granted
 	</LocationMatch>
+
+	ErrorLog /var/log/apache2/filebrowser_error.log
+	CustomLog /var/log/apache2/filebrowser_access.log combined
 </VirtualHost>

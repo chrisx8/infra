@@ -24,9 +24,6 @@
 	RewriteRule /notifications/hub(.*) ws://vaultwarden:3012/$1 [P,L]
 	Redirect 302 /admin/logout /admin/openid-connect?logout=
 
-	ErrorLog /var/log/apache2/vaultwarden_error.log
-	CustomLog /var/log/apache2/vaultwarden_access.log combined
-
 	OIDCClientID {{ vaultwarden_oidc.client_id }}
 	OIDCClientSecret {{ vaultwarden_oidc.client_secret }}
 	OIDCPassClaimsAs none
@@ -46,4 +43,7 @@
 		AuthType openid-connect
 		Require claim roles:admin
 	</Location>
+
+	ErrorLog /var/log/apache2/vaultwarden_error.log
+	CustomLog /var/log/apache2/vaultwarden_access.log combined
 </VirtualHost>
