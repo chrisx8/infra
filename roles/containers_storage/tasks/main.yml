@@ -1,5 +1,14 @@
 - name: Load secret vars
   ansible.builtin.include_vars: secrets.yml
+
+- name: Verify requirements
+  ansible.builtin.assert:
+    that:
+      - containers_storage_cron_ping_url is defined
+      - storage_oidc is defined
+      - storage_oidc.client_id
+      - storage_oidc.client_secret
+
 - name: Set Jellyfin config dir
   ansible.builtin.set_fact:
     _jellyfin_config_dir: /var/lib/containers/storage/volumes/jellyfin_config/_data

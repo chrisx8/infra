@@ -4,8 +4,8 @@ This role installs PHP-fpm 8.1 and Composer (optional). This role *requires* a w
 
 Role vars:
 
-- `php_install_composer`: if defined and true, the latest version of Composer will be installed.
-- `php_use_remi`: if defined and true, PHP will be installed from [Remi's RPM repository](https://blog.remirepo.net/pages/Config-en). Otherwise, PHP will be installed from AppStream.
+- `php_install_composer` (optional): if defined and true, the latest version of Composer will be installed.
+- `php_use_remi` (optional): if defined and true, PHP will be installed from [Remi's RPM repository](https://blog.remirepo.net/pages/Config-en). Otherwise, PHP will be installed from AppStream.
 
 Required facts: `distribution`
 

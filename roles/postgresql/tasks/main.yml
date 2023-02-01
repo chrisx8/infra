@@ -1,11 +1,12 @@
-- name: Verify system
+- name: Load secret vars
+  ansible.builtin.include_vars: secrets.yml
+
+- name: Verify requirements
   ansible.builtin.assert:
     that:
       - ansible_facts.distribution != 'Fedora'
       - ansible_facts.os_family == 'RedHat'
-
-- name: Load secret vars
-  ansible.builtin.include_vars: secrets.yml
+      - postgres_cron_ping_url is defined
 
 - name: Install PostgreSQL
   ansible.builtin.import_tasks: install.yml

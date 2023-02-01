@@ -1,6 +1,15 @@
 - name: Load secret vars
   ansible.builtin.include_vars: secrets.yml
 
+- name: Verify requirements
+  ansible.builtin.assert:
+    that:
+      - cloudflared_token is defined
+      - containers_web_cron_ping_url is defined
+      - vaultwarden_oidc is defined
+      - vaultwarden_oidc.client_id
+      - vaultwarden_oidc.client_secret
+
 - name: Configure Apache
   ansible.builtin.import_tasks: apache.yml
 
