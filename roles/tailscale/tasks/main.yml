@@ -1,9 +1,13 @@
-- name: Verify system
+- name: Load secret vars
+  ansible.builtin.include_vars: secrets.yml
+
+- name: Verify requirements
   ansible.builtin.assert:
     that:
       - ansible_facts.distribution != 'Fedora'
       - ansible_facts.os_family == 'Debian' or ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_type != 'lxc'
+      - tailscale_advertise_routes is defined
 
 - name: Install Tailscale (Debian)
   when: ansible_facts.os_family == 'Debian'
@@ -82,6 +86,6 @@
       --accept-dns=false
       --accept-routes=false
       --advertise-exit-node
-      --advertise-routes=10.69.0.0/24,10.69.100.0/24
+      --advertise-routes={{ tailscale_advertise_routes }}
       --snat-subnet-routes=false
   changed_when: false
