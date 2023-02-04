@@ -13,7 +13,7 @@ OP="$2"
 ################################################################################
 
 function fail() {
-	echo "Usage: certbot.sh WORKDIR certbot-(issue|renew)" 1>&2
+	echo "Usage: certbot.sh WORKDIR certbot-(clean|issue|renew|setup)" 1>&2
 	exit 1
 }
 
@@ -24,8 +24,8 @@ function setup() {
 	echo
 	echo "Creating certbot environment..."
 	python3 -m venv "$WORKDIR/venv"
-    # shellcheck source=/dev/null
-    source "$WORKDIR/venv/bin/activate"
+	# shellcheck source=/dev/null
+	source "$WORKDIR/venv/bin/activate"
 	echo
 	echo "Installing certbot..."
 	pip install -U pip wheel
@@ -33,10 +33,14 @@ function setup() {
 	echo
 }
 
+function clean() {
+	rm -rf "$WORKDIR/venv"
+}
+
 function issue() {
-    DOMAINS=""
+	DOMAINS=""
 	echo "Loading config from $WORKDIR/env"
-    # shellcheck source=/dev/null
+	# shellcheck source=/dev/null
 	source "$WORKDIR/env"
 	echo "Issuing certs with certbot..."
 	for DOMAIN in $DOMAINS; do
@@ -72,13 +76,19 @@ if [ ! -d "$WORKDIR" ]; then
 fi
 
 case "$OP" in
+	"certbot-clean")
+		clean
+		;;
 	"certbot-issue")
-        setup
+		setup
 		issue
 		;;
 	"certbot-renew")
-        setup
+		setup
 		renew
+		;;
+	"certbot-setup")
+		setup
 		;;
 	*)
 		fail
