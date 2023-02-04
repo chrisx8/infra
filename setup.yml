@@ -32,7 +32,6 @@
     - httpd
     - php_fpm
     - pihole
-    - static_sites
 
 - name: Set up PostgreSQL
   hosts: postgres

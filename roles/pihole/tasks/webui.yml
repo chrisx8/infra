@@ -7,10 +7,19 @@
       - php-xml
     state: present
 
-- name: Install arb cert
-  ansible.builtin.import_role:
-    name: sslcert
-    tasks_from: arb.yml
+- name: Create Apache ssl dir
+  ansible.builtin.file:
+    path: "/etc/ssl/{{ ssl_domain }}"
+    state: directory
+    mode: 0700
+- name: Copy ssl cert for {{ ssl_domain }}
+  ansible.builtin.copy:
+    src: "certbot.d/config/live/{{ ssl_domain }}/{{ item }}"
+    dest: "/etc/ssl/{{ ssl_domain }}"
+    mode: 0400
+  loop:
+    - fullchain.pem
+    - privkey.pem
 
 - name: Install index html
   ansible.builtin.copy:
