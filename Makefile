@@ -2,15 +2,21 @@ ANSIBLE_VAULT_ARGS = --vault-password-file files/bw_vault_password.sh
 EDITOR = code --wait
 
 # Set variable `checkdiff` to run Ansible with `--check --diff`
-# Example: `make setup checkdiff=yes`
+# Example: `make setup.yml checkdiff=yes`
 ifdef checkdiff
 	ANSIBLE_ARGS += --check --diff
 endif
 
 # Set variable `limit` to limit run to specified host(s)
-# Example: `make setup limit=guests`
+# Example: `make setup.yml limit=guests`
 ifdef limit
 	ANSIBLE_ARGS += --limit "$(limit)"
+endif
+
+# Set variable `novault` to bypass Ansible Vault setup
+# Example: `make setup.yml novault=yes`
+ifdef novault
+	ANSIBLE_VAULT_ARGS =
 endif
 
 # hack: placeholder task

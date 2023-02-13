@@ -31,9 +31,12 @@ Available `make` commands:
 Optional `make` args:
 
 - `checkdiff`: run Ansible with `--check --diff`
-  - Example: `make setup checkdiff=yes`
+  - Example: `make setup.yml checkdiff=yes`
 - `limit`: limit playbook run to specified host(s)
-  - Example: `make setup limit=guests`
+  - Example: `make setup.yml limit=guests`
+- `novault`: do not use Ansible Vault
+  - Example: `make setup.yml novault=yes`
+  - Note: if `novault` is set, roles that require Ansible Vault will fail
 
 ## Dependencies
 
