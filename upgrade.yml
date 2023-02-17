@@ -24,6 +24,16 @@
       ansible.builtin.dnf:
         autoremove: true
 
+- name: Upgrade Pi-hole
+  hosts: pihole
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Install ssl cert
+      ansible.builtin.import_role:
+        name: pihole
+        tasks_from: sslcert.yml
+
 - name: Upgrade postgres
   hosts: postgres
   become: true

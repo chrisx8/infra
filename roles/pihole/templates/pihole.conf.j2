@@ -3,7 +3,6 @@
 	SSLEngine on
 	SSLCertificateFile /etc/ssl/arb.chrisx.xyz/fullchain.pem
 	SSLCertificateKeyFile /etc/ssl/arb.chrisx.xyz/privkey.pem
-	Protocols h2 http/1.1
 
 	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 	Header set Referrer-Policy "same-otigin"
@@ -17,14 +16,14 @@
 	OIDCClientSecret {{ pihole_oidc.client_secret }}
 	OIDCRemoteUserClaim sub
 	OIDCScope openid
-	OIDCRedirectURI https://pihole.arb.chrisx.xyz/auth/openid-connect
+	OIDCRedirectURI https://pihole.arb.chrisx.xyz/openid-connect
 	OIDCCryptoPassphrase {{ oidc_crypto }}
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true
 
 	DocumentRoot /var/www/html
 
-	<Location "/auth/openid-connect">
+	<Location "/openid-connect">
 		AuthType openid-connect
 		Require valid-user
 	</Location>
@@ -32,9 +31,5 @@
 	<Directory "/var/www/html/admin">
 		AuthType openid-connect
 		Require claim roles:admin
-	</Directory>
-
-	<Directory "/var/www/html/admin/img/favicons">
-		Require all granted
 	</Directory>
 </VirtualHost>

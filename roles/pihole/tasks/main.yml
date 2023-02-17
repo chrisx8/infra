@@ -9,5 +9,7 @@
 
 - name: Install Pi-hole
   ansible.builtin.import_tasks: pihole.yml
+- name: Copy ssl cert
+  ansible.builtin.import_tasks: sslcert.yml
 - name: Configure Apache site for WebUI
   ansible.builtin.import_tasks: webui.yml

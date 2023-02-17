@@ -21,7 +21,7 @@
       - postgresql14-contrib
       - postgresql14-server
     state: present
-- name: Install dependencies for Ansible community.postgresql module
+- name: Install dependencies for community.postgresql
   ansible.builtin.dnf:
     name:
       - libpq-devel

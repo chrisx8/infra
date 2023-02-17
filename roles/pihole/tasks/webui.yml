@@ -7,26 +7,6 @@
       - php-xml
     state: present
 
-- name: Create Apache ssl dir
-  ansible.builtin.file:
-    path: "/etc/ssl/{{ ssl_domain }}"
-    state: directory
-    mode: 0700
-- name: Copy ssl cert for {{ ssl_domain }}
-  ansible.builtin.copy:
-    src: "certbot.d/config/live/{{ ssl_domain }}/{{ item }}"
-    dest: "/etc/ssl/{{ ssl_domain }}"
-    mode: 0400
-  loop:
-    - fullchain.pem
-    - privkey.pem
-
-- name: Install index html
-  ansible.builtin.copy:
-    src: index.html
-    dest: /var/www/html/index.html
-    mode: 0644
-
 - name: Generate new OIDC crypto password
   ansible.builtin.set_fact:
     oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
