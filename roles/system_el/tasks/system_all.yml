@@ -2,8 +2,11 @@
   ansible.builtin.hostname:
     name: "{{ ansible_host }}"
     use: systemd
+
 - name: Set timezone
-  ansible.builtin.command: "timedatectl set-timezone {{ timezone }}"
+  community.general.timezone:
+    name: "{{ timezone }}"
+    hwclock: "UTC"
   when: timezone is defined
 
 - name: Disable systemd coredump
