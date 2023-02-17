@@ -15,11 +15,13 @@
     name: epel-release
     state: present
   when: ansible_facts.distribution != 'Fedora'
+
 - name: Upgrade packages
   ansible.builtin.dnf:
     name: "*"
     update_cache: true
     state: latest
+
 - name: Install additional packages
   ansible.builtin.dnf:
     name:
@@ -33,6 +35,7 @@
       - unzip
       - wget
     state: present
+
 - name: Autoremove unneeded packages
   ansible.builtin.dnf:
     autoremove: true

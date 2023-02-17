@@ -1,0 +1,47 @@
+- name: Copy ssl cert
+  ansible.builtin.import_tasks: sslcert.yml
+
+- name: Disable systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    enabled: false
+    state: stopped
+  failed_when: false
+
+- name: Download latest AdGuardHome release from GitHub
+  ansible.builtin.unarchive:
+    src: https://github.com/AdguardTeam/AdGuardHome/releases/latest/download/AdGuardHome_linux_amd64.tar.gz
+    dest: /opt
+    remote_src: true
+    owner: nobody
+    group: nobody
+
+- name: Set permission on AdGuardHome binary
+  ansible.builtin.file:
+    path: /opt/AdGuardHome/AdGuardHome
+    mode: 0755
+    state: file
+- name: Set capabilities on AdGuardHome binary
+  community.general.capabilities:
+    capability: "{{ item }}"
+    path: /opt/AdGuardHome/AdGuardHome
+    state: present
+  loop:
+    - CAP_NET_BIND_SERVICE+eip
+    - CAP_NET_RAW+eip
+
+- name: Copy AdGuardHome systemd unit file
+  ansible.builtin.copy:
+    src: AdGuardHome.service
+    dest: /etc/systemd/system/AdGuardHome.service
+    mode: 0644
+- name: Enable and restart AdGuardHome
+  ansible.builtin.systemd:
+    name: AdGuardHome
+    daemon_reload: true
+    enabled: true
+    state: restarted
+
+- name: Finish setup
+  ansible.builtin.debug:
+    msg: "AdGuard Home is installed! Finish setup at http://{{ ansible_host }}:3000"
