@@ -13,4 +13,4 @@ Role variables:
 
 Required facts: `distribution`
 
-Supported OS: RedHat-based Linux systems, version 8 or newer
+Supported OS: CentOS Stream 8 or newer
