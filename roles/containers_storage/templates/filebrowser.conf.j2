@@ -11,12 +11,11 @@
 	Header set X-Frame-Options "DENY"
 	Header set X-Robots-Tag "none"
 
-	RequestHeader set X-Forwarded-Proto "https"
-	RequestHeader set X-Forwarded-Port "443"
-
 	ProxyPreserveHost On
 	ProxyPass "/" "http://filebrowser:80/"
 	ProxyPassReverse "/" "http://filebrowser:80/"
+	RequestHeader set X-Forwarded-Port "443"
+	RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 
 	ErrorLog /var/log/apache2/filebrowser_error.log
 	CustomLog /var/log/apache2/filebrowser_access.log combined
