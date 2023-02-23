@@ -1,6 +1,8 @@
 # Default values for each container
 # Need to override anything here? Declare the override in the individual container spec.
 container_defaults:
+  cap_drop:
+    - all
   generate_systemd:
     container_prefix: c
     path: /etc/systemd/system

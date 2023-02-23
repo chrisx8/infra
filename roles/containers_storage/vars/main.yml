@@ -5,6 +5,9 @@ container_specs:
   - name: filebrowser
     image: docker.io/filebrowser/filebrowser:latest
     network: "{{ container_network }}"
+    cap_add:
+      - DAC_OVERRIDE
+      - NET_BIND_SERVICE
     volumes:
       - "/opt/filebrowser.db:/database.db:z"
       - "/home:/srv:ro"
@@ -15,12 +18,16 @@ container_specs:
     image: docker.io/jellyfin/jellyfin:latest
     network: "{{ container_network }}"
     volumes:
+      - "jellyfin_cache:/cache:Z"
       - "jellyfin_config:/config:Z"
       - "/mnt/media:/media:z"
     user: "nobody:nogroup"
   - name: apache
     image: ghcr.io/chrisx8/apache-openidc:latest
     network: "{{ container_network }}"
+    cap_add:
+      - CHOWN
+      - NET_BIND_SERVICE
     ports:
       - "80:80"
       - "443:443"
@@ -32,5 +39,7 @@ container_specs:
       - "/opt/apache/www:/var/www:ro,z"
 
 container_volumes:
+  - name: jellyfin_cache
+    backup: false
   - name: jellyfin_config
     backup: true

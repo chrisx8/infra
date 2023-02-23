@@ -17,8 +17,6 @@ container_specs:
     image: docker.io/cloudflare/cloudflared:latest
     network: "{{ container_network }}"
     command: tunnel run --token {{ cloudflared_token }}
-    cap_drop:
-      - all
   - name: gitea
     image: docker.io/gitea/gitea:1-rootless
     network: "{{ container_network }}"
@@ -66,8 +64,6 @@ container_specs:
     volumes:
       - gitea_conf:/etc/gitea:Z
       - gitea_data:/var/lib/gitea:Z
-    cap_drop:
-      - all
   - name: keycloak
     image: quay.io/keycloak/keycloak:21.0
     command: start
@@ -80,12 +76,12 @@ container_specs:
       KC_DB_PASSWORD: "{{ postgres_keycloak_password }}"
       KC_HOSTNAME: "sso.chrisx.xyz"
       KC_PROXY: "edge"
-    cap_drop:
-      - all
   - name: vaultwarden
     image: docker.io/vaultwarden/server:latest
     network: "{{ container_network }}"
     user: nobody
+    cap_add:
+      - NET_BIND_SERVICE
     env:
       # yamllint disable-line rule:line-length
       DATABASE_URL: "postgres://vaultwarden:{{ postgres_vaultwarden_password }}@postgres.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt"
@@ -118,6 +114,9 @@ container_specs:
   - name: apache
     image: ghcr.io/chrisx8/apache-openidc:latest
     network: "{{ container_network }}"
+    cap_add:
+      - CHOWN
+      - NET_BIND_SERVICE
     ports:
       - "80:80"
       - "443:443"
