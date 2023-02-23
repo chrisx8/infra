@@ -69,7 +69,7 @@ container_specs:
     cap_drop:
       - all
   - name: keycloak
-    image: quay.io/keycloak/keycloak:20.0
+    image: quay.io/keycloak/keycloak:21.0
     command: start
     network: "{{ container_network }}"
     env:
