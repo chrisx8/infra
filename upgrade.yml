@@ -24,14 +24,13 @@
       ansible.builtin.dnf:
         autoremove: true
 
-- name: Upgrade Pi-hole
-  hosts: pihole
+- name: Upgrade AdGuard Home
+  hosts: adguard
   become: true
-  gather_facts: true
   tasks:
     - name: Install ssl cert
       ansible.builtin.import_role:
-        name: pihole
+        name: adguard_home
         tasks_from: sslcert.yml
 
 - name: Upgrade postgres

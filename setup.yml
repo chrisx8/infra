@@ -21,17 +21,15 @@
   roles:
     - system_el
 
-- name: Set up Pi-hole instance
-  hosts: pihole
+- name: Set up AdGuard Home
+  hosts: adguard
   become: true
   gather_facts: true
   gather_subset:
     - "!min"
     - "distribution"
   roles:
-    - httpd
-    - php_fpm
-    - pihole
+    - adguard_home
 
 - name: Set up PostgreSQL
   hosts: postgres
