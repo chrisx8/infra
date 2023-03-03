@@ -14,14 +14,14 @@
 
 	ProxyPass /admin/logout !
 	ProxyPass /robots.txt !
-	ProxyPass / http://vaultwarden:8288/
-	ProxyPassReverse / http://vaultwarden:8288/
+	ProxyPass / http://127.0.0.1:8288/
+	ProxyPassReverse / http://127.0.0.1:8288/
 	ProxyPreserveHost On
 	RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 
 	RewriteEngine on
 	RewriteCond %{HTTP:Upgrade} =websocket [NC]
-	RewriteRule /notifications/hub(.*) ws://vaultwarden:3012/$1 [P,L]
+	RewriteRule /notifications/hub(.*) ws://127.0.0.1:3012/$1 [P,L]
 	Redirect 302 /admin/logout /admin/openid-connect?logout=
 
 	OIDCClientID {{ vaultwarden_oidc.client_id }}

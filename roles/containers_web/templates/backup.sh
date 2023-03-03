@@ -3,7 +3,9 @@ set -e
 
 for v in $(podman volume ls -q); do
 	echo "Backing up $v..."
-	tar czf "/tmp/$v.tgz" "/var/lib/containers/storage/volumes/$v/_data/"
+	pushd "$HOME/.local/share/containers/storage/volumes/$v" > /dev/null
+	podman unshare tar czvf "/tmp/$v.tgz" "_data/"
+	popd > /dev/null
 done
 
 echo "====== List of backups ======"

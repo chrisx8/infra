@@ -1,0 +1,54 @@
+- name: Create container network
+  containers.podman.podman_network:
+    name: "{{ container_network }}"
+    state: present
+  register: _container_network
+  when: container_network
+
+- name: Create container volumes
+  containers.podman.podman_volume:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ container_volumes }}"
+
+- name: Pull container images
+  containers.podman.podman_image:
+    name: "{{ item.image }}"
+    force: true
+    pull: true
+    state: present
+  loop: "{{ container_specs }}"
+  loop_control:
+    label: "{{ item.image }}"
+
+- name: Disable and stop container systemd services
+  ansible.builtin.systemd:
+    name: "{{ container_defaults.generate_systemd.container_prefix }}-{{ item.name }}"
+    enabled: false
+    scope: user
+    state: stopped
+  failed_when: false
+  loop: "{{ container_specs }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Create containers
+  containers.podman.podman_container: "{{ container_defaults | combine(item) }}"
+  loop: "{{ container_specs }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Enable and start container systemd services
+  ansible.builtin.systemd:
+    name: "{{ container_defaults.generate_systemd.container_prefix }}-{{ item.name }}"
+    daemon_reload: true
+    enabled: true
+    scope: user
+    state: started
+  loop: "{{ container_specs }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Clean up container storage
+  ansible.builtin.command: "podman system prune -af"
+  changed_when: false

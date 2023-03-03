@@ -6,72 +6,31 @@
       - ansible_facts.virtualization_type == 'kvm'
       - container_network != 'host'
       - container_specs
+      - container_user != 'root'
 
 - name: Install Podman
   ansible.builtin.dnf:
     name: podman
     state: present
 
-- name: Create container network
-  containers.podman.podman_network:
-    name: "{{ container_network }}"
+- name: Create container user
+  ansible.builtin.user:
+    name: "{{ container_user }}"
+    create_home: true
+    password_lock: true
     state: present
-  register: _container_network
-  when: container_network is defined
+  register: _container_user_info
 
-- name: Create container volumes
-  containers.podman.podman_volume:
-    name: "{{ item.name }}"
-    state: present
-  loop: "{{ container_volumes }}"
-  loop_control:
-    label: "{{ item.name }}"
-  register: _container_volumes_create
-
-- name: Change ownership of container volumes
-  ansible.builtin.file:
-    path: "{{ item.volume.Mountpoint }}"
-    state: directory
-    recurse: true
-    owner: "{{ item.item.owner }}"
-    group: "{{ item.item.group }}"
-  loop: "{{ _container_volumes_create.results }}"
-  loop_control:
-    label: "{{ item.item.name }}"
-  when: item.changed and item.item.owner is defined and item.item.group is defined
-
-- name: Pull container images
-  containers.podman.podman_image:
-    name: "{{ item.image }}"
-    force: true
-    pull: true
-    state: present
-  loop: "{{ container_specs }}"
-  loop_control:
-    label: "{{ item.image }}"
-
-- name: Create containers
-  containers.podman.podman_container: "{{ container_defaults | combine(item) }}"
-  loop: "{{ container_specs }}"
-  loop_control:
-    label: "{{ item.name }}"
-
-- name: Enable and start container systemd services
-  ansible.builtin.systemd:
-    name: "{{ container_defaults.generate_systemd.container_prefix }}-{{ item.name }}"
-    enabled: true
-    daemon_reload: true
-    state: restarted
-  loop: "{{ container_specs }}"
-  loop_control:
-    label: "{{ item.name }}"
-
-- name: Clean up container storage
-  ansible.builtin.command: "podman system prune -af"
+- name: Enable linger for container user
+  ansible.builtin.command: "loginctl enable-linger {{ container_user }}"
   changed_when: false
 
-- name: Generate ct_util
-  ansible.builtin.template:
-    src: ct_util.j2
-    dest: /usr/local/bin/ct_util
-    mode: 0755
+- name: Run containers
+  ansible.builtin.import_tasks: containers.yml
+  become: true
+  become_user: "{{ container_user }}"
+
+- name: Set up user
+  ansible.builtin.import_tasks: user.yml
+  become: true
+  become_user: "{{ container_user }}"

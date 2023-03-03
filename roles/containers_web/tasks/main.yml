@@ -10,8 +10,29 @@
       - vaultwarden_oidc.client_id
       - vaultwarden_oidc.client_secret
 
-- name: Configure Apache
-  ansible.builtin.import_tasks: apache.yml
+- name: Allow unprivileged port bind
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_unprivileged_port_start
+    value: 80
+    reload: true
+    state: present
+
+- name: Create container user
+  ansible.builtin.user:
+    name: "{{ container_user }}"
+    create_home: true
+    state: present
+  register: _container_user_info
+
+- name: Pre-launch config
+  become_user: "{{ container_user }}"
+  block:
+    - name: Configure Apache
+      ansible.builtin.import_tasks: apache.yml
+    - name: Install static sites
+      ansible.builtin.import_tasks: pages.yml
+    - name: Copy helper scripts
+      ansible.builtin.import_tasks: scripts.yml
 
 - name: Set up Postgres DBs
   ansible.builtin.import_tasks: postgres_db.yml
@@ -24,7 +45,4 @@
 
 - name: Configure Apache RemoteIP
   ansible.builtin.import_tasks: apache_remoteip.yml
-- name: Install static sites
-  ansible.builtin.import_tasks: pages.yml
-- name: Copy helper scripts
-  ansible.builtin.import_tasks: scripts.yml
+  become_user: "{{ container_user }}"

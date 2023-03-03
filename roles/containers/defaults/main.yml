@@ -5,9 +5,13 @@ container_defaults:
     - all
   generate_systemd:
     container_prefix: c
-    path: /etc/systemd/system
+    path: ~/.config/systemd/user
     restart_policy: on-abnormal
+  hostname: containers.internal
   recreate: true
   security_opt:
     - no-new-privileges
   state: present
+
+container_network: ""
+container_volumes: []

@@ -4,18 +4,18 @@
     mode: 0755
     state: directory
   loop:
-    - /opt/apache/log
-    - /opt/apache/www
+    - "{{ _container_user_info.home }}/apache/log"
+    - "{{ _container_user_info.home }}/apache/www"
 
 - name: Create Apache ssl dir
   ansible.builtin.file:
-    path: "/opt/apache/ssl/{{ ssl_domain }}"
+    path: "{{ _container_user_info.home }}/apache/ssl/{{ ssl_domain }}"
     state: directory
     mode: 0700
 - name: Copy ssl cert for {{ ssl_domain }}
   ansible.builtin.copy:
     src: "certbot.d/config/live/{{ ssl_domain }}/{{ item }}"
-    dest: "/opt/apache/ssl/{{ ssl_domain }}"
+    dest: "{{ _container_user_info.home }}/apache/ssl/{{ ssl_domain }}"
     mode: 0400
   loop:
     - fullchain.pem
@@ -24,12 +24,12 @@
 - name: Copy Apache conf.d
   ansible.builtin.copy:
     src: apache/conf.d
-    dest: /opt/apache
+    dest: "{{ _container_user_info.home }}/apache"
     mode: 0640
 - name: Copy Apache html
   ansible.builtin.copy:
     src: apache/html
-    dest: /opt/apache/www
+    dest: "{{ _container_user_info.home }}/apache/www"
     mode: 0644
 
 - name: Generate OIDC crypto password
@@ -38,7 +38,7 @@
 - name: Copy templated Apache config
   ansible.builtin.template:
     src: "{{ item }}.j2"
-    dest: "/opt/apache/conf.d/{{ item }}"
+    dest: "{{ _container_user_info.home }}/apache/conf.d/{{ item }}"
     mode: 0640
   loop:
     - go.conf

@@ -5,20 +5,24 @@
   ansible.builtin.assert:
     that:
       - containers_storage_cron_ping_url is defined
-      - storage_oidc is defined
-      - storage_oidc.client_id
-      - storage_oidc.client_secret
 
-- name: Set Jellyfin config dir
-  ansible.builtin.set_fact:
-    _jellyfin_config_dir: /var/lib/containers/storage/volumes/jellyfin_config/_data
+- name: Create container user
+  ansible.builtin.user:
+    name: "{{ container_user }}"
+    create_home: true
+    home: /opt/podman
+    state: present
+  register: _container_user_info
 
 - name: Configure apps
-  ansible.builtin.import_tasks: apps.yml
-- name: Configure Apache
-  ansible.builtin.import_tasks: apache.yml
-- name: Copy helper scripts
-  ansible.builtin.import_tasks: scripts.yml
+  become_user: "{{ container_user }}"
+  block:
+    - name: Configure Apache
+      ansible.builtin.import_tasks: apache.yml
+    - name: Configure Jellyfin
+      ansible.builtin.import_tasks: jellyfin.yml
+    - name: Copy helper scripts
+      ansible.builtin.import_tasks: scripts.yml
 
 - name: Launch containers
   ansible.builtin.import_role:

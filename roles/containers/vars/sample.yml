@@ -1,4 +1,5 @@
 container_network: net
+container_user: someone
 
 container_specs:
   - name: local
@@ -12,6 +13,5 @@ container_specs:
       - "/etc/ssl:/etc/ssl:ro"
 
 container_volumes:
-  - name: vol1
-    owner: user
-    group: users
+  - vol1
+  - vol2

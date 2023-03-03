@@ -1,7 +1,15 @@
+- name: Gather default IPv4 information
+  ansible.builtin.setup:
+    gather_subset:
+      - "!all"
+      - "!min"
+      - "default_ipv4"
+  when: not container_network
+
 - name: Copy Apache RemoteIP config
   ansible.builtin.template:
     src: "1_remoteip.conf.j2"
-    dest: "/opt/apache/conf.d/1_remoteip.conf"
+    dest: "{{ _container_user_info.home }}/apache/conf.d/1_remoteip.conf"
     mode: 0640
 
 - name: Reload Apache

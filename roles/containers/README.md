@@ -1,13 +1,14 @@
 # Ansible Role: `containers`
 
-This role is a generic role for installing Podman and containerized apps.
+This role is a generic role for installing Podman and running rootless containers.
 
 Role variables ([sample](vars/sample.yml)):
 
 - `container_defaults` (default provided): Default values applied to all containers. To override, declare override values in individual container specs. See [defaults](defaults/main.yml).
 - `container_network` (optional): Name of the network to be created.
 - `container_specs` (**required**): Container specifications, see [`containers.podman.podman_container` docs](https://docs.ansible.com/ansible/latest/collections/containers/podman/podman_container_module.html#parameters).
-- `container_volumes` (optional): Container volumes to be created. Provide list of dicts with `name`, `owner`, and `group`.
+- `container_user` (**required**): Username or UID of the user which Podman will run as. Must not be `root`.
+- `container_volumes` (optional): Container volumes to be created. Provide list of volume names.
 
 Required facts: `distribution`, `virtualization_type`
 

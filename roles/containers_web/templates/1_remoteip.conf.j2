@@ -1,2 +1,6 @@
 RemoteIPHeader X-Forwarded-For
+{% if container_network %}
 RemoteIPTrustedProxy {{ _container_network.network.subnets[0].subnet }}
+{% else %}
+RemoteIPTrustedProxy {{ ansible_facts.default_ipv4.address }}
+{% endif %}
