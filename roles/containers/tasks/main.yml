@@ -4,7 +4,8 @@
       - ansible_facts.distribution_major_version|int >= 8
       - ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_type == 'kvm'
-      - container_specs is defined
+      - container_network != 'host'
+      - container_specs
 
 - name: Install Podman
   ansible.builtin.dnf:
