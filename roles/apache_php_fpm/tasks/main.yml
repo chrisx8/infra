@@ -1,0 +1,15 @@
+- name: Verify system
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution != 'Fedora'
+      - ansible_facts.distribution_major_version == '9'
+      - ansible_facts.os_family == 'RedHat'
+      - php_repo in ('', 'appstream', 'remi')
+      # php_repo must be set when php_install_composer is true
+      - not php_install_composer or php_repo
+
+- name: Install Apache httpd
+  ansible.builtin.import_tasks: httpd.yml
+- name: Install PHP
+  ansible.builtin.import_tasks: php.yml
+  when: php_repo

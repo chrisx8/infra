@@ -1,18 +1,11 @@
-- name: Verify system
-  ansible.builtin.assert:
-    that:
-      - ansible_facts.distribution != 'Fedora'
-      - ansible_facts.distribution_major_version == '9'
-      - ansible_facts.os_family == 'RedHat'
-
 - name: Install PHP 8.1 from AppStream
   ansible.builtin.dnf:
     name: "@php:8.1"
     state: present
-  when: php_use_remi is undefined or not php_use_remi
+  when: php_repo == 'appstream'
 
 - name: Install PHP 8.1 from Remi Modular repo
-  when: php_use_remi is defined and php_use_remi
+  when: php_repo == 'remi'
   block:
     - name: Enable CRB repo
       ansible.builtin.command:
@@ -40,7 +33,7 @@
   ansible.builtin.dnf:
     name: composer
     state: present
-  when: php_install_composer is defined and php_install_composer
+  when: php_install_composer
 
 - name: Configure PHP
   ansible.builtin.blockinfile:
