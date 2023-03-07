@@ -1,4 +1,3 @@
-ssl_domain: arb.chrisx.xyz
 container_network: ct
 
 container_specs:

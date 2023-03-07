@@ -8,7 +8,7 @@
 
 - name: Install ssl cert
   ansible.builtin.copy:
-    src: "certbot.d/config/live/arb.chrisx.xyz/{{ item }}"
+    src: "certbot.d/config/live/{{ ssl_domain }}/{{ item }}"
     dest: /var/lib/pgsql/ssl
     mode: 0400
     owner: postgres

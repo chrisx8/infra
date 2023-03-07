@@ -27,11 +27,8 @@
 - name: Upgrade AdGuard Home
   hosts: adguard
   become: true
-  tasks:
-    - name: Install ssl cert
-      ansible.builtin.import_role:
-        name: adguard_home
-        tasks_from: sslcert.yml
+  roles:
+    - adguard_home
 
 - name: Upgrade postgres
   hosts: postgres

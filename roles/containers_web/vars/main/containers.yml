@@ -1,4 +1,3 @@
-ssl_domain: chrisx.xyz
 container_network: ct
 
 container_volumes:
