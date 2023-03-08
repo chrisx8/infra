@@ -7,14 +7,14 @@
 
 - name: Get latest mod_auth_openidc version number from GitHub
   ansible.builtin.uri:
-    url: https://api.github.com/repos/zmartzone/mod_auth_openidc/releases/latest
+    url: https://api.github.com/repos/OpenIDC/mod_auth_openidc/releases/latest
     method: GET
   check_mode: false
   register: _mod_auth_openidc_release
 - name: Install mod_auth_openidc
   ansible.builtin.dnf:
     # yamllint disable-line rule:line-length
-    name: https://github.com/zmartzone/mod_auth_openidc/releases/download/v{{ item }}/mod_auth_openidc-{{ item }}-1.el9.x86_64.rpm
+    name: https://github.com/OpenIDC/mod_auth_openidc/releases/download/v{{ item }}/mod_auth_openidc-{{ item }}-1.el9.x86_64.rpm
     disable_gpg_check: true
     state: present
   with_items:
