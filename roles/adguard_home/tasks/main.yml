@@ -41,7 +41,3 @@
     daemon_reload: true
     enabled: true
     state: restarted
-
-- name: Finish setup
-  ansible.builtin.debug:
-    msg: "AdGuard Home is installed! Finish setup at http://{{ ansible_host }}:3000"
