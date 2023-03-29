@@ -33,7 +33,7 @@ _:
 
 # Run any Ansible playbook
 %.yml: _
-	ansible-playbook $(ANSIBLE_VAULT_ARGS) $(ANSIBLE_ARGS) $@
+	pipenv run ansible-playbook $(ANSIBLE_VAULT_ARGS) $(ANSIBLE_ARGS) $@
 
 ## Run the certbot helper script
 certbot-%: _
@@ -42,14 +42,15 @@ certbot-%: _
 # Set up Ansible environment
 # Includes required Ansible collections and pre-commit hooks
 envsetup:
-	ansible-galaxy collection install -U -r requirements.yml
-	pre-commit install --install-hooks
+	pipenv install --dev
+	pipenv run ansible-galaxy collection install -U -r requirements.yml
+	pipenv run pre-commit install --install-hooks
 
 # Run pre-commit checks on all files
 pre-commit:
-	pre-commit run --all-files
+	pipenv run pre-commit run --all-files
 
 # Edit Ansible Vault. Must set "host" variable
 vaultedit:
 	test -f "host_vars/$(host)/main/secrets.yml"
-	ansible-vault edit $(ANSIBLE_VAULT_ARGS) "host_vars/$(host)/main/secrets.yml"
+	pipenv run ansible-vault edit $(ANSIBLE_VAULT_ARGS) "host_vars/$(host)/main/secrets.yml"

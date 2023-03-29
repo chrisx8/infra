@@ -26,20 +26,27 @@ repos:
     hooks:
       - id: forbid-binary
       - id: shellcheck
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.32.0
+  - repo: local
     hooks:
       - id: yamllint
-  - repo: https://github.com/ansible-community/ansible-lint
-    rev: v6.17.2
-    hooks:
+        name: yamllint
+        language: script
+        entry: /usr/bin/env pipenv run yamllint
+        files: .+\.(yml)|(yaml)$
       - id: ansible-lint
+        name: Ansible-lint
+        entry: /usr/bin/env pipenv run ansible-lint -v
         args:
           - roles/containers_web/tasks/postgres_db.yml
           - roles/tailscale/tasks/main.yml
+        language: script
+        pass_filenames: false
       - id: ansible-lint
         name: Ansible-lint with reformatting
+        entry: /usr/bin/env pipenv run ansible-lint -v
         args:
           - --exclude=roles/containers_web/tasks/postgres_db.yml
           - --exclude=roles/tailscale/tasks/main.yml
           - --write
+        language: script
+        pass_filenames: false

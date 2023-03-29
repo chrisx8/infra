@@ -8,12 +8,19 @@ I use [Ansible](https://docs.ansible.com/ansible/latest/index.html) and [Podman]
 
 ### Setup
 
-First, make sure you have [Ansible](https://docs.ansible.com/ansible/latest/index.html), `ansible-lint`, and [pre-commit](https://pre-commit.com/) installed.
+First, make sure you have [Pipenv](https://pipenv.pypa.io) installed.
 
-Then, install repo dependencies, including Ansible collections and pre-commit hooks:
+Then, install repo dependencies, including Ansible, Ansible collections, `ansible-lint`, and pre-commit hooks:
 
 ```bash
 make envsetup
+```
+
+After initial setup, simply activate the Pipenv when working in this repo:
+
+```bash
+# Launch a shell in the Pipenv
+pipenv shell
 ```
 
 ### Makefile
@@ -30,8 +37,11 @@ Available `make` commands:
 
 Optional `make` args:
 
-- `checkdiff`: run Ansible with `--check --diff`
-  - Example: `make setup.yml checkdiff=yes`
+- `ANSIBLE_ARGS`: pass arbitrary arguments to Ansible, overwriting ALL args below.
+- `check`: run Ansible with `--check`
+  - Example: `make setup.yml check=yes`
+- `diff`: run Ansible with `--diff`
+  - Example: `make setup.yml diff=yes`
 - `limit`: limit playbook run to specified host(s)
   - Example: `make setup.yml limit=guests`
 - `novault`: do not use Ansible Vault
