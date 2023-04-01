@@ -12,6 +12,8 @@ golinks:
     dst: https://sso.chrisx.xyz/realms/chrisx/protocol/openid-connect/logout
   - src: pve
     dst: https://proxmox1.arb.chrisx.xyz:8006
+  - src: rss
+    dst: https://miniflux.arb.chrisx.xyz
   - src: sso
     dst: https://sso.chrisx.xyz/realms/chrisx/account/
   - src: ssoadmin

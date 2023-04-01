@@ -1,6 +1,8 @@
 <VirtualHost *:80>
 	ServerName go
 
+	DocumentRoot /var/www/html
+
 {% for link in golinks %}
 	RedirectMatch 302 ^/{{ link.src }}/?$ {{ link.dst }}
 {% endfor %}

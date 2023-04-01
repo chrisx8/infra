@@ -6,6 +6,7 @@ This role provides role variables for `containers` role, and installs containeri
 - [cloudflared](https://github.com/cloudflare/cloudflared)
 - [Gitea](https://gitea.io/)
 - [LauncherTW](https://github.com/chrisx8/LauncherTW)
+- [Miniflux](https://miniflux.app/)
 - [Keycloak](https://www.keycloak.org/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 

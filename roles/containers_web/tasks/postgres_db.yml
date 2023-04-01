@@ -27,3 +27,8 @@
       with_dict: "{{ postgres_passwords }}"
       loop_control:
         label: "{{ item.key }}"
+    - name: Add hstore extension to miniflux database
+      community.postgresql.postgresql_ext:
+        name: hstore
+        db: miniflux
+        state: present

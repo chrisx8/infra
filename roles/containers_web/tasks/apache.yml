@@ -50,3 +50,9 @@
     - go.conf
     - pages.conf
     - vaultwarden.conf
+
+- name: Copy templated html
+  ansible.builtin.template:
+    src: apache/html/index.html
+    dest: "{{ _container_user_info.home }}/apache/www/html/index.html"
+    mode: "0644"

@@ -75,10 +75,29 @@ container_specs:
       KC_HOSTNAME: sso.chrisx.xyz
       KC_HTTP_HOST: 127.0.0.1
       KC_PROXY: edge
+  # Miniflux: HTTP on 127.0.0.1:8081
+  - name: miniflux
+    image: docker.io/miniflux/miniflux:latest
+    network: host
+    env:
+      BASE_URL: https://miniflux.arb.chrisx.xyz
+      # yamllint disable-line rule:line-length
+      DATABASE_URL: postgres://miniflux:{{ postgres_passwords.miniflux }}@postgres.arb.chrisx.xyz/miniflux?sslmode=verify-full
+      DISABLE_HSTS: "1"
+      CLEANUP_REMOVE_SESSIONS_DAYS: "7"
+      LISTEN_ADDR: 127.0.0.1:8081
+      LOG_DATE_TIME: "1"
+      RUN_MIGRATIONS: "1"
+      OAUTH2_PROVIDER: oidc
+      OAUTH2_OIDC_DISCOVERY_ENDPOINT: https://sso.chrisx.xyz/realms/chrisx
+      OAUTH2_REDIRECT_URL: https://miniflux.arb.chrisx.xyz/oauth2/oidc/callback
+      OAUTH2_USER_CREATION: "1"
+      OAUTH2_CLIENT_ID: "{{ miniflux_oidc.client_id }}"
+      OAUTH2_CLIENT_SECRET: "{{ miniflux_oidc.client_secret }}"
   # Vaultwarden: HTTP on 127.0.0.1:8288, WebSocket on 127.0.0.1:3012
   - name: vaultwarden
     hostname: vaultwarden.{{ container_defaults.hostname }}
-    image: docker.io/vaultwarden/server:latest
+    image: docker.io/vaultwarden/server:testing
     network: host
     env:
       # yamllint disable-line rule:line-length
