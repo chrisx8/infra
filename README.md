@@ -54,55 +54,23 @@ To update pre-commit hooks, run:
 pre-commit autoupdate
 ```
 
-## Hardware
-
-### Server: HP EliteDesk 800 G2 Mini
-
-- Runs [Proxmox VE](https://www.proxmox.com/en/proxmox-ve)
-- Intel Core i5-6500T (quad-core)
-- 16GB DDR4 RAM
-- 240GB NVMe SSD + 8TB SATA HDD
-- Intel Gigabit Ethernet
-- Intel Wireless-AC 9260 (802.11ac Wi-Fi + Bluetooth 5.1)
-
-### Router & Wi-Fi AP: Belkin RT3200
-
-- Wi-Fi 6 (AX3200)
-- Runs [OpenWrt](https://openwrt.org)
-  - [OpenWrt installer](https://github.com/dangowrt/owrt-ubi-installer)
-- [OpenWrt wiki page](https://openwrt.org/toh/linksys/e8450)
-  - Note: Belkin RT3200 == Linksys E8450
-
 ## Software
 
-### Networking
-
-- [OpenWrt](https://openwrt.org/)
-- [Pi-hole](https://pi-hole.net/)
-- [Tailscale](https://tailscale.com/)
-
-### Home Automation
-
+- [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome)
+- [Apache HTTP Server with mod_auth_openidc](https://github.com/chrisx8/docker-apache-openidc)
+- [cloudflared](https://github.com/cloudflare/cloudflared)
+- [File Browser](https://github.com/filebrowser/filebrowser)
+- [Gitea](https://gitea.io/)
 - [Home Assistant](https://www.home-assistant.io)
   - [My Home Assistant Add-ons](https://github.com/chrisx8/home-assistant-addons)
   - [HACS](https://hacs.xyz)
-
-### Identity Management & Single Sign-On
-
-- [Keycloak](https://www.keycloak.org/)
-- [mod_auth_openidc](https://github.com/zmartzone/mod_auth_openidc)
-
-### Storage and Media
-
-- [File Browser](https://github.com/filebrowser/filebrowser)
 - [Jellyfin](https://jellyfin.org/)
   - [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
-- Per-user file shares, accessible via Samba and SFTP
-
-### Web Apps
-
-- [Gitea](https://gitea.io/)
+- [Keycloak](https://www.keycloak.org/)
 - [LauncherTW](https://github.com/chrisx8/LauncherTW) (another one of my projects)
+- [OpenWrt](https://openwrt.org/)
+- Samba and SFTP file shares
+- [Tailscale](https://tailscale.com/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 
 ## Resources

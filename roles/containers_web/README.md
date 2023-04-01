@@ -2,7 +2,7 @@
 
 This role provides role variables for `containers` role, and installs containerized web apps, including:
 
-- [Apache with mod_auth_openidc](https://github.com/chrisx8/docker-apache-openidc)
+- [Apache HTTP Server with mod_auth_openidc](https://github.com/chrisx8/docker-apache-openidc)
 - [cloudflared](https://github.com/cloudflare/cloudflared)
 - [Gitea](https://gitea.io/)
 - [LauncherTW](https://github.com/chrisx8/LauncherTW)

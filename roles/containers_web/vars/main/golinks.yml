@@ -1,17 +1,23 @@
 golinks:
   - src:
     dst: https://pages.chrisx.xyz/launcher/
+  - src: adguard
+    dst: https://adguard.arb.chrisx.xyz
+  - src: files
+    dst: https://storage.arb.chrisx.xyz
   - src: git
     dst: https://gitea.chrisx.xyz
   - src: jellyfin
     dst: https://storage.arb.chrisx.xyz:8443
-  - src: hass
-    dst: https://hass.arb.chrisx.xyz:8123
+  - src: logout
+    dst: https://sso.chrisx.xyz/realms/chrisx/protocol/openid-connect/logout
   - src: pve
     dst: https://proxmox1.arb.chrisx.xyz:8006
   - src: sso
     dst: https://sso.chrisx.xyz/realms/chrisx/account/
-  - src: storage
-    dst: https://storage.arb.chrisx.xyz
+  - src: ssoadmin
+    dst: https://sso.chrisx.xyz/admin/chrisx/console/
   - src: vault
     dst: https://vaultwarden.chrisx.xyz
+  - src: vaultadmin
+    dst: https://vaultwarden.chrisx.xyz/admin

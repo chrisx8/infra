@@ -25,9 +25,9 @@ services:
   - name: Network
     icon: fa-solid fa-network-wired
     apps:
-      - name: Pi-hole
+      - name: AdGuard Home
         icon: fa-solid fa-asterisk
-        url: https://pihole.arb.chrisx.xyz/admin/
+        url: https://adguard.arb.chrisx.xyz
         newtab: true
       - name: RT3200 (OpenWrt)
         icon: fa-solid fa-wifi

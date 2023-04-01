@@ -3,5 +3,8 @@
 
 {% for link in golinks %}
 	RedirectMatch 302 ^/{{ link.src }}/?$ {{ link.dst }}
-{% endfor -%}
+{% endfor %}
+
+	ErrorLog /var/log/apache2/go_error.log
+	CustomLog /var/log/apache2/go_access.log combined
 </VirtualHost>
