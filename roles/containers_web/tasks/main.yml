@@ -21,15 +21,13 @@
     name: "{{ container_user }}"
     create_home: true
     state: present
-  register: _container_user_info # noqa var-naming[no-role-prefix]
+  register: _container_user_info
 
 - name: Pre-launch config
   become_user: "{{ container_user }}"
   block:
     - name: Configure Apache
       ansible.builtin.import_tasks: apache.yml
-    - name: Install static sites
-      ansible.builtin.import_tasks: pages.yml
     - name: Copy helper scripts
       ansible.builtin.import_tasks: scripts.yml
     - name: Set up PostgreSQL databases and users

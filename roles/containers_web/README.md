@@ -5,7 +5,6 @@ This role provides role variables for `containers` role, and installs containeri
 - [Apache HTTP Server with mod_auth_openidc](https://github.com/chrisx8/docker-apache-openidc)
 - [cloudflared](https://github.com/cloudflare/cloudflared)
 - [Gitea](https://gitea.io/)
-- [LauncherTW](https://github.com/chrisx8/LauncherTW)
 - [Miniflux](https://miniflux.app/)
 - [Keycloak](https://www.keycloak.org/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
@@ -18,7 +17,6 @@ Role variables:
   - `src`: Golink alias. For example, a value of `alias` refers to the URL `go/alias`.
   - `dst`: Full destination URL.
   - Usage: `go/src` redirects to `dst`.
-- `pages_oidc` (**required**): OIDC client credentials, requires `client_id` and `client_secret`.
 - `postgres_passwords`: list of PostgreSQL databases and users.
   - For each list element, specify `db_name: ""`.
   - This will create databases with `db_name` and users with username `db_name` and randonly generated passwords.
@@ -34,7 +32,6 @@ Role variables:
   - `YUBICO_SECRET_KEY`
   - Refer to [Vaultwarden .env.template](https://github.com/dani-garcia/vaultwarden/blob/main/.env.template).
 - `vaultwarden_oidc` (**required**): OIDC client credentials, requires `client_id` and `client_secret`.
-- [LauncherTW role vars](https://github.com/chrisx8/LauncherTW#configuration) (**required**)
 
 Required facts: `default_ipv4`, `distribution`, `virtualization_type`
 

@@ -11,7 +11,7 @@
     url: https://api.github.com/repos/OpenIDC/mod_auth_openidc/releases/latest
     method: GET
   check_mode: false
-  register: _mod_auth_openidc_release # noqa var-naming[no-role-prefix]
+  register: _mod_auth_openidc_release
 - name: Install mod_auth_openidc
   ansible.builtin.dnf:
     # yamllint disable-line rule:line-length

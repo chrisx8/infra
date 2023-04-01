@@ -73,7 +73,7 @@
       ###### Tailscale - ACTION REQUIRED ######
       Generate a single-use, pre-authorized Tailscale auth key at https://login.tailscale.com/admin/settings/keys
       Enter Tailscale auth key
-  register: _tailscale_auth_key # noqa var-naming[no-role-prefix]
+  register: _tailscale_auth_key
 
 - name: Bring up Tailscale
   ansible.builtin.command:

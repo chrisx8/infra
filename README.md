@@ -66,7 +66,6 @@ pre-commit autoupdate
 - [Jellyfin](https://jellyfin.org/)
   - [Ugrend/jellyfin-plugin-keycloak-auth](https://github.com/Ugrend/jellyfin-plugin-keycloak-auth)
 - [Keycloak](https://www.keycloak.org/)
-- [LauncherTW](https://github.com/chrisx8/LauncherTW) (another one of my projects)
 - [Miniflux](https://miniflux.app/)
 - [OpenWrt](https://openwrt.org/)
 - Samba and SFTP file shares

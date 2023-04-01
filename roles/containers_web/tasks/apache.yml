@@ -41,7 +41,6 @@
   loop:
     - 1_default.conf
     - go.conf
-    - pages.conf
     - vaultwarden.conf
 
 - name: Copy templated html

@@ -1,7 +1,5 @@
 ---
 golinks:
-  - src:
-    dst: https://pages.chrisx.xyz/launcher/
   - src: adguard
     dst: https://adguard.arb.chrisx.xyz
   - src: git
