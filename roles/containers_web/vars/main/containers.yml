@@ -3,7 +3,7 @@ container_user: podman
 container_volumes:
   - gitea_conf
   - gitea_data
-  - vaultwarden_data
+  - vaultwarden
 
 container_specs:
   - name: cloudflared
@@ -77,8 +77,6 @@ container_specs:
     hostname: vaultwarden.{{ container_defaults.hostname }}
     image: docker.io/vaultwarden/server:latest
     network: host
-    cap_add:
-      - NET_BIND_SERVICE
     env:
       # yamllint disable-line rule:line-length
       DATABASE_URL: "postgres://vaultwarden:{{ postgres_vaultwarden_password }}@postgres.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt"
@@ -107,7 +105,7 @@ container_specs:
       YUBICO_CLIENT_ID: "{{ vaultwarden_env.YUBICO_CLIENT_ID }}"
       YUBICO_SECRET_KEY: "{{ vaultwarden_env.YUBICO_SECRET_KEY }}"
     volumes:
-      - vaultwarden_data:/data:Z
+      - vaultwarden:/data:Z
   # Apache: HTTP on 0.0.0.0:80, HTTPS on 0.0.0.0:443
   - name: apache
     hostname: apache.{{ container_defaults.hostname }}
