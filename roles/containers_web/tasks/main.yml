@@ -33,11 +33,8 @@
       ansible.builtin.import_tasks: pages.yml
     - name: Copy helper scripts
       ansible.builtin.import_tasks: scripts.yml
-
-- name: Set up Postgres DBs
-  ansible.builtin.import_tasks: postgres_db.yml
-  become_user: postgres
-  delegate_to: postgres
+    - name: Set up PostgreSQL databases and users
+      ansible.builtin.include_tasks: postgres_db.yml
 
 - name: Launch containers
   ansible.builtin.import_role:

@@ -1,0 +1,4 @@
+postgres_passwords:
+  - gitea: ""
+  - keycloak: ""
+  - vaultwarden: ""

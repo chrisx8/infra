@@ -1,38 +1,27 @@
-- name: Generate new password for PostgreSQL keycloak user
+- name: Generate PostgreSQL user passwords
   ansible.builtin.set_fact:
-    postgres_keycloak_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-- name: Create keycloak database
-  community.postgresql.postgresql_db:
-    name: keycloak
-    state: present
-- name: Create PostgreSQL keycloak user
-  community.postgresql.postgresql_user:
-    db: keycloak
-    name: keycloak
-    password: "{{ postgres_keycloak_password }}"
+    # yamllint disable-line rule:line-length
+    postgres_passwords: "{{ postgres_passwords | combine({item.key: lookup('password', '/dev/null chars=ascii_letters,digits length=64')}) }}"
+  with_dict: "{{ postgres_passwords }}"
+  loop_control:
+    label: "{{ item.key }}"
 
-- name: Generate new password for PostgreSQL gitea user
-  ansible.builtin.set_fact:
-    postgres_gitea_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-- name: Create gitea database
-  community.postgresql.postgresql_db:
-    name: gitea
-    state: present
-- name: Create PostgreSQL gitea user
-  community.postgresql.postgresql_user:
-    db: gitea
-    name: gitea
-    password: "{{ postgres_gitea_password }}"
-
-- name: Generate new password for PostgreSQL vaultwarden user
-  ansible.builtin.set_fact:
-    postgres_vaultwarden_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
-- name: Create vaultwarden database
-  community.postgresql.postgresql_db:
-    name: vaultwarden
-    state: present
-- name: Create PostgreSQL vaultwarden user
-  community.postgresql.postgresql_user:
-    db: vaultwarden
-    name: vaultwarden
-    password: "{{ postgres_vaultwarden_password }}"
+- name: Set up PostgreSQL databases and users
+  become_user: postgres
+  delegate_to: postgres
+  block:
+    - name: Create PostgreSQL databases
+      community.postgresql.postgresql_db:
+        name: "{{ item }}"
+        state: present
+      with_dict: "{{ postgres_passwords }}"
+      loop_control:
+        label: "{{ item.key }}"
+    - name: Create PostgreSQL users
+      community.postgresql.postgresql_user:
+        db: "{{ item.key }}"
+        name: "{{ item.key }}"
+        password: "{{ item.value }}"
+      with_dict: "{{ postgres_passwords }}"
+      loop_control:
+        label: "{{ item.key }}"
