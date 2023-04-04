@@ -1,10 +1,3 @@
-- name: Create container network
-  containers.podman.podman_network:
-    name: "{{ container_network }}"
-    state: present
-  register: _container_network
-  when: container_network
-
 - name: Create container volumes
   containers.podman.podman_volume:
     name: "{{ item }}"

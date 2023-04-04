@@ -4,7 +4,6 @@
       - "!all"
       - "!min"
       - "default_ipv4"
-  when: not container_network
 
 - name: Copy Apache RemoteIP config
   ansible.builtin.template:

@@ -13,5 +13,4 @@ container_defaults:
     - no-new-privileges
   state: present
 
-container_network: ""
 container_volumes: []

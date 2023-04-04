@@ -1,4 +1,3 @@
-container_network: net
 container_user: someone
 
 container_specs:
