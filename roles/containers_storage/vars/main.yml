@@ -25,3 +25,4 @@ container_specs:
       - "{{ _container_user_info.home }}/apache/log:/var/log/apache2:Z"
       - "{{ _container_user_info.home }}/apache/ssl:/etc/apache2/ssl:ro,Z"
       - "{{ _container_user_info.home }}/apache/www:/var/www:ro,Z"
+      - "{{ _container_user_info.home }}/apache/ports.conf:/etc/apache2/ports.conf:ro,Z"

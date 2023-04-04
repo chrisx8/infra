@@ -7,9 +7,6 @@
       - php-xml
     state: present
 
-- name: Generate OIDC crypto password
-  ansible.builtin.set_fact:
-    oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
 - name: Install Apache pihole config
   ansible.builtin.template:
     src: pihole.conf.j2

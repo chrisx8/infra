@@ -32,15 +32,20 @@
     dest: "{{ _container_user_info.home }}/apache/www"
     mode: 0644
 
-- name: Generate OIDC crypto password
-  ansible.builtin.set_fact:
-    oidc_crypto: "{{ lookup('password', '/dev/null length=64') }}"
+- name: Gather default IPv4 information
+  ansible.builtin.setup:
+    gather_subset:
+      - "!all"
+      - "!min"
+      - "default_ipv4"
+
 - name: Copy templated Apache config
   ansible.builtin.template:
-    src: "{{ item }}.j2"
+    src: "apache/conf.d/{{ item }}.j2"
     dest: "{{ _container_user_info.home }}/apache/conf.d/{{ item }}"
     mode: 0640
   loop:
+    - 1_default.conf
     - go.conf
     - pages.conf
     - vaultwarden.conf

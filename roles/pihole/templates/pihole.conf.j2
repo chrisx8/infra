@@ -17,7 +17,7 @@
 	OIDCRemoteUserClaim sub
 	OIDCScope openid
 	OIDCRedirectURI https://pihole.arb.chrisx.xyz/openid-connect
-	OIDCCryptoPassphrase {{ oidc_crypto }}
+	OIDCCryptoPassphrase {{ lookup('password', '/dev/null length=64') }}
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true
 

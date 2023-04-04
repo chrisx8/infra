@@ -24,7 +24,6 @@
 - name: Install dependencies for community.postgresql
   ansible.builtin.dnf:
     name:
-      - libpq-devel
       - python3-psycopg2
     state: present
 

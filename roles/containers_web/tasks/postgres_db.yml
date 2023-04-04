@@ -12,7 +12,7 @@
   block:
     - name: Create PostgreSQL databases
       community.postgresql.postgresql_db:
-        name: "{{ item }}"
+        name: "{{ item.key }}"
         state: present
       with_dict: "{{ postgres_passwords }}"
       loop_control:

@@ -21,8 +21,11 @@
     - fullchain.pem
     - privkey.pem
 
-- name: Copy Apache conf.d
+- name: Copy Apache config
   ansible.builtin.copy:
-    src: apache/conf.d
+    src: "apache/{{ item }}"
     dest: "{{ _container_user_info.home }}/apache"
     mode: 0640
+  loop:
+    - conf.d
+    - ports.conf

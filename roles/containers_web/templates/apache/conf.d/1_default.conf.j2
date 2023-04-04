@@ -2,8 +2,13 @@ ServerSignature Off
 ServerTokens Prod
 TraceEnable Off
 
+AllowEncodedSlashes NoDecode
+
 KeepAlive On
 KeepAliveTimeout 5
+
+RemoteIPHeader X-Forwarded-For
+RemoteIPTrustedProxy {{ ansible_facts.default_ipv4.address }}
 
 SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1 -TLSv1.2
 SSLHonorCipherOrder Off

@@ -4,7 +4,7 @@ golinks:
   - src: adguard
     dst: https://adguard.arb.chrisx.xyz
   - src: git
-    dst: https://gitea.chrisx.xyz
+    dst: https://gitea.arb.chrisx.xyz
   - src: jellyfin
     dst: https://storage.arb.chrisx.xyz:8443
   - src: logout

@@ -14,8 +14,8 @@
 
 	ProxyPass /admin/logout !
 	ProxyPass /robots.txt !
-	ProxyPass / http://127.0.0.1:8288/
-	ProxyPassReverse / http://127.0.0.1:8288/
+	ProxyPass / http://127.0.0.1:8288/ nocanon
+	ProxyPassReverse / http://127.0.0.1:8288/ nocanon
 	ProxyPreserveHost On
 	RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 
@@ -32,7 +32,7 @@
 	OIDCScope openid
 	OIDCSessionInactivityTimeout 3600
 	OIDCStateMaxNumberOfCookies 2 true
-	OIDCCryptoPassphrase {{ oidc_crypto }}
+	OIDCCryptoPassphrase {{ lookup('password', '/dev/null length=64') }}
 
 	<Location "/admin/openid-connect">
 		AuthType openid-connect

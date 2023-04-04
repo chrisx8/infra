@@ -39,7 +39,3 @@
 - name: Launch containers
   ansible.builtin.import_role:
     name: containers
-
-- name: Configure Apache RemoteIP
-  ansible.builtin.import_tasks: apache_remoteip.yml
-  become_user: "{{ container_user }}"
