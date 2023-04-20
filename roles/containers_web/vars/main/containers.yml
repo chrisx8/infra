@@ -62,7 +62,7 @@ container_specs:
   # Keycloak: HTTP on 127.0.0.1:8080
   - name: keycloak
     hostname: keycloak.{{ container_defaults.hostname }}
-    image: quay.io/keycloak/keycloak:21.0
+    image: quay.io/keycloak/keycloak:21.1
     command: start
     network: host
     env:

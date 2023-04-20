@@ -6,7 +6,6 @@ container_defaults:
   generate_systemd:
     container_prefix: c
     path: ~/.config/systemd/user
-    restart_policy: on-abnormal
   hostname: containers.internal
   recreate: true
   security_opt:
