@@ -1,7 +1,8 @@
+---
 - name: Configure PostgreSQL server
   ansible.builtin.blockinfile:
     path: /var/lib/pgsql/14/data/postgresql.conf
-    mode: 0600
+    mode: "0600"
     block: |
       listen_addresses = '*'
       ssl = on
@@ -14,7 +15,7 @@
 - name: Configure PostgreSQL access policy
   ansible.builtin.blockinfile:
     path: /var/lib/pgsql/14/data/pg_hba.conf
-    mode: 0600
+    mode: "0600"
     block: |
       # TYPE DATABASE USER ADDRESS METHOD
       hostssl  all  all  10.69.0.0/24  scram-sha-256

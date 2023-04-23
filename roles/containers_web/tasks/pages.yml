@@ -1,3 +1,4 @@
+---
 - name: Install Launcher
   block:
     - name: Load Launcher vars
@@ -28,4 +29,4 @@
   ansible.builtin.copy:
     src: pages/index.html
     dest: /opt/apache/www/pages/index.html
-    mode: 0644
+    mode: "0644"

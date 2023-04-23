@@ -1,25 +1,26 @@
+---
 - name: Create Pi-hole config dir
   ansible.builtin.file:
     name: /etc/pihole
     state: directory
-    mode: 0755
+    mode: "0755"
 - name: Copy Pi-hole config
   ansible.builtin.copy:
     src: setupVars.conf
     dest: /etc/pihole/setupVars.conf
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: Download Pi-hole install script
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/pi-hole/pi-hole/master/automated%20install/basic-install.sh
     dest: /tmp/pihole-basic-install.sh
-    mode: 0750
+    mode: "0750"
   check_mode: false
 - name: Run Pi-hole install script
   ansible.builtin.command:
-    cmd: "env PIHOLE_SKIP_OS_CHECK=true /tmp/pihole-basic-install.sh --unattended"
+    cmd: env PIHOLE_SKIP_OS_CHECK=true /tmp/pihole-basic-install.sh --unattended
   changed_when: true
 - name: Delete Pi-hole install script
   ansible.builtin.file:
@@ -42,18 +43,18 @@
   ansible.builtin.copy:
     src: 99-custom.conf
     dest: /etc/dnsmasq.d/99-custom.conf
-    mode: 0644
+    mode: "0644"
 
 - name: Copy helper scripts
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: /usr/local/bin
-    mode: 0755
+    mode: "0755"
   loop:
     - pihole_block.sh
     - pihole_update.sh
 
-- name: Configure crontab - Gravity update
+- name: Configure daily Gravity update
   ansible.builtin.cron:
     name: Update Pi-hole Gravity lists
     job: /usr/local/bin/pihole -g
@@ -63,5 +64,5 @@
 
 - name: Restart Pi-hole
   ansible.builtin.command:
-    cmd: "pihole restartdns"
+    cmd: pihole restartdns
   changed_when: true

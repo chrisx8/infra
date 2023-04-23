@@ -1,3 +1,4 @@
+---
 - name: Install PHP modules
   ansible.builtin.dnf:
     name:
@@ -11,7 +12,7 @@
   ansible.builtin.template:
     src: pihole.conf.j2
     dest: /etc/httpd/conf.d/pihole.conf
-    mode: 0640
+    mode: "0640"
 - name: Reload Apache
   ansible.builtin.systemd:
     name: httpd

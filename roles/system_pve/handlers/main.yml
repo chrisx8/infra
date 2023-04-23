@@ -1,3 +1,4 @@
+---
 - name: Restart pveproxy
   ansible.builtin.systemd:
     name: pveproxy.service

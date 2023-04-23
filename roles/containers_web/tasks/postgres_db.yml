@@ -1,3 +1,4 @@
+---
 - name: Generate PostgreSQL user passwords
   ansible.builtin.set_fact:
     # yamllint disable-line rule:line-length

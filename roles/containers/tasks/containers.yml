@@ -1,3 +1,4 @@
+---
 - name: Create container volumes
   containers.podman.podman_volume:
     name: "{{ item }}"
@@ -42,6 +43,6 @@
   loop_control:
     label: "{{ item.name }}"
 
-- name: Clean up container storage
-  ansible.builtin.command: "podman system prune -af"
+- name: Prune container storage
+  ansible.builtin.command: podman system prune -af
   changed_when: false

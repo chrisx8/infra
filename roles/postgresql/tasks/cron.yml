@@ -1,15 +1,16 @@
+---
 - name: Copy backup script
   ansible.builtin.template:
     src: backup.sh
     dest: /var/lib/pgsql/backup.sh
     owner: postgres
     group: postgres
-    mode: 0750
+    mode: "0750"
 
 - name: Set up backup cron job
   ansible.builtin.cron:
     name: container backup
-    job: "bash /var/lib/pgsql/backup.sh"
+    job: bash /var/lib/pgsql/backup.sh
     hour: 22
     minute: 12
     user: postgres

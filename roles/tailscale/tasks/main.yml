@@ -1,3 +1,4 @@
+---
 - name: Load secret vars
   ansible.builtin.include_vars: secrets.yml
 
@@ -15,18 +16,18 @@
     - name: Add Tailscale repo list (apt)
       ansible.builtin.lineinfile:
         path: /etc/apt/sources.list.d/tailscale.list
-        regexp: "^deb https://pkg.tailscale.com/stable/"
+        regexp: ^deb https://pkg.tailscale.com/stable/
         # yamllint disable-line rule:line-length
-        line: "deb https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution | lower }} {{ ansible_facts.distribution_release | lower }} main"
+        line: deb https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution | lower }} {{ ansible_facts.distribution_release | lower }} main
         create: true
-        mode: 0644
+        mode: "0644"
         state: present
     - name: Add Tailscale repo key (apt)
       ansible.builtin.get_url:
         # yamllint disable-line rule:line-length
-        url: "https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution | lower }}/{{ ansible_facts.distribution_release | lower }}.noarmor.gpg"
+        url: https://pkgs.tailscale.com/stable/{{ ansible_facts.distribution | lower }}/{{ ansible_facts.distribution_release | lower }}.noarmor.gpg
         dest: /etc/apt/trusted.gpg.d/tailscale-archive-keyring.gpg
-        mode: 0644
+        mode: "0644"
     - name: Install Tailscale (apt)
       ansible.builtin.apt:
         name: tailscale
@@ -52,7 +53,7 @@
         update_cache: true
         state: present
 
-- name: Change sysctl configs
+- name: Change sysctl config
   ansible.posix.sysctl:
     name: "{{ item.key }}"
     value: "{{ item.value }}"

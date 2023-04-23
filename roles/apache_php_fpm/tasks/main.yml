@@ -1,3 +1,4 @@
+---
 - name: Verify system
   ansible.builtin.assert:
     that:

@@ -1,3 +1,4 @@
+---
 - name: Install extra Debian packages
   ansible.builtin.apt:
     name:
@@ -26,7 +27,7 @@
 - name: Run powertop auto-tune on boot
   ansible.builtin.cron:
     name: Run powertop auto-tune on boot
-    job: "sleep 60 && /usr/sbin/powertop --auto-tune"
+    job: sleep 60 && /usr/sbin/powertop --auto-tune
     special_time: reboot
     state: present
 
@@ -34,29 +35,29 @@
   ansible.builtin.copy:
     src: vimrc
     dest: /etc/vim/vimrc
-    mode: 0644
+    mode: "0644"
 
 - name: Limit systemd-journald
   ansible.builtin.lineinfile:
-    dest: "/etc/systemd/journald.conf"
-    regex: "SystemMaxUse="
-    line: "SystemMaxUse=50M"
+    dest: /etc/systemd/journald.conf
+    regex: SystemMaxUse=
+    line: SystemMaxUse=50M
 
 - name: Set default text editor to vim
   ansible.builtin.lineinfile:
     dest: /etc/environment
-    regex: "^EDITOR="
+    regex: ^EDITOR=
     line: EDITOR=vim
 
 - name: Set GRUB timeout
   ansible.builtin.lineinfile:
     path: /etc/default/grub
-    regexp: "^GRUB_TIMEOUT"
+    regexp: ^GRUB_TIMEOUT
     line: GRUB_TIMEOUT=2
 - name: Set kernel cmdline
   ansible.builtin.lineinfile:
     path: /etc/default/grub
-    regexp: "^GRUB_CMDLINE_LINUX_DEFAULT"
+    regexp: ^GRUB_CMDLINE_LINUX_DEFAULT
     line: GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on pcie_aspm=off"
 - name: Update GRUB config
   ansible.builtin.command: update-grub2

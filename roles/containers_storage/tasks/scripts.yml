@@ -1,3 +1,4 @@
+---
 - name: Configure crontab
   ansible.builtin.cron:
     name: MAILTO
@@ -8,7 +9,7 @@
   ansible.builtin.template:
     src: backup.sh
     dest: "{{ _container_user_info.home }}/backup.sh"
-    mode: 0750
+    mode: "0750"
 - name: Set up backup cron job
   ansible.builtin.cron:
     name: container backup
@@ -21,12 +22,12 @@
   ansible.builtin.template:
     src: logrotate.conf
     dest: "{{ _container_user_info.home }}/apache/logrotate.conf"
-    mode: 0640
+    mode: "0640"
 - name: Set up logrotate cron job
   ansible.builtin.cron:
     name: apache logrotate
     # yamllint disable-line rule:line-length
-    job: "/usr/sbin/logrotate -s {{ _container_user_info.home }}/apache/logrotate.state {{ _container_user_info.home }}/apache/logrotate.conf"
+    job: /usr/sbin/logrotate -s {{ _container_user_info.home }}/apache/logrotate.state {{ _container_user_info.home }}/apache/logrotate.conf
     hour: 2
     minute: 0
     state: present

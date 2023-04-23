@@ -1,6 +1,7 @@
+---
 - name: Remove DSA and ECDSA SSH host keys
   ansible.builtin.file:
-    path: "/etc/ssh/{{ item }}"
+    path: /etc/ssh/{{ item }}
     state: absent
   loop:
     - ssh_host_ecdsa_key
@@ -12,12 +13,12 @@
   ansible.builtin.copy:
     src: ssh.conf
     dest: /etc/ssh/ssh_config.d
-    mode: 0644
+    mode: "0644"
 - name: Configure OpenSSH server
   ansible.builtin.copy:
     src: sshd.conf
     dest: /etc/ssh/sshd_config.d
-    mode: 0644
+    mode: "0644"
 
 - name: Restart OpenSSH server
   ansible.builtin.systemd:

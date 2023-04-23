@@ -1,3 +1,4 @@
+---
 - name: Configure bashrc
   ansible.builtin.blockinfile:
     path: "{{ _container_user_info.home }}/.bashrc"
@@ -8,11 +9,11 @@
 - name: Create ~/.local/bin
   ansible.builtin.file:
     path: "{{ _container_user_info.home }}/.local/bin"
-    mode: 0700
+    mode: "0700"
     state: directory
 
 - name: Generate ct_util
   ansible.builtin.template:
     src: ct_util.sh
     dest: "{{ _container_user_info.home }}/.local/bin/ct_util"
-    mode: 0700
+    mode: "0700"

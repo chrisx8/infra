@@ -1,3 +1,4 @@
+---
 - name: Install Apache httpd
   ansible.builtin.dnf:
     name:
@@ -5,7 +6,7 @@
       - mod_ssl
     state: present
 
-- name: Get latest mod_auth_openidc version number from GitHub
+- name: Get mod_auth_openidc version number from GitHub
   ansible.builtin.uri:
     url: https://api.github.com/repos/OpenIDC/mod_auth_openidc/releases/latest
     method: GET
@@ -33,8 +34,8 @@
     path: /etc/httpd/conf.modules.d/{{ item }}
     state: absent
   loop:
-    - 00-dav.conf
-    - 01-cgi.conf
+    - "00-dav.conf"
+    - "01-cgi.conf"
 - name: Remove built-in cgi-bin
   ansible.builtin.file:
     path: /var/www/cgi-bin
@@ -44,17 +45,17 @@
   ansible.builtin.copy:
     src: conf.d
     dest: /etc/httpd
-    mode: 0644
+    mode: "0644"
 - name: Copy Apache modules config
   ansible.builtin.copy:
     src: conf.modules.d
     dest: /etc/httpd
-    mode: 0644
+    mode: "0644"
 - name: Copy html
   ansible.builtin.copy:
     src: html
     dest: /var/www
-    mode: 0644
+    mode: "0644"
 
 - name: Enable and restart Apache httpd
   ansible.builtin.systemd:

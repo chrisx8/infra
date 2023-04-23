@@ -1,16 +1,17 @@
+---
 - name: Create ssl dir
   ansible.builtin.file:
-    path: "/opt/ssl/{{ ssl_domain }}"
+    path: /opt/ssl/{{ ssl_domain }}
     state: directory
-    mode: 0700
+    mode: "0700"
     owner: nobody
     group: nobody
 
 - name: Copy ssl cert for {{ ssl_domain }}
   ansible.builtin.copy:
-    src: "certbot.d/config/live/{{ ssl_domain }}/{{ item }}"
-    dest: "/opt/ssl/{{ ssl_domain }}"
-    mode: 0400
+    src: certbot.d/config/live/{{ ssl_domain }}/{{ item }}
+    dest: /opt/ssl/{{ ssl_domain }}
+    mode: "0400"
     owner: nobody
     group: nobody
   loop:

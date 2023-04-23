@@ -1,8 +1,9 @@
+---
 announcement:
   style: is-warning
   title: Message
   icon: fa-solid fa-bullhorn
-  content: "Hello world!"
+  content: Hello world!
 
 header_links:
   - name: Account Console

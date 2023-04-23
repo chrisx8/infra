@@ -1,3 +1,4 @@
+---
 - name: Upgrade proxmox
   hosts: proxmox
   become: true
@@ -45,8 +46,8 @@
   gather_facts: true
   gather_subset:
     - "!min"
-    - "distribution"
-    - "virtualization_type"
+    - distribution
+    - virtualization_type
   roles:
     - containers_web
 
@@ -56,7 +57,7 @@
   gather_facts: true
   gather_subset:
     - "!min"
-    - "distribution"
-    - "virtualization_type"
+    - distribution
+    - virtualization_type
   roles:
     - containers_storage

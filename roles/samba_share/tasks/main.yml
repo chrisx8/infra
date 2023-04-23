@@ -1,27 +1,24 @@
+---
 - name: Verify system
   ansible.builtin.assert:
     that:
       - ansible_facts.os_family == 'RedHat'
       - ansible_facts.distribution_major_version|int >= 8
 
-- name: Install file syncing tools
+- name: Install packages
   ansible.builtin.dnf:
     name:
       - rclone
       - rsync
+      - samba
       - tree
-    state: present
-
-- name: Install Samba
-  ansible.builtin.dnf:
-    name: samba
     state: present
 
 - name: Copy Samba config
   ansible.builtin.copy:
     src: smb.conf
     dest: /etc/samba/smb.conf
-    mode: 0644
+    mode: "0644"
 
 - name: Configure SELinux
   ansible.posix.seboolean:
@@ -31,13 +28,11 @@
     - samba_enable_home_dirs
     - samba_export_all_rw
 
-- name: Enable and restart smb service
+- name: Enable and restart Samba services
   ansible.builtin.systemd:
     name: smb
     enabled: true
     state: restarted
-- name: Enable and restart nmb service
-  ansible.builtin.systemd:
-    name: nmb
-    enabled: true
-    state: restarted
+  loop:
+    - smb
+    - nmb

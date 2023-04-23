@@ -1,3 +1,4 @@
+---
 - name: Load secret vars
   ansible.builtin.include_vars: secrets.yml
 

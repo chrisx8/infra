@@ -1,3 +1,4 @@
+---
 - name: Set sysctl configs
   ansible.posix.sysctl:
     name: "{{ item.key }}"
@@ -14,40 +15,43 @@
     policy: targeted
     state: enforcing
 
-- name: Install systemd-oomd & zram-generator
+- name: Install systemd components
   ansible.builtin.dnf:
     name:
+      - systemd-resolved
       - systemd-oomd
       - zram-generator
     state: present
 
-- name: Enable PSI support
+- name: Enable kernel PSI support
   ansible.builtin.command:
     cmd: grubby --update-kernel=ALL --args="psi=1"
   changed_when: true
-- name: Enable systemd-oomd service
-  ansible.builtin.systemd:
-    name: systemd-oomd
-    enabled: true
-    state: started
 
 - name: Configure zram-generator
   ansible.builtin.copy:
     src: zram-generator.conf
     dest: /etc/systemd/zram-generator.conf
-    mode: 0644
+    mode: "0644"
 
+- name: Enable and start systemd-oomd
+  ansible.builtin.systemd:
+    name: systemd-oomd
+    enabled: true
+    state: started
 - name: Enable and start systemd-resolved
   ansible.builtin.systemd:
     name: systemd-resolved
     enabled: true
     state: restarted
+
 - name: Use systemd stub resolver
   ansible.builtin.file:
     src: /run/systemd/resolve/stub-resolv.conf
     dest: /etc/resolv.conf
     force: true
     state: link
+
 - name: Restart NetworkManager
   ansible.builtin.systemd:
     name: NetworkManager

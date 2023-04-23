@@ -26,11 +26,19 @@ repos:
     hooks:
       - id: shellcheck
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.30.0
+    rev: v1.31.0
     hooks:
       - id: yamllint
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v6.15.0
+    rev: v6.16.0
     hooks:
       - id: ansible-lint
-        always_run: false
+        args:
+          - roles/containers_web/tasks/postgres_db.yml
+          - roles/tailscale/tasks/main.yml
+      - id: ansible-lint
+        name: Ansible-lint with reformatting
+        args:
+          - --exclude=roles/containers_web/tasks/postgres_db.yml
+          - --exclude=roles/tailscale/tasks/main.yml
+          - --write

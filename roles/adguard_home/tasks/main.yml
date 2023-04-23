@@ -1,3 +1,4 @@
+---
 - name: Copy ssl cert
   ansible.builtin.import_tasks: sslcert.yml
 
@@ -8,7 +9,7 @@
     state: stopped
   failed_when: false
 
-- name: Download latest AdGuardHome release from GitHub
+- name: Download AdGuardHome release from GitHub
   ansible.builtin.unarchive:
     src: https://github.com/AdguardTeam/AdGuardHome/releases/latest/download/AdGuardHome_linux_amd64.tar.gz
     dest: /opt
@@ -19,7 +20,7 @@
 - name: Set permission on AdGuardHome binary
   ansible.builtin.file:
     path: /opt/AdGuardHome/AdGuardHome
-    mode: 0755
+    mode: "0755"
     state: file
 - name: Set capabilities on AdGuardHome binary
   community.general.capabilities:
@@ -34,7 +35,7 @@
   ansible.builtin.copy:
     src: AdGuardHome.service
     dest: /etc/systemd/system/AdGuardHome.service
-    mode: 0644
+    mode: "0644"
 - name: Enable and restart AdGuardHome
   ansible.builtin.systemd:
     name: AdGuardHome

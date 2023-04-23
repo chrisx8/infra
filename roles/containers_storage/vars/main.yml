@@ -1,3 +1,4 @@
+---
 container_user: podman
 
 container_specs:
@@ -9,7 +10,7 @@ container_specs:
     volumes:
       - "{{ _container_user_info.home }}/jellyfin/cache:/cache:Z"
       - "{{ _container_user_info.home }}/jellyfin/config:/config:Z"
-      - "/mnt/media:/media:z"
+      - /mnt/media:/media:z
   # Apache: HTTPS on 0.0.0.0:8443
   - name: apache
     hostname: apache.{{ container_defaults.hostname }}

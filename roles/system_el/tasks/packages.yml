@@ -1,3 +1,4 @@
+---
 - name: Remove unneeded packages
   ansible.builtin.dnf:
     name:
@@ -22,7 +23,7 @@
     update_cache: true
     state: latest
 
-- name: Install additional packages
+- name: Install standard packages
   ansible.builtin.dnf:
     name:
       - bind-utils

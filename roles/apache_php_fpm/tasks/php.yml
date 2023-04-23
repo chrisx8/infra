@@ -1,3 +1,4 @@
+---
 - name: Install PHP 8.1 from AppStream
   ansible.builtin.dnf:
     name: "@php:8.1"
@@ -9,7 +10,7 @@
   block:
     - name: Enable CRB repo
       ansible.builtin.command:
-        cmd: "dnf config-manager --set-enabled crb"
+        cmd: dnf config-manager --set-enabled crb
       changed_when: true
     - name: Install Remi repo
       ansible.builtin.dnf:

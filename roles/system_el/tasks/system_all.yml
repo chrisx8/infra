@@ -1,3 +1,4 @@
+---
 - name: Set hostname
   ansible.builtin.hostname:
     name: "{{ ansible_host }}"
@@ -6,31 +7,31 @@
 - name: Set timezone
   community.general.timezone:
     name: "{{ timezone }}"
-    hwclock: "UTC"
+    hwclock: UTC
   when: timezone is defined
 
 - name: Disable systemd coredump
   ansible.builtin.lineinfile:
-    dest: "/etc/systemd/coredump.conf"
-    regex: "Storage="
-    line: "Storage=none"
+    dest: /etc/systemd/coredump.conf
+    regex: Storage=
+    line: Storage=none
 
 - name: Limit systemd-journald
   ansible.builtin.lineinfile:
-    dest: "/etc/systemd/journald.conf"
-    regex: "SystemMaxUse="
-    line: "SystemMaxUse=10M"
+    dest: /etc/systemd/journald.conf
+    regex: SystemMaxUse=
+    line: SystemMaxUse=10M
 
 - name: Set default text editor to vim
   ansible.builtin.lineinfile:
     dest: /etc/environment
-    regex: "^EDITOR="
+    regex: ^EDITOR=
     line: EDITOR=vim
 - name: Configure vim
   ansible.builtin.copy:
     src: vimrc
     dest: /etc/vimrc.local
-    mode: 0644
+    mode: "0644"
 
 - name: Configure crontab
   ansible.builtin.cron:

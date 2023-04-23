@@ -1,3 +1,4 @@
+---
 - name: Add pgdg-common repo
   ansible.builtin.yum_repository:
     name: pgdg-common

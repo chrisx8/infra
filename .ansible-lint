@@ -1,0 +1,12 @@
+---
+exclude_paths:
+  - .github/
+  - .vscode/
+  - .pre-commit-config.yaml
+  - .yamllint
+
+enable_list:
+  - args
+  - empty-string-compare
+  - no-same-owner
+  - role-name

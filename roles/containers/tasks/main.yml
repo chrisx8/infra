@@ -1,3 +1,4 @@
+---
 - name: Verify requirements
   ansible.builtin.assert:
     that:
@@ -21,15 +22,14 @@
   register: _container_user_info
 
 - name: Enable linger for container user
-  ansible.builtin.command: "loginctl enable-linger {{ container_user }}"
+  ansible.builtin.command: loginctl enable-linger {{ container_user }}
   changed_when: false
 
-- name: Run containers
-  ansible.builtin.import_tasks: containers.yml
+- name: Run as container user
   become: true
   become_user: "{{ container_user }}"
-
-- name: Set up user
-  ansible.builtin.import_tasks: user.yml
-  become: true
-  become_user: "{{ container_user }}"
+  block:
+    - name: Set up container user
+      ansible.builtin.import_tasks: user.yml
+    - name: Set up containers
+      ansible.builtin.import_tasks: containers.yml

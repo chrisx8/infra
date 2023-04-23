@@ -1,7 +1,8 @@
+---
 - name: Create Apache dirs
   ansible.builtin.file:
     path: "{{ item }}"
-    mode: 0755
+    mode: "0755"
     state: directory
   loop:
     - "{{ _container_user_info.home }}/apache/log"
@@ -11,12 +12,12 @@
   ansible.builtin.file:
     path: "{{ _container_user_info.home }}/apache/ssl/{{ ssl_domain }}"
     state: directory
-    mode: 0700
+    mode: "0700"
 - name: Copy ssl cert for {{ ssl_domain }}
   ansible.builtin.copy:
-    src: "certbot.d/config/live/{{ ssl_domain }}/{{ item }}"
+    src: certbot.d/config/live/{{ ssl_domain }}/{{ item }}
     dest: "{{ _container_user_info.home }}/apache/ssl/{{ ssl_domain }}"
-    mode: 0400
+    mode: "0400"
   loop:
     - fullchain.pem
     - privkey.pem
@@ -25,25 +26,25 @@
   ansible.builtin.copy:
     src: apache/conf.d
     dest: "{{ _container_user_info.home }}/apache"
-    mode: 0640
+    mode: "0640"
 - name: Copy Apache html
   ansible.builtin.copy:
     src: apache/html
     dest: "{{ _container_user_info.home }}/apache/www"
-    mode: 0644
+    mode: "0644"
 
 - name: Gather default IPv4 information
   ansible.builtin.setup:
     gather_subset:
       - "!all"
       - "!min"
-      - "default_ipv4"
+      - default_ipv4
 
 - name: Copy templated Apache config
   ansible.builtin.template:
-    src: "apache/conf.d/{{ item }}.j2"
+    src: apache/conf.d/{{ item }}.j2
     dest: "{{ _container_user_info.home }}/apache/conf.d/{{ item }}"
-    mode: 0640
+    mode: "0640"
   loop:
     - 1_default.conf
     - go.conf
