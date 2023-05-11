@@ -19,12 +19,7 @@
 - name: Install PostgreSQL 14
   ansible.builtin.dnf:
     name:
-      - postgresql14-contrib
       - postgresql14-server
-    state: present
-- name: Install dependencies for community.postgresql
-  ansible.builtin.dnf:
-    name:
       - python3-psycopg2
     state: present
 
