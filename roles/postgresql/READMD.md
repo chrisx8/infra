@@ -8,7 +8,7 @@ Notes:
 
 Role variables:
 
-- `postgres_cron_ping_url` (**required**): Webhook URL for cron job.
+- `postgres_cron_ping_url` (**required**): Healthchecks.io ping URL for cron job.
 
 Required facts: `distribution`
 

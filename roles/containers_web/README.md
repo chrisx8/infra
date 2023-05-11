@@ -13,7 +13,7 @@ This role provides role variables for `containers` role, and installs containeri
 Role variables:
 
 - `cloudflared_token` (**required**): Cloudflare Tunnel token.
-- `containers_web_cron_ping_url` (**required**): Webhook URL for cron job.
+- `containers_web_cron_ping_url` (**required**): Healthchecks.io ping URL for cron job.
 - `golinks` (optional): List of golinks. For each list element, include
   - `src`: Golink alias. For example, a value of `alias` refers to the URL `go/alias`.
   - `dst`: Full destination URL.
