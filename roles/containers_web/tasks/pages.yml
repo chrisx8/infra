@@ -9,8 +9,8 @@
         name: launcher_tw
       become: false
       vars:
-        launchertw_operation: deploy
-        launchertw_deploy_target_dir: /opt/apache/www/pages/launcher
+        launchertw_operation: deploy # noqa var-naming[no-role-prefix]
+        launchertw_deploy_target_dir: /opt/apache/www/pages/launcher # noqa var-naming[no-role-prefix]
 
 - name: Install Admin Center
   block:
@@ -22,8 +22,8 @@
         name: launcher_tw
       become: false
       vars:
-        launchertw_operation: deploy
-        launchertw_deploy_target_dir: /opt/apache/www/pages/launcher/admin
+        launchertw_operation: deploy # noqa var-naming[no-role-prefix]
+        launchertw_deploy_target_dir: /opt/apache/www/pages/launcher/admin # noqa var-naming[no-role-prefix]
 
 - name: Copy index html
   ansible.builtin.copy:

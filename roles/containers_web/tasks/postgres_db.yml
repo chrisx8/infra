@@ -3,6 +3,7 @@
   ansible.builtin.set_fact:
     # yamllint disable-line rule:line-length
     postgres_passwords: "{{ postgres_passwords | combine({item.key: lookup('password', '/dev/null chars=ascii_letters,digits length=64')}) }}"
+    # noqa var-naming[no-role-prefix]
   with_dict: "{{ postgres_passwords }}"
   loop_control:
     label: "{{ item.key }}"

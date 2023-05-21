@@ -6,20 +6,12 @@
       - ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_type == 'kvm'
       - container_specs
-      - container_user != 'root'
+      - _container_user_info.name != 'root'
 
 - name: Install Podman
   ansible.builtin.dnf:
     name: podman
     state: present
-
-- name: Create container user
-  ansible.builtin.user:
-    name: "{{ container_user }}"
-    create_home: true
-    password_lock: true
-    state: present
-  register: _container_user_info
 
 - name: Enable linger for container user
   ansible.builtin.command: loginctl enable-linger {{ container_user }}

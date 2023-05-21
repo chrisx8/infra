@@ -23,7 +23,7 @@
     name: "{{ container_user }}"
     create_home: true
     state: present
-  register: _container_user_info
+  register: _container_user_info # noqa var-naming[no-role-prefix]
 
 - name: Pre-launch config
   become_user: "{{ container_user }}"

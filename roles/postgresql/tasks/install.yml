@@ -25,8 +25,8 @@
 
 - name: Initialize PostgreSQL database
   ansible.builtin.command: /usr/pgsql-14/bin/postgresql-14-setup initdb
-  register: _postgresql_initdb
-  changed_when: _postgresql_initdb.rc == 0
+  register: _postgresql_initdb_result # noqa var-naming[no-role-prefix]
+  changed_when: _postgresql_initdb_result.rc == 0
   failed_when: false
 
 - name: Enable and start postgresql

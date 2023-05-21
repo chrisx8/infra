@@ -13,7 +13,7 @@
     create_home: true
     home: /opt/podman
     state: present
-  register: _container_user_info
+  register: _container_user_info # noqa var-naming[no-role-prefix]
 
 - name: Configure apps
   become_user: "{{ container_user }}"

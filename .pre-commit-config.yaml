@@ -26,11 +26,11 @@ repos:
     hooks:
       - id: shellcheck
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.31.0
+    rev: v1.32.0
     hooks:
       - id: yamllint
   - repo: https://github.com/ansible-community/ansible-lint
-    rev: v6.16.0
+    rev: v6.17.0
     hooks:
       - id: ansible-lint
         args:
