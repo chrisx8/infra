@@ -1,7 +1,7 @@
 ---
 - name: Configure PostgreSQL server
   ansible.builtin.blockinfile:
-    path: /var/lib/pgsql/14/data/postgresql.conf
+    path: /var/lib/pgsql/15/data/postgresql.conf
     mode: "0600"
     block: |
       listen_addresses = '*'
@@ -10,11 +10,11 @@
       ssl_key_file = '/var/lib/pgsql/ssl/privkey.pem'
       ssl_min_protocol_version = 'TLSv1.2'
   notify:
-    - Restart postgresql
+    - Enable and restart postgresql
 
 - name: Configure PostgreSQL access policy
   ansible.builtin.blockinfile:
-    path: /var/lib/pgsql/14/data/pg_hba.conf
+    path: /var/lib/pgsql/15/data/pg_hba.conf
     mode: "0600"
     block: |
       # TYPE DATABASE USER ADDRESS METHOD

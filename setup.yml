@@ -32,27 +32,19 @@
   roles:
     - adguard_home
 
-- name: Set up PostgreSQL
-  hosts: postgres
-  become: true
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - distribution
-  roles:
-    - postgresql
-
 - name: Set up containers
   hosts: v-containers
   become: true
   gather_facts: true
   gather_subset:
     - "!min"
+    - default_ipv4
     - distribution
     - virtualization_type
   roles:
-    - containers_web
     - tailscale
+    - postgresql
+    - containers_web
 
 - name: Set up storage server
   hosts: storage

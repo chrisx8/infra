@@ -10,7 +10,6 @@
 
 - name: Set up PostgreSQL databases and users
   become_user: postgres
-  delegate_to: postgres
   block:
     - name: Create PostgreSQL databases
       community.postgresql.postgresql_db:

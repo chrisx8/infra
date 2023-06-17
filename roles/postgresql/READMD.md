@@ -1,6 +1,6 @@
 # Ansible Role: `postgresql`
 
-This role installs PostgreSQL 14.
+This role installs PostgreSQL 15.
 
 Notes:
 

@@ -1,5 +1,6 @@
 ---
-- name: Restart postgresql
+- name: Enable and restart postgresql
   ansible.builtin.systemd:
-    name: postgresql-14.service
+    name: postgresql-15.service
+    enabled: true
     state: restarted

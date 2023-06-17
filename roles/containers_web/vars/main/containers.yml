@@ -21,9 +21,9 @@ container_specs:
       GITEA__cache_0X2E_last_commit__ENABLED: "true"
       GITEA__database__DB_TYPE: postgres
       GITEA__database__LOG_SQL: "false"
-      GITEA__database__HOST: postgres.arb.chrisx.xyz:5432
+      GITEA__database__HOST: 127.0.0.1:5432
       GITEA__database__NAME: gitea
-      GITEA__database__SSL_MODE: verify-full
+      GITEA__database__SSL_MODE: disable
       GITEA__database__USER: gitea
       GITEA__database__PASSWD: "{{ postgres_passwords.gitea }}"
       GITEA__federation__ENABLED: "false"
@@ -68,8 +68,7 @@ container_specs:
     network: host
     env:
       KC_DB: postgres
-      # yamllint disable-line rule:line-length
-      KC_DB_URL: jdbc:postgresql://postgres.arb.chrisx.xyz:5432/keycloak?ssl=true&sslmode=require&sslcert=/etc/ssl/certs/ca-bundle.crt
+      KC_DB_URL: jdbc:postgresql://127.0.0.1:5432/keycloak?ssl=false
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: "{{ postgres_passwords.keycloak }}"
       KC_HOSTNAME: sso.chrisx.xyz
@@ -81,8 +80,7 @@ container_specs:
     network: host
     env:
       BASE_URL: https://miniflux.arb.chrisx.xyz
-      # yamllint disable-line rule:line-length
-      DATABASE_URL: postgres://miniflux:{{ postgres_passwords.miniflux }}@postgres.arb.chrisx.xyz/miniflux?sslmode=verify-full
+      DATABASE_URL: postgres://miniflux:{{ postgres_passwords.miniflux }}@127.0.0.1:5432/miniflux?sslmode=disable
       DISABLE_HSTS: "1"
       CLEANUP_REMOVE_SESSIONS_DAYS: "7"
       LISTEN_ADDR: 127.0.0.1:8081
@@ -103,7 +101,7 @@ container_specs:
       _ENABLE_DUO: "false"
       _ENABLE_EMAIL_2FA: "false"
       # yamllint disable-line rule:line-length
-      DATABASE_URL: postgres://vaultwarden:{{ postgres_passwords.vaultwarden }}@postgres.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt
+      DATABASE_URL: postgres://vaultwarden:{{ postgres_passwords.vaultwarden }}@127.0.0.1:5432/vaultwarden?sslmode=disable
       DISABLE_ADMIN_TOKEN: "true"
       DOMAIN: https://vaultwarden.chrisx.xyz
       EVENTS_DAYS_RETAIN: "30"

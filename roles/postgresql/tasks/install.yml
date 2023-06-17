@@ -1,36 +1,31 @@
 ---
-- name: Add pgdg-common repo
+- name: Add PostgreSQL repos
   ansible.builtin.yum_repository:
-    name: pgdg-common
-    description: PostgreSQL common RPMs
-    baseurl: https://download.postgresql.org/pub/repos/yum/common/redhat/rhel-$releasever-$basearch
+    name: pgdg-{{ item }}
+    description: PostgreSQL {{ item }}
+    baseurl: https://download.postgresql.org/pub/repos/yum/{{ item }}/redhat/rhel-$releasever-$basearch
     gpgkey: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG
     gpgcheck: true
     repo_gpgcheck: true
-- name: Add pgdg14 repo
-  ansible.builtin.yum_repository:
-    name: pgdg14
-    description: PostgreSQL 14
-    baseurl: https://download.postgresql.org/pub/repos/yum/14/redhat/rhel-$releasever-$basearch
-    gpgkey: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG
-    gpgcheck: true
-    repo_gpgcheck: true
+    state: present
+  loop:
+    - common
+    - 15
+  loop_control:
+    label: pgdg-{{ item }}
 
-- name: Install PostgreSQL 14
+- name: Install PostgreSQL 15
   ansible.builtin.dnf:
     name:
-      - postgresql14-server
+      - postgresql15-contrib
+      - postgresql15-server
       - python3-psycopg2
     state: present
 
 - name: Initialize PostgreSQL database
-  ansible.builtin.command: /usr/pgsql-14/bin/postgresql-14-setup initdb
+  ansible.builtin.command: /usr/pgsql-15/bin/postgresql-15-setup initdb
   register: _postgresql_initdb_result # noqa var-naming[no-role-prefix]
   changed_when: _postgresql_initdb_result.rc == 0
   failed_when: false
-
-- name: Enable and start postgresql
-  ansible.builtin.systemd:
-    name: postgresql-14.service
-    enabled: true
-    state: started
+  notify:
+    - Enable and restart postgresql
