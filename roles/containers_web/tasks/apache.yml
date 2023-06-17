@@ -33,13 +33,6 @@
     dest: "{{ _container_user_info.home }}/apache/www"
     mode: "0644"
 
-- name: Gather default IPv4 information
-  ansible.builtin.setup:
-    gather_subset:
-      - "!all"
-      - "!min"
-      - default_ipv4
-
 - name: Copy templated Apache config
   ansible.builtin.template:
     src: apache/conf.d/{{ item }}.j2

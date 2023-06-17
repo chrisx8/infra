@@ -27,6 +27,16 @@
       with_dict: "{{ postgres_passwords }}"
       loop_control:
         label: "{{ item.key }}"
+    - name: GRANT ALL PRIVILEGES ON SCHEMA public
+      community.postgresql.postgresql_privs:
+        db: "{{ item.key }}"
+        type: schema
+        objs: public
+        privs: ALL
+        role: "{{ item.key }}"
+      with_dict: "{{ postgres_passwords }}"
+      loop_control:
+        label: "{{ item.key }}"
     - name: Add hstore extension to miniflux database
       community.postgresql.postgresql_ext:
         name: hstore

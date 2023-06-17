@@ -24,6 +24,6 @@ Role variables:
 - `vaultwarden_oidc` (**required**): OIDC client credentials, requires `client_id` and `client_secret`.
 - [LauncherTW role vars](https://github.com/chrisx8/LauncherTW#configuration) (**required**)
 
-Required facts: `distribution`, `virtualization_type`
+Required facts: `default_ipv4`, `distribution`, `virtualization_type`
 
 Supported OS: RHEL-like systems, version 8 or newer
