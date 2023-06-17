@@ -19,8 +19,20 @@ Role variables:
   - `dst`: Full destination URL.
   - Usage: `go/src` redirects to `dst`.
 - `pages_oidc` (**required**): OIDC client credentials, requires `client_id` and `client_secret`.
-- `postgres_passwords`: list of PostgreSQL databases and users. For each list element, specify `db_name: ""`
+- `postgres_passwords`: list of PostgreSQL databases and users.
+  - For each list element, specify `db_name: ""`.
   - This will create databases with `db_name` and users with username `db_name` and randonly generated passwords.
+- `vaultwarden_env` (**required**): Vaultwarden environment variables. The following keys are required:
+  - `PUSH_INSTALLATION_ID`
+  - `PUSH_INSTALLATION_KEY`
+  - `SMTP_FROM`
+  - `SMTP_HOST`
+  - `SMTP_PORT`
+  - `SMTP_USERNAME`
+  - `SMTP_PASSWORD`
+  - `YUBICO_CLIENT_ID`
+  - `YUBICO_SECRET_KEY`
+  - Refer to [Vaultwarden .env.template](https://github.com/dani-garcia/vaultwarden/blob/main/.env.template).
 - `vaultwarden_oidc` (**required**): OIDC client credentials, requires `client_id` and `client_secret`.
 - [LauncherTW role vars](https://github.com/chrisx8/LauncherTW#configuration) (**required**)
 

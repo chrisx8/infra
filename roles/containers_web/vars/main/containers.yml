@@ -100,30 +100,33 @@ container_specs:
     image: docker.io/vaultwarden/server:testing
     network: host
     env:
+      _ENABLE_DUO: "false"
+      _ENABLE_EMAIL_2FA: "false"
       # yamllint disable-line rule:line-length
       DATABASE_URL: postgres://vaultwarden:{{ postgres_passwords.vaultwarden }}@postgres.arb.chrisx.xyz/vaultwarden?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt
       DISABLE_ADMIN_TOKEN: "true"
       DOMAIN: https://vaultwarden.chrisx.xyz
-      EMAIL_ATTEMPTS_LIMIT: "0"
-      EMAIL_EXPIRATION_TIME: "0"
       EVENTS_DAYS_RETAIN: "30"
       IP_HEADER: X-Forwarded-For
       ORG_EVENTS_ENABLED: "true"
       PASSWORD_HINTS_ALLOWED: "false"
       PASSWORD_ITERATIONS: "600000"
+      PUSH_ENABLED: "true"
+      PUSH_INSTALLATION_ID: "{{ vaultwarden_env.PUSH_INSTALLATION_ID }}"
+      PUSH_INSTALLATION_KEY: "{{ vaultwarden_env.PUSH_INSTALLATION_KEY }}"
       ROCKET_ADDRESS: 127.0.0.1
       ROCKET_PORT: "8288"
       SIGNUPS_ALLOWED: "false"
       SIGNUPS_VERIFY: "true"
       SIGNUPS_VERIFY_RESEND_LIMIT: "3"
-      WEBSOCKET_ADDRESS: 127.0.0.1
-      WEBSOCKET_ENABLED: "true"
-      SMTP_SECURITY: force_tls
       SMTP_FROM: "{{ vaultwarden_env.SMTP_FROM }}"
       SMTP_HOST: "{{ vaultwarden_env.SMTP_HOST }}"
       SMTP_PORT: "{{ vaultwarden_env.SMTP_PORT }}"
       SMTP_USERNAME: "{{ vaultwarden_env.SMTP_USERNAME }}"
       SMTP_PASSWORD: "{{ vaultwarden_env.SMTP_PASSWORD }}"
+      SMTP_SECURITY: force_tls
+      WEBSOCKET_ADDRESS: 127.0.0.1
+      WEBSOCKET_ENABLED: "true"
       YUBICO_CLIENT_ID: "{{ vaultwarden_env.YUBICO_CLIENT_ID }}"
       YUBICO_SECRET_KEY: "{{ vaultwarden_env.YUBICO_SECRET_KEY }}"
     volumes:
