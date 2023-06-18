@@ -9,7 +9,8 @@ Notes:
 
 Role variables:
 
-- `tailscale_advertise_routes` (**required**): Comma-separated list of IP ranges (CIDR) to expose with Tailscale subnet router.
+- `tailscale_args` (optional, default is blank): Arguments to pass to Tailscale.
+  - For example, if you want to use a host as an "exit node", set `--advertise-exit-node`.
 
 Required facts: `distribution`, `virtualization_type`
 

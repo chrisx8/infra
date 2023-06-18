@@ -63,5 +63,6 @@
     - distribution
     - virtualization_type
   roles:
+    - tailscale
     - containers_storage
     - samba_share
