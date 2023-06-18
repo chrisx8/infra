@@ -1,10 +1,19 @@
 ANSIBLE_VAULT_ARGS = --vault-password-file files/bw_vault_password.sh
 EDITOR = code --wait
 
-# Set variable `checkdiff` to run Ansible with `--check --diff`
-# Example: `make setup.yml checkdiff=yes`
-ifdef checkdiff
-	ANSIBLE_ARGS += --check --diff
+# Set variable `ANSIBLE_ARGS` to pass arbitrary arguments to Ansible,
+# overwriting all other Ansible-related args.
+
+# Set variable `check` to run Ansible with `--check`
+# Example: `make setup.yml check=yes`
+ifdef check
+	ANSIBLE_ARGS += --check
+endif
+
+# Set variable `diff` to run Ansible with `--diff`
+# Example: `make setup.yml diff=yes`
+ifdef diff
+	ANSIBLE_ARGS += --diff
 endif
 
 # Set variable `limit` to limit run to specified host(s)
@@ -40,6 +49,7 @@ envsetup:
 pre-commit:
 	pre-commit run --all-files
 
-# Edit Ansible Vault
+# Edit Ansible Vault. Must set "host" variable
 vaultedit:
-	ansible-vault edit $(ANSIBLE_VAULT_ARGS) vars/secrets.yml
+	test -f "host_vars/$(host)/main/secrets.yml"
+	ansible-vault edit $(ANSIBLE_VAULT_ARGS) "host_vars/$(host)/main/secrets.yml"

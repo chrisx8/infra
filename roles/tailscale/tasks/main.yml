@@ -1,7 +1,4 @@
 ---
-- name: Load secret vars
-  ansible.builtin.include_vars: secrets.yml
-
 - name: Verify requirements
   ansible.builtin.assert:
     that:
