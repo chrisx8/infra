@@ -42,7 +42,7 @@
     - virtualization_type
   roles:
     - containers_web
-  tasks:
+  pre_tasks:
     - name: Install ssl cert for PostgreSQL
       ansible.builtin.import_role:
         name: postgresql

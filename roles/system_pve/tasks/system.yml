@@ -34,7 +34,7 @@
 - name: Configure vim
   ansible.builtin.copy:
     src: vimrc
-    dest: /etc/vim/vimrc
+    dest: /etc/vim/vimrc.local
     mode: "0644"
 
 - name: Limit systemd-journald
