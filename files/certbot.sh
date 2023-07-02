@@ -13,7 +13,7 @@ OP="$2"
 ################################################################################
 
 function fail() {
-	echo "Usage: certbot.sh WORKDIR certbot-(clean|issue|renew|setup)" 1>&2
+	echo "Usage: certbot.sh WORKDIR certbot-(clean|issue|list|renew|setup)" 1>&2
 	exit 1
 }
 
@@ -38,6 +38,7 @@ function clean() {
 }
 
 function issue() {
+    setup
 	DOMAINS=""
 	echo "Loading config from $WORKDIR/env"
 	# shellcheck source=/dev/null
@@ -56,8 +57,17 @@ function issue() {
 }
 
 function renew() {
+    setup
 	echo "Renewing certs with certbot..."
 	certbot renew \
+		--config-dir "$WORKDIR/config" \
+		--logs-dir "$WORKDIR/log" \
+		--work-dir "$WORKDIR/workdir"
+}
+
+function list() {
+    setup
+	certbot certificates \
 		--config-dir "$WORKDIR/config" \
 		--logs-dir "$WORKDIR/log" \
 		--work-dir "$WORKDIR/workdir"
@@ -80,11 +90,12 @@ case "$OP" in
 		clean
 		;;
 	"certbot-issue")
-		setup
 		issue
 		;;
+    "certbot-list")
+        list
+        ;;
 	"certbot-renew")
-		setup
 		renew
 		;;
 	"certbot-setup")
