@@ -9,7 +9,6 @@
 	Header set X-Content-Type-Options "nosniff"
 	Header set X-Frame-Options "SAMEORIGIN"
 	Header set X-Robots-Tag "none"
-	Header set X-XSS-Protection "1; mode=block"
 
 	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
 	OIDCClientID {{ pihole_oidc.client_id }}
