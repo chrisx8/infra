@@ -46,3 +46,6 @@
 - name: Prune dangling container images
   ansible.builtin.command: podman image prune -f
   changed_when: false
+- name: Prune container volumes
+  ansible.builtin.command: podman volume prune -f
+  changed_when: false

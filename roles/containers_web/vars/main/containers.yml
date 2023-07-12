@@ -2,7 +2,6 @@
 container_user: podman
 
 container_volumes:
-  - gitea_conf
   - gitea_data
   - vaultwarden
 
@@ -10,13 +9,14 @@ container_specs:
   - name: cloudflared
     image: docker.io/cloudflare/cloudflared:latest
     command: tunnel run --token {{ cloudflared_token }}
+    network: host
   # Gitea: HTTP on 127.0.0.1:3000, SSH on 0.0.0.0:2222
   - name: gitea
     hostname: gitea.{{ container_defaults.hostname }}
     image: docker.io/gitea/gitea:1-rootless
     network: host
     env:
-      GITEA____APP_NAME: Gitea
+      APP_NAME: Gitea
       GITEA__cache__ENABLED: "true"
       GITEA__cache_0X2E_last_commit__ENABLED: "true"
       GITEA__database__DB_TYPE: postgres
@@ -58,12 +58,11 @@ container_specs:
       GITEA__ssh_0X2E_minimum_key_sizes__ECDSA: "-1"
       GITEA__ui__SHOW_USER_EMAIL: "false"
     volumes:
-      - gitea_conf:/etc/gitea:Z
       - gitea_data:/var/lib/gitea:Z
   # Keycloak: HTTP on 127.0.0.1:8080
   - name: keycloak
     hostname: keycloak.{{ container_defaults.hostname }}
-    image: quay.io/keycloak/keycloak:21.1
+    image: quay.io/keycloak/keycloak:22.0
     command: start
     network: host
     env:
