@@ -13,14 +13,13 @@
 
     ProxyPass /admin/logout !
     ProxyPass /robots.txt !
-    ProxyPass / http://127.0.0.1:8288/ nocanon
+    ProxyPass / http://127.0.0.1:8288/ nocanon upgrade=websocket
     ProxyPassReverse / http://127.0.0.1:8288/ nocanon
     ProxyPreserveHost On
+    ProxyRequests Off
     RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 
     RewriteEngine on
-    RewriteCond %{HTTP:Upgrade} =websocket [NC]
-    RewriteRule /notifications/hub(.*) ws://127.0.0.1:3012/$1 [P,L]
     Redirect 302 /admin/logout /admin/openid-connect?logout=
 
     OIDCClientID {{ vaultwarden_oidc.client_id }}

@@ -93,7 +93,7 @@ container_specs:
       OAUTH2_USER_CREATION: "1"
       OAUTH2_CLIENT_ID: "{{ miniflux_oidc.client_id }}"
       OAUTH2_CLIENT_SECRET: "{{ miniflux_oidc.client_secret }}"
-  # Vaultwarden: HTTP on 127.0.0.1:8288, WebSocket on 127.0.0.1:3012
+  # Vaultwarden: HTTP + WebSocket on 127.0.0.1:8288
   - name: vaultwarden
     hostname: vaultwarden.{{ container_defaults.hostname }}
     image: docker.io/vaultwarden/server:testing
@@ -124,8 +124,6 @@ container_specs:
       SMTP_USERNAME: "{{ vaultwarden_env.SMTP_USERNAME }}"
       SMTP_PASSWORD: "{{ vaultwarden_env.SMTP_PASSWORD }}"
       SMTP_SECURITY: force_tls
-      WEBSOCKET_ADDRESS: 127.0.0.1
-      WEBSOCKET_ENABLED: "true"
       YUBICO_CLIENT_ID: "{{ vaultwarden_env.YUBICO_CLIENT_ID }}"
       YUBICO_SECRET_KEY: "{{ vaultwarden_env.YUBICO_SECRET_KEY }}"
     volumes:
