@@ -1,48 +1,48 @@
 <VirtualHost *:443>
-	ServerName vaultwarden.chrisx.xyz
+    ServerName vaultwarden.chrisx.xyz
 
-	SSLEngine on
-	SSLCertificateFile /etc/apache2/ssl/chrisx.xyz/fullchain.pem
-	SSLCertificateKeyFile /etc/apache2/ssl/chrisx.xyz/privkey.pem
+    SSLEngine on
+    SSLCertificateFile /etc/apache2/ssl/chrisx.xyz/fullchain.pem
+    SSLCertificateKeyFile /etc/apache2/ssl/chrisx.xyz/privkey.pem
 
-	Header unset Referrer-Policy
-	Header unset X-XSS-Protection
-	Header always set Referrer-Policy "no-referrer"
-	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-	Header always set X-Robots-Tag "none"
+    Header unset Referrer-Policy
+    Header unset X-XSS-Protection
+    Header always set Referrer-Policy "no-referrer"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set X-Robots-Tag "none"
 
-	ProxyPass /admin/logout !
-	ProxyPass /robots.txt !
-	ProxyPass / http://127.0.0.1:8288/ nocanon
-	ProxyPassReverse / http://127.0.0.1:8288/ nocanon
-	ProxyPreserveHost On
-	RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
+    ProxyPass /admin/logout !
+    ProxyPass /robots.txt !
+    ProxyPass / http://127.0.0.1:8288/ nocanon
+    ProxyPassReverse / http://127.0.0.1:8288/ nocanon
+    ProxyPreserveHost On
+    RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 
-	RewriteEngine on
-	RewriteCond %{HTTP:Upgrade} =websocket [NC]
-	RewriteRule /notifications/hub(.*) ws://127.0.0.1:3012/$1 [P,L]
-	Redirect 302 /admin/logout /admin/openid-connect?logout=
+    RewriteEngine on
+    RewriteCond %{HTTP:Upgrade} =websocket [NC]
+    RewriteRule /notifications/hub(.*) ws://127.0.0.1:3012/$1 [P,L]
+    Redirect 302 /admin/logout /admin/openid-connect?logout=
 
-	OIDCClientID {{ vaultwarden_oidc.client_id }}
-	OIDCClientSecret {{ vaultwarden_oidc.client_secret }}
-	OIDCPassClaimsAs none
-	OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
-	OIDCRedirectURI https://vaultwarden.chrisx.xyz/admin/openid-connect
-	OIDCScope openid
-	OIDCSessionInactivityTimeout 3600
-	OIDCStateMaxNumberOfCookies 2 true
-	OIDCCryptoPassphrase {{ lookup('password', '/dev/null length=64') }}
+    OIDCClientID {{ vaultwarden_oidc.client_id }}
+    OIDCClientSecret {{ vaultwarden_oidc.client_secret }}
+    OIDCPassClaimsAs none
+    OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
+    OIDCRedirectURI https://vaultwarden.chrisx.xyz/admin/openid-connect
+    OIDCScope openid
+    OIDCSessionInactivityTimeout 3600
+    OIDCStateMaxNumberOfCookies 2 true
+    OIDCCryptoPassphrase {{ lookup('password', '/dev/null length=64') }}
 
-	<Location "/admin/openid-connect">
-		AuthType openid-connect
-		Require valid-user
-	</Location>
+    <Location "/admin/openid-connect">
+        AuthType openid-connect
+        Require valid-user
+    </Location>
 
-	<Location "/admin">
-		AuthType openid-connect
-		Require claim roles:admin
-	</Location>
+    <Location "/admin">
+        AuthType openid-connect
+        Require claim roles:admin
+    </Location>
 
-	ErrorLog /var/log/apache2/vaultwarden_error.log
-	CustomLog /var/log/apache2/vaultwarden_access.log combined
+    ErrorLog /var/log/apache2/vaultwarden_error.log
+    CustomLog /var/log/apache2/vaultwarden_access.log combined
 </VirtualHost>
