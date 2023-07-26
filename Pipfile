@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-ansible-core = "~=2.15"
+ansible-core = "~=2.15.2"
 
 [dev-packages]
-ansible-lint = "6.17.2"
+ansible-lint = "~=6.17.2"
 pre-commit = "*"
 yamllint = "*"
