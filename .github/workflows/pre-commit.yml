@@ -4,20 +4,30 @@ on:
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
+    env:
+      PIPENV_VENV_IN_PROJECT: 1
     steps:
       - name: Get Python version
         run: echo "PY=$(python -V | sed 's/ //g')" >> $GITHUB_ENV
       - name: Check out repo
         uses: actions/checkout@v3
-      - name: Set up pre-commit cache
+      - name: Cache pre-commit repos
         uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
-      - name: Install pre-commit
+      - name: Cache Python env
+        uses: actions/cache@v3
+        with:
+          path: ~/work/infra/.venv
+          key: venv|${{ env.PY }}|${{ hashFiles('Pipfile.lock') }}
+      - name: Install dependencies
         run: |
-          sudo pip install pre-commit
-          pre-commit install --install-hooks
-      - name: Run pre-commit checks on all files
+          pip install --user pipenv
+      - name: Set up Python env
         run: |
-          pre-commit run --all-files
+          pipenv install --dev
+          pipenv run pre-commit install --install-hooks
+      - name: Run pre-commit checks
+        run: |
+          pipenv run pre-commit run --all-files
