@@ -1,4 +1,4 @@
-ANSIBLE_VAULT_ARGS = --vault-password-file files/bw_vault_password.sh
+ANSIBLE_VAULT_ARGS = --vault-password-file files/op_vault_password.sh
 EDITOR = code --wait
 
 # Set variable `ANSIBLE_ARGS` to pass arbitrary arguments to Ansible,
@@ -49,6 +49,10 @@ envsetup:
 # Run pre-commit checks on all files
 pre-commit:
 	pipenv run pre-commit run --all-files
+
+# Create Ansible Vault. Must set "host" variable
+vaultcreate:
+	pipenv run ansible-vault create $(ANSIBLE_VAULT_ARGS) "host_vars/$(host)/main/secrets.yml"
 
 # Edit Ansible Vault. Must set "host" variable
 vaultedit:

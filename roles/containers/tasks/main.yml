@@ -25,7 +25,7 @@
       ansible.builtin.blockinfile:
         path: "{{ _container_user_info.home }}/.bashrc"
         block: |-
-          export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+          alias sdu="systemctl --user"
         state: present
     - name: Set up containers
       ansible.builtin.import_tasks: containers.yml

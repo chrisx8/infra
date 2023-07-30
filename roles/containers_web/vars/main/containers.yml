@@ -2,6 +2,7 @@
 container_user: podman
 
 container_volumes:
+  - gitea_conf
   - gitea_data
   - vaultwarden
 
@@ -16,7 +17,7 @@ container_specs:
     image: docker.io/gitea/gitea:1-rootless
     network: host
     env:
-      APP_NAME: Gitea
+      GITEA____APP_NAME: Gitea
       GITEA__cache__ENABLED: "true"
       GITEA__cache_0X2E_last_commit__ENABLED: "true"
       GITEA__database__DB_TYPE: postgres
@@ -58,6 +59,7 @@ container_specs:
       GITEA__ssh_0X2E_minimum_key_sizes__ECDSA: "-1"
       GITEA__ui__SHOW_USER_EMAIL: "false"
     volumes:
+      - gitea_conf:/etc/gitea:Z
       - gitea_data:/var/lib/gitea:Z
   # Keycloak: HTTP on 127.0.0.1:8080
   - name: keycloak

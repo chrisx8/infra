@@ -33,6 +33,7 @@ Available `make` commands:
 - `make certbot-*`: run the [certbot helper script](files/certbot.sh).
 - `make envsetup`: set up local Ansible environment, including Ansible collections and pre-commit.
 - `make pre-commit`: run pre-commit checks on all files.
+- `make vaultcreate`: create Ansible Vault.
 - `make vaultedit`: edit Ansible Vault.
 
 Optional `make` args:

@@ -43,9 +43,6 @@
   loop_control:
     label: "{{ item.name }}"
 
-- name: Prune dangling container images
-  ansible.builtin.command: podman image prune -f
-  changed_when: false
-- name: Prune container volumes
-  ansible.builtin.command: podman volume prune -f
+- name: Prune dangling container resources
+  ansible.builtin.command: podman system prune -f
   changed_when: false
