@@ -8,7 +8,7 @@ I use [Ansible](https://docs.ansible.com/ansible/latest/index.html) and [Podman]
 
 ### Setup
 
-First, make sure you have [Pipenv](https://pipenv.pypa.io) installed.
+First, make sure you have **Python 3.11** (or newer) and [**Pipenv**](https://pipenv.pypa.io) installed.
 
 Then, install repo dependencies, including Ansible, Ansible collections, `ansible-lint`, and pre-commit hooks:
 
