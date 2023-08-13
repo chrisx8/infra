@@ -1,0 +1,9 @@
+---
+# PostgreSQL version to install
+cx_postgresql_version: "15"
+
+# Healthchecks.io ping URL for backup cron job
+cx_postgresql_cron_ping_url: ""
+
+# Addresses (CIDR notation) that may access PostgreSQL over SSL
+cx_postgresql_local_cidr: 127.0.0.1/32

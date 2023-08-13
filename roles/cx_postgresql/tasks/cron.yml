@@ -1,7 +1,7 @@
 ---
 - name: Copy backup script
   ansible.builtin.template:
-    src: backup.sh
+    src: backup.sh.j2
     dest: /var/lib/pgsql/backup.sh
     owner: postgres
     group: postgres

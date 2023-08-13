@@ -5,11 +5,11 @@
   tasks:
     - name: Upgrade
       ansible.builtin.import_role:
-        name: system_pve
+        name: cx_base_pve
         tasks_from: upgrade.yml
     - name: Install ssl cert for PVE
       ansible.builtin.import_role:
-        name: system_pve
+        name: cx_base_pve
         tasks_from: ssl_cert.yml
 
 - name: Upgrade guests
@@ -29,7 +29,7 @@
   hosts: adguard
   become: true
   roles:
-    - adguard_home
+    - cx_adguard_home
 
 - name: Upgrade containers
   hosts: v-containers
@@ -44,7 +44,7 @@
   pre_tasks:
     - name: Install ssl cert for PostgreSQL
       ansible.builtin.import_role:
-        name: postgresql
+        name: cx_postgresql
         tasks_from: sslcert.yml
 
 - name: Upgrade storage

@@ -38,16 +38,18 @@ repos:
         name: Ansible-lint
         entry: /usr/bin/env pipenv run ansible-lint -v
         args:
-          - roles/containers_web/tasks/postgres_db.yml
-          - roles/tailscale/tasks/main.yml
+          - host_vars/prod-container-miniflux/main/cx_container_app.yml
+          - host_vars/prod-container-vaultwarden/main/cx_container_app.yml
+          - roles/cx_tailscale/tasks/main.yml
         language: script
         pass_filenames: false
       - id: ansible-lint
         name: Ansible-lint with reformatting
         entry: /usr/bin/env pipenv run ansible-lint -v
         args:
-          - --exclude=roles/containers_web/tasks/postgres_db.yml
-          - --exclude=roles/tailscale/tasks/main.yml
+          - --exclude=host_vars/prod-container-miniflux/main/cx_container_app.yml
+          - --exclude=host_vars/prod-container-vaultwarden/main/cx_container_app.yml
+          - --exclude=roles/cx_tailscale/tasks/main.yml
           - --write
         language: script
         pass_filenames: false

@@ -9,7 +9,7 @@
     - virtualization_role
     - virtualization_type
   roles:
-    - system_pve
+    - cx_base_pve
 
 - name: Set up all guests
   hosts: guests
@@ -19,18 +19,22 @@
     - "!min"
     - distribution
     - virtualization_type
+  vars_prompt:
+    - name: cx_tailscale_auth_key
+      prompt: |-
+        ###### Tailscale - ACTION REQUIRED ######
+        Generate a pre-authorized Tailscale auth key at https://login.tailscale.com/admin/settings/keys
+        Enter Tailscale auth key
   roles:
-    - system_el
+    - cx_base_el
+    - cx_container_runtime
+    - cx_tailscale
 
 - name: Set up AdGuard Home
   hosts: adguard
   become: true
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - distribution
   roles:
-    - adguard_home
+    - cx_adguard_home
 
 - name: Set up containers
   hosts: v-containers
@@ -41,8 +45,7 @@
     - distribution
     - virtualization_type
   roles:
-    - tailscale
-    - postgresql
+    - cx_postgresql
     - containers_web
 
 - name: Set up storage server
@@ -54,6 +57,5 @@
     - distribution
     - virtualization_type
   roles:
-    - tailscale
     - cx_samba
     - containers_storage

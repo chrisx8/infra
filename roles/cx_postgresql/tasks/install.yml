@@ -10,22 +10,23 @@
     state: present
   loop:
     - common
-    - 15
+    - "{{ cx_postgresql_version }}"
   loop_control:
     label: pgdg-{{ item }}
 
-- name: Install PostgreSQL 15
+- name: Install PostgreSQL {{ cx_postgresql_version }}
   ansible.builtin.dnf:
     name:
-      - postgresql15-contrib
-      - postgresql15-server
+      - postgresql{{ cx_postgresql_version }}-contrib
+      - postgresql{{ cx_postgresql_version }}-server
       - python3-psycopg2
     state: present
 
 - name: Initialize PostgreSQL database
-  ansible.builtin.command: /usr/pgsql-15/bin/postgresql-15-setup initdb
-  register: _postgresql_initdb_result
-  changed_when: _postgresql_initdb_result.rc == 0
+  ansible.builtin.command:
+    cmd: /usr/pgsql-{{ cx_postgresql_version }}/bin/postgresql-{{ cx_postgresql_version }}-setup initdb
+  register: _postgresql_initdb
+  changed_when: _postgresql_initdb.rc == 0
   failed_when: false
   notify:
     - Enable and restart postgresql

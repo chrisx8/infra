@@ -1,6 +1,6 @@
 ---
 - name: Enable and restart postgresql
   ansible.builtin.systemd:
-    name: postgresql-15.service
+    name: postgresql-{{ cx_postgresql_version }}.service
     enabled: true
     state: restarted

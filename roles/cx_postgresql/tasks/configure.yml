@@ -1,7 +1,7 @@
 ---
 - name: Configure PostgreSQL server
   ansible.builtin.blockinfile:
-    path: /var/lib/pgsql/15/data/postgresql.conf
+    path: /var/lib/pgsql/{{ cx_postgresql_version }}/data/postgresql.conf
     mode: "0600"
     block: |
       listen_addresses = '*'
@@ -14,8 +14,10 @@
 
 - name: Configure PostgreSQL access policy
   ansible.builtin.blockinfile:
-    path: /var/lib/pgsql/15/data/pg_hba.conf
+    path: /var/lib/pgsql/{{ cx_postgresql_version }}/data/pg_hba.conf
     mode: "0600"
     block: |
       # TYPE DATABASE USER ADDRESS METHOD
-      hostssl  all  all  10.69.0.0/24  scram-sha-256
+      hostssl  all  all  {{ cx_postgresql_local_cidr }}  scram-sha-256
+  notify:
+    - Enable and restart postgresql
