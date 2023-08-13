@@ -1,0 +1,9 @@
+---
+ansible_host: v-containers.arb.chrisx.xyz
+
+# cloudflared: no open port
+cx_container_app_spec:
+  name: cloudflared
+  image: docker.io/cloudflare/cloudflared:latest
+  command: tunnel run --token {{ _cloudflared_token }}
+  network: host

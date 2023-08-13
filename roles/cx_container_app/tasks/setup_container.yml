@@ -1,0 +1,41 @@
+---
+- name: Generate container spec
+  ansible.builtin.set_fact:
+    _container_spec: "{{ cx_container_app_spec | combine(_container_defaults) }}"
+
+- name: Generate systemd unit name
+  ansible.builtin.set_fact:
+    _container_systemd_unit: "{{ _container_spec.generate_systemd.container_prefix }}-{{ _container_spec.name }}"
+
+- name: Create volumes
+  loop: "{{ cx_container_app_volumes }}"
+  when: cx_container_app_volumes
+  containers.podman.podman_volume:
+    name: "{{ item }}"
+    state: present
+
+- name: Pull image
+  containers.podman.podman_image:
+    name: "{{ _container_spec.image }}"
+    force: true
+    pull: true
+    state: present
+
+- name: Disable and stop systemd unit
+  failed_when: false
+  ansible.builtin.systemd:
+    name: "{{ _container_systemd_unit }}"
+    enabled: false
+    scope: user
+    state: stopped
+
+- name: Create container
+  containers.podman.podman_container: "{{ _container_spec }}"
+
+- name: Enable and start systemd unit
+  ansible.builtin.systemd:
+    name: "{{ _container_systemd_unit }}"
+    daemon_reload: true
+    enabled: true
+    scope: user
+    state: started

@@ -1,0 +1,30 @@
+---
+# User to run the container as
+cx_container_app_user: podman
+
+# Healthchecks.io ping URL for nightly volume backup job
+cx_container_app_backup_ping_url:
+# PostgreSQL database and user to be created. A random password will be
+# generated for the user, and it's accessible as `_postgres_password`
+cx_container_app_postgres_db:
+# Optional pre-tasks for container: Place pre-task files in the `cx_container_pretasks`
+# role, and set this variable to the name of the tasks file.
+cx_container_app_pretask_from: ""
+# Container volumes to be created
+cx_container_app_volumes: []
+# Default values for each container
+# Need to override anything here? Declare the override in cx_container_app_spec.
+_container_defaults:
+  cap_drop:
+    - all
+  generate_systemd:
+    container_prefix: c
+    path: ~/.config/systemd/user
+  hostname: "{{ inventory_hostname }}"
+  recreate: true
+  security_opt:
+    - no-new-privileges
+  state: present
+
+# haxx: placeholder default to make Ansible happy
+_postgres_password: ""

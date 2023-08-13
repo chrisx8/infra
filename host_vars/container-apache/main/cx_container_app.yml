@@ -1,0 +1,20 @@
+---
+ansible_host: v-containers.arb.chrisx.xyz
+
+cx_container_app_pretask_from: apache.yml
+
+# Apache: HTTP on 0.0.0.0:80, HTTPS on 0.0.0.0:443
+cx_container_app_spec:
+  name: apache
+  image: ghcr.io/chrisx8/apache-openidc:latest
+  network: host
+  cap_add:
+    - CHOWN
+    - NET_BIND_SERVICE
+    - SETGID
+    - SETUID
+  volumes:
+    - "{{ _container_user.home }}/apache/conf.d:/etc/apache2/sites-enabled:ro,Z"
+    - "{{ _container_user.home }}/apache/log:/var/log/apache2:Z"
+    - "{{ _container_user.home }}/apache/ssl:/etc/apache2/ssl:ro,Z"
+    - "{{ _container_user.home }}/apache/www:/var/www:ro,Z"

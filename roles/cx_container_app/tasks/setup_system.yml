@@ -1,0 +1,11 @@
+---
+- name: Create user {{ cx_container_app_user }}
+  register: _container_user
+  ansible.builtin.user:
+    name: "{{ cx_container_app_user }}"
+    create_home: true
+    state: present
+
+- name: Enable linger for user {{ cx_container_app_user }}
+  changed_when: false
+  ansible.builtin.command: loginctl enable-linger {{ cx_container_app_user }}

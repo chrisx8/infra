@@ -1,0 +1,23 @@
+---
+- name: Generate PostgreSQL password
+  ansible.builtin.set_fact:
+    _postgres_password: "{{ lookup('password', '/dev/null chars=ascii_letters,digits length=64') }}"
+
+- name: Create PostgreSQL database
+  community.postgresql.postgresql_db:
+    name: "{{ cx_container_app_postgres_db }}"
+    state: present
+
+- name: Create PostgreSQL user
+  community.postgresql.postgresql_user:
+    db: "{{ cx_container_app_postgres_db }}"
+    name: "{{ cx_container_app_postgres_db }}"
+    password: "{{ _postgres_password }}"
+
+- name: Grant all privileges on public schema
+  community.postgresql.postgresql_privs:
+    db: "{{ cx_container_app_postgres_db }}"
+    type: schema
+    objs: public
+    privs: ALL
+    role: "{{ cx_container_app_postgres_db }}"

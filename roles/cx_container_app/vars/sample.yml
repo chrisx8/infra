@@ -1,0 +1,13 @@
+---
+cx_container_app_spec:
+  name: nginx
+  image: docker.io/library/nginx:alpine
+  ports:
+    - 80:80
+    - 443:443
+  volumes:
+    - /etc/ssl:/etc/ssl:ro
+    - nginx_log:/var/log/nginx
+
+cx_container_app_volumes:
+  - nginx_log

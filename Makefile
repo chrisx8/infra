@@ -1,4 +1,4 @@
-ANSIBLE_VAULT_ARGS = --vault-password-file files/op_vault_password.sh
+ANSIBLE_VAULT_ARGS = --vault-password-file utils/vault_password_op.sh
 EDITOR = code --wait
 
 # Set variable `ANSIBLE_ARGS` to pass arbitrary arguments to Ansible,

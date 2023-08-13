@@ -1,0 +1,59 @@
+---
+ansible_host: v-containers.arb.chrisx.xyz
+
+cx_container_app_postgres_db: gitea
+
+# Gitea: HTTP on 127.0.0.1:3000, SSH on 0.0.0.0:2222
+cx_container_app_spec:
+  name: gitea
+  image: docker.io/gitea/gitea:1-rootless
+  network: host
+  env:
+    GITEA____APP_NAME: Gitea
+    GITEA__cache__ENABLED: "true"
+    GITEA__cache_0X2E_last_commit__ENABLED: "true"
+    GITEA__database__DB_TYPE: postgres
+    GITEA__database__LOG_SQL: "false"
+    GITEA__database__HOST: 127.0.0.1:5432
+    GITEA__database__NAME: "{{ cx_container_app_postgres_db }}"
+    GITEA__database__SSL_MODE: disable
+    GITEA__database__USER: "{{ cx_container_app_postgres_db }}"
+    GITEA__database__PASSWD: "{{ _postgres_password }}"
+    GITEA__federation__ENABLED: "false"
+    GITEA__federation__SHARE_USER_STATISTICS: "false"
+    GITEA__oauth2_client__ACCOUNT_LINKING: login
+    GITEA__oauth2_client__ENABLE_AUTO_REGISTRATION: "true"
+    GITEA__other__SHOW_FOOTER_BRANDING: "true"
+    GITEA__other__SHOW_FOOTER_TEMPLATE_LOAD_TIME: "false"
+    GITEA__picture__DISABLE_GRAVATAR: "true"
+    GITEA__picture__ENABLE_FEDERATED_AVATAR: "false"
+    GITEA__security__INSTALL_LOCK: "true"
+    GITEA__security__PASSWORD_HASH_ALGO: argon2
+    GITEA__server__DOMAIN: gitea.arb.chrisx.xyz
+    GITEA__server__HTTP_ADDR: 127.0.0.1
+    GITEA__server__HTTP_PORT: "3000"
+    GITEA__server__LANDING_PAGE: login
+    GITEA__server__OFFLINE_MODE: "true"
+    GITEA__server__ROOT_URL: https://gitea.arb.chrisx.xyz/
+    GITEA__server__SSH_DOMAIN: gitea.arb.chrisx.xyz
+    GITEA__server__SSH_PORT: "2222"
+    GITEA__service__ALLOW_ONLY_EXTERNAL_REGISTRATION: "true"
+    GITEA__service__DEFAULT_KEEP_EMAIL_PRIVATE: "true"
+    GITEA__service__DEFAULT_USER_IS_RESTRICTED: "true"
+    GITEA__service__DISABLE_REGISTRATION: "false"
+    GITEA__service__ENABLE_BASIC_AUTHENTICATION: "false"
+    GITEA__service__MINIMUM_KEY_SIZE_CHECK: "true"
+    GITEA__service__REGISTER_MANUAL_CONFIRM: "true"
+    GITEA__service__REQUIRE_SIGNIN_VIEW: "true"
+    GITEA__session__COOKIE_SECURE: "true"
+    GITEA__session__PROVIDER: db
+    GITEA__ssh_0X2E_minimum_key_sizes__DSA: "-1"
+    GITEA__ssh_0X2E_minimum_key_sizes__ECDSA: "-1"
+    GITEA__ui__SHOW_USER_EMAIL: "false"
+  volumes:
+    - gitea_conf:/etc/gitea:Z
+    - gitea_data:/var/lib/gitea:Z
+
+cx_container_app_volumes:
+  - gitea_conf
+  - gitea_data

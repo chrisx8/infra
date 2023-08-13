@@ -1,0 +1,56 @@
+---
+- name: Create Apache log dir
+  ansible.builtin.file:
+    path: "{{ _container_user.home }}/apache/log"
+    mode: "0755"
+    state: directory
+
+- name: Create Apache ssl dir
+  ansible.builtin.file:
+    path: "{{ _container_user.home }}/apache/ssl/{{ ssl_domain }}"
+    state: directory
+    mode: "0700"
+- name: Copy ssl cert for {{ ssl_domain }}
+  ansible.builtin.copy:
+    src: certbot.d/config/live/{{ ssl_domain }}/{{ item }}
+    dest: "{{ _container_user.home }}/apache/ssl/{{ ssl_domain }}"
+    mode: "0400"
+  loop:
+    - fullchain.pem
+    - privkey.pem
+
+- name: Copy Apache conf.d
+  ansible.builtin.copy:
+    src: apache/conf.d
+    dest: "{{ _container_user.home }}/apache"
+    mode: "0640"
+
+- name: Copy Apache www
+  ansible.builtin.copy:
+    src: apache/www
+    dest: "{{ _container_user.home }}/apache"
+    mode: "0644"
+
+- name: Copy templated Apache config
+  ansible.builtin.template:
+    src: apache/{{ item }}.j2
+    dest: "{{ _container_user.home }}/apache/{{ item }}"
+    mode: "0640"
+  loop:
+    - conf.d/go.conf
+    - conf.d/vaultwarden.conf
+    - logrotate.conf
+
+- name: Disable cron mail
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+- name: Set up logrotate cron job
+  ansible.builtin.cron:
+    name: apache logrotate
+    # yamllint disable-line rule:line-length
+    job: /usr/sbin/logrotate -s {{ _container_user.home }}/apache/logrotate.state {{ _container_user.home }}/apache/logrotate.conf
+    hour: 2
+    minute: 0
+    state: present

@@ -1,0 +1,40 @@
+---
+- name: Verify system requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+      - ansible_facts.virtualization_type != 'lxc'
+
+- name: System setup - run as root
+  become: true
+  ansible.builtin.import_tasks: setup_system.yml
+
+- name: Validate cx_container_app_spec
+  ansible.builtin.assert:
+    that:
+      - cx_container_app_spec
+      - cx_container_app_spec.image
+      - cx_container_app_spec.name
+      - cx_container_app_user != 'root'
+
+- name: Import container pre-tasks
+  ansible.builtin.import_role:
+    name: cx_container_pretasks
+
+- name: Nightly volume backup setup - run as {{ cx_container_app_user }}
+  become: true
+  become_user: "{{ cx_container_app_user }}"
+  when: cx_container_app_backup_ping_url
+  ansible.builtin.import_tasks: setup_backup.yml
+
+- name: PostgreSQL database setup - run as postgres
+  become: true
+  become_user: postgres
+  when: cx_container_app_postgres_db
+  ansible.builtin.import_tasks: setup_postgres_db.yml
+
+- name: Container setup - run as {{ cx_container_app_user }}
+  become: true
+  become_user: "{{ cx_container_app_user }}"
+  ansible.builtin.import_tasks: setup_container.yml

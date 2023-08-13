@@ -1,0 +1,14 @@
+---
+ansible_host: storage.arb.chrisx.xyz
+
+cx_container_app_pretask_from: jellyfin.yml
+
+# Jellyfin: HTTP on 127.0.0.1:8096
+cx_container_app_spec:
+  name: jellyfin
+  image: docker.io/jellyfin/jellyfin:latest
+  network: host
+  volumes:
+    - "{{ _container_user.home }}/jellyfin/cache:/cache:Z"
+    - "{{ _container_user.home }}/jellyfin/config:/config:Z"
+    - /mnt/media:/media:z
