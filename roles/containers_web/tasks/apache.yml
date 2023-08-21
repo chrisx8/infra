@@ -39,7 +39,6 @@
     dest: "{{ _container_user_info.home }}/apache/conf.d/{{ item }}"
     mode: "0640"
   loop:
-    - 1_default.conf
     - go.conf
     - vaultwarden.conf
 

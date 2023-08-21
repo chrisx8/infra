@@ -37,7 +37,6 @@
   gather_facts: true
   gather_subset:
     - "!min"
-    - default_ipv4
     - distribution
     - virtualization_type
   roles:

@@ -2,7 +2,6 @@
 - name: Verify requirements
   ansible.builtin.assert:
     that:
-      - ansible_facts.default_ipv4.address is defined
       - cloudflared_token is defined
       - containers_web_cron_ping_url is defined
       - vaultwarden_oidc is defined

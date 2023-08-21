@@ -33,6 +33,6 @@ Role variables:
   - Refer to [Vaultwarden .env.template](https://github.com/dani-garcia/vaultwarden/blob/main/.env.template).
 - `vaultwarden_oidc` (**required**): OIDC client credentials, requires `client_id` and `client_secret`.
 
-Required facts: `default_ipv4`, `distribution`, `virtualization_type`
+Required facts: `distribution`, `virtualization_type`
 
 Supported OS: RHEL-like systems, version 8 or newer

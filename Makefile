@@ -50,11 +50,6 @@ envsetup:
 pre-commit:
 	pipenv run pre-commit run --all-files
 
-# Create Ansible Vault. Must set "host" variable
-vaultcreate:
-	pipenv run ansible-vault create $(ANSIBLE_VAULT_ARGS) "host_vars/$(host)/main/secrets.yml"
-
-# Edit Ansible Vault. Must set "host" variable
-vaultedit:
-	test -f "host_vars/$(host)/main/secrets.yml"
-	pipenv run ansible-vault edit $(ANSIBLE_VAULT_ARGS) "host_vars/$(host)/main/secrets.yml"
+# Create or edit Ansible Vault.
+%/secrets.yml: _
+	pipenv run ansible-vault edit $(ANSIBLE_VAULT_ARGS) "$@" || pipenv run ansible-vault create $(ANSIBLE_VAULT_ARGS) "$@"
