@@ -1,9 +1,20 @@
 ---
-- name: Verify system
+- name: Verify system requirements
   ansible.builtin.assert:
     that:
       - ansible_facts.os_family == 'RedHat'
       - ansible_facts.distribution_major_version|int >= 8
+
+- name: Validate cx_samba_shares
+  ansible.builtin.assert:
+    that:
+      - item.name
+      - item.comment
+      - item.path and item.path.startswith('/')
+      - item.browsable in ('yes', 'no')
+      - item.create_mask|length == 4
+      - item.directory_mask|length == 4
+  loop: "{{ cx_samba_shares }}"
 
 - name: Install packages
   ansible.builtin.dnf:
@@ -15,10 +26,10 @@
     state: present
 
 - name: Copy Samba config
-  ansible.builtin.copy:
-    src: smb.conf
+  ansible.builtin.template:
+    src: smb.conf.j2
     dest: /etc/samba/smb.conf
-    mode: "0644"
+    mode: "0640"
 
 - name: Configure SELinux
   ansible.posix.seboolean:
@@ -30,9 +41,9 @@
 
 - name: Enable and restart Samba services
   ansible.builtin.systemd:
-    name: smb
+    name: "{{ item }}"
     enabled: true
     state: restarted
   loop:
-    - smb
     - nmb
+    - smb

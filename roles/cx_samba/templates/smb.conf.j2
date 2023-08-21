@@ -1,10 +1,10 @@
 [global]
     server role = standalone server
-    server string = %h server
+    server string = %h
     workgroup = WORKGROUP
     include = registry
 
-    min protocol = SMB2
+    min protocol = {{ cx_samba_min_protocol }}
     allow nt4 crypto = no
     require strong key = yes
 
@@ -27,14 +27,6 @@
     fruit:zero_file_id = yes
     fruit:nfs_aces = no
 
-[Media]
-    comment = Media Library
-    path = /mnt/media
-    browsable = yes
-    writable = yes
-    create mask = 0664
-    directory mask = 0775
-
 [homes]
     comment = Home Directories
     browseable = no
@@ -42,3 +34,13 @@
     create mask = 0600
     directory mask = 0700
     valid users = %S
+
+{% for share in cx_samba_shares %}
+[{{ share.name }}]
+    comment = {{ share.comment|default(share.name) }}
+    path = {{ share.path }}
+    browsable = {{ share.browsable }}
+    writable = {{ share.writable }}
+    create mask = {{ share.create_mask }}
+    directory mask = {{ share.directory_mask }}
+{% endfor %}

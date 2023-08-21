@@ -1,0 +1,14 @@
+---
+# Upstream DNS servers
+cx_pihole_dns_1: 1.1.1.1
+cx_pihole_dns_2: 1.0.0.1
+# Enable DNS query logging, "true" or "false"
+cx_pihole_enable_query_logging: "true"
+
+# rDNS for local addresses, rDNS queries for these addresses will be forwarded
+# to the local rDNS server
+cx_pihole_rdns_local_cidr:
+# Search domain for local network
+cx_pihole_rdns_local_domain:
+# Local rDNS server
+cx_pihole_rdns_server:

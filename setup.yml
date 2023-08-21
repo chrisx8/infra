@@ -55,5 +55,5 @@
     - virtualization_type
   roles:
     - tailscale
+    - cx_samba
     - containers_storage
-    - samba_share
