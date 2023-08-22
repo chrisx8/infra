@@ -1,0 +1,13 @@
+---
+- name: Remove container apps
+  hosts: cx_container_app
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+    - virtualization_type
+  tasks:
+    - name: Remove container app
+      ansible.builtin.import_role:
+        name: cx_container_app
+        tasks_from: remove.yml
