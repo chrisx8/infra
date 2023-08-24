@@ -1,4 +1,36 @@
 ---
+- name: Remove unneeded packages
+  ansible.builtin.dnf:
+    name:
+      - cloud-init
+      - command-not-found
+      - open-iscsi
+      - open-vm-tools
+      - plymouth
+      - postfix
+      - telnet
+    state: absent
+
+- name: Install epel-release repo
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present
+  when: ansible_facts.distribution != 'Fedora'
+
+- name: Install standard packages
+  ansible.builtin.dnf:
+    name:
+      - bind-utils
+      - cronie
+      - curl
+      - htop
+      - psmisc
+      - vim
+      - tar
+      - unzip
+      - wget
+    state: present
+
 - name: Set hostname
   ansible.builtin.hostname:
     name: "{{ ansible_host }}"
@@ -9,6 +41,12 @@
     name: "{{ timezone }}"
     hwclock: UTC
   when: timezone is defined
+
+- name: Set up passwordless sudo for wheel group
+  ansible.builtin.blockinfile:
+    block: "%wheel ALL=(ALL) NOPASSWD:ALL"
+    path: /etc/sudoers
+    state: present
 
 - name: Disable systemd coredump
   ansible.builtin.lineinfile:
@@ -27,14 +65,9 @@
     dest: /etc/environment
     regex: ^EDITOR=
     line: EDITOR=vim
-- name: Configure vim
+
+- name: Copy system vimrc
   ansible.builtin.copy:
     src: vimrc
     dest: /etc/vimrc.local
     mode: "0644"
-
-- name: Configure crontab
-  ansible.builtin.cron:
-    name: MAILTO
-    env: true
-    job: ""

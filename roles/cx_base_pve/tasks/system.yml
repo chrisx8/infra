@@ -31,7 +31,7 @@
     special_time: reboot
     state: present
 
-- name: Configure vim
+- name: Copy system vimrc
   ansible.builtin.copy:
     src: vimrc
     dest: /etc/vim/vimrc.local
@@ -59,6 +59,7 @@
     path: /etc/default/grub
     regexp: ^GRUB_CMDLINE_LINUX_DEFAULT
     line: GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on pcie_aspm=off"
+
 - name: Update GRUB config
   ansible.builtin.command: update-grub2
   changed_when: true

@@ -16,14 +16,10 @@
   hosts: guests
   become: true
   tasks:
-    - name: Upgrade packages
-      ansible.builtin.dnf: # noqa package-latest
-        name: "*"
-        update_cache: true
-        state: latest
-    - name: Autoremove unneeded packages
-      ansible.builtin.dnf:
-        autoremove: true
+    - name: Upgrade
+      ansible.builtin.import_role:
+        name: cx_base_el
+        tasks_from: upgrade.yml
 
 - name: Upgrade AdGuard Home
   hosts: adguard
