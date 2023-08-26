@@ -27,7 +27,6 @@
         Enter Tailscale auth key
   roles:
     - cx_base_el
-    - cx_container_runtime
     - cx_tailscale
 
 - name: Set up AdGuard Home
