@@ -45,9 +45,6 @@ Optional `make` args:
   - Example: `make setup.yml diff=yes`
 - `limit`: limit playbook run to specified host(s)
   - Example: `make setup.yml limit=guests`
-- `novault`: do not use Ansible Vault
-  - Example: `make setup.yml novault=yes`
-  - Note: if `novault` is set, roles that require Ansible Vault will fail
 
 ## Dependencies
 

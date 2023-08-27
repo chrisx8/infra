@@ -104,7 +104,7 @@ container_specs:
       # yamllint disable-line rule:line-length
       DATABASE_URL: postgres://vaultwarden:{{ postgres_passwords.vaultwarden }}@127.0.0.1:5432/vaultwarden?sslmode=disable
       DISABLE_ADMIN_TOKEN: "true"
-      DOMAIN: https://vaultwarden.chrisx.xyz
+      DOMAIN: https://vaultwarden.arb.chrisx.xyz
       EVENTS_DAYS_RETAIN: "30"
       IP_HEADER: X-Forwarded-For
       ORG_EVENTS_ENABLED: "true"

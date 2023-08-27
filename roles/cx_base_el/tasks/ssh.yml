@@ -9,16 +9,17 @@
     - ssh_host_dsa_key
     - ssh_host_dsa_key.pub
 
-- name: Configure OpenSSH client
+- name: Copy OpenSSH client config
   ansible.builtin.copy:
     src: ssh.conf
-    dest: /etc/ssh/ssh_config.d
+    dest: /etc/ssh/ssh_config.d/01-ansible.conf
     mode: "0644"
-- name: Configure OpenSSH server
+
+- name: Copy OpenSSH server config
   ansible.builtin.copy:
     src: sshd.conf
-    dest: /etc/ssh/sshd_config.d
-    mode: "0644"
+    dest: /etc/ssh/sshd_config.d/01-ansible.conf
+    mode: "0600"
 
 - name: Restart OpenSSH server
   ansible.builtin.systemd:

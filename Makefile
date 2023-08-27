@@ -22,12 +22,6 @@ ifdef limit
 	ANSIBLE_ARGS += --limit "$(limit)"
 endif
 
-# Set variable `novault` to bypass Ansible Vault setup
-# Example: `make setup.yml novault=yes`
-ifdef novault
-	ANSIBLE_VAULT_ARGS =
-endif
-
 # hack: placeholder task
 _:
 

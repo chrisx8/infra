@@ -16,7 +16,7 @@ golinks:
     dst: https://sso.chrisx.xyz/realms/chrisx/account/
   - src: ssoadmin
     dst: https://sso.chrisx.xyz/admin/chrisx/console/
-  - src: vault
-    dst: https://vaultwarden.chrisx.xyz
-  - src: vaultadmin
-    dst: https://vaultwarden.chrisx.xyz/admin
+  - src: vw
+    dst: https://vaultwarden.arb.chrisx.xyz
+  - src: vwadmin
+    dst: https://vaultwarden.arb.chrisx.xyz/admin

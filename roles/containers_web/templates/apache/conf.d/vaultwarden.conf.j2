@@ -1,5 +1,5 @@
 <VirtualHost *:443>
-    ServerName vaultwarden.chrisx.xyz
+    ServerName vaultwarden.arb.chrisx.xyz
 
     SSLEngine on
     SSLCertificateFile /etc/apache2/ssl/chrisx.xyz/fullchain.pem
@@ -26,7 +26,7 @@
     OIDCClientSecret {{ vaultwarden_oidc.client_secret }}
     OIDCPassClaimsAs none
     OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
-    OIDCRedirectURI https://vaultwarden.chrisx.xyz/admin/openid-connect
+    OIDCRedirectURI https://vaultwarden.arb.chrisx.xyz/admin/openid-connect
     OIDCScope openid
     OIDCSessionInactivityTimeout 3600
     OIDCStateMaxNumberOfCookies 2 true
@@ -41,6 +41,16 @@
         AuthType openid-connect
         Require claim roles:admin
     </Location>
+
+    ErrorLog /var/log/apache2/vaultwarden_error.log
+    CustomLog /var/log/apache2/vaultwarden_access.log combined
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName vaultwarden
+
+    RewriteEngine On
+    RewriteRule ^(.*)$ https://vaultwarden.arb.chrisx.xyz$1 [R=301,L]
 
     ErrorLog /var/log/apache2/vaultwarden_error.log
     CustomLog /var/log/apache2/vaultwarden_access.log combined
