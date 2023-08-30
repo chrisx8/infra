@@ -5,11 +5,10 @@
     SSLCertificateFile /etc/apache2/ssl/chrisx.xyz/fullchain.pem
     SSLCertificateKeyFile /etc/apache2/ssl/chrisx.xyz/privkey.pem
 
-    Header unset Referrer-Policy
-    Header unset X-XSS-Protection
     Header always set Referrer-Policy "no-referrer"
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-    Header always set X-Robots-Tag "none"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
 
     ProxyPass /admin/logout !
     ProxyPass /robots.txt !
