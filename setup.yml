@@ -8,8 +8,15 @@
     - distribution
     - virtualization_role
     - virtualization_type
+  vars_prompt:
+    - name: cx_tailscale_auth_key
+      prompt: |-
+        ###### Tailscale - ACTION REQUIRED ######
+        Generate a pre-authorized Tailscale auth key at https://login.tailscale.com/admin/settings/keys
+        Enter Tailscale auth key
   roles:
     - cx_base_pve
+    - cx_tailscale
 
 - name: Set up all guests
   hosts: guests

@@ -5,7 +5,7 @@
       - ansible_facts.distribution != 'Fedora'
       - ansible_facts.os_family == 'Debian' or ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_type != 'lxc'
-      - cx_tailscale_auth_key
+      - cx_tailscale_auth_key.startswith('tskey-auth-')
 
 - name: Install Tailscale (Debian)
   when: ansible_facts.os_family == 'Debian'
