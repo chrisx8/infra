@@ -3,11 +3,11 @@
   ansible.builtin.import_tasks: sslcert.yml
 
 - name: Disable systemd-resolved
+  failed_when: false
   ansible.builtin.systemd:
     name: systemd-resolved
     enabled: false
     state: stopped
-  failed_when: false
 
 - name: Download AdGuardHome release from GitHub
   ansible.builtin.unarchive:

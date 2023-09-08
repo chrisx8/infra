@@ -1,14 +1,4 @@
 ---
-- name: Remove DSA and ECDSA SSH host keys
-  ansible.builtin.file:
-    path: /etc/ssh/{{ item }}
-    state: absent
-  loop:
-    - ssh_host_ecdsa_key
-    - ssh_host_ecdsa_key.pub
-    - ssh_host_dsa_key
-    - ssh_host_dsa_key.pub
-
 - name: Copy OpenSSH client config
   ansible.builtin.copy:
     src: ssh.conf
