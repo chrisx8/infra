@@ -1,0 +1,17 @@
+---
+- name: Verify system requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+      - ansible_facts.virtualization_type != 'lxc'
+
+- name: Validate cx_container_app vars
+  ansible.builtin.assert:
+    that:
+      - cx_container_app_network != 'host'
+      - cx_container_app_network != 'podman'
+      - cx_container_app_spec
+      - cx_container_app_spec.image
+      - cx_container_app_spec.name
+      - cx_container_app_user

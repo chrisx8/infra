@@ -1,0 +1,7 @@
+[Socket]
+{% for stream in cx_container_app_socket_listen_streams %}
+ListenStream={{ stream }}
+{% endfor %}
+
+[Install]
+WantedBy=sockets.target

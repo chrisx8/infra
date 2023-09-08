@@ -17,26 +17,14 @@
       ansible.builtin.fail:
         msg: TASK NOT CONFIRMED
 
-- name: Verify system requirements
-  ansible.builtin.assert:
-    that:
-      - ansible_facts.distribution_major_version|int >= 8
-      - ansible_facts.os_family == 'RedHat'
-      - ansible_facts.virtualization_type != 'lxc'
-
 - name: Fetch user {{ cx_container_app_user }}
   register: _container_user
   ansible.builtin.user:
     name: "{{ cx_container_app_user }}"
     state: present
 
-- name: Validate cx_container_app vars
-  ansible.builtin.assert:
-    that:
-      - cx_container_app_spec
-      - cx_container_app_spec.image
-      - cx_container_app_spec.name
-      - cx_container_app_user != 'root'
+- name: Validate system and role vars
+  ansible.builtin.import_tasks: check.yml
 
 - name: Generate container spec
   ansible.builtin.set_fact:
@@ -50,15 +38,26 @@
   become: true
   become_user: "{{ cx_container_app_user }}"
   block:
-    - name: Disable and stop systemd unit
+    - name: Disable and stop systemd socket
+      when: cx_container_app_socket_listen_streams
       ansible.builtin.systemd:
-        name: "{{ _container_systemd_unit }}"
+        name: "{{ _container_systemd_unit }}.socket"
         enabled: false
         scope: user
         state: stopped
-    - name: Delete systemd unit file
+    - name: Disable and stop systemd service
+      ansible.builtin.systemd:
+        name: "{{ _container_systemd_unit }}.service"
+        enabled: false
+        scope: user
+        state: stopped
+    - name: Delete systemd service config
       ansible.builtin.file:
         path: "{{ _container_spec.generate_systemd.path }}/{{ _container_systemd_unit }}.service"
+        state: absent
+    - name: Delete systemd socket config
+      ansible.builtin.file:
+        path: "{{ _container_spec.generate_systemd.path }}/{{ _container_systemd_unit }}.socket"
         state: absent
     - name: Delete container
       containers.podman.podman_container:
@@ -67,6 +66,12 @@
     - name: Delete image
       containers.podman.podman_image:
         name: "{{ _container_spec.image }}"
+        state: absent
+    - name: Delete container network
+      failed_when: false
+      when: cx_container_app_network
+      containers.podman.podman_network:
+        name: "{{ cx_container_app_network }}"
         state: absent
     - name: Delete container volumes
       loop: "{{ cx_container_app_volumes }}"

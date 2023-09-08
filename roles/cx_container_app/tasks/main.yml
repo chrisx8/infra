@@ -1,24 +1,12 @@
 ---
-- name: Verify system requirements
-  ansible.builtin.assert:
-    that:
-      - ansible_facts.distribution_major_version|int >= 8
-      - ansible_facts.os_family == 'RedHat'
-      - ansible_facts.virtualization_type != 'lxc'
-
 - name: Get user {{ cx_container_app_user }}
   register: _container_user
   ansible.builtin.user:
     name: "{{ cx_container_app_user }}"
     state: present
 
-- name: Validate cx_container_app_spec
-  ansible.builtin.assert:
-    that:
-      - cx_container_app_spec
-      - cx_container_app_spec.image
-      - cx_container_app_spec.name
-      - cx_container_app_user != 'root'
+- name: Validate system and role vars
+  ansible.builtin.import_tasks: check.yml
 
 - name: Import container pre-tasks
   ansible.builtin.import_role:
