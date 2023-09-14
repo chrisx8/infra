@@ -51,3 +51,8 @@ repos:
           - --write
         language: script
         pass_filenames: false
+      - id: validate
+        name: Run validate.yml playbook
+        entry: /usr/bin/env make validate.yml
+        language: script
+        pass_filenames: false

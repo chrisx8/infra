@@ -1,0 +1,18 @@
+---
+- name: Validation - all hosts
+  hosts: all
+  connection: local
+  tasks:
+    - name: Assert that ansible_user is defined
+      ansible.builtin.assert:
+        that:
+          - ansible_user
+
+- name: Validation - opt-in
+  hosts: storage
+  connection: local
+  tasks:
+    - name: Assert that ansible_user is not root
+      ansible.builtin.assert:
+        that:
+          - ansible_user != "root"
