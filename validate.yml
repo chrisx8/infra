@@ -1,5 +1,5 @@
 ---
-- name: Validation - all hosts
+- name: Validate all
   hosts: all
   connection: local
   tasks:
@@ -7,6 +7,15 @@
       ansible.builtin.assert:
         that:
           - ansible_user
+
+- name: Validate container apps
+  hosts: cx_container_apps
+  connection: local
+  tasks:
+    - name: Assert that cx_container_app_user is not root
+      ansible.builtin.assert:
+        that:
+          - cx_container_app_user is undefined or cx_container_app_user != "root"
 
 - name: Validation - opt-in
   hosts: storage

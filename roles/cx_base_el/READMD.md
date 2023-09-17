@@ -4,7 +4,11 @@ This role provides the base configuration and software for a standard RHEL-like 
 
 ## Role variables
 
-None
+| Variable              | Description                          | Required          |
+| --------------------- | ------------------------------------ | ----------------- |
+| `cx_base_el_timezone` | System timezone in TZ identifier[^1] | No, default `UTC` |
+
+[^1]: [List of TZ database timezones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 ## Required facts
 

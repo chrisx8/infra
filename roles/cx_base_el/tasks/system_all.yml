@@ -38,9 +38,8 @@
 
 - name: Set timezone
   community.general.timezone:
-    name: "{{ timezone }}"
+    name: "{{ cx_base_el_timezone }}"
     hwclock: UTC
-  when: timezone is defined
 
 - name: Set up passwordless sudo for wheel group
   ansible.builtin.blockinfile:
