@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-WORKDIR="$1"
-OP="$2"
+
+WORKDIR="$(dirname "${BASH_SOURCE[0]}")/../files/certbot.d"
 
 ################################################################################
 # REQUIRED CONFIGURATION
@@ -13,15 +13,11 @@ OP="$2"
 ################################################################################
 
 function fail() {
-    echo "Usage: certbot.sh WORKDIR certbot-(clean|issue|list|renew|setup)" 1>&2
+    echo "Usage: certbot.sh (clean|issue|list|renew|setup)" 1>&2
     exit 1
 }
 
 function setup() {
-    echo "#####################################################################"
-    echo "    chrisx8/infra certbot utilities"
-    echo "#####################################################################"
-    echo
     echo "Creating certbot environment..."
     python3 -m venv "$WORKDIR/venv"
     # shellcheck source=/dev/null
@@ -34,11 +30,11 @@ function setup() {
 }
 
 function clean() {
+    set -ux
     rm -rf "$WORKDIR/venv"
 }
 
 function issue() {
-    setup
     DOMAINS=""
     echo "Loading config from $WORKDIR/env"
     # shellcheck source=/dev/null
@@ -57,7 +53,6 @@ function issue() {
 }
 
 function renew() {
-    setup
     echo "Renewing certs with certbot..."
     certbot renew \
         --config-dir "$WORKDIR/config" \
@@ -66,14 +61,18 @@ function renew() {
 }
 
 function list() {
-    setup
     certbot certificates \
         --config-dir "$WORKDIR/config" \
         --logs-dir "$WORKDIR/log" \
         --work-dir "$WORKDIR/workdir"
 }
 
-[ "$#" != "2" ] && fail
+echo "#####################################################################"
+echo "    chrisx8/infra certbot utilities"
+echo "#####################################################################"
+echo
+
+[ "$#" != "1" ] && fail
 
 if [ ! -d "$WORKDIR" ]; then
     echo "$WORKDIR is not a valid directory."
@@ -85,20 +84,23 @@ if [ ! -d "$WORKDIR" ]; then
     fi
 fi
 
-case "$OP" in
-    "certbot-clean")
+case "$1" in
+    "clean")
         clean
         ;;
-    "certbot-issue")
+    "issue")
+        setup
         issue
         ;;
-    "certbot-list")
+    "list")
+        setup
         list
         ;;
-    "certbot-renew")
+    "renew")
+        setup
         renew
         ;;
-    "certbot-setup")
+    "setup")
         setup
         ;;
     *)

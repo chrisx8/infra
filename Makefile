@@ -29,9 +29,9 @@ _:
 %.yml: _
 	pipenv run ansible-playbook $(ANSIBLE_VAULT_ARGS) $(ANSIBLE_ARGS) $@
 
-## Run the certbot helper script
-certbot-%: _
-	files/certbot.sh files/certbot.d $@
+# Create or edit Ansible Vault.
+%/secrets.yml: _
+	pipenv run ansible-vault edit $(ANSIBLE_VAULT_ARGS) "$@" || pipenv run ansible-vault create $(ANSIBLE_VAULT_ARGS) "$@"
 
 # Set up Ansible environment
 # Includes required Ansible collections and pre-commit hooks
@@ -43,7 +43,3 @@ envsetup:
 # Run pre-commit checks on all files
 pre-commit:
 	pipenv run pre-commit run --all-files
-
-# Create or edit Ansible Vault.
-%/secrets.yml: _
-	pipenv run ansible-vault edit $(ANSIBLE_VAULT_ARGS) "$@" || pipenv run ansible-vault create $(ANSIBLE_VAULT_ARGS) "$@"

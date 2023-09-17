@@ -30,7 +30,6 @@ You may run Ansible playbooks, and several repo-related tasks, with `make`.
 Available `make` commands:
 
 - `make *.yml`: run a given playbook against all hosts.
-- `make certbot-*`: run the [certbot helper script](files/certbot.sh).
 - `make envsetup`: set up local Ansible environment, including Ansible collections and pre-commit.
 - `make pre-commit`: run pre-commit checks on all files.
 - `make vaultcreate`: create Ansible Vault.
