@@ -10,10 +10,10 @@
 - name: Configure ssh
   ansible.builtin.import_tasks: ssh.yml
 - name: Configure system
-  ansible.builtin.import_tasks: system_all.yml
-- name: Configure KVM systems
-  ansible.builtin.include_tasks: system_kvm.yml
-  when: ansible_facts.virtualization_type == 'kvm'
+  ansible.builtin.import_tasks: system_base.yml
+- name: Configure non-LXC systems
+  ansible.builtin.include_tasks: system_full.yml
+  when: ansible_facts.virtualization_type != 'lxc'
 
 - name: Reboot
   ansible.builtin.reboot:

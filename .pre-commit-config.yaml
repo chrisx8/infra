@@ -50,7 +50,7 @@ repos:
           - --exclude=host_vars/container-miniflux/main/cx_container_app.yml
           - --exclude=host_vars/container-vaultwarden/main/cx_container_app.yml
           - --exclude=roles/cx_tailscale/tasks/main.yml
-          - --write
+          - --fix
         language: script
         pass_filenames: false
       - id: validate

@@ -14,7 +14,7 @@ cx_container_app_pretask_from: ""
 cx_container_app_volumes: []
 # Default values for each container
 # Need to override anything here? Declare the override in cx_container_app_spec.
-_container_defaults:
+_container_defaults: # noqa var-naming[no-role-prefix]
   cap_drop:
     - all
   generate_systemd:
@@ -27,4 +27,4 @@ _container_defaults:
   state: present
 
 # haxx: placeholder default to make Ansible happy
-_postgres_password: ""
+_postgres_password: "" # noqa var-naming[no-role-prefix]

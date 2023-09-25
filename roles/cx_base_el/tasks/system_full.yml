@@ -18,7 +18,6 @@
 - name: Install systemd components
   ansible.builtin.dnf:
     name:
-      - systemd-resolved
       - systemd-oomd
       - zram-generator
     state: present
@@ -39,18 +38,6 @@
     name: systemd-oomd
     enabled: true
     state: started
-- name: Enable and start systemd-resolved
-  ansible.builtin.systemd:
-    name: systemd-resolved
-    enabled: true
-    state: restarted
-
-- name: Use systemd stub resolver
-  ansible.builtin.file:
-    src: /run/systemd/resolve/stub-resolv.conf
-    dest: /etc/resolv.conf
-    force: true
-    state: link
 
 - name: Restart NetworkManager
   ansible.builtin.systemd:

@@ -11,7 +11,7 @@
       - telnet
     state: absent
 
-- name: Install epel-release repo
+- name: Install epel-release
   ansible.builtin.dnf:
     name: epel-release
     state: present
@@ -41,10 +41,12 @@
     name: "{{ cx_base_el_timezone }}"
     hwclock: UTC
 
-- name: Set up passwordless sudo for wheel group
+- name: Set up passwordless sudo for {{ ansible_user }}
   ansible.builtin.blockinfile:
-    block: "%wheel ALL=(ALL) NOPASSWD:ALL"
-    path: /etc/sudoers
+    block: "{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL"
+    create: true
+    mode: "0600"
+    path: /etc/sudoers.d/01-ansible
     state: present
 
 - name: Disable systemd coredump
