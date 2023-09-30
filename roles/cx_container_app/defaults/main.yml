@@ -1,5 +1,5 @@
 ---
-# User to run the container as
+# User to run the container as. User must already exist on the host system.
 cx_container_app_user: podman
 
 # Healthchecks.io ping URL for nightly volume backup job

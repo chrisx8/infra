@@ -6,9 +6,11 @@
       - ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_type != 'lxc'
 
-- name: System setup - run as root
-  become: true
-  ansible.builtin.import_tasks: setup_system.yml
+- name: Get user {{ cx_container_app_user }}
+  register: _container_user
+  ansible.builtin.user:
+    name: "{{ cx_container_app_user }}"
+    state: present
 
 - name: Validate cx_container_app_spec
   ansible.builtin.assert:

@@ -18,3 +18,15 @@
     value: "{{ cx_container_runtime_port_start }}"
     reload: true
     state: present
+
+- name: Set up contaienr user
+  when: cx_container_runtime_user != "root"
+  block:
+    - name: Create user {{ cx_container_runtime_user }}
+      ansible.builtin.user:
+        name: "{{ cx_container_runtime_user }}"
+        create_home: true
+        state: present
+    - name: Enable linger for user {{ cx_container_runtime_user }}
+      changed_when: false
+      ansible.builtin.command: loginctl enable-linger {{ cx_container_runtime_user }}
