@@ -1,0 +1,32 @@
+---
+- name: Verify system requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+      - ansible_facts.virtualization_role == 'host'
+
+- name: Install QEMU
+  ansible.builtin.dnf:
+    name: qemu-kvm
+    state: present
+
+- name: Install Cockpit
+  ansible.builtin.dnf:
+    name:
+      - cockpit-machines
+      - cockpit-system
+      - cockpit-ws
+    state: present
+
+- name: Disable kdump
+  ansible.builtin.systemd:
+    name: kdump
+    enabled: false
+    state: stopped
+
+- name: Enable and start Cockpit socket
+  ansible.builtin.systemd:
+    name: cockpit.socket
+    enabled: true
+    state: started

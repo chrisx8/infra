@@ -1,0 +1,30 @@
+---
+- name: List self-signed cert
+  register: _self_signed_crt
+  ansible.builtin.find:
+    paths: /etc/cockpit/ws-certs.d
+    file_type: file
+    patterns: "*self-signed*"
+
+- name: Delete self-signed cert
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ _self_signed_crt.files }}"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Install ssl cert
+  ansible.builtin.copy:
+    src: certbot.d/config/live/{{ ssl_domain }}/{{ item.src }}
+    dest: /etc/cockpit/ws-certs.d/{{ item.dest }}
+    mode: "0400"
+    owner: root
+    group: root
+  loop:
+    - src: fullchain.pem
+      dest: "{{ ssl_domain }}.crt"
+    - src: privkey.pem
+      dest: "{{ ssl_domain }}.key"
+  notify:
+    - Restart Cockpit socket

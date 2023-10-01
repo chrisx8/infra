@@ -21,6 +21,15 @@
         name: cx_base_el
         tasks_from: upgrade.yml
 
+- name: Upgrade Cockpit
+  hosts: cx_cockpit_kvm
+  become: true
+  tasks:
+    - name: Install ssl cert for Cockpit
+      ansible.builtin.import_role:
+        name: cx_cockpit_kvm
+        tasks_from: sslcert.yml
+
 - name: Upgrade PostgreSQL
   hosts: cx_postgresql
   become: true

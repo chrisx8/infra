@@ -63,6 +63,7 @@ pre-commit autoupdate
 - [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome)
 - [Apache HTTP Server with mod_auth_openidc](https://github.com/chrisx8/docker-apache-openidc)
 - [cloudflared](https://github.com/cloudflare/cloudflared)
+- [Cockpit](https://cockpit-project.org/)
 - [Gitea](https://gitea.io/)
 - [Home Assistant](https://www.home-assistant.io)
   - [My Home Assistant Add-ons](https://github.com/chrisx8/home-assistant-addons)

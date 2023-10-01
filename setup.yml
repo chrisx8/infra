@@ -37,6 +37,17 @@
     - cx_container_runtime
     - cx_tailscale
 
+- name: Set up Cockpit + KVM
+  hosts: cx_cockpit_kvm
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+    - virtualization_type
+  roles:
+    - cx_cockpit_kvm
+
 - name: Set up PostgreSQL
   hosts: cx_postgresql
   become: true
