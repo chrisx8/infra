@@ -1,16 +1,16 @@
 ---
-- name: Upgrade Proxmox VE hosts
-  hosts: hosts_pve
-  become: true
-  tasks:
-    - name: Upgrade
-      ansible.builtin.import_role:
-        name: cx_base_pve
-        tasks_from: upgrade.yml
-    - name: Install ssl cert for PVE
-      ansible.builtin.import_role:
-        name: cx_base_pve
-        tasks_from: ssl_cert.yml
+# - name: Upgrade Proxmox VE hosts
+#   hosts: hosts_pve
+#   become: true
+#   tasks:
+#     - name: Upgrade
+#       ansible.builtin.import_role:
+#         name: cx_base_pve
+#         tasks_from: upgrade.yml
+#     - name: Install ssl cert for PVE
+#       ansible.builtin.import_role:
+#         name: cx_base_pve
+#         tasks_from: ssl_cert.yml
 
 - name: Upgrade EL hosts
   hosts: hosts_el
@@ -21,8 +21,8 @@
         name: cx_base_el
         tasks_from: upgrade.yml
 
-- name: Upgrade v-containers
-  hosts: v-containers
+- name: Upgrade PostgreSQL
+  hosts: cx_postgresql
   become: true
   tasks:
     - name: Install ssl cert for PostgreSQL
@@ -30,14 +30,8 @@
         name: cx_postgresql
         tasks_from: sslcert.yml
 
-- name: Set up AdGuard Home
-  hosts: adguard
-  become: true
-  roles:
-    - cx_adguard_home
-
 - name: Set up container apps
-  hosts: cx_container_apps
+  hosts: cx_container_app
   gather_facts: true
   gather_subset:
     - "!min"

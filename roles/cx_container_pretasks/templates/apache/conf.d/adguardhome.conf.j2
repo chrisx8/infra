@@ -1,0 +1,54 @@
+<VirtualHost *:443>
+    ServerName adguardhome.arb.chrisx.xyz
+
+    SSLEngine on
+    SSLCertificateFile /etc/apache2/ssl/chrisx.xyz/fullchain.pem
+    SSLCertificateKeyFile /etc/apache2/ssl/chrisx.xyz/privkey.pem
+
+    Header always set Referrer-Policy "no-referrer"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set X-Content-Type-Options "nosniff"
+
+    ProxyPass /robots.txt !
+    ProxyPass / http://127.0.0.1:30000/ nocanon
+    ProxyPassReverse / http://127.0.0.1:30000/ nocanon
+    ProxyPreserveHost On
+    ProxyRequests Off
+    RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
+
+    RewriteEngine on
+    Redirect 302 /logout /openid-connect?logout=
+
+    OIDCClientID {{ _adguardhome_oidc_client_id }}
+    OIDCClientSecret {{ _adguardhome_oidc_client_secret }}
+    OIDCPassClaimsAs none
+    OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/master/.well-known/openid-configuration
+    OIDCRedirectURI https://adguardhome.arb.chrisx.xyz/openid-connect
+    OIDCScope openid
+    OIDCSessionInactivityTimeout 3600
+    OIDCStateMaxNumberOfCookies 2 true
+    OIDCCryptoPassphrase {{ lookup('password', '/dev/null length=64') }}
+
+    <Location "/openid-connect">
+        AuthType openid-connect
+        Require valid-user
+    </Location>
+
+    <Location "/">
+        AuthType openid-connect
+        Require claim roles:adguardhome_admin
+    </Location>
+
+    ErrorLog /var/log/apache2/adguardhome_error.log
+    CustomLog /var/log/apache2/adguardhome_access.log combined
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName adguardhome
+
+    RewriteEngine On
+    RewriteRule ^(.*)$ https://adguardhome.arb.chrisx.xyz$1 [R=301,L]
+
+    ErrorLog /var/log/apache2/adguardhome_error.log
+    CustomLog /var/log/apache2/adguardhome_access.log combined
+</VirtualHost>

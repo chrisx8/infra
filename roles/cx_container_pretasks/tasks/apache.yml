@@ -37,6 +37,7 @@
     dest: "{{ _container_user.home }}/apache/{{ item }}"
     mode: "0640"
   loop:
+    - conf.d/adguardhome.conf
     - conf.d/go.conf
     - conf.d/vaultwarden.conf
     - logrotate.conf

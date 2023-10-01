@@ -1,5 +1,5 @@
 ---
-ansible_host: storage.arb.chrisx.xyz
+ansible_host: s-elt800g2.arb.chrisx.xyz
 
 cx_container_app_pretask_from: jellyfin.yml
 
@@ -8,7 +8,11 @@ cx_container_app_spec:
   name: jellyfin
   image: docker.io/jellyfin/jellyfin:latest
   network: host
+  device:
+    - /dev/dri/renderD128:/dev/dri/renderD128
+  group_add:
+    - "998"
   volumes:
     - "{{ _container_user.home }}/jellyfin/cache:/cache:Z"
     - "{{ _container_user.home }}/jellyfin/config:/config:Z"
-    - /mnt/media:/media:z
+    - /media/hdd/media:/media:z

@@ -23,9 +23,8 @@
     state: present
 
 - name: Enable kernel PSI support
-  ansible.builtin.command:
-    cmd: grubby --update-kernel=ALL --args="psi=1"
   changed_when: true
+  ansible.builtin.command: grubby --args=psi=1 --update-kernel=ALL
 
 - name: Configure zram-generator
   ansible.builtin.copy:

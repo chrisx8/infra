@@ -35,37 +35,3 @@
     hour: 22
     minute: 12
     state: present
-
-- name: Generate PKCS12 bundle on localhost
-  become: false
-  check_mode: false
-  delegate_to: localhost
-  block:
-    - name: Create temp dir
-      changed_when: false
-      register: _temp_dir
-      ansible.builtin.tempfile:
-        state: directory
-    - name: Generate PKCS12 bundle
-      changed_when: false
-      ansible.builtin.command:
-        cmd: >-
-          openssl pkcs12 -export -passout pass:
-          -out {{ _temp_dir.path }}/{{ ssl_domain }}.p12
-          -inkey files/certbot.d/config/live/{{ ssl_domain }}/privkey.pem
-          -in files/certbot.d/config/live/{{ ssl_domain }}/fullchain.pem
-
-- name: Copy PKCS12 bundle
-  ansible.builtin.copy:
-    src: "{{ _temp_dir.path }}/{{ ssl_domain }}.p12"
-    dest: "{{ _container_user.home }}/jellyfin/cache/{{ ssl_domain }}.p12"
-    mode: "0400"
-
-- name: Delete temp dir
-  become: false
-  check_mode: false
-  changed_when: false
-  delegate_to: localhost
-  ansible.builtin.file:
-    path: "{{ _temp_dir.path }}"
-    state: absent

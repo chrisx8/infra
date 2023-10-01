@@ -1,0 +1,26 @@
+---
+- name: Install performance management tools
+  ansible.builtin.dnf:
+    name:
+      - lm_sensors
+      - powertop
+      - smartmontools
+      - tuned
+    state: present
+
+- name: Configure system crontab
+  ansible.builtin.cron:
+    name: MAILTO
+    env: true
+    job: ""
+- name: Set up cron job for powertop auto-tune on boot
+  ansible.builtin.cron:
+    name: powertop auto-tune
+    job: sleep 60 && /usr/sbin/powertop --auto-tune
+    special_time: reboot
+    state: present
+    user: root
+
+- name: Disable PCIe ASPM
+  changed_when: true
+  ansible.builtin.command: grubby --args=pcie_aspm=off --update-kernel=ALL

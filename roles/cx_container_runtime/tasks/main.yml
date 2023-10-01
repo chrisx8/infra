@@ -19,6 +19,12 @@
     reload: true
     state: present
 
+- name: Set SELinux container_use_devices flag
+  ansible.posix.seboolean:
+    name: container_use_devices
+    persistent: true
+    state: true
+
 - name: Set up contaienr user
   when: cx_container_runtime_user != "root"
   block:

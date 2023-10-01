@@ -1,22 +1,22 @@
 ---
-- name: Set up Proxmox VE hosts
-  hosts: hosts_pve
-  become: true
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - distribution
-    - virtualization_role
-    - virtualization_type
-  vars_prompt:
-    - name: cx_tailscale_auth_key
-      prompt: |-
-        ###### Tailscale - ACTION REQUIRED ######
-        Generate a pre-authorized Tailscale auth key at https://login.tailscale.com/admin/settings/keys
-        Enter Tailscale auth key
-  roles:
-    - cx_base_pve
-    - cx_tailscale
+# - name: Set up Proxmox VE hosts
+#   hosts: hosts_pve
+#   become: true
+#   gather_facts: true
+#   gather_subset:
+#     - "!min"
+#     - distribution
+#     - virtualization_role
+#     - virtualization_type
+#   vars_prompt:
+#     - name: cx_tailscale_auth_key
+#       prompt: |-
+#         ###### Tailscale - ACTION REQUIRED ######
+#         Generate a pre-authorized Tailscale auth key at https://login.tailscale.com/admin/settings/keys
+#         Enter Tailscale auth key
+#   roles:
+#     - cx_base_pve
+#     - cx_tailscale
 
 - name: Set up EL hosts
   hosts: hosts_el
@@ -37,14 +37,8 @@
     - cx_container_runtime
     - cx_tailscale
 
-- name: Set up AdGuard Home
-  hosts: adguard
-  become: true
-  roles:
-    - cx_adguard_home
-
-- name: Set up v-containers
-  hosts: v-containers
+- name: Set up PostgreSQL
+  hosts: cx_postgresql
   become: true
   gather_facts: true
   gather_subset:
@@ -64,7 +58,7 @@
     - cx_samba
 
 - name: Set up container apps
-  hosts: cx_container_apps
+  hosts: cx_container_app
   gather_facts: true
   gather_subset:
     - "!min"

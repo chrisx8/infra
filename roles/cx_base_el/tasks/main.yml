@@ -9,11 +9,14 @@
   ansible.builtin.import_tasks: upgrade.yml
 - name: Configure ssh
   ansible.builtin.import_tasks: ssh.yml
-- name: Configure system
+- name: Configure all system
   ansible.builtin.import_tasks: system_base.yml
-- name: Configure non-LXC systems
-  ansible.builtin.include_tasks: system_full.yml
+- name: Configure non-LXC system
+  ansible.builtin.include_tasks: system_ext.yml
   when: ansible_facts.virtualization_type != 'lxc'
+- name: Configure bare-metal system
+  ansible.builtin.include_tasks: system_host.yml
+  when: ansible_facts.virtualization_role == 'host'
 
 - name: Reboot
   ansible.builtin.reboot:

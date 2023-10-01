@@ -3,25 +3,16 @@
   hosts: all
   connection: local
   tasks:
-    - name: Assert that ansible_user is defined
+    - name: Assert that ansible_user is not root
       ansible.builtin.assert:
         that:
-          - ansible_user
+          - ansible_user != "root"
 
 - name: Validate container apps
-  hosts: cx_container_apps
+  hosts: cx_container_app
   connection: local
   tasks:
     - name: Assert that cx_container_app_user is not root
       ansible.builtin.assert:
         that:
           - cx_container_app_user is undefined or cx_container_app_user != "root"
-
-- name: Validation - opt-in
-  hosts: storage
-  connection: local
-  tasks:
-    - name: Assert that ansible_user is not root
-      ansible.builtin.assert:
-        that:
-          - ansible_user != "root"

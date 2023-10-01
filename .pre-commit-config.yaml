@@ -38,8 +38,8 @@ repos:
         name: Ansible-lint
         entry: /usr/bin/env pipenv run ansible-lint -v
         args:
-          - host_vars/container-miniflux/main/cx_container_app.yml
-          - host_vars/container-vaultwarden/main/cx_container_app.yml
+          - host_vars/container-miniflux/cx_container_app.yml
+          - host_vars/container-vaultwarden/cx_container_app.yml
           - roles/cx_tailscale/tasks/main.yml
         language: script
         pass_filenames: false
@@ -47,8 +47,8 @@ repos:
         name: Ansible-lint with reformatting
         entry: /usr/bin/env pipenv run ansible-lint -v
         args:
-          - --exclude=host_vars/container-miniflux/main/cx_container_app.yml
-          - --exclude=host_vars/container-vaultwarden/main/cx_container_app.yml
+          - --exclude=host_vars/container-miniflux/cx_container_app.yml
+          - --exclude=host_vars/container-vaultwarden/cx_container_app.yml
           - --exclude=roles/cx_tailscale/tasks/main.yml
           - --fix
         language: script

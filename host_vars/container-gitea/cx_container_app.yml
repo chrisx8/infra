@@ -1,5 +1,5 @@
 ---
-ansible_host: v-containers.arb.chrisx.xyz
+ansible_host: s-elt800g2.arb.chrisx.xyz
 
 cx_container_app_postgres_db: gitea
 
