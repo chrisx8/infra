@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "christian-kohler.path-intellisense",
+    "redhat.ansible",
+    "redhat.vscode-yaml",
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "wholroyd.jinja"
+  ]
+}

@@ -21,7 +21,7 @@
     OIDCClientID {{ _vaultwarden_oidc_client_id }}
     OIDCClientSecret {{ _vaultwarden_oidc_client_secret }}
     OIDCPassClaimsAs none
-    OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/chrisx/.well-known/openid-configuration
+    OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/master/.well-known/openid-configuration
     OIDCRedirectURI https://vaultwarden.arb.chrisx.xyz/admin/openid-connect
     OIDCScope openid
     OIDCSessionInactivityTimeout 3600
@@ -35,7 +35,7 @@
 
     <Location "/admin">
         AuthType openid-connect
-        Require claim roles:admin
+        Require claim roles:vw_admin
     </Location>
 
     ErrorLog /var/log/apache2/vaultwarden_error.log

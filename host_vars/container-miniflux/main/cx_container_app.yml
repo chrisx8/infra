@@ -18,7 +18,7 @@ cx_container_app_spec:
     LOG_DATE_TIME: "1"
     RUN_MIGRATIONS: "1"
     OAUTH2_PROVIDER: oidc
-    OAUTH2_OIDC_DISCOVERY_ENDPOINT: https://sso.chrisx.xyz/realms/chrisx
+    OAUTH2_OIDC_DISCOVERY_ENDPOINT: https://sso.chrisx.xyz/realms/master
     OAUTH2_REDIRECT_URL: https://miniflux.arb.chrisx.xyz/oauth2/oidc/callback
     OAUTH2_USER_CREATION: "1"
     OAUTH2_CLIENT_ID: "{{ _miniflux_oidc_client_id }}"
