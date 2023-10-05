@@ -1,14 +1,12 @@
 # chrisx8/infra
 
-This repo is an Ansible monorepo for my self-hosted Linux environment. It contains what I'm using to manage [my home servers](#hardware) and [software running on them](#software).
-
-I use [Ansible](https://docs.ansible.com/ansible/latest/index.html) and [Podman](https://podman.io/) extensively to manage my systems.
+This repo is an Ansible monorepo for my self-hosted Linux environment. It contains what I'm using to manage my home servers and [software running on them](#software).
 
 ## Usage
 
 ### Setup
 
-First, make sure you have **Python 3.11** (or newer) and [**Pipenv**](https://pipenv.pypa.io) installed.
+First, make sure you have **Python 3.11** and [**Pipenv**](https://pipenv.pypa.io) installed.
 
 Then, install repo dependencies, including Ansible, Ansible collections, `ansible-lint`, and pre-commit hooks:
 
