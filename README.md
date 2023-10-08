@@ -17,7 +17,6 @@ make envsetup
 After initial setup, simply activate the Pipenv when working in this repo:
 
 ```bash
-# Launch a shell in the Pipenv
 pipenv shell
 ```
 

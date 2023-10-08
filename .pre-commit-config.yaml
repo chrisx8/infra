@@ -6,7 +6,7 @@ repos:
       - id: remove-crlf
       - id: remove-tabs
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
@@ -33,9 +33,9 @@ repos:
         name: yamllint
         language: script
         entry: /usr/bin/env pipenv run yamllint
-        files: .+\.(yml)|(yaml)$
+        files: \.(yml)|(yaml)$
       - id: ansible-lint
-        name: Ansible-lint
+        name: ansible-lint
         entry: /usr/bin/env pipenv run ansible-lint -v
         args:
           - host_vars/container-miniflux/cx_container_app.yml
@@ -44,7 +44,7 @@ repos:
         language: script
         pass_filenames: false
       - id: ansible-lint
-        name: Ansible-lint with reformatting
+        name: ansible-lint with reformatting
         entry: /usr/bin/env pipenv run ansible-lint -v
         args:
           - --exclude=host_vars/container-miniflux/cx_container_app.yml
@@ -54,7 +54,7 @@ repos:
         language: script
         pass_filenames: false
       - id: validate
-        name: Run validate.yml playbook
+        name: run validate.yml playbook
         entry: /usr/bin/env make validate.yml
         language: script
         pass_filenames: false

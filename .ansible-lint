@@ -5,7 +5,7 @@ exclude_paths:
   - .pre-commit-config.yaml
   - .yamllint
   - files/certbot.d
-  - files/private
+  - utils
   - "**/secrets.yml"
 
 enable_list:

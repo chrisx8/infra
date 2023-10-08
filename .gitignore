@@ -1,4 +1,3 @@
 .venv/
 files/certbot.d/
-files/private/
 secrets.yml
