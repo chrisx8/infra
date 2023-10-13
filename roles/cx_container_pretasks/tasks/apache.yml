@@ -7,13 +7,13 @@
 
 - name: Create Apache ssl dir
   ansible.builtin.file:
-    path: "{{ _container_user.home }}/apache/ssl/{{ ssl_domain }}"
+    path: "{{ _container_user.home }}/apache/ssl/{{ _apache_cert_name }}"
     state: directory
     mode: "0700"
-- name: Copy ssl cert for {{ ssl_domain }}
+- name: Copy ssl cert for {{ _apache_cert_name }}
   ansible.builtin.copy:
-    src: certbot.d/config/live/{{ ssl_domain }}/{{ item }}
-    dest: "{{ _container_user.home }}/apache/ssl/{{ ssl_domain }}"
+    src: certbot.d/config/live/{{ _apache_cert_name }}/{{ item }}
+    dest: "{{ _container_user.home }}/apache/ssl/{{ _apache_cert_name }}"
     mode: "0400"
   loop:
     - fullchain.pem

@@ -1,7 +1,7 @@
 ---
 - name: Install pveproxy ssl cert
   ansible.builtin.copy:
-    src: certbot.d/config/live/{{ ssl_domain }}/{{ item.src }}
+    src: certbot.d/config/live/{{ cx_base_pve_cert_name }}/{{ item.src }}
     dest: /etc/pve/local/{{ item.dest }}
     mode: "0640"
     owner: root
@@ -13,3 +13,4 @@
       dest: pveproxy-ssl.key
   notify:
     - Restart pveproxy
+  when: cx_base_pve_cert_name is defined

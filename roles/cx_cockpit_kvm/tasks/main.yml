@@ -1,10 +1,11 @@
 ---
-- name: Verify system requirements
+- name: Verify requirements
   ansible.builtin.assert:
     that:
       - ansible_facts.distribution_major_version|int >= 8
       - ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_role == 'host'
+      - cx_cockpit_kvm_cert_name
 
 - name: Install QEMU
   ansible.builtin.dnf:

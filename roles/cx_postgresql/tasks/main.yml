@@ -6,6 +6,7 @@
       - ansible_facts.os_family == 'RedHat'
       - cx_postgresql_version|int >= 11
       - "'/' in cx_postgresql_local_cidr"
+      - cx_postgresql_cert_name
 
 - name: Install PostgreSQL
   ansible.builtin.import_tasks: install.yml

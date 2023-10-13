@@ -1,4 +1,4 @@
-ANSIBLE_VAULT_ARGS = --vault-password-file utils/vault_password_op.sh
+ANSIBLE_VAULT_ARGS ?= --vault-password-file utils/vault_password_op.sh
 
 # Set variable `ANSIBLE_ARGS` to pass arbitrary arguments to Ansible,
 # overwriting all other Ansible-related args.

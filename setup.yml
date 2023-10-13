@@ -58,8 +58,8 @@
   roles:
     - cx_postgresql
 
-- name: Set up storage server
-  hosts: storage
+- name: Set up Samba
+  hosts: cx_samba
   become: true
   gather_facts: true
   gather_subset:
