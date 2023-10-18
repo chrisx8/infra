@@ -1,13 +1,17 @@
 ---
 extends: default
 
+rules:
+  comments:
+    min-spaces-from-content: 1
+  document-start:
+    level: error
+  line-length:
+    max: 120
+  truthy:
+    level: error
+
 yaml-files:
   - "*.yaml"
   - "*.yml"
   - ".yamllint"
-
-rules:
-  comments:
-    min-spaces-from-content: 1
-  line-length:
-    max: 120
