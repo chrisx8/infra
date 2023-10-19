@@ -13,48 +13,18 @@ WORKDIR="$(dirname "${BASH_SOURCE[0]}")/../files/certbot.d"
 ################################################################################
 
 function fail() {
-    echo "Usage: certbot.sh (clean|issue|list|renew|setup)" 1>&2
+    echo "Usage: certbot.sh (clean|delete|issue|list|renew|revoke|setup)" 1>&2
     exit 1
 }
 
-function setup() {
-    echo "Creating certbot environment..."
-    python3 -m venv "$WORKDIR/venv"
-    # shellcheck source=/dev/null
-    source "$WORKDIR/venv/bin/activate"
-    echo
-    echo "Installing certbot..."
-    pip install -U pip wheel
-    pip install -U certbot-dns-cloudflare
-    echo
-}
 
 function clean() {
     set -ux
     rm -rf "$WORKDIR/venv"
 }
 
-function issue() {
-    DOMAINS=""
-    echo "Loading config from $WORKDIR/env"
-    # shellcheck source=/dev/null
-    source "$WORKDIR/env"
-    echo "Issuing certs with certbot..."
-    for DOMAIN in $DOMAINS; do
-        certbot certonly \
-            --config-dir "$WORKDIR/config" \
-            --logs-dir "$WORKDIR/log" \
-            --work-dir "$WORKDIR/workdir" \
-            --no-eff-email --email "$EMAIL" \
-            -d "$DOMAIN" \
-            --dns-cloudflare \
-            --dns-cloudflare-credentials "$WORKDIR/cloudflare.ini"
-    done
-}
-
-function renew() {
-    echo "Renewing certs with certbot..."
-    certbot renew \
+function delete() {
+    certbot delete \
         --config-dir "$WORKDIR/config" \
         --logs-dir "$WORKDIR/log" \
         --work-dir "$WORKDIR/workdir"
@@ -67,38 +37,84 @@ function list() {
         --work-dir "$WORKDIR/workdir"
 }
 
+function issue() {
+    certbot certonly \
+        --config-dir "$WORKDIR/config" \
+        --logs-dir "$WORKDIR/log" \
+        --work-dir "$WORKDIR/workdir" \
+        --dns-cloudflare \
+        --dns-cloudflare-credentials "$WORKDIR/cloudflare.ini"
+}
+
+function renew() {
+    certbot renew \
+        --config-dir "$WORKDIR/config" \
+        --logs-dir "$WORKDIR/log" \
+        --work-dir "$WORKDIR/workdir"
+}
+
+function revoke() {
+    certbot revoke \
+        --cert-name "$1" \
+        --config-dir "$WORKDIR/config" \
+        --logs-dir "$WORKDIR/log" \
+        --work-dir "$WORKDIR/workdir"
+}
+
+function setup() {
+    if [ ! -d "$WORKDIR" ]; then
+        echo "$WORKDIR is not a valid directory."
+        read -r -p "Create? (y/n) " create_dir
+        if [ "$create_dir" == "y" ]; then
+            mkdir -p "$WORKDIR"
+        else
+            exit 1
+        fi
+    fi
+    echo "Creating certbot environment..."
+    python3 -m venv "$WORKDIR/venv"
+    # shellcheck source=/dev/null
+    source "$WORKDIR/venv/bin/activate"
+    echo
+    echo "Installing certbot..."
+    pip install -U pip wheel
+    pip install -U certbot-dns-cloudflare
+    echo
+}
+
 echo "#####################################################################"
 echo "    chrisx8/infra certbot utilities"
 echo "#####################################################################"
 echo
 
-[ "$#" != "1" ] && fail
+[ $# -gt 0 ] || fail
 
-if [ ! -d "$WORKDIR" ]; then
-    echo "$WORKDIR is not a valid directory."
-    read -r -p "Create? (y/n) " create_dir
-    if [ "$create_dir" == "y" ]; then
-        mkdir -p "$WORKDIR"
-    else
-        exit 1
-    fi
+if [ "$1" != "setup" ] && [ ! -f "$WORKDIR/venv/bin/activate" ]; then
+    echo "Certbot virtualenv has not been set up!" >&2
+    fail
 fi
+
+# shellcheck source=/dev/null
+[ "$1" == "setup" ] || source "$WORKDIR/venv/bin/activate"
 
 case "$1" in
     "clean")
         clean
         ;;
+    "delete")
+        delete
+        ;;
     "issue")
-        setup
         issue
         ;;
     "list")
-        setup
         list
         ;;
     "renew")
-        setup
         renew
+        ;;
+    "revoke")
+        revoke "$2"
         ;;
     "setup")
         setup
