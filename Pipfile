@@ -10,6 +10,6 @@ python_version = "3.11"
 ansible-core = "~=2.15.2"
 
 [dev-packages]
-ansible-lint = "~=6.20.1"
+ansible-lint = "~=6.21.1"
 pre-commit = "*"
 yamllint = "*"
