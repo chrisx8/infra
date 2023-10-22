@@ -2,8 +2,8 @@
     ServerName jellyfin.arb.chrisx.xyz
 
     SSLEngine on
-    SSLCertificateFile /etc/apache2/ssl/chrisx.xyz/fullchain.pem
-    SSLCertificateKeyFile /etc/apache2/ssl/chrisx.xyz/privkey.pem
+    SSLCertificateFile /etc/apache2/ssl/{{ _apache_cert_name }}/fullchain.pem
+    SSLCertificateKeyFile /etc/apache2/ssl/{{ _apache_cert_name }}/privkey.pem
 
     Header set Referrer-Policy "no-referrer"
     Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"

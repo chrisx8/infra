@@ -14,7 +14,7 @@ cx_container_app_spec:
     - SETGID
     - SETUID
   volumes:
-    - "{{ _container_user.home }}/apache/conf.d:/etc/apache2/sites-enabled:ro,Z"
+    - "{{ _container_user.home }}/apache/assembled.conf:/etc/apache2/sites-enabled/assembled.conf:ro,Z"
     - "{{ _container_user.home }}/apache/log:/var/log/apache2:Z"
     - "{{ _container_user.home }}/apache/ssl:/etc/apache2/ssl:ro,Z"
     - "{{ _container_user.home }}/apache/www:/var/www:ro,Z"

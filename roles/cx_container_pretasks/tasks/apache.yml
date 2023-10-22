@@ -19,28 +19,17 @@
     - fullchain.pem
     - privkey.pem
 
-- name: Copy Apache conf.d
-  ansible.builtin.copy:
-    src: apache/conf.d
-    dest: "{{ _container_user.home }}/apache"
-    mode: "0640"
-
 - name: Copy Apache www
   ansible.builtin.copy:
     src: apache/www
     dest: "{{ _container_user.home }}/apache"
     mode: "0644"
 
-- name: Copy templated Apache config
+- name: Copy logrotate config
   ansible.builtin.template:
-    src: apache/{{ item }}.j2
-    dest: "{{ _container_user.home }}/apache/{{ item }}"
+    src: apache/logrotate.conf.j2
+    dest: "{{ _container_user.home }}/apache/logrotate.conf"
     mode: "0640"
-  loop:
-    - conf.d/adguardhome.conf
-    - conf.d/go.conf
-    - conf.d/vaultwarden.conf
-    - logrotate.conf
 
 - name: Disable cron mail
   ansible.builtin.cron:
@@ -55,3 +44,35 @@
     hour: 2
     minute: 0
     state: present
+
+- name: Process templated Apache config
+  become: false
+  delegate_to: localhost
+  block:
+    - name: Create local temp dir
+      register: _apache_conf_tempdir
+      ansible.builtin.tempfile:
+        state: directory
+    - name: Assemble templates
+      ansible.builtin.template:
+        src: "{{ item }}"
+        dest: "{{ _apache_conf_tempdir.path }}/{{ item | basename }}"
+        mode: "0640"
+      loop_control:
+        label: "{{ item | basename }}"
+      with_fileglob:
+        - ../templates/apache/conf.d/*
+
+- name: Assemble and copy Apache config
+  ansible.builtin.assemble:
+    src: "{{ _apache_conf_tempdir.path }}"
+    dest: "{{ _container_user.home }}/apache/assembled.conf"
+    mode: "0640"
+    remote_src: false
+
+- name: Delete local temp dir
+  become: false
+  delegate_to: localhost
+  ansible.builtin.file:
+    path: "{{ _apache_conf_tempdir.path }}"
+    state: absent
