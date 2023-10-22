@@ -28,6 +28,7 @@ Available `make` commands:
 
 - `make *.yml`: run a given playbook against all hosts.
 - `make envsetup`: set up local Ansible environment, including Ansible collections and pre-commit.
+- `make envupdate`: auto-update packages, pre-commit hooks, and requirements/lock files.
 - `make pre-commit`: run pre-commit checks on all files.
 - `make vaultcreate`: create Ansible Vault.
 - `make vaultedit`: edit Ansible Vault.
