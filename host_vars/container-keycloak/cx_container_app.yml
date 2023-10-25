@@ -14,6 +14,7 @@ cx_container_app_spec:
     KC_DB_URL: jdbc:postgresql://127.0.0.1:5432/{{ cx_container_app_postgres_db }}?ssl=false
     KC_DB_USERNAME: "{{ cx_container_app_postgres_db }}"
     KC_DB_PASSWORD: "{{ _postgres_password }}"
+    KC_FEATURES_DISABLED: authorization,ciba,client-policies,impersonation,kerberos,par
     KC_HOSTNAME: sso.chrisx.xyz
     KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
     KC_HTTP_HOST: 127.0.0.1

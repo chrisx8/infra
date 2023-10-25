@@ -1,8 +1,6 @@
 ---
 ansible_host: s-elt800g2.arb.chrisx.xyz
 
-cx_container_app_pretask_from: jellyfin.yml
-
 # Jellyfin: HTTP on 127.0.0.1:8096
 cx_container_app_spec:
   name: jellyfin
@@ -13,6 +11,10 @@ cx_container_app_spec:
   group_add:
     - "998"
   volumes:
-    - "{{ _container_user.home }}/jellyfin/cache:/cache:Z"
-    - "{{ _container_user.home }}/jellyfin/config:/config:Z"
+    - jellyfin_cache:/cache:Z
+    - jellyfin_config:/config:Z
     - /media/hdd/media:/media:z
+
+cx_container_app_volumes:
+  - jellyfin_cache
+  - jellyfin_config

@@ -35,7 +35,6 @@ cx_container_app_spec:
     GITEA__server__LANDING_PAGE: login
     GITEA__server__OFFLINE_MODE: "true"
     GITEA__server__ROOT_URL: https://gitea.arb.chrisx.xyz/
-    GITEA__server__SSH_DOMAIN: gitea.arb.chrisx.xyz
     GITEA__server__SSH_PORT: "2222"
     GITEA__service__ALLOW_ONLY_EXTERNAL_REGISTRATION: "true"
     GITEA__service__DEFAULT_KEEP_EMAIL_PRIVATE: "true"
