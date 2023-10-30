@@ -21,6 +21,12 @@
     state: present
     user: root
 
+- name: Enable periodic filesystem trim
+  ansible.builtin.systemd:
+    name: fstrim.timer
+    enabled: true
+    state: started
+
 - name: Disable PCIe ASPM
   changed_when: true
   ansible.builtin.command: grubby --args=pcie_aspm=off --update-kernel=ALL
