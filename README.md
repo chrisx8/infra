@@ -62,7 +62,7 @@ pre-commit autoupdate
 ## Software
 
 - [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome)
-- [Apache HTTP Server with mod_auth_openidc](https://github.com/chrisx8/docker-apache-openidc)
+- Apache HTTP Server with [mod_auth_openidc](https://github.com/OpenIDC/mod_auth_openidc)
 - [cloudflared](https://github.com/cloudflare/cloudflared)
 - [Cockpit](https://cockpit-project.org/)
 - [Gitea](https://gitea.io/)

@@ -2,8 +2,8 @@
     ServerName vaultwarden.arb.chrisx.xyz
 
     SSLEngine on
-    SSLCertificateFile /etc/apache2/ssl/{{ _apache_cert_name }}/fullchain.pem
-    SSLCertificateKeyFile /etc/apache2/ssl/{{ _apache_cert_name }}/privkey.pem
+    SSLCertificateFile /etc/httpd/ssl/{{ _apache_cert_name }}/fullchain.pem
+    SSLCertificateKeyFile /etc/httpd/ssl/{{ _apache_cert_name }}/privkey.pem
 
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
@@ -38,16 +38,17 @@
         Require claim roles:vw_admin
     </Location>
 
-    ErrorLog /var/log/apache2/vaultwarden_error.log
-    CustomLog /var/log/apache2/vaultwarden_access.log combined
+    ErrorLog /var/log/httpd/vaultwarden_error.log
+    CustomLog /var/log/httpd/vaultwarden_access.log combined
 </VirtualHost>
 
 <VirtualHost *:80>
-    ServerName vaultwarden
+    ServerAlias vaultwarden
+    ServerName vaultwarden.arb.chrisx.xyz
 
     RewriteEngine On
     RewriteRule ^(.*)$ https://vaultwarden.arb.chrisx.xyz$1 [R=301,L]
 
-    ErrorLog /var/log/apache2/vaultwarden_error.log
-    CustomLog /var/log/apache2/vaultwarden_access.log combined
+    ErrorLog /var/log/httpd/vaultwarden_error.log
+    CustomLog /var/log/httpd/vaultwarden_access.log combined
 </VirtualHost>

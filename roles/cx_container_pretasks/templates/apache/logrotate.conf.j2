@@ -7,7 +7,6 @@
     notifempty
     create 644 {{ _container_user.uid }} {{ _container_user.group }}
     sharedscripts
-    postrotate
-        podman exec -it apache apache2ctl graceful
+    postrotate podman restart apache
     endscript
 }

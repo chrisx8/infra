@@ -11,17 +11,20 @@
     state: directory
     mode: "0700"
 - name: Copy ssl cert for {{ _apache_cert_name }}
+  loop:
+    - fullchain.pem
+    - privkey.pem
   ansible.builtin.copy:
     src: certbot.d/config/live/{{ _apache_cert_name }}/{{ item }}
     dest: "{{ _container_user.home }}/apache/ssl/{{ _apache_cert_name }}"
     mode: "0400"
-  loop:
-    - fullchain.pem
-    - privkey.pem
 
-- name: Copy Apache www
+- name: Copy Apache files
+  loop:
+    - modules_base.conf
+    - www
   ansible.builtin.copy:
-    src: apache/www
+    src: apache/{{ item }}
     dest: "{{ _container_user.home }}/apache"
     mode: "0644"
 
@@ -53,7 +56,7 @@
       register: _apache_conf_tempdir
       ansible.builtin.tempfile:
         state: directory
-    - name: Assemble templates
+    - name: Process config templates
       ansible.builtin.template:
         src: "{{ item }}"
         dest: "{{ _apache_conf_tempdir.path }}/{{ item | basename }}"
@@ -61,12 +64,12 @@
       loop_control:
         label: "{{ item | basename }}"
       with_fileglob:
-        - ../templates/apache/conf.d/*
+        - ../templates/apache/conf.d/*.conf.j2
 
 - name: Assemble and copy Apache config
   ansible.builtin.assemble:
     src: "{{ _apache_conf_tempdir.path }}"
-    dest: "{{ _container_user.home }}/apache/assembled.conf"
+    dest: "{{ _container_user.home }}/apache/ansible.conf"
     mode: "0640"
     remote_src: false
 

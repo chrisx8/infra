@@ -2,8 +2,8 @@
     ServerName sso.chrisx.xyz
 
     SSLEngine on
-    SSLCertificateFile /etc/apache2/ssl/{{ _apache_cert_name }}/fullchain.pem
-    SSLCertificateKeyFile /etc/apache2/ssl/{{ _apache_cert_name }}/privkey.pem
+    SSLCertificateFile /etc/httpd/ssl/{{ _apache_cert_name }}/fullchain.pem
+    SSLCertificateKeyFile /etc/httpd/ssl/{{ _apache_cert_name }}/privkey.pem
 
     Header unset Strict-Transport-Security
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
@@ -13,6 +13,6 @@
     ProxyPreserveHost On
     RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 
-    ErrorLog /var/log/apache2/sso_error.log
-    CustomLog /var/log/apache2/sso_access.log combined
+    ErrorLog /var/log/httpd/sso_error.log
+    CustomLog /var/log/httpd/sso_access.log combined
 </VirtualHost>

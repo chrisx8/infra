@@ -1,9 +1,11 @@
+ServerName {{ inventory_hostname }}
+
 ServerSignature Off
 ServerTokens Prod
 TraceEnable Off
 
 AllowEncodedSlashes NoDecode
-DocumentRoot /var/www
+DocumentRoot /var/www/html
 
 KeepAlive On
 KeepAliveTimeout 5
@@ -17,15 +19,19 @@ SSLSessionTickets Off
 SSLUseStapling On
 SSLStaplingCache "shmcb:logs/ssl_stapling(32768)"
 
+<Directory "/var/www/html">
+    AllowOverride None
+    Options None
+</Directory>
+
 <VirtualHost *:80>
-    RewriteEngine On
-    RewriteRule ^(.*)$ https://%{HTTP_HOST}$1 [R=301,L]
+    RedirectMatch 404 ^/
 </VirtualHost>
 
 <VirtualHost *:443>
     SSLEngine On
-    SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
-    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+    SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
     SSLUseStapling Off
 
     RedirectMatch 404 ^/
