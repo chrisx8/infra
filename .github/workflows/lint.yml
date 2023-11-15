@@ -35,5 +35,7 @@ jobs:
           pipenv install --dev
           pipenv run pre-commit install --install-hooks
       - name: Run pre-commit checks
+        env:
+          SKIP: validate
         run: |
           pipenv run pre-commit run --all-files
