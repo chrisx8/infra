@@ -16,7 +16,7 @@ jobs:
       - name: Get Python version
         run: echo "PY=$(python -V | sed 's/ //g')" >> $GITHUB_ENV
       - name: Check out repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Cache pre-commit repos
         uses: actions/cache@v3
         with:
