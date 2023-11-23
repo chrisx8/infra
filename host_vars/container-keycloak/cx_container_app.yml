@@ -6,7 +6,7 @@ cx_container_app_postgres_db: keycloak
 # Keycloak: HTTP on 127.0.0.1:8080
 cx_container_app_spec:
   name: keycloak
-  image: quay.io/keycloak/keycloak:22.0
+  image: quay.io/keycloak/keycloak:23.0
   command: start
   network: host
   env:
