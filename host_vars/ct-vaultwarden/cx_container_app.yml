@@ -3,18 +3,17 @@ ansible_host: s-elt800g2.arb.chrisx.xyz
 
 cx_container_app_postgres_db: vaultwarden
 
-# Vaultwarden: HTTP + WebSocket on 127.0.0.1:8288
 cx_container_app_spec:
   name: vaultwarden
   image: docker.io/vaultwarden/server:testing
-  network: host
+  network: "{{ cx_container_app_network }}"
   env:
     _ENABLE_DUO: "false"
     _ENABLE_EMAIL_2FA: "false"
     _ENABLE_SMTP: "false"
     _ENABLE_YUBICO: "false"
     # yamllint disable-line rule:line-length
-    DATABASE_URL: postgres://{{ cx_container_app_postgres_db }}:{{ _postgres_password }}@127.0.0.1:5432/{{ cx_container_app_postgres_db }}?sslmode=disable
+    DATABASE_URL: postgres://{{ cx_container_app_postgres_db }}:{{ _postgres_password }}@host.containers.internal:5432/{{ cx_container_app_postgres_db }}?sslmode=disable
     DISABLE_ADMIN_TOKEN: "true"
     DOMAIN: https://vaultwarden.arb.chrisx.xyz
     EVENTS_DAYS_RETAIN: "30"
@@ -25,7 +24,6 @@ cx_container_app_spec:
     PUSH_ENABLED: "true"
     PUSH_INSTALLATION_ID: "{{ _vaultwarden_push_installation_id }}"
     PUSH_INSTALLATION_KEY: "{{ _vaultwarden_push_installation_key }}"
-    ROCKET_ADDRESS: 127.0.0.1
     ROCKET_PORT: "8288"
     SIGNUPS_ALLOWED: "false"
     SIGNUPS_VERIFY: "false"

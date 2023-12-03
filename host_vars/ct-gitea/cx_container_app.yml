@@ -3,18 +3,17 @@ ansible_host: s-elt800g2.arb.chrisx.xyz
 
 cx_container_app_postgres_db: gitea
 
-# Gitea: HTTP on 127.0.0.1:3000, SSH on 0.0.0.0:2222
 cx_container_app_spec:
   name: gitea
   image: docker.io/gitea/gitea:1-rootless
-  network: host
+  network: "{{ cx_container_app_network }}"
   env:
     GITEA____APP_NAME: Gitea
     GITEA__cache__ENABLED: "true"
     GITEA__cache_0X2E_last_commit__ENABLED: "true"
     GITEA__database__DB_TYPE: postgres
     GITEA__database__LOG_SQL: "false"
-    GITEA__database__HOST: 127.0.0.1:5432
+    GITEA__database__HOST: host.containers.internal:5432
     GITEA__database__NAME: "{{ cx_container_app_postgres_db }}"
     GITEA__database__SSL_MODE: disable
     GITEA__database__USER: "{{ cx_container_app_postgres_db }}"
@@ -31,7 +30,6 @@ cx_container_app_spec:
     GITEA__security__PASSWORD_HASH_ALGO: argon2
     GITEA__server__DISABLE_SSH: "true"
     GITEA__server__DOMAIN: gitea.arb.chrisx.xyz
-    GITEA__server__HTTP_ADDR: 127.0.0.1
     GITEA__server__HTTP_PORT: "3000"
     GITEA__server__LANDING_PAGE: login
     GITEA__server__OFFLINE_MODE: "true"

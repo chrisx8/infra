@@ -11,10 +11,10 @@
     Header set X-Frame-Options "DENY"
     Header set X-Robots-Tag "none"
 
-    ProxyPass "/socket" "ws://127.0.0.1:8096/socket"
-    ProxyPassReverse "/socket" "ws://127.0.0.1:8096/socket"
-    ProxyPass "/" "http://127.0.0.1:8096/"
-    ProxyPassReverse "/" "http://127.0.0.1:8096/"
+    ProxyPass "/socket" "ws://jellyfin:8096/socket"
+    ProxyPassReverse "/socket" "ws://jellyfin:8096/socket"
+    ProxyPass "/" "http://jellyfin:8096/"
+    ProxyPassReverse "/" "http://jellyfin:8096/"
     ProxyPreserveHost On
     RequestHeader set X-Forwarded-Port 443
     RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}

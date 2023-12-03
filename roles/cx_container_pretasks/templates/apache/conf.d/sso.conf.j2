@@ -8,8 +8,8 @@
     Header unset Strict-Transport-Security
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
-    ProxyPass / http://127.0.0.1:8080/ nocanon
-    ProxyPassReverse / http://127.0.0.1:8080/ nocanon
+    ProxyPass / http://keycloak:8080/ nocanon
+    ProxyPassReverse / http://keycloak:8080/ nocanon
     ProxyPreserveHost On
     RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 

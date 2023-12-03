@@ -2,12 +2,14 @@
 ansible_host: s-elt800g2.arb.chrisx.xyz
 
 cx_container_app_pretask_from: apache.yml
+cx_container_app_socket_listen_streams:
+  - 80
+  - 443
 
-# Apache: HTTP on 0.0.0.0:80, HTTPS on 0.0.0.0:443
 cx_container_app_spec:
   name: apache
   image: ghcr.io/chrisx8/apache-openidc:latest
-  network: host
+  network: "{{ cx_container_app_network }}"
   cap_add:
     - CHOWN
     - NET_BIND_SERVICE

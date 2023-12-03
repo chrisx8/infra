@@ -3,18 +3,16 @@ ansible_host: s-elt800g2.arb.chrisx.xyz
 
 cx_container_app_postgres_db: miniflux
 
-# Miniflux: HTTP on 127.0.0.1:8081
 cx_container_app_spec:
   name: miniflux
   image: docker.io/miniflux/miniflux:latest
-  network: host
+  network: "{{ cx_container_app_network }}"
   env:
     BASE_URL: https://miniflux.arb.chrisx.xyz
     # yamllint disable-line rule:line-length
-    DATABASE_URL: postgres://{{ cx_container_app_postgres_db }}:{{ _postgres_password }}@127.0.0.1:5432/{{ cx_container_app_postgres_db }}?sslmode=disable
+    DATABASE_URL: postgres://{{ cx_container_app_postgres_db }}:{{ _postgres_password }}@host.containers.internal:5432/{{ cx_container_app_postgres_db }}?sslmode=disable
     DISABLE_HSTS: "1"
     CLEANUP_REMOVE_SESSIONS_DAYS: "7"
-    LISTEN_ADDR: 127.0.0.1:8081
     LOG_DATE_TIME: "1"
     RUN_MIGRATIONS: "1"
     OAUTH2_PROVIDER: oidc

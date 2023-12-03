@@ -1,7 +1,6 @@
 ---
 ansible_host: s-elt800g2.arb.chrisx.xyz
 
-# AdGuard Home
 cx_container_app_spec:
   name: adguardhome
   image: docker.io/adguard/adguardhome:latest

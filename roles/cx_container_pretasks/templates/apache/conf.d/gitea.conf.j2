@@ -10,8 +10,8 @@
     Header always set X-Content-Type-Options "nosniff"
 
     ProxyPass /robots.txt !
-    ProxyPass / http://127.0.0.1:3000/ nocanon
-    ProxyPassReverse / http://127.0.0.1:3000/ nocanon
+    ProxyPass / http://gitea:3000/ nocanon
+    ProxyPassReverse / http://gitea:3000/ nocanon
     ProxyPreserveHost On
     ProxyRequests off
     RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}

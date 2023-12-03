@@ -1,11 +1,10 @@
 ---
 ansible_host: s-elt800g2.arb.chrisx.xyz
 
-# Jellyfin: HTTP on 127.0.0.1:8096
 cx_container_app_spec:
   name: jellyfin
   image: docker.io/jellyfin/jellyfin:latest
-  network: host
+  network: "{{ cx_container_app_network }}"
   device:
     - /dev/dri/renderD128:/dev/dri/renderD128
   group_add:

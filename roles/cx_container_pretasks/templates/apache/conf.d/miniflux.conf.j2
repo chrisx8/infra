@@ -7,8 +7,8 @@
 
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
-    ProxyPass / http://127.0.0.1:8081/ nocanon
-    ProxyPassReverse / http://127.0.0.1:8081/ nocanon
+    ProxyPass / http://miniflux:8080/ nocanon
+    ProxyPassReverse / http://miniflux:8080/ nocanon
     ProxyPreserveHost On
     RequestHeader set X-Forwarded-Proto expr=%{REQUEST_SCHEME}
 

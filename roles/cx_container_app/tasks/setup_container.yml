@@ -64,6 +64,7 @@
         state: restarted
 
 - name: Enable and start systemd service
+  when: not cx_container_app_socket_listen_streams
   ansible.builtin.systemd:
     name: "{{ _container_systemd_unit }}.service"
     daemon_reload: true
