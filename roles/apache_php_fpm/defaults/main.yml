@@ -1,3 +1,0 @@
----
-php_install_composer: false # noqa var-naming[no-role-prefix]
-php_repo: "" # noqa var-naming[no-role-prefix]
