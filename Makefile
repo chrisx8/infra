@@ -36,13 +36,17 @@ _:
 # Includes required Ansible collections and pre-commit hooks
 envsetup:
 	pipenv install --dev
+	@echo
 	pipenv run ansible-galaxy collection install -U -r requirements.yml
+	@echo
 	pipenv run pre-commit install --install-hooks
 
 # Auto-update Ansible environment packages, pre-commit hooks, and requirements/lock files
 envupdate:
 	pipenv update --dev
+	@echo
 	pipenv run ansible-galaxy collection install -U -r requirements.yml
+	@echo
 	pipenv run pre-commit autoupdate
 
 # Run pre-commit checks on all files
