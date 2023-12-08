@@ -7,6 +7,11 @@
       ansible.builtin.assert:
         that:
           - ansible_user != "root"
+    - name: Assert that ansible_host is set
+      ansible.builtin.assert:
+        that:
+          - ansible_host is defined
+          - ansible_host|length > 1
 
 - name: Validate container apps
   hosts: cx_container_app

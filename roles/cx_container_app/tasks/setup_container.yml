@@ -28,6 +28,14 @@
     pull: true
     state: present
 
+- name: Disable and stop systemd socket
+  failed_when: false
+  ansible.builtin.systemd:
+    name: "{{ _container_systemd_unit }}.socket"
+    enabled: false
+    scope: user
+    state: stopped
+
 - name: Disable and stop systemd service
   failed_when: false
   ansible.builtin.systemd:
