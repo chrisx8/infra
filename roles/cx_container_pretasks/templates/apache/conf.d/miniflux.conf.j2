@@ -1,9 +1,9 @@
 <VirtualHost *:443>
-    ServerName miniflux.arb.chrisx.xyz
+    ServerName {{ _apache_miniflux.server_name }}
 
     SSLEngine on
-    SSLCertificateFile /etc/httpd/ssl/{{ _apache_cert_name }}/fullchain.pem
-    SSLCertificateKeyFile /etc/httpd/ssl/{{ _apache_cert_name }}/privkey.pem
+    SSLCertificateFile /etc/certbot/live/{{ _apache_miniflux.cert_name }}/fullchain.pem
+    SSLCertificateKeyFile /etc/certbot/live/{{ _apache_miniflux.cert_name }}/privkey.pem
 
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
@@ -17,11 +17,10 @@
 </VirtualHost>
 
 <VirtualHost *:80>
-    ServerAlias miniflux
-    ServerName miniflux.arb.chrisx.xyz
+    ServerName {{ _apache_miniflux.server_name }}
 
     RewriteEngine On
-    RewriteRule ^(.*)$ https://miniflux.arb.chrisx.xyz$1 [R=301,L]
+    RewriteRule ^(.*)$ https://{{ _apache_miniflux.server_name }}$1 [R=301,L]
 
     ErrorLog /var/log/httpd/miniflux_error.log
     CustomLog /var/log/httpd/miniflux_access.log combined

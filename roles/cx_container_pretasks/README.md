@@ -4,10 +4,9 @@ This role provides pre-tasks for `cx_container_app`. See [`cx_container_app`](..
 
 ## Role variables
 
-| Variable                          | Description                                     | Required |
-| --------------------------------- | ----------------------------------------------- | -------- |
-| `_adguardhome_oidc_client_id`     | OIDC Client ID                                  | **Yes**  |
-| `_adguardhome_oidc_client_secret` | OIDC Client Secret                              | **Yes**  |
-| `_apache_cert_name`               | Common Name (CN) of SSL cert managed by Certbot | **Yes**  |
-| `_vaultwarden_oidc_client_id`     | OIDC Client ID                                  | **Yes**  |
-| `_vaultwarden_oidc_client_secret` | OIDC Client Secret                              | **Yes**  |
+| Variable                          | Description        | Required |
+| --------------------------------- | ------------------ | -------- |
+| `_adguardhome_oidc_client_id`     | OIDC Client ID     | **Yes**  |
+| `_adguardhome_oidc_client_secret` | OIDC Client Secret | **Yes**  |
+| `_vaultwarden_oidc_client_id`     | OIDC Client ID     | **Yes**  |
+| `_vaultwarden_oidc_client_secret` | OIDC Client Secret | **Yes**  |

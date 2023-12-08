@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-WORKDIR="$(dirname "${BASH_SOURCE[0]}")/../files/certbot.d"
+WORKDIR="$HOME/.certbot"
 
 ################################################################################
 # REQUIRED CONFIGURATION

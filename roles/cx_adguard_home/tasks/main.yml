@@ -1,12 +1,4 @@
 ---
-- name: Verify requirements
-  ansible.builtin.assert:
-    that:
-      - cx_adguard_home_cert_name
-
-- name: Copy ssl cert
-  ansible.builtin.import_tasks: sslcert.yml
-
 - name: Disable systemd-resolved
   failed_when: false
   ansible.builtin.systemd:

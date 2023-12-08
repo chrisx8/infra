@@ -15,7 +15,7 @@ cx_container_app_spec:
     # yamllint disable-line rule:line-length
     DATABASE_URL: postgres://{{ cx_container_app_postgres_db }}:{{ _postgres_password }}@host.containers.internal:5432/{{ cx_container_app_postgres_db }}?sslmode=disable
     DISABLE_ADMIN_TOKEN: "true"
-    DOMAIN: https://vaultwarden.arb.chrisx.xyz
+    DOMAIN: https://{{ _apache_vaultwarden.server_name }}
     EVENTS_DAYS_RETAIN: "30"
     IP_HEADER: X-Forwarded-For
     ORG_EVENTS_ENABLED: "true"

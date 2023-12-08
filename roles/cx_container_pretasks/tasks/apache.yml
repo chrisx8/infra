@@ -1,23 +1,15 @@
 ---
+- name: Copy certbot helper script
+  ansible.builtin.copy:
+    src: certbot.sh
+    dest: "{{ _container_user.home }}"
+    mode: "0750"
+
 - name: Create Apache log dir
   ansible.builtin.file:
     path: "{{ _container_user.home }}/apache/log"
     mode: "0755"
     state: directory
-
-- name: Create Apache ssl dir
-  ansible.builtin.file:
-    path: "{{ _container_user.home }}/apache/ssl/{{ _apache_cert_name }}"
-    state: directory
-    mode: "0700"
-- name: Copy ssl cert for {{ _apache_cert_name }}
-  loop:
-    - fullchain.pem
-    - privkey.pem
-  ansible.builtin.copy:
-    src: certbot.d/config/live/{{ _apache_cert_name }}/{{ item }}
-    dest: "{{ _container_user.home }}/apache/ssl/{{ _apache_cert_name }}"
-    mode: "0400"
 
 - name: Copy Apache files
   loop:

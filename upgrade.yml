@@ -7,10 +7,6 @@
 #       ansible.builtin.import_role:
 #         name: cx_base_pve
 #         tasks_from: upgrade.yml
-#     - name: Install ssl cert for PVE
-#       ansible.builtin.import_role:
-#         name: cx_base_pve
-#         tasks_from: ssl_cert.yml
 
 - name: Upgrade EL hosts
   hosts: hosts_el
@@ -20,24 +16,6 @@
       ansible.builtin.import_role:
         name: cx_base_el
         tasks_from: upgrade.yml
-
-- name: Upgrade Cockpit
-  hosts: cx_cockpit_kvm
-  become: true
-  tasks:
-    - name: Install ssl cert for Cockpit
-      ansible.builtin.import_role:
-        name: cx_cockpit_kvm
-        tasks_from: sslcert.yml
-
-- name: Upgrade PostgreSQL
-  hosts: cx_postgresql
-  become: true
-  tasks:
-    - name: Install ssl cert for PostgreSQL
-      ansible.builtin.import_role:
-        name: cx_postgresql
-        tasks_from: sslcert.yml
 
 - name: Set up container apps
   hosts: cx_container_app

@@ -4,9 +4,7 @@ This role installs [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome) an
 
 ## Role variables
 
-| Variable                    | Description                                            | Required |
-| --------------------------- | ------------------------------------------------------ | -------- |
-| `cx_adguard_home_cert_name` | Common Name (CN) of SSL certificate managed by Certbot | **Yes**  |
+None
 
 ## Required facts
 

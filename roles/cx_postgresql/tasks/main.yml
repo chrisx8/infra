@@ -6,14 +6,11 @@
       - ansible_facts.os_family == 'RedHat'
       - cx_postgresql_version|int >= 11
       - "'/' in cx_postgresql_local_cidr"
-      - cx_postgresql_cert_name
 
 - name: Install PostgreSQL
   ansible.builtin.import_tasks: install.yml
 - name: Configure PostgreSQL
   ansible.builtin.import_tasks: configure.yml
-- name: Install ssl cert
-  ansible.builtin.import_tasks: sslcert.yml
 - name: Configure cron jobs
   when: cx_postgresql_cron_ping_url
   ansible.builtin.import_tasks: cron.yml
