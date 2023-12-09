@@ -19,11 +19,6 @@
     kernel.dmesg_restrict: 1
     kernel.sysrq: 0
 
-- name: Configure crontab
-  ansible.builtin.cron:
-    name: MAILTO
-    env: true
-    job: ""
 - name: Run powertop auto-tune on boot
   ansible.builtin.cron:
     name: Run powertop auto-tune on boot

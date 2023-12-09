@@ -1,5 +1,5 @@
 ---
-ansible_host: s-elt800g2.arb.chrisx.xyz
+ansible_host: s-elt800g2.lan.home
 
 cx_container_app_pretask_from: apache.yml
 cx_container_app_socket_listen_streams:

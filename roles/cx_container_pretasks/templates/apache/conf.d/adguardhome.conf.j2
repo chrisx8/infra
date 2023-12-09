@@ -22,7 +22,7 @@
     OIDCClientID {{ _adguardhome_oidc_client_id }}
     OIDCClientSecret {{ _adguardhome_oidc_client_secret }}
     OIDCPassClaimsAs none
-    OIDCProviderMetadataURL https://sso.chrisx.xyz/realms/master/.well-known/openid-configuration
+    OIDCProviderMetadataURL https://gitea.arb.chrisx.xyz/.well-known/openid-configuration
     OIDCRedirectURI https://adguardhome.arb.chrisx.xyz/openid-connect
     OIDCScope openid
     OIDCSessionInactivityTimeout 3600
@@ -36,7 +36,7 @@
 
     <Location "/">
         AuthType openid-connect
-        Require claim roles:adguardhome_admin
+        Require claim groups:infra:owners
     </Location>
 
     ErrorLog /var/log/httpd/adguardhome_error.log

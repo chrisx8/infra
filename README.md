@@ -63,14 +63,12 @@ pre-commit autoupdate
 
 - [AdGuard Home](https://github.com/AdguardTeam/AdGuardHome)
 - Apache HTTP Server with [mod_auth_openidc](https://github.com/OpenIDC/mod_auth_openidc)
-- [cloudflared](https://github.com/cloudflare/cloudflared)
 - [Cockpit](https://cockpit-project.org/)
 - [Gitea](https://gitea.io/)
 - [Home Assistant](https://www.home-assistant.io)
   - [My Home Assistant Add-ons](https://github.com/chrisx8/hassio-addons)
   - [HACS](https://hacs.xyz)
 - [Jellyfin](https://jellyfin.org/)
-- [Keycloak](https://www.keycloak.org/)
 - [Miniflux](https://miniflux.app/)
 - [OpenWrt](https://openwrt.org/)
 - Samba and SFTP file shares

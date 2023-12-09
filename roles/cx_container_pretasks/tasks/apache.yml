@@ -34,11 +34,6 @@
     dest: "{{ _container_user.home }}/apache/logrotate.conf"
     mode: "0640"
 
-- name: Disable cron mail
-  ansible.builtin.cron:
-    name: MAILTO
-    env: true
-    job: ""
 - name: Set up logrotate cron job
   ansible.builtin.cron:
     name: apache logrotate

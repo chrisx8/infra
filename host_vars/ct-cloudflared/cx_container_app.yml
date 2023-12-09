@@ -1,8 +1,0 @@
----
-ansible_host: s-elt800g2.arb.chrisx.xyz
-
-cx_container_app_spec:
-  name: cloudflared
-  image: docker.io/cloudflare/cloudflared:latest
-  command: tunnel run --token {{ _cloudflared_token }}
-  network: "{{ cx_container_app_network }}"
