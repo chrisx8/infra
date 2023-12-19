@@ -9,12 +9,12 @@ echo "[Healthchecks start]"
 for v in{% for vol in cx_container_app_volumes %} {{ vol }}{% endfor %}; do
     echo "Backing up $v..."
     pushd "$HOME/.local/share/containers/storage/volumes/$v" > /dev/null
-    podman unshare tar czvf "/tmp/$v.tgz" "_data/"
+    podman unshare tar czvf "/tmp/$v.tar.gz" _data
     popd > /dev/null
 done
 
 echo "====== List of backups ======"
-ls -lh /tmp/*.tgz
+ls -lh /tmp/*.gz
 echo "============================="
 
 curl -fsS -m 3 "{{ cx_container_app_backup_ping_url }}?rid=$RID"
