@@ -8,15 +8,8 @@
 #     - distribution
 #     - virtualization_role
 #     - virtualization_type
-#   vars_prompt:
-#     - name: cx_tailscale_auth_key
-#       prompt: |-
-#         ###### Tailscale - ACTION REQUIRED ######
-#         Generate a pre-authorized Tailscale auth key at https://login.tailscale.com/admin/settings/keys
-#         Enter Tailscale auth key
 #   roles:
 #     - cx_base_pve
-#     - cx_tailscale
 
 - name: Set up EL hosts
   hosts: hosts_el
@@ -26,16 +19,9 @@
     - "!min"
     - distribution
     - virtualization_type
-  vars_prompt:
-    - name: cx_tailscale_auth_key
-      prompt: |-
-        ###### Tailscale - ACTION REQUIRED ######
-        Generate a pre-authorized Tailscale auth key at https://login.tailscale.com/admin/settings/keys
-        Enter Tailscale auth key
   roles:
     - cx_base_el
     - cx_container_runtime
-    - cx_tailscale
 
 - name: Set up Cockpit + KVM
   hosts: cx_cockpit_kvm
@@ -57,16 +43,6 @@
     - distribution
   roles:
     - cx_postgresql
-
-- name: Set up Samba
-  hosts: cx_samba
-  become: true
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - distribution
-  roles:
-    - cx_samba
 
 - name: Set up container apps
   hosts: cx_container_app

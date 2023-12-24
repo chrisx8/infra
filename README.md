@@ -72,7 +72,6 @@ pre-commit autoupdate
 - [Miniflux](https://miniflux.app/)
 - [OpenWrt](https://openwrt.org/)
 - Samba and SFTP file shares
-- [Tailscale](https://tailscale.com/)
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 
 ## Resources

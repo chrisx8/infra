@@ -42,7 +42,6 @@ repos:
         args:
           - host_vars/ct-miniflux/cx_container_app.yml
           - host_vars/ct-vaultwarden/cx_container_app.yml
-          - roles/cx_tailscale/tasks/main.yml
         language: script
         pass_filenames: false
       - id: ansible-lint
@@ -51,7 +50,6 @@ repos:
         args:
           - --exclude=host_vars/ct-miniflux/cx_container_app.yml
           - --exclude=host_vars/ct-vaultwarden/cx_container_app.yml
-          - --exclude=roles/cx_tailscale/tasks/main.yml
           - --fix
         language: script
         pass_filenames: false
