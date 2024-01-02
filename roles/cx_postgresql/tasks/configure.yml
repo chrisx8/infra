@@ -5,10 +5,6 @@
     mode: "0600"
     block: |
       listen_addresses = '*'
-      ssl = on
-      ssl_cert_file = '/var/lib/pgsql/ssl/fullchain.pem'
-      ssl_key_file = '/var/lib/pgsql/ssl/privkey.pem'
-      ssl_min_protocol_version = 'TLSv1.2'
   notify:
     - Enable and restart postgresql
 
@@ -17,7 +13,9 @@
     path: /var/lib/pgsql/{{ cx_postgresql_version }}/data/pg_hba.conf
     mode: "0600"
     block: |
-      # TYPE DATABASE USER ADDRESS METHOD
-      hostssl  all  all  {{ cx_postgresql_local_cidr }}  scram-sha-256
+      # TYPE DATABASE USER CIDR METHOD
+      {% for addr in cx_postgresql_allow_hosts %}
+      host  all  all  {{ addr }}  scram-sha-256
+      {% endfor %}
   notify:
     - Enable and restart postgresql
