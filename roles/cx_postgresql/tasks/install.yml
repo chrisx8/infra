@@ -4,15 +4,13 @@
     name: pgdg-{{ item }}
     description: PostgreSQL {{ item }}
     baseurl: https://download.postgresql.org/pub/repos/yum/{{ item }}/redhat/rhel-$releasever-$basearch
-    gpgkey: https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG
+    gpgkey: https://download.postgresql.org/pub/repos/yum/keys/PGDG-RPM-GPG-KEY-RHEL
     gpgcheck: true
     repo_gpgcheck: true
     state: present
   loop:
     - common
     - "{{ cx_postgresql_version }}"
-  loop_control:
-    label: pgdg-{{ item }}
 
 - name: Install PostgreSQL {{ cx_postgresql_version }}
   ansible.builtin.dnf:
