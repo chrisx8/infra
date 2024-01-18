@@ -18,12 +18,12 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v4
       - name: Cache pre-commit repos
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Cache Python venv
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.venv
           key: venv|${{ env.PY }}|${{ hashFiles('Pipfile.lock') }}
