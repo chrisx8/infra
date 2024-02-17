@@ -1,5 +1,5 @@
 ---
-ansible_host: s-elt800g2.lan.home
+ansible_host: towercoffeel1.lan.home
 
 cx_container_app_postgres_db: gitea
 
