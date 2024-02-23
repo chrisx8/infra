@@ -1,0 +1,41 @@
+[global]
+    server role = standalone server
+    server string = %h
+    workgroup = WORKGROUP
+
+    logging = file systemd
+    log file = /var/log/samba/%m.log
+
+    min protocol = SMB3
+    allow nt4 crypto = no
+    require strong key = yes
+
+    security = user
+    map to guest = Never
+    usershare allow guests = no
+
+    unix password sync = yes
+    obey pam restrictions = yes
+    passwd program = /usr/bin/passwd %u
+    pam password change = yes
+
+[homes]
+    comment = Home Directory
+    browseable = no
+    writable = yes
+    create mask = 0600
+    directory mask = 0700
+{% if cx_samba_homedir_override %}
+    path = {{ cx_samba_homedir_override}}
+{% endif %}
+    valid users = %S
+
+{% for share in cx_samba_shares %}
+[{{ share.name }}]
+    comment = {{ share.comment | default(share.name) }}
+    path = {{ share.path }}
+    browsable = {{ share.browsable | default("yes") }}
+    writable = {{ share.writable | default("yes") }}
+    create mask = {{ share.create_mask | default("0640") }}
+    directory mask = {{ share.directory_mask | default("0750") }}
+{% endfor %}

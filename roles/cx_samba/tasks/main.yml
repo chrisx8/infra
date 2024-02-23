@@ -1,0 +1,44 @@
+---
+- name: Verify system requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.os_family == 'RedHat'
+      - ansible_facts.distribution_major_version|int >= 8
+
+- name: Validate cx_samba_shares
+  loop: "{{ cx_samba_shares }}"
+  ansible.builtin.assert:
+    that:
+      - item.name
+      - item.path and item.path.startswith('/')
+      # nonexistent (default) or correctly configured
+      - item.browsable is not defined or item.browsable in ('yes', 'no')
+      - item.writable is not defined or item.writable in ('yes', 'no')
+      - item.create_mask is not defined or item.create_mask | length == 4
+      - item.directory_mask is not defined or item.directory_mask | length == 4
+
+- name: Install Samba
+  ansible.builtin.dnf:
+    name: samba
+    state: present
+
+- name: Copy Samba config
+  ansible.builtin.template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+    mode: "0644"
+
+- name: Configure SELinux
+  loop:
+    - samba_enable_home_dirs
+    - samba_export_all_rw
+  ansible.posix.seboolean:
+    name: "{{ item }}"
+    persistent: true
+    state: true
+
+- name: Enable and restart Samba service
+  ansible.builtin.systemd:
+    name: smb
+    enabled: true
+    state: restarted

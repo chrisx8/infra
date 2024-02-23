@@ -1,0 +1,8 @@
+---
+# Optional override for home directory. Leave blank for system default.
+# Example: /mnt/home/%S
+cx_samba_homedir_override:
+# List of additional Samba shares
+# Each item defines a Samba share, using the following options:
+# name*, path*, comment, browsable, writable, create_mask, directory_mask
+cx_samba_shares: []
