@@ -1,10 +1,4 @@
 ---
-- name: Copy certbot helper script
-  ansible.builtin.copy:
-    src: certbot.sh
-    dest: "{{ _container_user.home }}"
-    mode: "0750"
-
 - name: Create Apache log dir
   ansible.builtin.file:
     path: "{{ _container_user.home }}/apache/log"
@@ -20,21 +14,6 @@
     dest: "{{ _container_user.home }}/apache"
     mode: "0644"
 
-- name: Copy logrotate config
-  ansible.builtin.template:
-    src: apache/logrotate.conf.j2
-    dest: "{{ _container_user.home }}/apache/logrotate.conf"
-    mode: "0640"
-
-- name: Set up logrotate cron job
-  ansible.builtin.cron:
-    name: apache logrotate
-    # yamllint disable-line rule:line-length
-    job: /usr/sbin/logrotate -s {{ _container_user.home }}/apache/logrotate.state {{ _container_user.home }}/apache/logrotate.conf
-    hour: 2
-    minute: 0
-    state: present
-
 - name: Process templated Apache config
   become: false
   delegate_to: localhost
@@ -44,14 +23,14 @@
       ansible.builtin.tempfile:
         state: directory
     - name: Process config templates
-      ansible.builtin.template:
-        src: "{{ item }}"
-        dest: "{{ _apache_conf_tempdir.path }}/{{ item | basename }}"
-        mode: "0640"
       loop_control:
         label: "{{ item | basename }}"
       with_fileglob:
         - ../templates/apache/conf.d/*.conf.j2
+      ansible.builtin.template:
+        src: "{{ item }}"
+        dest: "{{ _apache_conf_tempdir.path }}/{{ item | basename }}"
+        mode: "0640"
 
 - name: Assemble and copy Apache config
   ansible.builtin.assemble:
@@ -66,3 +45,24 @@
   ansible.builtin.file:
     path: "{{ _apache_conf_tempdir.path }}"
     state: absent
+
+- name: Copy certbot helper script
+  ansible.builtin.copy:
+    src: certbot.sh
+    dest: "{{ _container_user.home }}"
+    mode: "0750"
+
+- name: Copy logrotate config
+  ansible.builtin.template:
+    src: apache/logrotate.conf.j2
+    dest: "{{ _container_user.home }}/apache/logrotate.conf"
+    mode: "0640"
+
+- name: Set up logrotate cron job
+  ansible.builtin.cron:
+    name: apache logrotate
+    # yamllint disable-line rule:line-length
+    job: /usr/sbin/logrotate -s {{ _container_user.home }}/apache/logrotate.state {{ _container_user.home }}/apache/logrotate.conf
+    hour: 2
+    minute: 0
+    state: present

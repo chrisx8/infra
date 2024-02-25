@@ -1,8 +1,0 @@
----
-- name: Include pre-tasks
-  args:
-    apply:
-      become: true
-      become_user: "{{ cx_container_app_user }}"
-  when: cx_container_app_pretask_from
-  ansible.builtin.include_tasks: "{{ cx_container_app_pretask_from }}"

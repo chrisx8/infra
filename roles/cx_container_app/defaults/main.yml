@@ -1,7 +1,6 @@
 ---
 # User to run the container as. User must already exist on the host system.
-cx_container_app_user: podman
-
+cx_container_app_user:
 # Healthchecks.io ping URL for nightly volume backup job
 cx_container_app_backup_ping_url:
 # Container network to be created
@@ -9,9 +8,6 @@ cx_container_app_network:
 # PostgreSQL database and user to be created. A random password will be
 # generated for the user, and it's accessible as `_postgres_password`
 cx_container_app_postgres_db:
-# Optional pre-tasks for container: Place pre-task files in the `cx_container_pretasks`
-# role, and set this variable to the name of the tasks file.
-cx_container_app_pretask_from: ""
 # systemd socket activation: Listen addresses for the systemd socket
 # https://www.freedesktop.org/software/systemd/man/latest/systemd.socket.html#ListenStream=
 cx_container_app_socket_listen_streams: []

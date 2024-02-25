@@ -1,13 +1,4 @@
 ---
-# - name: Upgrade Proxmox VE hosts
-#   hosts: hosts_pve
-#   become: true
-#   tasks:
-#     - name: Upgrade
-#       ansible.builtin.import_role:
-#         name: cx_base_pve
-#         tasks_from: upgrade.yml
-
 - name: Upgrade EL hosts
   hosts: hosts_el
   become: true
@@ -17,7 +8,17 @@
         name: cx_base_el
         tasks_from: upgrade.yml
 
-- name: Set up container apps
+- name: Deploy containerized Apache config
+  hosts: ct-apache
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+    - virtualization_type
+  roles:
+    - cx_container_app_apache
+
+- name: Deploy container apps
   hosts: cx_container_app
   gather_facts: true
   gather_subset:

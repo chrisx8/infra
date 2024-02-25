@@ -8,10 +8,6 @@
 - name: Validate system and role vars
   ansible.builtin.import_tasks: check.yml
 
-- name: Import container pre-tasks
-  ansible.builtin.import_role:
-    name: cx_container_pretasks
-
 - name: Nightly volume backup setup - run as {{ cx_container_app_user }}
   become: true
   become_user: "{{ cx_container_app_user }}"

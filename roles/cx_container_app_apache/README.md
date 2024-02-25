@@ -1,6 +1,6 @@
-# Ansible Role: `cx_container_pretasks`
+# Ansible Role: `cx_container_app_apache`
 
-This role provides pre-tasks for `cx_container_app`. See [`cx_container_app`](../cx_container_app/README.md) for more information.
+This role provides configuration for Apache, which is managed by `cx_container_app`.
 
 ## Role variables
 

@@ -1,4 +1,0 @@
----
-ansible_host: s-elt800g2.lan.home
-
-cx_container_runtime_port_start: 80

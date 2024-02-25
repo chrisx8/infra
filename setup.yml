@@ -1,17 +1,5 @@
 ---
-# - name: Set up Proxmox VE hosts
-#   hosts: hosts_pve
-#   become: true
-#   gather_facts: true
-#   gather_subset:
-#     - "!min"
-#     - distribution
-#     - virtualization_role
-#     - virtualization_type
-#   roles:
-#     - cx_base_pve
-
-- name: Set up EL hosts
+- name: Deploy EL hosts
   hosts: hosts_el
   become: true
   gather_facts: true
@@ -23,7 +11,7 @@
     - cx_base_el
     - cx_container_runtime
 
-- name: Set up Cockpit + KVM
+- name: Deploy Cockpit + KVM
   hosts: cx_cockpit_kvm
   become: true
   gather_facts: true
@@ -34,7 +22,7 @@
   roles:
     - cx_cockpit_kvm
 
-- name: Set up PostgreSQL
+- name: Deploy PostgreSQL
   hosts: cx_postgresql
   become: true
   gather_facts: true
@@ -44,7 +32,17 @@
   roles:
     - cx_postgresql
 
-- name: Set up container apps
+- name: Deploy containerized Apache config
+  hosts: ct-apache
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+    - virtualization_type
+  roles:
+    - cx_container_app_apache
+
+- name: Deploy container apps
   hosts: cx_container_app
   gather_facts: true
   gather_subset:
