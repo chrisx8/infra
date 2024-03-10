@@ -10,7 +10,7 @@
     - modules_base.conf
     - www
   ansible.builtin.copy:
-    src: apache/{{ item }}
+    src: "{{ item }}"
     dest: "{{ _container_user.home }}/apache"
     mode: "0644"
 
@@ -26,7 +26,7 @@
       loop_control:
         label: "{{ item | basename }}"
       with_fileglob:
-        - ../templates/apache/conf.d/*.conf.j2
+        - "{{ role_path }}/templates/conf.d/*.conf.j2"
       ansible.builtin.template:
         src: "{{ item }}"
         dest: "{{ _apache_conf_tempdir.path }}/{{ item | basename }}"
@@ -54,7 +54,7 @@
 
 - name: Copy logrotate config
   ansible.builtin.template:
-    src: apache/logrotate.conf.j2
+    src: logrotate.conf.j2
     dest: "{{ _container_user.home }}/apache/logrotate.conf"
     mode: "0640"
 

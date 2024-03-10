@@ -31,7 +31,6 @@
       - vim
       - unzip
       - usbutils
-      - wget
     state: present
 
 - name: Set hostname
@@ -55,19 +54,19 @@
 - name: Disable systemd coredump
   ansible.builtin.lineinfile:
     dest: /etc/systemd/coredump.conf
-    regex: Storage=
+    regexp: ^Storage=
     line: Storage=none
 
 - name: Limit systemd-journald
   ansible.builtin.lineinfile:
     dest: /etc/systemd/journald.conf
-    regex: SystemMaxUse=
-    line: SystemMaxUse=10M
+    regexp: ^SystemMaxUse=
+    line: SystemMaxUse=20M
 
 - name: Set default text editor to vim
   ansible.builtin.lineinfile:
     dest: /etc/environment
-    regex: ^EDITOR=
+    regexp: ^EDITOR=
     line: EDITOR=vim
 
 - name: Copy system vimrc

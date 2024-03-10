@@ -21,7 +21,3 @@
     name: fstrim.timer
     enabled: true
     state: started
-
-- name: Disable PCIe ASPM
-  changed_when: true
-  ansible.builtin.command: grubby --args=pcie_aspm=off --update-kernel=ALL

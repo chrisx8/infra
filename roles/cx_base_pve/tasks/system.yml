@@ -35,13 +35,13 @@
 - name: Limit systemd-journald
   ansible.builtin.lineinfile:
     dest: /etc/systemd/journald.conf
-    regex: SystemMaxUse=
+    regexp: ^SystemMaxUse=
     line: SystemMaxUse=50M
 
 - name: Set default text editor to vim
   ansible.builtin.lineinfile:
     dest: /etc/environment
-    regex: ^EDITOR=
+    regexp: ^EDITOR=
     line: EDITOR=vim
 
 - name: Set GRUB timeout
@@ -53,7 +53,7 @@
   ansible.builtin.lineinfile:
     path: /etc/default/grub
     regexp: ^GRUB_CMDLINE_LINUX_DEFAULT
-    line: GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on pcie_aspm=off"
+    line: GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"
 
 - name: Update GRUB config
   ansible.builtin.command: update-grub2
