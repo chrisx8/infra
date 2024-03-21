@@ -1,24 +1,29 @@
 ANSIBLE_VAULT_ARGS ?= --vault-password-file utils/vault_password_op.sh
 
-# Set variable `ANSIBLE_ARGS` to pass arbitrary arguments to Ansible,
-# overwriting all other Ansible-related args.
+# Set variable `ANSIBLE_ARGS` to pass arbitrary arguments to Ansible
 
 # Set variable `check` to run Ansible with `--check`
 # Example: `make setup.yml check=yes`
 ifdef check
-	ANSIBLE_ARGS += --check
+	_ANSIBLE_MAKE_ARGS += --check
+endif
+
+# Set variable `debug` to run Ansible with `-vvv`
+# Example: `make setup.yml debug=yes`
+ifdef debug
+	_ANSIBLE_MAKE_ARGS += -vvv
 endif
 
 # Set variable `diff` to run Ansible with `--diff`
 # Example: `make setup.yml diff=yes`
 ifdef diff
-	ANSIBLE_ARGS += --diff
+	_ANSIBLE_MAKE_ARGS += --diff
 endif
 
 # Set variable `limit` to limit run to specified host(s)
 # Example: `make setup.yml limit=guests`
 ifdef limit
-	ANSIBLE_ARGS += --limit "$(limit)"
+	_ANSIBLE_MAKE_ARGS += --limit "$(limit)"
 endif
 
 # hack: placeholder task

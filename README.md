@@ -27,17 +27,18 @@ You may run Ansible playbooks, and several repo-related tasks, with `make`.
 Available `make` commands:
 
 - `make *.yml`: run a given playbook against all hosts.
+- `make */secrets.yml`: create/edit Ansible Vault.
 - `make envsetup`: set up local Ansible environment, including Ansible collections and pre-commit.
 - `make envupdate`: auto-update packages, pre-commit hooks, and requirements/lock files.
 - `make pre-commit`: run pre-commit checks on all files.
-- `make vaultcreate`: create Ansible Vault.
-- `make vaultedit`: edit Ansible Vault.
 
 Optional `make` args:
 
 - `ANSIBLE_ARGS`: pass arbitrary arguments to Ansible, overwriting ALL args below.
 - `check`: run Ansible with `--check`
   - Example: `make setup.yml check=yes`
+- `debug`: run Ansible with `-vvv`
+  - Example: `make setup.yml debug=yes`
 - `diff`: run Ansible with `--diff`
   - Example: `make setup.yml diff=yes`
 - `limit`: limit playbook run to specified host(s)
