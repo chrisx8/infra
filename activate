@@ -1,0 +1,22 @@
+export PIPENV_VENV_IN_PROJECT=1
+
+INFRA_REPO_DIR=$(dirname "$(realpath "$0")")
+export INFRA_REPO_DIR
+
+# .venv exists and no virtualenv is activated
+if [ ! -d .venv ] && [ ! -f .venv/bin/ansible ]; then
+  echo "Ansible virtualenv is not set up! Please run utils/envsetup.sh"
+  return 1
+fi
+
+source .venv/bin/activate
+echo "***********************************************************************"
+echo " Activating Ansible venv"
+echo "***********************************************************************"
+
+ANSIBLE_VAULT_ARGS=(--vault-password-file utils/vault_password_op.sh)
+
+alias anplay="ansible-playbook ${ANSIBLE_VAULT_ARGS}"
+alias anvault="ansible-vault edit ${ANSIBLE_VAULT_ARGS} || \
+  ansible-vault create ${ANSIBLE_VAULT_ARGS}"
+alias chkall="pre-commit run --all-files"
