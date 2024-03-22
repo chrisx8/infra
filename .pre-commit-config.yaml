@@ -34,11 +34,11 @@ repos:
       - id: yamllint
         name: yamllint
         language: script
-        entry: /usr/bin/env pipenv run yamllint
+        entry: /usr/bin/env yamllint
         files: \.(yml)|(yaml)$
       - id: ansible-lint
         name: ansible-lint
-        entry: /usr/bin/env pipenv run ansible-lint -v
+        entry: /usr/bin/env ansible-lint -v
         args:
           - host_vars/ct-miniflux/cx_container_app.yml
           - host_vars/ct-vaultwarden/cx_container_app.yml
@@ -46,7 +46,7 @@ repos:
         pass_filenames: false
       - id: ansible-lint
         name: ansible-lint with reformatting
-        entry: /usr/bin/env pipenv run ansible-lint -v
+        entry: /usr/bin/env ansible-lint -v
         args:
           - --exclude=host_vars/ct-miniflux/cx_container_app.yml
           - --exclude=host_vars/ct-vaultwarden/cx_container_app.yml
@@ -55,6 +55,6 @@ repos:
         pass_filenames: false
       - id: validate
         name: run validate.yml playbook
-        entry: /usr/bin/env make validate.yml
+        entry: /usr/bin/env ansible-playbook plays/validate.yml
         language: script
         pass_filenames: false

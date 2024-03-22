@@ -6,8 +6,6 @@ on: # yamllint disable-line rule:truthy
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
-    env:
-      PIPENV_VENV_IN_PROJECT: 1
     steps:
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -22,20 +20,12 @@ jobs:
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
-      - name: Cache Python venv
-        uses: actions/cache@v4
-        with:
-          path: ${{ github.workspace }}/.venv
-          key: venv|${{ env.PY }}|${{ hashFiles('Pipfile.lock') }}
-      - name: Install dependencies
+      - name: Install uv
         run: |
-          pip install --user pipenv
-      - name: Set up Python env
+          pip install --user uv
+      - name: Set up Python virtualenv
         run: |
-          pipenv install --dev
-          pipenv run pre-commit install --install-hooks
+          utils/envsetup.sh
       - name: Run pre-commit checks
-        env:
-          SKIP: validate
         run: |
-          pipenv run pre-commit run --all-files
+          source ./activate && pre-commit run --all-files

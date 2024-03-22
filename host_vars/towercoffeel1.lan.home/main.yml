@@ -1,4 +1,2 @@
 ---
-ansible_host: towercoffeel1.lan.home
-
 cx_container_runtime_port_start: 80

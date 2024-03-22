@@ -6,43 +6,37 @@ This repo is an Ansible monorepo for my self-hosted Linux environment. It contai
 
 ### Setup
 
-First, make sure you have **Python 3.12** and [**Pipenv**](https://pipenv.pypa.io) installed.
+First, make sure you have **Python 3.12** and [**uv**](https://github.com/astral-sh/uv) installed.
 
-Then, install repo dependencies, including Ansible, Ansible collections, `ansible-lint`, and pre-commit hooks:
-
-```bash
-make envsetup
-```
-
-After initial setup, simply activate the Pipenv when working in this repo:
+Then, install repo dependencies, including Ansible, Ansible collections, `ansible-lint`, pre-commit hooks, and other Python packages:
 
 ```bash
-pipenv shell
+./utils/envsetup.sh
 ```
 
-### Makefile
+After initial setup, simply activate the virtualenv when working in this repo:
 
-You may run Ansible playbooks, and several repo-related tasks, with `make`.
+```bash
+source ./activate
+```
 
-Available `make` commands:
+### Shell functions
 
-- `make *.yml`: run a given playbook against all hosts.
-- `make */secrets.yml`: create/edit Ansible Vault.
-- `make envsetup`: set up local Ansible environment, including Ansible collections and pre-commit.
-- `make envupdate`: auto-update packages, pre-commit hooks, and requirements/lock files.
-- `make pre-commit`: run pre-commit checks on all files.
+Once you activate the virtualenv with `./activate`, some shell aliases will be available.
 
-Optional `make` args:
+Available shell aliases:
 
-- `ANSIBLE_ARGS`: pass arbitrary arguments to Ansible, overwriting ALL args below.
-- `check`: run Ansible with `--check`
-  - Example: `make setup.yml check=yes`
-- `debug`: run Ansible with `-vvv`
-  - Example: `make setup.yml debug=yes`
-- `diff`: run Ansible with `--diff`
-  - Example: `make setup.yml diff=yes`
-- `limit`: limit playbook run to specified host(s)
-  - Example: `make setup.yml limit=guests`
+- `anplay`: run `ansible-playbook`
+- `anvault`: run `ansible-vault`
+- `chkall`: run pre-commit checks on all files
+
+### Update environment
+
+With the virtualenv activated, run the update script, which will update Python packages, Ansible collections, and pre-commit hooks:
+
+```bash
+./utils/envupdate.sh
+```
 
 ## Dependencies
 
