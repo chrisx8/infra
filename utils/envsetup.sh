@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-export PIPENV_VENV_IN_PROJECT=1
-
 if [ ! -f "requirements".txt ] || [ ! -f "requirements.yml" ]; then
   echo "Please run this script in the repo's base directory." >&2
   exit 1
@@ -19,9 +17,8 @@ else
   uv venv
 fi
 
-echo "## Installing Python packages with pipenv"
-pipenv install --dev
-# uv pip install -r requirements.txt
+echo "## Installing Python packages with uv"
+uv pip install -r requirements.txt
 source .venv/bin/activate
 
 echo "## Installing Ansible collections"

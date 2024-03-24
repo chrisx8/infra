@@ -11,10 +11,8 @@ echo " Updating Ansible virtualenv"
 echo "*********************************************************************"
 
 pushd "$INFRA_REPO_DIR" > /dev/null
-# echo "## Compiling Python package list (requirements.txt)"
-# uv pip compile requirements.in > requirements.txt
-echo "## Updating Python packages with pipenv"
-pipenv update --dev
+echo "## Compiling Python package list (requirements.txt)"
+uv pip compile requirements.in > requirements.txt
 echo "## Updating Ansible collections"
 ansible-galaxy collection install -U -r requirements.yml
 echo "## Updating pre-commit hooks"
