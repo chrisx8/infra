@@ -5,7 +5,7 @@ cx_container_app_postgres_db: miniflux
 
 cx_container_app_spec:
   name: miniflux
-  image: docker.io/miniflux/miniflux:latest
+  image: docker.io/miniflux/miniflux:2.1.2
   network: "{{ cx_container_app_network }}"
   env:
     BASE_URL: https://{{ _apache_miniflux.server_name }}
