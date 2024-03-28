@@ -20,7 +20,7 @@ cx_container_app_spec:
     IP_HEADER: X-Forwarded-For
     ORG_EVENTS_ENABLED: "true"
     PASSWORD_HINTS_ALLOWED: "false"
-    PASSWORD_ITERATIONS: "600000"
+    PASSWORD_ITERATIONS: "1000000"
     PUSH_ENABLED: "true"
     PUSH_INSTALLATION_ID: "{{ _vaultwarden_push_installation_id }}"
     PUSH_INSTALLATION_KEY: "{{ _vaultwarden_push_installation_key }}"
