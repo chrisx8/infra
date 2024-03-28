@@ -14,31 +14,3 @@
   ansible.posix.selinux:
     policy: targeted
     state: enforcing
-
-- name: Install systemd components
-  ansible.builtin.dnf:
-    name:
-      - systemd-oomd
-      - zram-generator
-    state: present
-
-- name: Enable kernel PSI support
-  changed_when: true
-  ansible.builtin.command: grubby --args=psi=1 --update-kernel=ALL
-
-- name: Configure zram-generator
-  ansible.builtin.copy:
-    src: zram-generator.conf
-    dest: /etc/systemd/zram-generator.conf
-    mode: "0644"
-
-- name: Enable and start systemd-oomd
-  ansible.builtin.systemd:
-    name: systemd-oomd
-    enabled: true
-    state: started
-
-- name: Restart NetworkManager
-  ansible.builtin.systemd:
-    name: NetworkManager
-    state: restarted
