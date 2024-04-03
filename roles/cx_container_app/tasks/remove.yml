@@ -4,7 +4,7 @@
   block:
     - name: Set prompt string
       ansible.builtin.set_fact:
-        _confirm_expected: CONFIRM {{ ansible_play_hosts | length }} APPS
+        _confirm_expected: CONFIRM {{ ansible_play_hosts | length }}
     - name: Confirm removal
       register: _confirm
       ansible.builtin.pause:

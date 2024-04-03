@@ -8,22 +8,5 @@
         name: cx_base_el
         tasks_from: upgrade.yml
 
-- name: Deploy containerized Apache config
-  hosts: ct-apache
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - distribution
-    - virtualization_type
-  roles:
-    - cx_container_app_apache
-
-- name: Deploy container apps
-  hosts: cx_container_app
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - distribution
-    - virtualization_type
-  roles:
-    - cx_container_app
+- name: Upgrade apps
+  ansible.builtin.import_playbook: app_setup.yml
