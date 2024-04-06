@@ -6,7 +6,7 @@ ansible-core==2.16.5
     # via
     #   ansible-compat
     #   ansible-lint
-ansible-lint==24.2.1
+ansible-lint==24.2.2
 attrs==23.2.0
     # via
     #   jsonschema
@@ -25,7 +25,7 @@ cryptography==42.0.5
     # via ansible-core
 distlib==0.3.8
     # via virtualenv
-filelock==3.13.3
+filelock==3.13.4
     # via
     #   ansible-lint
     #   virtualenv

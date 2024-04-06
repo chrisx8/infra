@@ -1,19 +1,21 @@
-# .venv exists and no virtualenv is activated
-if [ ! -d .venv ] && [ ! -f .venv/bin/ansible ]; then
+INFRA_REPO_DIR=$(dirname "$(realpath "$0")")
+export INFRA_REPO_DIR
+
+if [ ! -d "$INFRA_REPO_DIR/.venv" ] || [ ! -f "$INFRA_REPO_DIR/.venv/bin/ansible" ]; then
   echo "Ansible virtualenv is not set up! Please run utils/envsetup.sh"
   return 1
 fi
 
-source .venv/bin/activate
 echo "***********************************************************************"
 echo " Activating Ansible venv"
 echo "***********************************************************************"
-
-INFRA_REPO_DIR=$(dirname "$(realpath "$0")")
-export INFRA_REPO_DIR
+# shellcheck source=/dev/null
+source "$INFRA_REPO_DIR/.venv/bin/activate"
 
 export ANSIBLE_CONFIG="$INFRA_REPO_DIR/ansible.cfg"
 
 alias anplay="ansible-playbook"
 alias anvault="ansible-vault"
 alias chkall="pre-commit run --all-files"
+
+# vim: ft=sh
