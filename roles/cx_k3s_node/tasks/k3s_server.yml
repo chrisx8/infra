@@ -1,0 +1,26 @@
+---
+- name: Run k3s install script (server)
+  when: not ansible_check_mode
+  changed_when: true
+  environment:
+    INSTALL_K3S_CHANNEL: "{{ cx_k3s_node_channel }}"
+    INSTALL_K3S_EXEC: server {{ cx_k3s_node_server_args }}
+    K3S_KUBECONFIG_MODE: "{{ cx_k3s_node_kubeconfig_mode }}"
+  ansible.builtin.command:
+    cmd: /tmp/get_k3s.sh
+
+- name: Deploy custom manifests for k3s server components
+  loop_control:
+    label: "{{ item | basename }}"
+  with_fileglob:
+    - "{{ role_path }}/files/server_manifests/*.yaml"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
+    mode: "0640"
+
+- name: Restart k3s server with systemd
+  ansible.builtin.systemd:
+    name: k3s.service
+    daemon_reload: true
+    state: restarted

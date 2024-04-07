@@ -1,0 +1,47 @@
+---
+- name: Verify requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+      - ansible_facts.virtualization_type != 'lxc'
+      - cx_k3s_node_channel in ('latest', 'stable', 'testing')
+      - cx_k3s_node_role in ('agent', 'server')
+
+- name: Remove firewalld
+  ansible.builtin.dnf:
+    name: firewalld
+    state: absent
+
+- name: Install iptables + nfs utils
+  ansible.builtin.dnf:
+    name:
+      - iptables-nft
+      - nfs-utils
+    state: present
+
+- name: Download k3s install script
+  ansible.builtin.get_url:
+    url: https://get.k3s.io
+    dest: /tmp/get_k3s.sh
+    mode: "0700"
+
+- name: Install k3s
+  ansible.builtin.include_tasks: k3s_{{ cx_k3s_node_role }}.yml
+
+- name: Delete k3s install script
+  ansible.builtin.file:
+    path: /tmp/get_k3s.sh
+    state: absent
+
+- name: Deploy Kubernetes system workloads on server
+  when: cx_k3s_node_role == 'server'
+  block:
+    - name: Get kubeconfig from k3s server
+      register: _kubeconfig_file
+      ansible.builtin.slurp:
+        src: /etc/rancher/k3s/k3s.yaml
+    - name: Deploy Kubernetes system workloads
+      become: false
+      delegate_to: localhost
+      ansible.builtin.import_tasks: k3s_system_workload.yml

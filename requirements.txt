@@ -17,10 +17,18 @@ black==24.4.2
     # via ansible-lint
 bracex==2.4
     # via wcmatch
+cachetools==5.3.3
+    # via google-auth
+certifi==2024.6.2
+    # via
+    #   kubernetes
+    #   requests
 cffi==1.16.0
     # via cryptography
 cfgv==3.4.0
     # via pre-commit
+charset-normalizer==3.3.2
+    # via requests
 click==8.1.7
     # via black
 cryptography==42.0.8
@@ -31,8 +39,12 @@ filelock==3.14.0
     # via
     #   ansible-lint
     #   virtualenv
+google-auth==2.30.0
+    # via kubernetes
 identify==2.5.36
     # via pre-commit
+idna==3.7
+    # via requests
 importlib-metadata==7.1.0
     # via ansible-lint
 jinja2==3.1.4
@@ -43,6 +55,8 @@ jsonschema==4.22.0
     #   ansible-lint
 jsonschema-specifications==2023.12.1
     # via jsonschema
+kubernetes==30.1.0
+    # via -r requirements.in
 markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.5
@@ -53,6 +67,10 @@ mypy-extensions==1.0.0
     # via black
 nodeenv==1.9.1
     # via pre-commit
+oauthlib==3.2.2
+    # via
+    #   kubernetes
+    #   requests-oauthlib
 packaging==24.0
     # via
     #   ansible-compat
@@ -70,21 +88,36 @@ platformdirs==4.2.2
     #   virtualenv
 pre-commit==3.7.1
     # via -r requirements.in
+pyasn1==0.6.0
+    # via
+    #   pyasn1-modules
+    #   rsa
+pyasn1-modules==0.4.0
+    # via google-auth
 pycparser==2.22
     # via cffi
 pygments==2.18.0
     # via rich
+python-dateutil==2.9.0.post0
+    # via kubernetes
 pyyaml==6.0.1
     # via
     #   ansible-compat
     #   ansible-core
     #   ansible-lint
+    #   kubernetes
     #   pre-commit
     #   yamllint
 referencing==0.35.1
     # via
     #   jsonschema
     #   jsonschema-specifications
+requests==2.32.3
+    # via
+    #   kubernetes
+    #   requests-oauthlib
+requests-oauthlib==2.0.0
+    # via kubernetes
 resolvelib==1.0.1
     # via ansible-core
 rich==13.7.1
@@ -93,18 +126,30 @@ rpds-py==0.18.1
     # via
     #   jsonschema
     #   referencing
+rsa==4.9
+    # via google-auth
 ruamel-yaml==0.18.6
     # via ansible-lint
 ruamel-yaml-clib==0.2.8
     # via ruamel-yaml
+six==1.16.0
+    # via
+    #   kubernetes
+    #   python-dateutil
 subprocess-tee==0.4.1
     # via
     #   ansible-compat
     #   ansible-lint
+urllib3==2.2.1
+    # via
+    #   kubernetes
+    #   requests
 virtualenv==20.26.2
     # via pre-commit
 wcmatch==8.5.2
     # via ansible-lint
+websocket-client==1.8.0
+    # via kubernetes
 yamllint==1.35.1
     # via
     #   -r requirements.in

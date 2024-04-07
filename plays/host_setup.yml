@@ -11,8 +11,8 @@
     - cx_base_el
     - cx_container_runtime
 
-- name: Deploy Cockpit + KVM
-  hosts: cx_cockpit_kvm
+- name: Deploy k3s nodes
+  hosts: cx_k3s_node
   become: true
   gather_facts: true
   gather_subset:
@@ -20,7 +20,7 @@
     - distribution
     - virtualization_type
   roles:
-    - cx_cockpit_kvm
+    - cx_k3s_node
 
 - name: Deploy PostgreSQL
   hosts: cx_postgresql

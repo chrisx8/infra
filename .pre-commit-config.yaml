@@ -37,11 +37,20 @@ repos:
         entry: /usr/bin/env yamllint
         files: \.(yml)|(yaml)$
       - id: ansible-lint
+        name: ansible-lint
+        entry: /usr/bin/env ansible-lint
+        args:
+          - -v
+          - roles/cx_k3s_node/tasks/k3s_system_workload.yml
+        language: script
+        pass_filenames: false
+      - id: ansible-lint
         name: ansible-lint with autofix
         entry: /usr/bin/env ansible-lint
         args:
           - -v
           - --fix
+          - --exclude=roles/cx_k3s_node/tasks/k3s_system_workload.yml
         language: script
         pass_filenames: false
       - id: validate

@@ -1,0 +1,23 @@
+---
+# k3s release channel to use, supports stable, latest, testing
+cx_k3s_node_channel: stable
+
+# cert-manager version
+cx_k3s_node_cert_manager_version: v1.14.5
+
+# NFS CSI Driver version
+cx_k3s_node_cert_csi_nfs_version: v4.7.0
+
+# Permission of k3s's kubeconfig
+cx_k3s_node_kubeconfig_mode: "644"
+
+# Role of the k3s node, server or agent
+cx_k3s_node_role: ""
+
+# Optional flags for launching k3s agent
+# 'agent' will be prefixed
+cx_k3s_node_agent_args: ""
+
+# Optional flags for launching k3s server
+# 'server' will be prefixed
+cx_k3s_node_server_args: ""
