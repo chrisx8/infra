@@ -5,7 +5,7 @@ cx_container_app_postgres_db: gitea
 
 cx_container_app_spec:
   name: gitea
-  image: docker.io/gitea/gitea:1.21.10-rootless
+  image: docker.io/gitea/gitea:1.21.11-rootless
   network: "{{ cx_container_app_network }}"
   env:
     GITEA____APP_NAME: Gitea
