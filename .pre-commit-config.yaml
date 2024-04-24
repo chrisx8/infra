@@ -45,7 +45,7 @@ repos:
         language: script
         pass_filenames: false
       - id: ansible-lint
-        name: ansible-lint with reformatting
+        name: ansible-lint with autofix
         entry: /usr/bin/env ansible-lint -v
         args:
           - --exclude=host_vars/ct-miniflux/cx_container_app.yml

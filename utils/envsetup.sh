@@ -14,7 +14,7 @@ if [ -d .venv ]; then
   echo "## Using existing virtualenv at .venv"
 else
   echo "## Creating virtualenv at .venv"
-  uv venv
+  uv venv --seed
 fi
 
 echo "## Installing Python packages with uv"
