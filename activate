@@ -1,4 +1,4 @@
-INFRA_REPO_DIR=$(dirname "$(realpath "$0")")
+INFRA_REPO_DIR="$(pwd)"
 export INFRA_REPO_DIR
 
 if [ ! -d "$INFRA_REPO_DIR/.venv" ] || [ ! -f "$INFRA_REPO_DIR/.venv/bin/ansible" ]; then
