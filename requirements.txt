@@ -4,16 +4,14 @@ ansible-compat==4.1.11
     # via ansible-lint
 ansible-core==2.16.6
     # via
-    #   -r requirements.in
     #   ansible-compat
     #   ansible-lint
-ansible-lint==24.2.2
-    # via -r requirements.in
+ansible-lint==24.2.3
 attrs==23.2.0
     # via
     #   jsonschema
     #   referencing
-black==24.4.1
+black==24.4.2
     # via ansible-lint
 bracex==2.4
     # via wcmatch
@@ -23,11 +21,11 @@ cfgv==3.4.0
     # via pre-commit
 click==8.1.7
     # via black
-cryptography==42.0.5
+cryptography==42.0.7
     # via ansible-core
 distlib==0.3.8
     # via virtualenv
-filelock==3.13.4
+filelock==3.14.0
     # via
     #   ansible-lint
     #   virtualenv
@@ -35,7 +33,7 @@ identify==2.5.36
     # via pre-commit
 jinja2==3.1.4
     # via ansible-core
-jsonschema==4.21.1
+jsonschema==4.22.0
     # via
     #   ansible-compat
     #   ansible-lint
@@ -67,10 +65,9 @@ platformdirs==4.2.1
     #   black
     #   virtualenv
 pre-commit==3.7.0
-    # via -r requirements.in
 pycparser==2.22
     # via cffi
-pygments==2.17.2
+pygments==2.18.0
     # via rich
 pyyaml==6.0.1
     # via
@@ -79,7 +76,7 @@ pyyaml==6.0.1
     #   ansible-lint
     #   pre-commit
     #   yamllint
-referencing==0.35.0
+referencing==0.35.1
     # via
     #   jsonschema
     #   jsonschema-specifications
@@ -87,7 +84,7 @@ resolvelib==1.0.1
     # via ansible-core
 rich==13.7.1
     # via ansible-lint
-rpds-py==0.18.0
+rpds-py==0.18.1
     # via
     #   jsonschema
     #   referencing
@@ -95,15 +92,15 @@ ruamel-yaml==0.18.6
     # via ansible-lint
 ruamel-yaml-clib==0.2.8
     # via ruamel-yaml
+setuptools==69.5.1
+    # via nodeenv
 subprocess-tee==0.4.1
     # via
     #   ansible-compat
     #   ansible-lint
-virtualenv==20.26.0
+virtualenv==20.26.1
     # via pre-commit
 wcmatch==8.5.1
     # via ansible-lint
 yamllint==1.35.1
-    # via
-    #   -r requirements.in
-    #   ansible-lint
+    # via ansible-lint
