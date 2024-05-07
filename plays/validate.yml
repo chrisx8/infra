@@ -6,7 +6,7 @@
     - name: Assert that ansible_user is not root
       ansible.builtin.assert:
         that:
-          - ansible_user != "root"
+          - ansible_user is not defined or ansible_user != "root"
     - name: Assert that ansible_host is set
       ansible.builtin.assert:
         that:
