@@ -64,7 +64,7 @@ platformdirs==4.2.1
     # via
     #   black
     #   virtualenv
-pre-commit==3.7.0
+pre-commit==3.7.1
 pycparser==2.22
     # via cffi
 pygments==2.18.0
