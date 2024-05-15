@@ -3,7 +3,7 @@ ansible_host: towercoffeel1.lan.home
 
 cx_container_app_spec:
   name: jellyfin
-  image: docker.io/jellyfin/jellyfin:10.9.0
+  image: docker.io/jellyfin/jellyfin:10.9.1
   network: "{{ cx_container_app_network }}"
   device:
     - /dev/dri/renderD128:/dev/dri/renderD128
