@@ -1,6 +1,6 @@
 # chrisx8/infra
 
-This repo is an Ansible monorepo for my self-hosted Linux environment. It contains what I'm using to manage my home servers and [software running on them](#software).
+This repo is an Ansible monorepo for my self-hosted Linux environment.
 
 ## Usage
 
@@ -53,25 +53,6 @@ To update pre-commit hooks, run:
 ```bash
 pre-commit autoupdate
 ```
-
-## Software
-
-- Apache HTTP Server with [mod_auth_openidc](https://github.com/OpenIDC/mod_auth_openidc)
-- [Cockpit](https://cockpit-project.org/)
-- [Gitea](https://gitea.io/)
-- [Home Assistant](https://www.home-assistant.io)
-  - [My Home Assistant Add-ons](https://github.com/chrisx8/hassio-addons)
-  - [HACS](https://hacs.xyz)
-- [Jellyfin](https://jellyfin.org/)
-- [Miniflux](https://miniflux.app/)
-- [OpenWrt](https://openwrt.org/)
-- Samba and SFTP file shares
-- [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
-
-## Resources
-
-- [How to Home Lab](https://www.dlford.io/tag/how-to-home-lab-series/)
-- [Postfix mail relay](https://www.howtoforge.com/tutorial/configure-postfix-to-use-gmail-as-a-mail-relay/)
 
 ## License
 

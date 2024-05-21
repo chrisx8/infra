@@ -37,24 +37,17 @@ repos:
         entry: /usr/bin/env yamllint
         files: \.(yml)|(yaml)$
       - id: ansible-lint
-        name: ansible-lint
-        entry: /usr/bin/env ansible-lint -v
-        args:
-          - host_vars/ct-miniflux/cx_container_app.yml
-          - host_vars/ct-vaultwarden/cx_container_app.yml
-        language: script
-        pass_filenames: false
-      - id: ansible-lint
         name: ansible-lint with autofix
-        entry: /usr/bin/env ansible-lint -v
+        entry: /usr/bin/env ansible-lint
         args:
-          - --exclude=host_vars/ct-miniflux/cx_container_app.yml
-          - --exclude=host_vars/ct-vaultwarden/cx_container_app.yml
+          - -v
           - --fix
         language: script
         pass_filenames: false
       - id: validate
         name: run validate.yml playbook
-        entry: /usr/bin/env ansible-playbook plays/validate.yml
+        entry: /usr/bin/env ansible-playbook
+        args:
+          - plays/validate.yml
         language: script
         pass_filenames: false

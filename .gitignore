@@ -1,3 +1,2 @@
 .venv/
-files/certbot.d/
-secrets.yml
+inventory/

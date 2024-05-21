@@ -26,3 +26,13 @@ ansible-galaxy collection install -U -r requirements.yml
 
 echo "## Installing pre-commit hooks"
 pre-commit install --install-hooks
+
+if [ -z "$CI" ] && [ ! -d inventory ]; then
+  echo "## Cloning inventory repo"
+  git clone https://github.com/chrisx8/infra-inventory.git inventory
+
+  echo "## Installing pre-commit hooks for inventory repo"
+  pushd inventory > /dev/null
+  pre-commit install --install-hooks
+  popd > /dev/null
+fi

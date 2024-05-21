@@ -26,6 +26,9 @@ jobs:
       - name: Set up Python virtualenv
         run: |
           utils/envsetup.sh
-      - name: Run pre-commit checks
+      - name: Run lint checks
+        env:
+          SKIP: validate
         run: |
-          source ./activate && pre-commit run --all-files
+          source ./activate
+          pre-commit run --all-files --verbose
