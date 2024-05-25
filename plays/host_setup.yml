@@ -9,7 +9,6 @@
     - virtualization_type
   roles:
     - cx_base_el
-    - cx_container_runtime
 
 - name: Deploy k3s nodes
   hosts: cx_k3s_node

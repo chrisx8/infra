@@ -2,8 +2,6 @@
   "ansible.python.activationScript": ".venv/bin/activate",
   "cSpell.spellCheckOnlyWorkspaceFiles": true,
   "files.associations": {
-    "*.yml": "ansible",
-    "**/vars/*.yml": "yaml",
-    "tmp*.yml": "yaml"
+    "*.yml": "ansible"
   }
 }

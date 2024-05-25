@@ -1,4 +1,0 @@
----
-cx_apache_php_install_composer: false
-cx_apache_php_repo: appstream
-cx_apache_php_version: ""
