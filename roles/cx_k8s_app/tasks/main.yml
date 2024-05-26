@@ -1,0 +1,27 @@
+---
+- name: Verify requirements
+  ansible.builtin.assert:
+    that:
+      - cx_k8s_app_k8s_context
+      - cx_k8s_app_k8s_namespace
+      - cx_k8s_app_resources | type_debug == 'list'
+      - cx_k8s_app_state in ('present', 'absent')
+
+- name: Confirm resource removal
+  run_once: true
+  when: cx_k8s_app_state == 'absent'
+  ansible.builtin.include_tasks: confirm_absent.yml
+
+- name: Set k8s resources to {{ cx_k8s_app_state }}
+  delegate_to: localhost
+  loop: "{{ cx_k8s_app_resources }}"
+  loop_control:
+    label: "{{ item.kind }} {{ item.metadata | default() }}"
+  kubernetes.core.k8s:
+    apply: true
+    context: "{{ cx_k8s_app_k8s_context }}"
+    # metadata in resource definition can override 'name' and 'namespace'
+    namespace: "{{ cx_k8s_app_k8s_namespace }}"
+    name: "{{ inventory_hostname_short }}"
+    resource_definition: "{{ item }}"
+    state: "{{ cx_k8s_app_state }}"

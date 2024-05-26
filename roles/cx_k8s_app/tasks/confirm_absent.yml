@@ -1,0 +1,17 @@
+---
+- name: Set prompt string
+  ansible.builtin.set_fact:
+    _confirm_expected: CONFIRM {{ ansible_play_hosts | length }}
+
+- name: Confirm removal
+  register: _confirm
+  ansible.builtin.pause:
+    prompt: |-
+      Are you sure you want to remove {{ ansible_play_hosts | length }} app(s)?
+      This will remove ALL RESOURCES!
+      Type "{{ _confirm_expected }}" to continue
+
+- name: Fail if not confirmed
+  when: _confirm.user_input != _confirm_expected
+  ansible.builtin.fail:
+    msg: TASK NOT CONFIRMED

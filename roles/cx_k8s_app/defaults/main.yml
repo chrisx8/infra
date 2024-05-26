@@ -1,0 +1,3 @@
+---
+# state of k8s resources, present or absent
+cx_k8s_app_state: present

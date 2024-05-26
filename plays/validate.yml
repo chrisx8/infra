@@ -1,17 +1,27 @@
 ---
-- name: Validate all
-  hosts: all
+- name: Validate non k8s hosts
+  hosts: "!cx_k8s_app"
   connection: local
   tasks:
     - name: Assert that ansible_user is not root
       ansible.builtin.assert:
         that:
           - ansible_user is not defined or ansible_user != "root"
-    - name: Assert that ansible_host is set
+    - name: Assert that ansible_host is set correctly
+      delegate_to: localhost
       ansible.builtin.assert:
         that:
-          - ansible_host is defined
-          - ansible_host|length > 1
+          - ansible_host != 'localhost'
+          - ansible_host | length > 1
+
+- name: Validate k8s apps
+  hosts: cx_k8s_app
+  connection: local
+  tasks:
+    - name: Assert that ansible_host is set correctly
+      ansible.builtin.assert:
+        that:
+          - ansible_host is match(".+\.k8s")
 
 - name: Validate container apps
   hosts: cx_container_app

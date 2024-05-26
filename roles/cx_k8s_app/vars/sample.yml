@@ -1,0 +1,46 @@
+---
+cx_k8s_app_k8s_context: testcluster
+cx_k8s_app_k8s_namespace: default
+
+cx_k8s_app_resources:
+  - kind: Deployment
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: "{{ inventory_hostname_short }}"
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: "{{ inventory_hostname_short }}"
+        spec:
+          containers:
+            - name: whoami
+              image: ghcr.io/traefik/whoami:v1.10.2
+              ports:
+                - containerPort: 80
+
+  - kind: Service
+    metadata:
+      name: whoami-http
+    spec:
+      selector:
+        app.kubernetes.io/name: "{{ inventory_hostname_short }}"
+      ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 80
+
+  - kind: Ingress
+    spec:
+      rules:
+        - host: whoami.example.com
+          http:
+            paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: whoami-http
+                    port:
+                      number: 80

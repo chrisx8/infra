@@ -8,3 +8,8 @@
     - virtualization_type
   roles:
     - cx_container_app
+
+- name: Deploy k8s apps
+  hosts: cx_k8s_app
+  roles:
+    - cx_k8s_app
