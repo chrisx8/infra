@@ -5,9 +5,6 @@ cx_container_app_user:
 cx_container_app_backup_ping_url:
 # Container network to be created
 cx_container_app_network:
-# PostgreSQL database and user to be created. A random password will be
-# generated for the user, and it's accessible as `_postgres_password`
-cx_container_app_postgres_db:
 # systemd socket activation: Listen addresses for the systemd socket
 # https://www.freedesktop.org/software/systemd/man/latest/systemd.socket.html#ListenStream=
 cx_container_app_socket_listen_streams: []
@@ -26,6 +23,3 @@ _container_defaults: # noqa var-naming[no-role-prefix]
   security_opt:
     - no-new-privileges
   state: present
-
-# haxx: placeholder default to make Ansible happy
-_postgres_password: "" # noqa var-naming[no-role-prefix]

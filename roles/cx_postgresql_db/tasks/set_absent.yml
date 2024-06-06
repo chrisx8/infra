@@ -1,0 +1,10 @@
+---
+- name: Remove database
+  community.postgresql.postgresql_db:
+    name: "{{ cx_postgresql_db_name }}"
+    state: absent
+
+- name: Remove user
+  community.postgresql.postgresql_user:
+    user: "{{ cx_postgresql_db_name }}"
+    state: absent

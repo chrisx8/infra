@@ -8,19 +8,12 @@
 - name: Validate system and role vars
   ansible.builtin.import_tasks: check.yml
 
-- name: Nightly volume backup setup - run as {{ cx_container_app_user }}
+- name: Run as {{ cx_container_app_user }}
   become: true
   become_user: "{{ cx_container_app_user }}"
-  when: cx_container_app_backup_ping_url
-  ansible.builtin.import_tasks: setup_backup.yml
-
-- name: PostgreSQL database setup - run as postgres
-  become: true
-  become_user: postgres
-  when: cx_container_app_postgres_db
-  ansible.builtin.import_tasks: setup_postgres_db.yml
-
-- name: Container setup - run as {{ cx_container_app_user }}
-  become: true
-  become_user: "{{ cx_container_app_user }}"
-  ansible.builtin.import_tasks: setup_container.yml
+  block:
+    - name: Nightly volume backup setup
+      when: cx_container_app_backup_ping_url
+      ansible.builtin.import_tasks: setup_backup.yml
+    - name: Container setup
+      ansible.builtin.import_tasks: setup_container.yml

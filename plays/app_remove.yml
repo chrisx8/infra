@@ -13,7 +13,15 @@
 
 - name: Remove k8s apps
   hosts: cx_k8s_app
-  roles:
-    - cx_k8s_app
+  tasks:
+    - name: Remove k8s resources
+      ansible.builtin.import_role:
+        name: cx_k8s_app
+    - name: Remove PostgreSQL resources
+      delegate_to: "{{ cx_postgresql_db_host }}"
+      when: cx_postgresql_db_name is defined
+      ansible.builtin.import_role:
+        name: cx_postgresql_db
   vars:
     cx_k8s_app_state: absent
+    cx_postgresql_db_state: absent

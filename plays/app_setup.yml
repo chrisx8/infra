@@ -10,5 +10,11 @@
 
 - name: Deploy k8s apps
   hosts: cx_k8s_app
+  pre_tasks:
+    - name: Deploy PostgreSQL db for app
+      delegate_to: "{{ cx_postgresql_db_host }}"
+      when: cx_postgresql_db_name is defined
+      ansible.builtin.import_role:
+        name: cx_postgresql_db
   roles:
     - cx_k8s_app
