@@ -1,0 +1,20 @@
+---
+- name: Create database
+  community.postgresql.postgresql_db:
+    name: "{{ cx_postgresql_db_name }}"
+    state: present
+
+- name: Create user
+  community.postgresql.postgresql_user:
+    db: "{{ cx_postgresql_db_name }}"
+    name: "{{ cx_postgresql_db_name }}"
+    password: "{{ cx_postgresql_db_password }}"
+    state: present
+
+- name: Grant all privileges on public schema
+  community.postgresql.postgresql_privs:
+    db: "{{ cx_postgresql_db_name }}"
+    type: schema
+    objs: public
+    privs: ALL
+    role: "{{ cx_postgresql_db_name }}"

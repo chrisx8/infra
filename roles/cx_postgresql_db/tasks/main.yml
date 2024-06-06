@@ -1,0 +1,14 @@
+---
+- name: Verify requirements
+  ansible.builtin.assert:
+    that:
+      - cx_postgresql_db_name | length > 1
+      - cx_postgresql_db_password | length >= 8
+      - cx_postgresql_db_state in ('present', 'absent')
+
+- name: Set PostgreSQL resources to {{ cx_postgresql_db_state }}
+  args:
+    apply:
+      become: true
+      become_user: postgres
+  ansible.builtin.include_tasks: set_{{ cx_postgresql_db_state }}.yml
