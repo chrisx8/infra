@@ -34,8 +34,8 @@
     path: /etc/httpd/conf.modules.d/{{ item }}
     state: absent
   loop:
-    - "00-dav.conf"
-    - "01-cgi.conf"
+    - 00-dav.conf
+    - 01-cgi.conf
 - name: Remove built-in cgi-bin
   ansible.builtin.file:
     path: /var/www/cgi-bin
