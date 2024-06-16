@@ -5,18 +5,10 @@
       - ansible_facts.distribution_major_version|int >= 8
       - ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_type != 'lxc'
-      - cx_container_runtime_port_start > 0
 
 - name: Install Podman
   ansible.builtin.dnf:
     name: podman
-    state: present
-
-- name: Allow unprivileged port bind
-  ansible.posix.sysctl:
-    name: net.ipv4.ip_unprivileged_port_start
-    value: "{{ cx_container_runtime_port_start }}"
-    reload: true
     state: present
 
 - name: Set SELinux container_use_devices flag
@@ -25,8 +17,16 @@
     persistent: true
     state: true
 
+- name: Allow unprivileged port bind
+  when: cx_container_runtime_port_start
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_unprivileged_port_start
+    value: "{{ cx_container_runtime_port_start }}"
+    reload: true
+    state: present
+
 - name: Set up contaienr user
-  when: cx_container_runtime_user != "root"
+  when: cx_container_runtime_user and cx_container_runtime_user != "root"
   block:
     - name: Create user {{ cx_container_runtime_user }}
       ansible.builtin.user:

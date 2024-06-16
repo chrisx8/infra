@@ -10,6 +10,17 @@
   roles:
     - cx_base_el
 
+- name: Deploy container hosts
+  hosts: cx_container_runtime
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+    - virtualization_type
+  roles:
+    - cx_container_runtime
+
 - name: Deploy k3s nodes
   hosts: cx_k3s_node
   become: true
