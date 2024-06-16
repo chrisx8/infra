@@ -4,10 +4,10 @@ This role sets up the system for running Podman containers.
 
 ## Role variables
 
-| Variable                          | Description                                              | Required             |
-| --------------------------------- | -------------------------------------------------------- | -------------------- |
-| `cx_container_runtime_port_start` | Minimum port number that supports unprivileged port bind | No, default `80`     |
-| `cx_container_runtime_user`       | User to run containers as                                | No, default `podman` |
+| Variable                          | Description                                              | Required |
+| --------------------------------- | -------------------------------------------------------- | -------- |
+| `cx_container_runtime_port_start` | Minimum port number that supports unprivileged port bind | No       |
+| `cx_container_runtime_user`       | User to run containers as, default `podman`              | No       |
 
 ## Required facts
 

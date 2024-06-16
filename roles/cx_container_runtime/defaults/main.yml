@@ -1,5 +1,5 @@
 ---
 # Minimum port number that supports unprivileged port bind
-cx_container_runtime_port_start: 80
+cx_container_runtime_port_start: 0
 # User to run containers as
 cx_container_runtime_user: podman

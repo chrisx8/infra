@@ -39,13 +39,13 @@ filelock==3.15.4
     # via
     #   ansible-lint
     #   virtualenv
-google-auth==2.30.0
+google-auth==2.31.0
     # via kubernetes
 identify==2.5.36
     # via pre-commit
 idna==3.7
     # via requests
-importlib-metadata==7.2.0
+importlib-metadata==8.0.0
     # via ansible-lint
 jinja2==3.1.4
     # via ansible-core
