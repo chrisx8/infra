@@ -7,7 +7,7 @@ This role sets up the system for running Podman containers.
 | Variable                          | Description                                              | Required |
 | --------------------------------- | -------------------------------------------------------- | -------- |
 | `cx_container_runtime_port_start` | Minimum port number that supports unprivileged port bind | No       |
-| `cx_container_runtime_user`       | User to run containers as                                | No       |
+| `cx_container_runtime_user`       | User to run containers as, default `podman`              | No       |
 
 ## Required facts
 

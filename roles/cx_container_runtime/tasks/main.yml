@@ -6,9 +6,12 @@
       - ansible_facts.os_family == 'RedHat'
       - ansible_facts.virtualization_type != 'lxc'
 
-- name: Install Podman
+- name: Install packages
   ansible.builtin.dnf:
-    name: podman
+    name:
+      - podman
+      - python3-libsemanage
+      - systemd-container
     state: present
 
 - name: Set SELinux container_use_devices flag
@@ -26,7 +29,7 @@
     state: present
 
 - name: Set up contaienr user
-  when: cx_container_runtime_user and cx_container_runtime_user != "root"
+  when: cx_container_runtime_user != "root"
   block:
     - name: Create user {{ cx_container_runtime_user }}
       ansible.builtin.user:
@@ -34,5 +37,5 @@
         create_home: true
         state: present
     - name: Enable linger for user {{ cx_container_runtime_user }}
-      changed_when: false
+      changed_when: true
       ansible.builtin.command: loginctl enable-linger {{ cx_container_runtime_user }}
