@@ -1,4 +1,10 @@
 ---
+- name: Get k3s token from server host
+  delegate_to: "{{ cx_k3s_node_server_host }}"
+  register: _node_token
+  ansible.builtin.slurp:
+    path: /var/lib/rancher/k3s/server/token
+
 - name: Run k3s install script (agent)
   when: not ansible_check_mode
   changed_when: true
@@ -6,7 +12,8 @@
     INSTALL_K3S_CHANNEL: "{{ cx_k3s_node_channel }}"
     INSTALL_K3S_EXEC: agent {{ cx_k3s_node_agent_args }}
     # Only set when node is a k3s agent
-    K3S_URL: "{{ cx_k3s_node_server_url }}"
-    K3S_TOKEN: "{{ cx_k3s_node_server_token }}"
+    # Assume HTTPS on port 6443 (k3s default)
+    K3S_URL: https://{{ cx_k3s_node_server_host }}:6443
+    K3S_TOKEN: "{{ _node_token.content | b64decode | trim }}"
   ansible.builtin.command:
     cmd: /tmp/get_k3s.sh
