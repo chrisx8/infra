@@ -74,3 +74,19 @@
     src: vimrc
     dest: /etc/vimrc.local
     mode: "0644"
+
+- name: Set sysctl configs
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: true
+    reload: true
+  with_dict:
+    kernel.dmesg_restrict: 1
+    kernel.sysrq: 0
+
+- name: Set SELinux Enforcing
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing

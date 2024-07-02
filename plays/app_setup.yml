@@ -5,7 +5,6 @@
   gather_subset:
     - "!min"
     - distribution
-    - virtualization_type
   roles:
     - cx_container_app
 

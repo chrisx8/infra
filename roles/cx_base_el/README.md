@@ -1,6 +1,6 @@
 # Ansible Role: `cx_base_el`
 
-This role provides the base configuration and software for a standard RHEL-like system. It should be run on all standardized RHEL-like systems, including LXC containers and VMs.
+This role provides the base configuration and software for a standardized Enterprise Linux (EL) system.
 
 ## Role variables
 
@@ -15,8 +15,8 @@ This role provides the base configuration and software for a standard RHEL-like 
 | Fact                  | Purpose                      |
 | --------------------- | ---------------------------- |
 | `distribution`        | Checking system requirements |
-| `virtualization_type` | Checking system requirements |
+| `virtualization_role` | Checking system requirements |
 
 ## System requirements
 
-- RHEL 9, including its derivatives.
+EL 9

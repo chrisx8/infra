@@ -6,7 +6,7 @@
   gather_subset:
     - "!min"
     - distribution
-    - virtualization_type
+    - virtualization_role
   roles:
     - cx_base_el
 
@@ -17,7 +17,6 @@
   gather_subset:
     - "!min"
     - distribution
-    - virtualization_type
   roles:
     - cx_container_runtime
 
@@ -28,7 +27,6 @@
   gather_subset:
     - "!min"
     - distribution
-    - virtualization_type
   roles:
     - cx_k3s_node
 

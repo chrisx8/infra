@@ -20,4 +20,4 @@ Note: PostgreSQL will be configured to only accept connections from the local ne
 
 ## System requirements
 
-- RHEL systems (including their derivatives) supported by PostgreSQL.
+EL 8 or newer

@@ -5,7 +5,6 @@
   gather_subset:
     - "!min"
     - distribution
-    - virtualization_type
   tasks:
     - name: Remove container app
       ansible.builtin.import_role:

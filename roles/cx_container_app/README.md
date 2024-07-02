@@ -24,12 +24,10 @@ Sample: [vars/sample.yml](vars/sample.yml)
 
 ## Required facts
 
-| Fact                  | Purpose                      |
-| --------------------- | ---------------------------- |
-| `distribution`        | Checking system requirements |
-| `virtualization_type` | Checking system requirements |
+| Fact           | Purpose                      |
+| -------------- | ---------------------------- |
+| `distribution` | Checking system requirements |
 
 ## System requirements
 
-- RHEL 8 or newer, including its derivatives.
-- LXC containers are not supported.
+EL 8 or newer
