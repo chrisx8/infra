@@ -1,14 +1,54 @@
 #!/bin/bash
 set -e
 
-RID="$(uuidgen)"
+B2_KEY_ID="{{ cx_postgresql_b2_backup_config.b2_key_id }}"
+B2_APP_KEY="{{ cx_postgresql_b2_backup_config.b2_app_key }}"
+B2_BUCKET_ID="{{ cx_postgresql_b2_backup_config.b2_bucket_id }}"
 
-curl -fsS -m 3 "{{ cx_postgresql_cron_ping_url }}/start?rid=$RID"
+function b2Upload() {
+  local FILE_TO_UPLOAD=$1
+  local REMOTE_PATH=$2
+
+  AUTH_REL=$(curl -s https://api.backblaze.com/b2api/v1/b2_authorize_account -u "$B2_KEY_ID:$B2_APP_KEY")
+  AUTH_TOKEN=$( echo "$AUTH_REL" | grep -Po '(?<="authorizationToken": ")[^"]*')
+  API_URL=$( echo "$AUTH_REL" | grep -Po '(?<="apiUrl": ")[^"]*')
+
+  UPLOAD_REL=$(curl -s \
+    -H "Authorization: $AUTH_TOKEN" \
+    -d '{"bucketId": "'"$B2_BUCKET_ID"'"}' \
+    "$API_URL/b2api/v1/b2_get_upload_url")
+
+  UPLOAD_AUTH=$( echo "$UPLOAD_REL" | grep -Po '(?<="authorizationToken": ")[^"]*' )
+  UPLOAD_URL=$( echo "$UPLOAD_REL" | grep -Po '(?<="uploadUrl": ")[^"]*' )
+  MIME_TYPE=$(file --mime-type -b "$FILE_TO_UPLOAD")
+  SHA1_OF_FILE=$(openssl dgst -sha1 "$FILE_TO_UPLOAD" | awk '{print $2;}')
+
+  curl -s \
+    -H "Authorization: $UPLOAD_AUTH" \
+    -H "X-Bz-File-Name: $REMOTE_PATH" \
+    -H "Content-Type: $MIME_TYPE" \
+    -H "X-Bz-Content-Sha1: $SHA1_OF_FILE" \
+    -H "X-Bz-Info-Author: unknown" \
+    --data-binary "@$FILE_TO_UPLOAD" \
+    --progress-bar \
+    "$UPLOAD_URL"
+}
+
+function postgresDumpGz() {
+  pg_dumpall -c -f "$1"
+  gzip -f "$1"
+}
+
+RUN_ID="$(uuidgen)"
+
+curl -fsS -m 3 "{{ cx_postgresql_b2_backup_config.healthchecks_url }}/start?rid=$RUN_ID"
 echo "[Healthchecks start]"
 
-echo "Backing up Postgres databases..."
-pg_dumpall -c -f /tmp/pg_dumpall.sql
-gzip -f /tmp/pg_dumpall.sql
+echo "Backing up Postgres..."
+postgresDumpGz /tmp/pg_dumpall.sql
 
-curl -fsS -m 3 "{{ cx_postgresql_cron_ping_url }}?rid=$RID"
+echo "Uploading to B2..."
+b2Upload /tmp/pg_dumpall.sql.gz pg_dumpall.sql.gz
+
+curl -fsS -m 3 "{{ cx_postgresql_b2_backup_config.healthchecks_url }}?rid=$RUN_ID"
 echo "[Healthchecks done]"

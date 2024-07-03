@@ -1,5 +1,5 @@
 ---
-- name: Copy backup script
+- name: Place backup script
   ansible.builtin.template:
     src: backup.sh.j2
     dest: /var/lib/pgsql/backup.sh
