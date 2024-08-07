@@ -1,0 +1,39 @@
+---
+- name: Create dirs for systemd units
+  loop:
+    - ~/.config/containers/systemd
+    - ~/.config/systemd/user
+  ansible.builtin.file:
+    path: "{{ item }}"
+    mode: "0750"
+    owner: "{{ cx_container_app_user }}"
+    group: "{{ cx_container_app_user }}"
+    state: directory
+
+- name: Deploy Quadlet units
+  loop: "{{ _quadlet_files }}"
+  ansible.builtin.template:
+    src: "{{ (item | split('.'))[-1] }}.j2"
+    dest: ~/.config/containers/systemd/{{ item }}
+    mode: "0640"
+    owner: "{{ cx_container_app_user }}"
+    group: "{{ cx_container_app_user }}"
+
+- name: Pull container image
+  containers.podman.podman_image:
+    name: "{{ cx_container_app_image }}"
+    force: true
+    state: present
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+
+- name: Enable and restart systemd units
+  loop: "{{ _systemd_units }}"
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    scope: user
+    state: restarted

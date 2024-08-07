@@ -1,0 +1,17 @@
+[Container]
+ContainerName={{ cx_container_app_name }}
+HostName={{ cx_container_app_name }}
+Image={{ cx_container_app_image }}
+{% if _quadlet_need_network %}
+Network={{ cx_container_app_network }}.network
+{% else %}
+Network={{ cx_container_app_network }}
+{% endif %}
+{{ cx_container_app_options }}
+
+[Service]
+Restart=on-abnormal
+TimeoutStartSec=900
+
+[Install]
+WantedBy=network-online.target

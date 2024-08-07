@@ -23,7 +23,7 @@ certifi==2024.8.30
     # via
     #   kubernetes
     #   requests
-cffi==1.17.0
+cffi==1.17.1
     # via cryptography
 cfgv==3.4.0
     # via pre-commit
@@ -35,7 +35,7 @@ cryptography==43.0.1
     # via ansible-core
 distlib==0.3.8
     # via virtualenv
-filelock==3.15.4
+filelock==3.16.0
     # via
     #   ansible-lint
     #   virtualenv
@@ -82,7 +82,7 @@ pathspec==0.12.1
     #   ansible-lint
     #   black
     #   yamllint
-platformdirs==4.2.2
+platformdirs==4.3.2
     # via
     #   black
     #   virtualenv
@@ -144,7 +144,7 @@ urllib3==2.2.2
     # via
     #   kubernetes
     #   requests
-virtualenv==20.26.3
+virtualenv==20.26.4
     # via pre-commit
 wcmatch==9.0
     # via ansible-lint

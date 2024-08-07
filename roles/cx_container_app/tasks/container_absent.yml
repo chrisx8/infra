@@ -1,0 +1,38 @@
+---
+- name: Disable and stop systemd units
+  failed_when: false
+  loop: "{{ _systemd_units }}"
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: false
+    scope: user
+    state: stopped
+
+- name: Remove Quadlet units
+  loop: "{{ _quadlet_files }}"
+  ansible.builtin.file:
+    path: ~/.config/containers/systemd/{{ item }}
+    state: absent
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: user
+
+- name: Delete image
+  containers.podman.podman_image:
+    name: "{{ cx_container_app_image }}"
+    state: absent
+
+- name: Delete container network
+  failed_when: false
+  when: _quadlet_need_network
+  containers.podman.podman_network:
+    name: "{{ cx_container_app_network }}"
+    state: absent
+
+- name: Delete container volumes
+  loop: "{{ cx_container_app_volumes }}"
+  containers.podman.podman_volume:
+    name: "{{ item }}"
+    state: absent

@@ -1,25 +1,26 @@
 ---
+### REQUIRED vars
+# Image to pull
+cx_container_app_image:
 # User to run the container as. User must already exist on the host system.
 cx_container_app_user:
+### Optional vars
+# State dictates whether to deploy or remove, 'present' or 'absent'
+cx_container_app_state: present
+
 # Healthchecks.io ping URL for nightly volume backup job
 cx_container_app_backup_ping_url:
-# Container network to be created
-cx_container_app_network:
-# systemd socket activation: Listen addresses for the systemd socket
-# https://www.freedesktop.org/software/systemd/man/latest/systemd.socket.html#ListenStream=
-cx_container_app_socket_listen_streams: []
+# Name of this containerized app, all Quadlet systemd units will use this name,
+# e.g. `{{ cx_container_app }}.*`
+# Default to short-form inventory hostname
+cx_container_app_name: "{{ inventory_hostname_short }}"
+
+# Container network to be created, default to `podman`
+cx_container_app_network: podman
+
+# Extra options for the container, content will be injected into `{{ cx_container_app }}.container` directly
+# Name, Image, and Network are pre-filled from relevant role vars
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html#container-units-container
+cx_container_app_options:
 # Container volumes to be created
 cx_container_app_volumes: []
-# Default values for each container
-# Need to override anything here? Declare the override in cx_container_app_spec.
-_container_defaults: # noqa var-naming[no-role-prefix]
-  cap_drop:
-    - all
-  generate_systemd:
-    container_prefix: c
-    path: ~/.config/systemd/user
-  hostname: "{{ inventory_hostname }}"
-  recreate: true
-  security_opt:
-    - no-new-privileges
-  state: present

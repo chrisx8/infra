@@ -9,7 +9,8 @@
     - name: Remove container app
       ansible.builtin.import_role:
         name: cx_container_app
-        tasks_from: remove.yml
+  vars:
+    cx_container_app_state: absent
 
 - name: Remove k8s apps
   hosts: cx_k8s_app

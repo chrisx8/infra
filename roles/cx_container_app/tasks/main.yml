@@ -1,19 +1,59 @@
 ---
+- name: Verify system requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+
+- name: Validate cx_container_app vars
+  ansible.builtin.assert:
+    that:
+      - cx_container_app_state in ('present', 'absent')
+      - cx_container_app_image
+      - cx_container_app_user
+
+- name: Confirm resource removal
+  run_once: true
+  when: cx_container_app_state == 'absent'
+  ansible.builtin.include_tasks: confirm_absent.yml
+
 - name: Get user {{ cx_container_app_user }}
   register: _container_user
   ansible.builtin.user:
     name: "{{ cx_container_app_user }}"
     state: present
 
-- name: Validate system and role vars
-  ansible.builtin.import_tasks: check.yml
+- name: Check if network should be deployed
+  ansible.builtin.set_fact:
+    _quadlet_need_network: "{{ cx_container_app_network and cx_container_app_network not in ('host', 'podman') }}"
+
+- name: Build list of units
+  ansible.builtin.set_fact:
+    _quadlet_files: |-
+      {% set _result = [cx_container_app_name + '.container'] %}
+      {% if _quadlet_need_network %}
+      {% set _ = _result.append(cx_container_app_network + '.network') %}
+      {% endif %}
+      {% for volume in cx_container_app_volumes %}
+      {% set _ = _result.append(volume + '.volume') %}
+      {% endfor %}
+      {{ _result }}
+    _systemd_units: |-
+      {% set _result = [cx_container_app_name + '.service'] %}
+      {% if _quadlet_need_network %}
+      {% set _ = _result.append(cx_container_app_network + '-network.service') %}
+      {% endif %}
+      {% for volume in cx_container_app_volumes %}
+      {% set _ = _result.append(volume + '-volume.service') %}
+      {% endfor %}
+      {{ _result }}
 
 - name: Run as {{ cx_container_app_user }}
   become: true
   become_user: "{{ cx_container_app_user }}"
   block:
-    - name: Nightly volume backup setup
+    - name: Nightly volume backup job - {{ cx_container_app_state }}
       when: cx_container_app_backup_ping_url
-      ansible.builtin.import_tasks: setup_backup.yml
-    - name: Container setup
-      ansible.builtin.import_tasks: setup_container.yml
+      ansible.builtin.include_tasks: backup_{{ cx_container_app_state }}.yml
+    - name: Container app - {{ cx_container_app_state }}
+      ansible.builtin.include_tasks: container_{{ cx_container_app_state }}.yml
