@@ -32,7 +32,7 @@
     scope: user
 
 - name: Enable and restart systemd units
-  loop: "{{ _quadlet_units }}"
+  loop: "{{ _systemd_units }}"
   ansible.builtin.systemd:
     name: "{{ item }}"
     enabled: true

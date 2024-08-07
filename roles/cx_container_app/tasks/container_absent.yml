@@ -1,7 +1,7 @@
 ---
 - name: Disable and stop systemd units
   failed_when: false
-  loop: "{{ _quadlet_units }}"
+  loop: "{{ _systemd_units }}"
   ansible.builtin.systemd:
     name: "{{ item }}"
     enabled: false
