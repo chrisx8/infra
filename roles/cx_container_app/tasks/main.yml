@@ -1,19 +1,66 @@
 ---
+- name: Verify system requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+
+- name: Validate cx_container_app vars
+  ansible.builtin.assert:
+    that:
+      - cx_container_app_state in ('present', 'absent')
+      - cx_container_app_image
+      - cx_container_app_user
+
+- name: Confirm resource removal
+  run_once: true
+  when: cx_container_app_state == 'absent'
+  ansible.builtin.include_tasks: confirm_absent.yml
+
 - name: Get user {{ cx_container_app_user }}
   register: _container_user
   ansible.builtin.user:
     name: "{{ cx_container_app_user }}"
     state: present
 
-- name: Validate system and role vars
-  ansible.builtin.import_tasks: check.yml
+- name: Check if network should be deployed
+  ansible.builtin.set_fact:
+    _quadlet_need_network: "{{ cx_container_app_network and cx_container_app_network not in ('host', 'podman') }}"
+
+- name: Build list of Quadlet units to deploy
+  ansible.builtin.set_fact:
+    _quadlet_files:
+      - "{{ cx_container_app_name }}.container"
+    _quadlet_units: []
+
+- name: Add network to Quadlet units list
+  when: _quadlet_need_network
+  ansible.builtin.set_fact:
+    _quadlet_files: "{{ _quadlet_files + [cx_container_app_network + '.network'] }}"
+    _quadlet_units: "{{ _quadlet_units + [cx_container_app_network + '-network.service'] }}"
+
+- name: Add volumes to Quadlet units list
+  loop: "{{ cx_container_app_volumes }}"
+  ansible.builtin.set_fact:
+    _quadlet_files: "{{ _quadlet_files + [item + '.volume'] }}"
+    _quadlet_units: "{{ _quadlet_units + [item + '-volume.service'] }}"
+
+- name: Add socket to Quadlet units list
+  when: cx_container_app_socket_listen_streams
+  ansible.builtin.set_fact:
+    _quadlet_units: "{{ _quadlet_units + [cx_container_app_name + '.socket'] }}"
+
+- name: Add container to Quadlet units list
+  when: not cx_container_app_socket_listen_streams
+  ansible.builtin.set_fact:
+    _quadlet_units: "{{ _quadlet_units + [cx_container_app_name + '.service'] }}"
 
 - name: Run as {{ cx_container_app_user }}
   become: true
   become_user: "{{ cx_container_app_user }}"
   block:
-    - name: Nightly volume backup setup
+    - name: Nightly volume backup job - {{ cx_container_app_state }}
       when: cx_container_app_backup_ping_url
-      ansible.builtin.import_tasks: setup_backup.yml
-    - name: Container setup
-      ansible.builtin.import_tasks: setup_container.yml
+      ansible.builtin.include_tasks: backup_{{ cx_container_app_state }}.yml
+    - name: Container app - {{ cx_container_app_state }}
+      ansible.builtin.include_tasks: container_{{ cx_container_app_state }}.yml

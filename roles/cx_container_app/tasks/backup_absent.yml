@@ -1,0 +1,11 @@
+---
+- name: Delete volume backup script
+  ansible.builtin.file:
+    path: ~/scripts/backup_{{ cx_container_app_name }}.sh
+    state: absent
+
+- name: Remove volume backup cron job
+  ansible.builtin.cron:
+    name: nightly volume backup for {{ cx_container_app_name }}
+    job: ~/scripts/backup_{{ cx_container_app_name }}.sh
+    state: absent

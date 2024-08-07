@@ -1,20 +1,20 @@
 ---
 - name: Create scripts directory
   ansible.builtin.file:
-    path: "{{ _container_user.home }}/scripts"
+    path: ~/scripts
     mode: "0750"
     state: directory
 
 - name: Copy volume backup script
   ansible.builtin.template:
     src: backup.sh.j2
-    dest: "{{ _container_user.home }}/scripts/backup_{{ cx_container_app_spec.name }}.sh"
+    dest: ~/scripts/backup_{{ cx_container_app_name }}.sh
     mode: "0750"
 
 - name: Set up volume backup cron job
   ansible.builtin.cron:
-    name: nightly volume backup for {{ cx_container_app_spec.name }}
-    job: "{{ _container_user.home }}/scripts/backup_{{ cx_container_app_spec.name }}.sh"
+    name: nightly volume backup for {{ cx_container_app_name }}
+    job: ~/scripts/backup_{{ cx_container_app_name }}.sh
     hour: 22
     minute: 12
     state: present
