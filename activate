@@ -1,3 +1,4 @@
+# vim: ft=sh
 INFRA_REPO_DIR="$(pwd)"
 export INFRA_REPO_DIR
 
@@ -7,7 +8,7 @@ if [ ! -d "$INFRA_REPO_DIR/.venv" ] || [ ! -f "$INFRA_REPO_DIR/.venv/bin/ansible
 fi
 
 echo "***********************************************************************"
-echo " Activating Ansible venv"
+echo " Activating Ansible virtualenv"
 echo "***********************************************************************"
 # shellcheck source=/dev/null
 source "$INFRA_REPO_DIR/.venv/bin/activate"
@@ -17,5 +18,3 @@ export ANSIBLE_CONFIG="$INFRA_REPO_DIR/ansible.cfg"
 alias anplay="ansible-playbook"
 alias anvault="ansible-vault"
 alias chkall="pre-commit run --all-files"
-
-# vim: ft=sh

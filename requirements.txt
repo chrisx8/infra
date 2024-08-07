@@ -9,7 +9,7 @@ ansible-core==2.17.2
     #   ansible-lint
 ansible-lint==24.7.0
     # via -r requirements.in
-attrs==24.1.0
+attrs==24.2.0
     # via
     #   jsonschema
     #   referencing
@@ -23,7 +23,7 @@ certifi==2024.7.4
     # via
     #   kubernetes
     #   requests
-cffi==1.16.0
+cffi==1.17.0
     # via cryptography
 cfgv==3.4.0
     # via pre-commit
@@ -39,7 +39,7 @@ filelock==3.15.4
     # via
     #   ansible-lint
     #   virtualenv
-google-auth==2.32.0
+google-auth==2.33.0
     # via kubernetes
 identify==2.6.0
     # via pre-commit
@@ -100,7 +100,7 @@ pygments==2.18.0
     # via rich
 python-dateutil==2.9.0.post0
     # via kubernetes
-pyyaml==6.0.1
+pyyaml==6.0.2
     # via
     #   ansible-compat
     #   ansible-core
@@ -122,7 +122,7 @@ resolvelib==1.0.1
     # via ansible-core
 rich==13.7.1
     # via ansible-lint
-rpds-py==0.19.1
+rpds-py==0.20.0
     # via
     #   jsonschema
     #   referencing
