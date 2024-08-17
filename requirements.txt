@@ -2,7 +2,7 @@
 #    uv pip compile requirements.in
 ansible-compat==24.7.0
     # via ansible-lint
-ansible-core==2.17.2
+ansible-core==2.17.3
     # via
     #   -r requirements.in
     #   ansible-compat
@@ -154,5 +154,5 @@ yamllint==1.35.1
     # via
     #   -r requirements.in
     #   ansible-lint
-zipp==3.19.2
+zipp==3.20.0
     # via importlib-metadata
