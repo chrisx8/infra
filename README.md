@@ -38,28 +38,8 @@ With the virtualenv activated, run the update script, which will update Python p
 ./utils/envupdate.sh
 ```
 
-## Dependencies
-
-### Ansible Collections
-
-Some Ansible roles here depend on additional Ansible collections. See [`requirements.yml`](requirements.yml) for details.
-
-### Pre-commit hooks
-
-Pre-commit hooks are configured. See [`.pre-commit-config.yaml`](.pre-commit-config.yaml) for details.
-
-To update pre-commit hooks, run:
-
-```bash
-pre-commit autoupdate
-```
-
 ## License
 
 [GNU GPLv3](LICENSE)
 
-Copyright (c) 2021-2023 Chris Xiao
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+Copyright (c) 2021-2024 Chris Xiao
