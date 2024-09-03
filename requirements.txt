@@ -19,7 +19,7 @@ bracex==2.5
     # via wcmatch
 cachetools==5.5.0
     # via google-auth
-certifi==2024.7.4
+certifi==2024.8.30
     # via
     #   kubernetes
     #   requests
@@ -31,7 +31,7 @@ charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via black
-cryptography==43.0.0
+cryptography==43.0.1
     # via ansible-core
 distlib==0.3.8
     # via virtualenv
