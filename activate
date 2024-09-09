@@ -1,20 +1,59 @@
-# vim: ft=sh
-INFRA_REPO_DIR="$(pwd)"
-export INFRA_REPO_DIR
+if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
+    echo "*********************************************************************"
+    echo " Bootstrapping Ansible virtualenv"
+    echo "*********************************************************************"
 
-if [ ! -d "$INFRA_REPO_DIR/.venv" ] || [ ! -f "$INFRA_REPO_DIR/.venv/bin/ansible" ]; then
-  echo "Ansible virtualenv is not set up! Please run utils/envsetup.sh"
-  return 1
+    if [ -d .venv ]; then
+        echo "## Using existing virtualenv at .venv"
+    else
+        echo "## Creating virtualenv at .venv"
+        uv venv --seed --python 3.12
+    fi
+
+    # shellcheck source=/dev/null
+    source .venv/bin/activate
+
+    echo "## Installing Python packages with uv"
+    uv pip install -U -r requirements.txt
+
+    echo "## Installing Ansible collections"
+    ansible-galaxy collection install -U -r requirements.yml
+
+    echo "## Installing pre-commit hooks"
+    pre-commit install --install-hooks
+
+    if [ -z "$CI" ] && [ ! -d inventory ]; then
+        echo "## Cloning inventory repo"
+        git clone https://github.com/chrisx8/infra-inventory.git inventory
+
+        echo "## Installing pre-commit hooks for inventory repo"
+        pushd inventory >/dev/null
+        pre-commit install --install-hooks
+        popd >/dev/null
+    elif [ -d inventory ]; then
+        echo "## Pulling inventory repo"
+        pushd inventory >/dev/null
+        git pull
+        popd >/dev/null
+    fi
 fi
 
-echo "***********************************************************************"
-echo " Activating Ansible virtualenv"
-echo "***********************************************************************"
-# shellcheck source=/dev/null
-source "$INFRA_REPO_DIR/.venv/bin/activate"
+if [ "$*" = "" ] || [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
+    echo "***********************************************************************"
+    echo " Activating Ansible virtualenv"
+    echo "***********************************************************************"
 
-export ANSIBLE_CONFIG="$INFRA_REPO_DIR/ansible.cfg"
+    # shellcheck source=/dev/null
+    source .venv/bin/activate
 
-alias anplay="ansible-playbook"
-alias anvault="ansible-vault"
-alias chkall="pre-commit run --all-files"
+    alias anplay="ansible-playbook"
+    alias anvault="ansible-vault"
+    alias chkall="pre-commit run --all-files"
+
+    ANSIBLE_CONFIG="$(readlink -f ansible.cfg)"
+    export ANSIBLE_CONFIG
+else
+    echo "usage: source $0 [-u|--bootstrap]" >&2
+fi
+
+# vim: ft=sh
