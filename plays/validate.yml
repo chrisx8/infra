@@ -6,7 +6,7 @@
     - name: Assert that ansible_user is not root
       ansible.builtin.assert:
         that:
-          - ansible_user is not defined or ansible_user != "root"
+          - ansible_user != "root"
     - name: Assert that ansible_host is set correctly
       delegate_to: localhost
       ansible.builtin.assert:
@@ -30,4 +30,4 @@
     - name: Assert that cx_container_app_user is not root
       ansible.builtin.assert:
         that:
-          - cx_container_app_user is undefined or cx_container_app_user != "root"
+          - cx_container_app_user != "root"

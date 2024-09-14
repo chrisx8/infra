@@ -16,7 +16,7 @@
   delegate_to: localhost
   loop: "{{ cx_k8s_app_resources }}"
   loop_control:
-    label: "{{ item.kind }} {{ item.metadata | default() }}"
+    label: "{{ item.kind }} {{ item.metadata.name | default() }}"
   kubernetes.core.k8s:
     apply: true
     context: "{{ cx_k8s_app_k8s_context }}"
