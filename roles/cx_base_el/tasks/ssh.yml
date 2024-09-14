@@ -1,10 +1,4 @@
 ---
-- name: Copy OpenSSH client config
-  ansible.builtin.copy:
-    src: ssh.conf
-    dest: /etc/ssh/ssh_config.d/01-ansible.conf
-    mode: "0644"
-
 - name: Copy OpenSSH server config
   ansible.builtin.copy:
     src: sshd.conf
