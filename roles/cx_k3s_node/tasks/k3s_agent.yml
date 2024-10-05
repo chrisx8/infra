@@ -9,7 +9,7 @@
   when: not ansible_check_mode
   changed_when: true
   environment:
-    INSTALL_K3S_CHANNEL: "{{ cx_k3s_node_channel }}"
+    INSTALL_K3S_CHANNEL: "{{ cx_k3s_node_k3s_channel }}"
     INSTALL_K3S_EXEC: agent {{ cx_k3s_node_agent_args }}
     # Only set when node is a k3s agent
     # Assume HTTPS on port 6443 (k3s default)

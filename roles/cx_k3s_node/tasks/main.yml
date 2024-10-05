@@ -4,7 +4,9 @@
     that:
       - ansible_facts.distribution_major_version|int >= 8
       - ansible_facts.os_family == 'RedHat'
-      - cx_k3s_node_channel in ('latest', 'stable', 'testing')
+      - cx_k3s_node_k3s_channel is regex('^v1\.\d+$')
+      - cx_k3s_node_cert_manager_version is regex('^v1\.\d+\.\d+$')
+      - cx_k3s_node_cert_csi_nfs_version is regex('^v4\.\d+\.\d+$')
       - cx_k3s_node_role in ('agent', 'server')
 
 - name: Remove firewalld

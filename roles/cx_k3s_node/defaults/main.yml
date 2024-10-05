@@ -1,9 +1,9 @@
 ---
-# k3s release channel to use, supports stable, latest, testing
-cx_k3s_node_channel: stable
+# k3s release channel to use, see https://github.com/k3s-io/k3s/blob/master/channel.yaml
+cx_k3s_node_k3s_channel: v1.30
 
 # cert-manager version
-cx_k3s_node_cert_manager_version: v1.15.3
+cx_k3s_node_cert_manager_version: v1.16.0
 
 # NFS CSI Driver version
 cx_k3s_node_cert_csi_nfs_version: v4.9.0

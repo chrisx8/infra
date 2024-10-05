@@ -15,7 +15,7 @@ attrs==24.2.0
     #   referencing
 black==24.8.0
     # via ansible-lint
-bracex==2.5
+bracex==2.5.post1
     # via wcmatch
 cachetools==5.5.0
     # via google-auth
@@ -35,7 +35,7 @@ cryptography==43.0.1
     # via ansible-core
 distlib==0.3.8
     # via virtualenv
-durationpy==0.7
+durationpy==0.9
     # via kubernetes
 filelock==3.16.1
     # via
@@ -122,7 +122,7 @@ requests-oauthlib==2.0.0
     # via kubernetes
 resolvelib==1.0.1
     # via ansible-core
-rich==13.8.1
+rich==13.9.2
     # via ansible-lint
 rpds-py==0.20.0
     # via
@@ -146,9 +146,9 @@ urllib3==2.2.3
     # via
     #   kubernetes
     #   requests
-virtualenv==20.26.5
+virtualenv==20.26.6
     # via pre-commit
-wcmatch==9.0
+wcmatch==10.0
     # via ansible-lint
 websocket-client==1.8.0
     # via kubernetes

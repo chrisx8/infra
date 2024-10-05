@@ -3,7 +3,7 @@
   when: not ansible_check_mode
   changed_when: true
   environment:
-    INSTALL_K3S_CHANNEL: "{{ cx_k3s_node_channel }}"
+    INSTALL_K3S_CHANNEL: "{{ cx_k3s_node_k3s_channel }}"
     INSTALL_K3S_EXEC: server {{ cx_k3s_node_server_args }}
     K3S_KUBECONFIG_MODE: "{{ cx_k3s_node_kubeconfig_mode }}"
   ansible.builtin.command:
