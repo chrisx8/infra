@@ -7,7 +7,7 @@ if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
         echo "## Using existing virtualenv at .venv"
     else
         echo "## Creating virtualenv at .venv"
-        uv venv --seed --python 3.12
+        uv venv --seed --python 3.13
     fi
 
     # shellcheck source=/dev/null

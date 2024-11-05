@@ -6,7 +6,7 @@ This repo is an Ansible monorepo for my self-hosted Linux environment.
 
 ### Setup
 
-First, install **Python 3.12** and [**uv**](https://github.com/astral-sh/uv).
+First, install **Python 3.13** and [**uv**](https://github.com/astral-sh/uv).
 
 Then, install repo dependencies, including Ansible, Ansible collections, `ansible-lint`, pre-commit hooks, and other Python packages:
 
