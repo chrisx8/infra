@@ -1,2 +1,6 @@
 ---
+# Skip host reboot after setup completes
+cx_base_el_skip_reboot: false
+
+# System timezone
 cx_base_el_timezone: UTC

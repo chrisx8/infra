@@ -17,4 +17,5 @@
   ansible.builtin.include_tasks: system_host.yml
 
 - name: Reboot
+  when: not cx_base_el_skip_reboot
   ansible.builtin.reboot:
