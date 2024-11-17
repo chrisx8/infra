@@ -1,15 +1,4 @@
 ---
-- name: Deploy EL hosts
-  hosts: hosts_el
-  become: true
-  gather_facts: true
-  gather_subset:
-    - "!min"
-    - distribution
-    - virtualization_role
-  roles:
-    - cx_base_el
-
 - name: Deploy container hosts
   hosts: cx_container_runtime
   become: true

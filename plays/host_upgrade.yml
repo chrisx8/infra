@@ -7,6 +7,3 @@
       ansible.builtin.import_role:
         name: cx_base_el
         tasks_from: upgrade.yml
-
-- name: Upgrade apps
-  ansible.builtin.import_playbook: app_setup.yml
