@@ -2,18 +2,32 @@
 extends: default
 
 rules:
+  anchors:
+    forbid-undeclared-aliases: true
+    forbid-duplicated-anchors: true
+    forbid-unused-anchors: true
   braces:
     max-spaces-inside: 1
+    min-spaces-inside-empty: 0
+    max-spaces-inside-empty: 0
+  brackets:
+    min-spaces-inside-empty: 0
+    max-spaces-inside-empty: 0
   comments:
     min-spaces-from-content: 1
   comments-indentation: false
   document-start:
     level: error
+  empty-lines:
+    max: 1
   line-length:
     max: 120
   octal-values:
     forbid-explicit-octal: true
     forbid-implicit-octal: true
+  quoted-strings:
+    quote-type: double
+    required: only-when-needed
   truthy:
     level: error
 
