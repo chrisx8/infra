@@ -1,0 +1,48 @@
+---
+- name: Verify requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution != 'Fedora'
+      - ansible_facts.os_family == 'RedHat'
+      - cx_tailscale_auth_key is undefined or cx_tailscale_auth_key.startswith('tskey-auth-')
+      - cx_tailscale_args | type_debug == 'list'
+
+- name: Add Tailscale repo
+  ansible.builtin.yum_repository:
+    name: tailscale
+    description: Tailscale stable
+    baseurl: https://pkgs.tailscale.com/stable/rhel/{{ ansible_facts.distribution_major_version }}/$basearch
+    gpgkey: https://pkgs.tailscale.com/stable/rhel/{{ ansible_facts.distribution_major_version }}/repo.gpg
+    gpgcheck: false
+    repo_gpgcheck: true
+    state: present
+
+- name: Install Tailscale
+  ansible.builtin.dnf:
+    name: tailscale
+    update_cache: true
+    state: present
+
+- name: Enable IP forwarding
+  with_dict:
+    net.ipv4.ip_forward: 1
+    net.ipv6.conf.all.forwarding: 1
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: true
+    reload: true
+
+- name: Enable and start tailscaled
+  ansible.builtin.systemd:
+    name: tailscaled.service
+    enabled: true
+    state: started
+
+- name: Bring up Tailscale
+  changed_when: true
+  ansible.builtin.command:
+    cmd: tailscale up
+      {% if cx_tailscale_auth_key is defined %}--auth-key={{ cx_tailscale_auth_key }}{% endif %}
+      {{ cx_tailscale_args | map('quote') | join(' ') }}
