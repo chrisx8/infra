@@ -4,9 +4,6 @@ exclude_paths:
   - .vscode/
   - .pre-commit-config.yaml
   - .yamllint
-  - files/certbot.d
-  - utils
-  - "**/secrets.yml"
 
 enable_list:
   - args

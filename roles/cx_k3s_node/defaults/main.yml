@@ -1,6 +1,6 @@
 ---
 # k3s release channel to use, see https://github.com/k3s-io/k3s/blob/master/channel.yaml
-cx_k3s_node_k3s_channel: v1.30
+cx_k3s_node_k3s_channel: v1.31
 
 # cert-manager version
 cx_k3s_node_cert_manager_version: v1.16.2
