@@ -40,6 +40,7 @@ repos:
         name: ansible-lint
         entry: /usr/bin/env ansible-lint
         args:
+          - --exclude=roles/external
           - -v
         language: script
         pass_filenames: false

@@ -46,10 +46,6 @@ if [ "$*" = "" ] || [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
     # shellcheck source=/dev/null
     source .venv/bin/activate
 
-    alias anplay="ansible-playbook"
-    alias anvault="ansible-vault"
-    alias chkall="pre-commit run --all-files"
-
     ANSIBLE_CONFIG="$(readlink -f ansible.cfg)"
     export ANSIBLE_CONFIG
 else
