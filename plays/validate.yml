@@ -1,6 +1,6 @@
 ---
 - name: Validate non k8s hosts
-  hosts: "!cx_k8s_app,!novalidate"
+  hosts: "!cx_k8s_app"
   connection: local
   tasks:
     - name: Assert that ansible_user is not root
