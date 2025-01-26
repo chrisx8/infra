@@ -19,5 +19,5 @@
   kubernetes.core.k8s:
     kubeconfig: "{{ _kubeconfig }}"
     # yamllint disable-line rule:line-length
-    src: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/{{ cx_k3s_node_cert_csi_nfs_version }}/deploy/{{ item }}
+    src: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/{{ cx_k3s_node_csi_nfs_version }}/deploy/{{ item }}
     state: present
