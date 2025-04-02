@@ -26,12 +26,6 @@
     special_time: reboot
     state: present
 
-- name: Copy system vimrc
-  ansible.builtin.copy:
-    src: vimrc
-    dest: /etc/vim/vimrc.local
-    mode: "0644"
-
 - name: Limit systemd-journald
   ansible.builtin.lineinfile:
     dest: /etc/systemd/journald.conf

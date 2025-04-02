@@ -35,7 +35,7 @@
 
 - name: Set hostname
   ansible.builtin.hostname:
-    name: "{{ ansible_host }}"
+    name: "{{ inventory_hostname }}"
     use: systemd
 
 - name: Set timezone
@@ -68,12 +68,6 @@
     dest: /etc/environment
     regexp: ^EDITOR=
     line: EDITOR=vim
-
-- name: Copy system vimrc
-  ansible.builtin.copy:
-    src: vimrc
-    dest: /etc/vimrc.local
-    mode: "0644"
 
 - name: Set sysctl configs
   ansible.posix.sysctl:
