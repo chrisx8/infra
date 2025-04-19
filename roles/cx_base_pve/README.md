@@ -16,4 +16,4 @@ None
 
 ## System requirements
 
-- Proxmox VE 9
+- Proxmox VE

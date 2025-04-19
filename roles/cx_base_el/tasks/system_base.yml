@@ -61,7 +61,7 @@
   ansible.builtin.lineinfile:
     dest: /etc/systemd/journald.conf
     regexp: ^SystemMaxUse=
-    line: SystemMaxUse=20M
+    line: SystemMaxUse=100M
 
 - name: Set default text editor to vim
   ansible.builtin.lineinfile:

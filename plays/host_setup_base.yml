@@ -9,3 +9,13 @@
     - virtualization_role
   roles:
     - cx_base_el
+
+- name: Deploy Proxmox VE hosts
+  hosts: hosts_pve
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+    - virtualization_role
+  roles:
+    - cx_base_pve
