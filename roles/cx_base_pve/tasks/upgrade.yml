@@ -8,5 +8,7 @@
     autoremove: true
     purge: true
 - name: Clean apt packages
+  changed_when: false
   ansible.builtin.apt:
+    autoclean: true
     clean: true

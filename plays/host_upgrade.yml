@@ -7,3 +7,11 @@
       ansible.builtin.import_role:
         name: cx_base_el
         tasks_from: upgrade.yml
+
+- name: Upgrade PVE hosts
+  hosts: hosts_pve
+  tasks:
+    - name: Upgrade
+      ansible.builtin.import_role:
+        name: cx_base_pve
+        tasks_from: upgrade.yml
