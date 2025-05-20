@@ -10,7 +10,7 @@
     - cx_container_runtime
 
 - name: Deploy k3s nodes
-  hosts: cx_k3s_node
+  hosts: cx_k3s_node_agents:cx_k3s_node_servers
   become: true
   gather_facts: true
   gather_subset:

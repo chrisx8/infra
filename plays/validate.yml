@@ -8,7 +8,6 @@
         that:
           - ansible_user == "root"
     - name: Assert that ansible_host is set correctly
-      delegate_to: localhost
       ansible.builtin.assert:
         that:
           - ansible_host != 'localhost'
@@ -23,7 +22,6 @@
         that:
           - ansible_user != "root"
     - name: Assert that ansible_host is set correctly
-      delegate_to: localhost
       ansible.builtin.assert:
         that:
           - ansible_host != 'localhost'
