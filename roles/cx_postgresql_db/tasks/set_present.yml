@@ -13,7 +13,7 @@
 
 - name: Grant all privileges on public schema
   community.postgresql.postgresql_privs:
-    db: "{{ cx_postgresql_db_name }}"
+    login_db: "{{ cx_postgresql_db_name }}"
     type: schema
     objs: public
     privs: ALL
