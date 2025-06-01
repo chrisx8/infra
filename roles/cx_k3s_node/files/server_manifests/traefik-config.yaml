@@ -7,15 +7,18 @@ metadata:
 spec:
   valuesContent: >-
     globalArguments:
-      - "--global.checknewversion=true"
+      - "--global.checknewversion=false"
       - "--global.sendanonymoususage=false"
     logs:
       general:
         level: INFO
     ports:
       web:
-        redirectTo:
-          port: websecure
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
       websecure:
         tls:
           enabled: true

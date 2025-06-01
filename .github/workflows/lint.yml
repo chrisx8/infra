@@ -7,25 +7,18 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Python 3.12
+      - name: Set up Python 3.13
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-      - name: Get Python version
-        run: echo "PY=$(python -V | sed 's/ //g')" >> $GITHUB_ENV
+          python-version: "3.13"
       - name: Check out repo
         uses: actions/checkout@v4
-      - name: Cache pre-commit repos
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pre-commit
-          key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Install uv
         run: |
           pip install --user uv
       - name: Set up Python virtualenv
         run: |
-          utils/envsetup.sh
+          source ./activate -u
       - name: Run lint checks
         env:
           SKIP: validate

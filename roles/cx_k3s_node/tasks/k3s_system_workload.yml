@@ -1,7 +1,7 @@
 ---
 - name: Load kubeconfig content
   ansible.builtin.set_fact:
-    _kubeconfig: "{{ _kubeconfig_file.content | b64decode | replace('127.0.0.1', ansible_host) | from_yaml }}"
+    _kubeconfig: "{{ _kubeconfig_file.content | b64decode | replace('127.0.0.1', inventory_hostname) | from_yaml }}"
 
 - name: Deploy cert-manager
   kubernetes.core.k8s:
