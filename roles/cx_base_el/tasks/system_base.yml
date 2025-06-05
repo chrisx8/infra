@@ -4,6 +4,7 @@
     name:
       - cloud-init
       - command-not-found
+      - firewalld
       - NetworkManager-team
       - open-iscsi
       - open-vm-tools
@@ -27,6 +28,7 @@
       - htop
       - pciutils
       - psmisc
+      - rsync
       - tar
       - vim
       - unzip
@@ -84,3 +86,9 @@
   ansible.posix.selinux:
     policy: targeted
     state: enforcing
+
+- name: Enable periodic filesystem trim
+  ansible.builtin.systemd:
+    name: fstrim.timer
+    enabled: true
+    state: started

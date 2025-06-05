@@ -15,9 +15,3 @@
     special_time: reboot
     state: present
     user: root
-
-- name: Enable periodic filesystem trim
-  ansible.builtin.systemd:
-    name: fstrim.timer
-    enabled: true
-    state: started
