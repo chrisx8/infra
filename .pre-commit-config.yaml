@@ -34,18 +34,18 @@ repos:
       - id: yamllint
         name: yamllint
         language: script
-        entry: /usr/bin/env yamllint
+        entry: /usr/bin/env uv run yamllint
         files: \.(yml)|(yaml)$
       - id: ansible-lint
         name: ansible-lint
-        entry: /usr/bin/env ansible-lint
+        entry: /usr/bin/env uv run ansible-lint
         args:
           - -v
         language: script
         pass_filenames: false
       - id: validate
         name: run validate.yml playbook
-        entry: /usr/bin/env ansible-playbook
+        entry: /usr/bin/env uv run ansible-playbook
         args:
           - plays/validate.yml
         language: script

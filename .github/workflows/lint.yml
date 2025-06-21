@@ -7,15 +7,16 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Python 3.13
+      - name: Check out repo
+        uses: actions/checkout@v4
+      - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Check out repo
-        uses: actions/checkout@v4
       - name: Install uv
-        run: |
-          pip install --user uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: latest
       - name: Set up Python virtualenv
         run: |
           source ./activate -u
