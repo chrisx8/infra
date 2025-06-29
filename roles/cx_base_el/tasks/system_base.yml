@@ -53,23 +53,23 @@
     path: /etc/sudoers.d/01-ansible
     state: present
 
-- name: Disable systemd coredump
-  ansible.builtin.lineinfile:
-    dest: /etc/systemd/coredump.conf
-    regexp: ^Storage=
-    line: Storage=none
+- name: Disable systemd-coredump storage
+  ansible.builtin.blockinfile:
+    block: Storage=none
+    path: /etc/systemd/coredump.conf
+    state: present
 
-- name: Limit systemd-journald
-  ansible.builtin.lineinfile:
-    dest: /etc/systemd/journald.conf
-    regexp: ^SystemMaxUse=
-    line: SystemMaxUse=100M
+- name: Set systemd-journald storage limit
+  ansible.builtin.blockinfile:
+    block: SystemMaxUse=100M
+    path: /etc/systemd/journald.conf
+    state: present
 
-- name: Set default text editor to vim
-  ansible.builtin.lineinfile:
-    dest: /etc/environment
-    regexp: ^EDITOR=
-    line: EDITOR=vim
+- name: Set default text editor
+  ansible.builtin.blockinfile:
+    block: EDITOR=vim
+    path: /etc/environment
+    state: present
 
 - name: Set sysctl configs
   ansible.posix.sysctl:
