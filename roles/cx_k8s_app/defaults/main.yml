@@ -1,3 +1,9 @@
 ---
 # state of k8s resources, present or absent
 cx_k8s_app_state: present
+
+# List of URLs of Kubernetes manifests to apply
+cx_k8s_app_manifests: []
+
+# List of Kubernetes resource definitions
+cx_k8s_app_resources: []
