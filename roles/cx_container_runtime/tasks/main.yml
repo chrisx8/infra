@@ -20,14 +20,14 @@
     state: true
 
 - name: Allow unprivileged port bind
-  when: cx_container_runtime_port_start
+  when: cx_container_runtime_port_start > 0
   ansible.posix.sysctl:
     name: net.ipv4.ip_unprivileged_port_start
     value: "{{ cx_container_runtime_port_start }}"
     reload: true
     state: present
 
-- name: Set up contaienr user
+- name: Set up container user
   when: cx_container_runtime_user != "root"
   block:
     - name: Create user {{ cx_container_runtime_user }}

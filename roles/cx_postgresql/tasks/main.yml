@@ -14,5 +14,5 @@
   ansible.builtin.import_tasks: configure.yml
 
 - name: Configure cron jobs
-  when: cx_postgresql_b2_backup_config
+  when: cx_postgresql_b2_backup_config | type_debug == 'dict'
   ansible.builtin.import_tasks: cron.yml

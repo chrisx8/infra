@@ -2,8 +2,8 @@
 - name: Verify requirements
   ansible.builtin.assert:
     that:
-      - cx_k8s_app_k8s_context
-      - cx_k8s_app_k8s_namespace
+      - cx_k8s_app_k8s_context | length > 0
+      - cx_k8s_app_k8s_namespace | length > 0
       - cx_k8s_app_manifests | type_debug == 'list'
       - cx_k8s_app_resources | type_debug == 'list'
       - cx_k8s_app_state in ('present', 'absent')

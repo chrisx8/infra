@@ -23,4 +23,4 @@ This role installs and configures Pi-hole.
 
 ## System requirements
 
-- CentOS Stream 8 or newer
+CentOS Stream 8 or newer
