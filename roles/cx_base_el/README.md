@@ -20,4 +20,4 @@ This role provides the base configuration and software for a standardized Enterp
 
 ## System requirements
 
-EL 9
+EL 9 or 10

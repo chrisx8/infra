@@ -14,10 +14,10 @@
     state: absent
 
 - name: Install epel-release
+  when: ansible_facts.distribution != 'Fedora'
   ansible.builtin.dnf:
     name: epel-release
     state: present
-  when: ansible_facts.distribution != 'Fedora'
 
 - name: Install standard packages
   ansible.builtin.dnf:

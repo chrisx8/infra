@@ -1,4 +1,6 @@
 ---
+profile: production
+
 exclude_paths:
   - .github/
   - .vscode/
@@ -9,4 +11,3 @@ enable_list:
   - args
   - empty-string-compare
   - no-same-owner
-  - role-name
