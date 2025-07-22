@@ -39,20 +39,8 @@ function postgresDumpGz() {
   gzip -f "$1"
 }
 
-{% if 'healthchecks_url' in cx_postgresql_b2_backup_config %}
-RUN_ID="$(uuidgen)"
-
-curl -fsS -m 3 "{{ cx_postgresql_b2_backup_config.healthchecks_url }}/start?rid=$RUN_ID"
-echo "[Healthchecks start]"
-{%- endif %}
-
 echo "Backing up Postgres..."
 postgresDumpGz /tmp/pg_dumpall.sql
 
 echo "Uploading to B2..."
 b2Upload /tmp/pg_dumpall.sql.gz pg_dumpall.sql.gz
-
-{%- if 'healthchecks_url' in cx_postgresql_b2_backup_config %}
-curl -fsS -m 3 "{{ cx_postgresql_b2_backup_config.healthchecks_url }}?rid=$RUN_ID"
-echo "[Healthchecks done]"
-{%- endif %}
