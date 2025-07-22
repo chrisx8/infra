@@ -8,8 +8,6 @@ cx_container_app_user:
 # State dictates whether to deploy or remove, 'present' or 'absent'
 cx_container_app_state: present
 
-# Healthchecks.io ping URL for nightly volume backup job
-cx_container_app_backup_ping_url:
 # Name of this containerized app, all Quadlet systemd units will use this name,
 # e.g. `{{ cx_container_app }}.*`
 # Default to short-form inventory hostname

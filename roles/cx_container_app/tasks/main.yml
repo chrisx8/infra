@@ -51,9 +51,4 @@
 - name: Run as {{ cx_container_app_user }}
   become: true
   become_user: "{{ cx_container_app_user }}"
-  block:
-    - name: Nightly volume backup job - {{ cx_container_app_state }}
-      when: cx_container_app_backup_ping_url
-      ansible.builtin.include_tasks: backup_{{ cx_container_app_state }}.yml
-    - name: Container app - {{ cx_container_app_state }}
-      ansible.builtin.include_tasks: container_{{ cx_container_app_state }}.yml
+  ansible.builtin.import_tasks: container_{{ cx_container_app_state }}.yml

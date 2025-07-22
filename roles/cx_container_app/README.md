@@ -8,7 +8,6 @@ This role is a generic role for setting up rootless container apps.
 | ---------------------------------- | ----------------------------------------------------------------------------- | -------- |
 | `cx_container_app_image`           | Container image name                                                          | **Yes**  |
 | `cx_container_app_user`            | Username or UID of the user which Podman will run as                          | **Yes**  |
-| `cx_container_app_backup_ping_url` | Healthchecks.io ping URL for nightly volume backup job                        | No       |
 | `cx_container_app_name`            | Name of the container, default `{{ inventory_hostname_short }}`               | No       |
 | `cx_container_app_network`         | Name of container network, default `podman`                                   | No       |
 | `cx_container_app_options`         | Extra options for the container, will be injected into container Quadlet file | No       |
