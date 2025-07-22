@@ -13,5 +13,3 @@ cx_postgresql_b2_backup_config:
   # b2_key_id:
   # Backblaze B2 bucket ID
   # b2_bucket_id:
-  # Healthchecks.io ping URL
-  # healthchecks_url:
