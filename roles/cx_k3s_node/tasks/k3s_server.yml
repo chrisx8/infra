@@ -24,3 +24,23 @@
     name: k3s.service
     daemon_reload: true
     state: restarted
+
+- name: Apply NoSchedule taint to control-plane node
+  when: cx_k3s_node_server_noschedule
+  block:
+    - name: Get kubeconfig from k3s server
+      register: _kubeconfig_file
+      ansible.builtin.slurp:
+        src: /etc/rancher/k3s/k3s.yaml
+
+    - name: Apply NoSchedule taint to control-plane node
+      become: false
+      delegate_to: localhost
+      kubernetes.core.k8s_taint:
+        kubeconfig: "{{ _kubeconfig_file.content | b64decode | replace('127.0.0.1', inventory_hostname) | from_yaml }}"
+        name: "{{ inventory_hostname_short }}"
+        state: present
+        taints:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/control-plane
+            value: "true"
