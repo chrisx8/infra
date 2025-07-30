@@ -15,3 +15,7 @@ cx_k3s_node_agent_args: ""
 # Optional flags for launching k3s server
 # 'server' will be prefixed
 cx_k3s_node_server_args: ""
+
+# Whether to prevent workloads from scheduling on the server (control-plane) node
+# If true, this applies taint node-role.kubernetes.io/control-plane=true:NoSchedule
+cx_k3s_node_server_noschedule: false
