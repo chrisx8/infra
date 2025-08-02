@@ -12,6 +12,8 @@ spec:
     logs:
       general:
         level: INFO
+    nodeSelector:
+      node-role.kubernetes.io/control-plane: "true"
     ports:
       web:
         redirections:
