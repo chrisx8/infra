@@ -1,7 +1,7 @@
 ---
 - name: Create dirs for systemd units
   loop:
-    - ~/.config/containers/systemd
+    - "{{ _systemd_container_dir }}"
     - ~/.config/systemd/user
   ansible.builtin.file:
     path: "{{ item }}"
@@ -14,7 +14,7 @@
   loop: "{{ _quadlet_files }}"
   ansible.builtin.template:
     src: "{{ (item | split('.'))[-1] }}.j2"
-    dest: ~/.config/containers/systemd/{{ item }}
+    dest: "{{ (_systemd_container_dir, item) | path_join }}"
     mode: "0640"
     owner: "{{ cx_container_app_user }}"
     group: "{{ cx_container_app_user }}"
@@ -28,12 +28,12 @@
 - name: Reload systemd daemon
   ansible.builtin.systemd:
     daemon_reload: true
-    scope: user
+    scope: "{{ _systemd_scope }}"
 
 - name: Enable and restart systemd units
   loop: "{{ _systemd_units }}"
   ansible.builtin.systemd:
     name: "{{ item }}"
     enabled: true
-    scope: user
+    scope: "{{ _systemd_scope }}"
     state: restarted

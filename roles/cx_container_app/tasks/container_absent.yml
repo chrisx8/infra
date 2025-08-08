@@ -4,20 +4,20 @@
   loop: "{{ _systemd_units }}"
   ansible.builtin.systemd:
     name: "{{ item }}"
-    enabled: false
-    scope: user
+    enabled: true
+    scope: "{{ _systemd_scope }}"
     state: stopped
 
 - name: Remove Quadlet units
   loop: "{{ _quadlet_files }}"
   ansible.builtin.file:
-    path: ~/.config/containers/systemd/{{ item }}
+    path: "{{ (_systemd_container_dir, item) | path_join }}"
     state: absent
 
 - name: Reload systemd daemon
   ansible.builtin.systemd:
     daemon_reload: true
-    scope: user
+    scope: "{{ _systemd_scope }}"
 
 - name: Delete image
   containers.podman.podman_image:

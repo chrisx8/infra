@@ -27,7 +27,7 @@
   ansible.builtin.set_fact:
     _quadlet_need_network: "{{ cx_container_app_network and cx_container_app_network not in ('host', 'podman') }}"
 
-- name: Build list of units
+- name: Build systemd deployment facts
   ansible.builtin.set_fact:
     _quadlet_files: |-
       {% set _result = [cx_container_app_name + '.container'] %}
@@ -47,6 +47,9 @@
       {% set _ = _result.append(volume + '-volume.service') %}
       {% endfor %}
       {{ _result }}
+    _systemd_container_dir: "{{ (cx_container_app_user == 'root') |
+      ternary('/etc/containers/systemd', '~/.config/containers/systemd') }}"
+    _systemd_scope: "{{ (cx_container_app_user == 'root') | ternary('system', 'user') }}"
 
 - name: Run as {{ cx_container_app_user }}
   become: true
