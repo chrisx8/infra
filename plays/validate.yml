@@ -40,7 +40,8 @@
   hosts: cx_container_app
   connection: local
   tasks:
-    - name: Assert that cx_container_app_user is not root
+    - name: Assert that ansible_host is set correctly
       ansible.builtin.assert:
         that:
-          - cx_container_app_user != "root"
+          - ansible_host is not match(".+\.container")
+          - inventory_hostname is match(".+\.container")
