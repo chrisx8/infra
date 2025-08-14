@@ -1,7 +1,7 @@
 ---
 - name: Get k3s token from server host
   delegate_to: "{{ cx_k3s_node_server_host }}"
-  register: _node_token
+  register: _node_token # noqa: var-naming[no-role-prefix]
   ansible.builtin.slurp:
     path: /var/lib/rancher/k3s/server/token
 
