@@ -21,10 +21,10 @@
     state: present
 
 - name: Initialize PostgreSQL database
-  ansible.builtin.command:
-    cmd: /usr/pgsql-{{ cx_postgresql_version }}/bin/postgresql-{{ cx_postgresql_version }}-setup initdb
-  register: _postgresql_initdb
   changed_when: _postgresql_initdb.rc == 0
   failed_when: false
+  register: _postgresql_initdb # noqa: var-naming[no-role-prefix]
   notify:
     - Enable and restart postgresql
+  ansible.builtin.command:
+    cmd: /usr/pgsql-{{ cx_postgresql_version }}/bin/postgresql-{{ cx_postgresql_version }}-setup initdb

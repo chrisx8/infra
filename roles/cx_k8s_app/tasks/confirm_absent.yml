@@ -1,10 +1,11 @@
 ---
 - name: Set prompt string
   ansible.builtin.set_fact:
+    # noqa: var-naming[no-role-prefix]
     _confirm_expected: CONFIRM {{ ansible_play_hosts | length }}
 
 - name: Confirm removal
-  register: _confirm
+  register: _confirm # noqa: var-naming[no-role-prefix]
   ansible.builtin.pause:
     prompt: |-
       Are you sure you want to remove {{ ansible_play_hosts | length }} app(s)?

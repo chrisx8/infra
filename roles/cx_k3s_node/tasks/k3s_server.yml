@@ -29,7 +29,7 @@
   when: cx_k3s_node_server_noschedule
   block:
     - name: Get kubeconfig from k3s server
-      register: _kubeconfig_file
+      register: _kubeconfig_file # noqa: var-naming[no-role-prefix]
       ansible.builtin.slurp:
         src: /etc/rancher/k3s/k3s.yaml
 
