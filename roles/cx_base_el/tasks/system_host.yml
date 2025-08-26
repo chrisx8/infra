@@ -3,15 +3,6 @@
   ansible.builtin.dnf:
     name:
       - lm_sensors
-      - powertop
       - smartmontools
       - tuned
     state: present
-
-- name: Set up cron job for powertop auto-tune on boot
-  ansible.builtin.cron:
-    name: powertop auto-tune
-    job: sleep 60 && /usr/sbin/powertop --auto-tune
-    special_time: reboot
-    state: present
-    user: root

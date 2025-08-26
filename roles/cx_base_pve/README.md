@@ -16,4 +16,4 @@ None
 
 ## System requirements
 
-Proxmox VE
+Proxmox VE 9 / Debian 13 (trixie) or newer

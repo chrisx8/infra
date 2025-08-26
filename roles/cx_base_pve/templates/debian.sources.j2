@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+Types: deb
+URIs: http://deb.debian.org/debian/
+Suites: {{ ansible_facts.distribution_release }}
+Components: main contrib non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb
+URIs: http://deb.debian.org/debian/
+Suites: {{ ansible_facts.distribution_release }}-updates
+Components: main contrib non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb
+URIs: http://security.debian.org/
+Suites: {{ ansible_facts.distribution_release }}-security
+Components: main contrib non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg

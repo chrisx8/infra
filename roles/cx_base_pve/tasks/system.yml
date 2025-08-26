@@ -3,7 +3,6 @@
   ansible.builtin.apt:
     name:
       - lm-sensors
-      - powertop
       - vim
     install_recommends: false
     state: present
@@ -18,13 +17,6 @@
   with_dict:
     kernel.dmesg_restrict: 1
     kernel.sysrq: 0
-
-- name: Run powertop auto-tune on boot
-  ansible.builtin.cron:
-    name: Run powertop auto-tune on boot
-    job: sleep 60 && /usr/sbin/powertop --auto-tune
-    special_time: reboot
-    state: present
 
 - name: Set systemd-journald storage limit
   ansible.builtin.blockinfile:

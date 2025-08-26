@@ -1,17 +1,14 @@
 ---
-- name: Switch to Debian repos on CDN
-  ansible.builtin.replace:
+- name: Remove legacy apt sources.list
+  ansible.builtin.file:
     path: /etc/apt/sources.list
-    regexp: ftp\.us\.debian\.org
-    replace: deb.debian.org
-
-- name: Remove Proxmox VE enterprise repo
-  ansible.builtin.apt_repository:
-    repo: deb https://enterprise.proxmox.com/debian/pve {{ ansible_facts.distribution_release }} pve-enterprise
     state: absent
 
-- name: Add Proxmox VE no subscription repo
-  ansible.builtin.apt_repository:
-    repo: deb http://download.proxmox.com/debian/pve {{ ansible_facts.distribution_release }} pve-no-subscription
-    state: present
-    filename: pve-no-subscription
+- name: Configure apt repos
+  loop:
+    - debian.sources
+    - proxmox.sources
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: /etc/apt/sources.list.d/{{ item }}
+    mode: "0644"
