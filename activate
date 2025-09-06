@@ -27,14 +27,14 @@ if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
         git clone https://github.com/chrisx8/infra-inventory.git inventory
 
         echo "## Installing pre-commit hooks for inventory repo"
-        pushd inventory >/dev/null
+        pushd inventory >/dev/null || exit 1
         pre-commit install --install-hooks
-        popd >/dev/null
+        popd >/dev/null || exit
     elif [ -d inventory ]; then
         echo "## Pulling inventory repo"
-        pushd inventory >/dev/null
+        pushd inventory >/dev/null || exit 1
         git pull
-        popd >/dev/null
+        popd >/dev/null || exit
     fi
 fi
 
