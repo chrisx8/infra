@@ -5,11 +5,3 @@ cx_postgresql_version: "16"
 # Addresses (CIDR notation) that may access PostgreSQL
 cx_postgresql_allow_hosts:
   - 127.0.0.1/32
-
-# Config for B2 backup cron job
-cx_postgresql_b2_backup_config:
-  # Backblaze B2 Application Key and Key ID
-  # b2_app_key:
-  # b2_key_id:
-  # Backblaze B2 bucket ID
-  # b2_bucket_id:
