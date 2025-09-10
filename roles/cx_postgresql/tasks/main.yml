@@ -7,12 +7,51 @@
       - cx_postgresql_version|int >= 11
       - cx_postgresql_allow_hosts | type_debug == 'list'
 
-- name: Install PostgreSQL
-  ansible.builtin.import_tasks: install.yml
+- name: Add PostgreSQL repos
+  loop:
+    - common
+    - "{{ cx_postgresql_version }}"
+  ansible.builtin.yum_repository:
+    name: pgdg-{{ item }}
+    description: PostgreSQL {{ item }}
+    baseurl: https://download.postgresql.org/pub/repos/yum/{{ item }}/redhat/rhel-$releasever-$basearch
+    gpgkey: https://download.postgresql.org/pub/repos/yum/keys/PGDG-RPM-GPG-KEY-RHEL
+    gpgcheck: true
+    repo_gpgcheck: true
+    state: present
+
+- name: Install PostgreSQL {{ cx_postgresql_version }}
+  ansible.builtin.dnf:
+    name:
+      - postgresql{{ cx_postgresql_version }}-contrib
+      - postgresql{{ cx_postgresql_version }}-server
+      - python3-psycopg2
+    state: present
 
 - name: Configure PostgreSQL
-  ansible.builtin.import_tasks: configure.yml
+  notify:
+    - Enable and restart postgresql
+  block:
+    - name: Initialize PostgreSQL database
+      register: _postgresql_initdb
+      changed_when: _postgresql_initdb.rc == 0 # noqa: var-naming[no-role-prefix]
+      failed_when: false
+      ansible.builtin.command:
+        cmd: /usr/pgsql-{{ cx_postgresql_version }}/bin/postgresql-{{ cx_postgresql_version }}-setup initdb
 
-- name: Configure cron jobs
-  when: cx_postgresql_b2_backup_config | type_debug == 'dict'
-  ansible.builtin.import_tasks: cron.yml
+    - name: Configure PostgreSQL server
+      ansible.builtin.blockinfile:
+        path: /var/lib/pgsql/{{ cx_postgresql_version }}/data/postgresql.conf
+        mode: "0600"
+        block: |
+          listen_addresses = '*'
+
+    - name: Configure PostgreSQL access policy
+      ansible.builtin.blockinfile:
+        path: /var/lib/pgsql/{{ cx_postgresql_version }}/data/pg_hba.conf
+        mode: "0600"
+        block: |
+          # TYPE DATABASE USER CIDR METHOD
+          {% for addr in cx_postgresql_allow_hosts %}
+          host  all  all  {{ addr }}  scram-sha-256
+          {% endfor %}
