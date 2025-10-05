@@ -1,6 +1,6 @@
 ---
-# k3s release channel to use, see https://github.com/k3s-io/k3s/blob/master/channel.yaml
-cx_k3s_node_k3s_channel: v1.32
+# k3s release channel to use, see https://github.com/k3s-io/k3s/blob/main/channel.yaml
+cx_k3s_node_k3s_channel: v1.33
 
 # Permission of k3s's kubeconfig
 cx_k3s_node_kubeconfig_mode: "644"
