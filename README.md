@@ -20,16 +20,6 @@ After initial setup, simply activate the virtualenv when working in this repo:
 source ./activate
 ```
 
-### Shell functions
-
-Once you activate the virtualenv with `./activate`, some shell aliases will be available.
-
-Available shell aliases:
-
-- `anplay`: run `ansible-playbook`
-- `anvault`: run `ansible-vault`
-- `chkall`: run pre-commit checks on all files
-
 ### Update environment
 
 Re-running the repo setup will update Python packages and Ansible collections:
