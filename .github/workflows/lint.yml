@@ -14,9 +14,9 @@ jobs:
         with:
           python-version: "3.13"
       - name: Install uv
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v7
         with:
-          version: latest
+          activate-environment: true
       - name: Set up Python virtualenv
         run: |
           source ./activate -u
@@ -24,5 +24,4 @@ jobs:
         env:
           SKIP: validate
         run: |
-          source ./activate
           pre-commit run --all-files --verbose
