@@ -4,11 +4,17 @@ This repo is an Ansible monorepo for my self-hosted Linux environment.
 
 ## Usage
 
-### Setup
+### Install dependencies
 
-First, install **Python 3.13** and [**uv**](https://github.com/astral-sh/uv).
+Install the following packages:
 
-Then, install repo dependencies, including Ansible, Ansible collections, `ansible-lint`, pre-commit hooks, and other Python packages:
+- Python **3.14**
+- [**prek**](https://github.com/j178/prek)
+- [**uv**](https://github.com/astral-sh/uv)
+
+### Set up repo environment
+
+Install repo dependencies, including Ansible, Ansible collections, `ansible-lint`, pre-commit hooks, and other Python packages:
 
 ```bash
 source ./activate -u
@@ -33,7 +39,7 @@ Dependencies are declared in various places:
 - Python dependencies are pinned by minor versions, declared in `requirements.txt`
   - Re-run setup after updating dependency pins
 - Pre-commit hooks are pinned by exact versions, declared in `.pre-commit-config.yaml`
-  - Update by running `pre-commit autoupdate`
+  - Update by running `prek autoupdate`
 - Ansible collections are unpinned, declared in `requirements.yml`
 
 ## License

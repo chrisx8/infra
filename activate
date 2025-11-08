@@ -7,7 +7,7 @@ if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
         echo "## Using existing virtualenv at .venv"
     else
         echo "## Creating virtualenv at .venv"
-        uv venv --python 3.13
+        uv venv --python 3.14
     fi
 
     # shellcheck source=/dev/null
@@ -20,7 +20,7 @@ if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
     ansible-galaxy collection install -U -r requirements.yml
 
     echo "## Installing pre-commit hooks"
-    pre-commit install --install-hooks
+    prek install --install-hooks --overwrite
 
     if [ -z "$CI" ] && [ ! -d inventory ]; then
         echo "## Cloning inventory repo"
@@ -28,7 +28,7 @@ if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
 
         echo "## Installing pre-commit hooks for inventory repo"
         pushd inventory >/dev/null || exit 1
-        pre-commit install --install-hooks
+        prek install --install-hooks --overwrite
         popd >/dev/null || exit
     elif [ -d inventory ]; then
         echo "## Pulling inventory repo"
