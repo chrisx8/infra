@@ -2,6 +2,18 @@
 cx_k8s_app_k8s_context: testcluster
 cx_k8s_app_k8s_namespace: default
 
+cx_k8s_app_helm_releases:
+  - name: nvidia-gpu-operator
+    chart_ref: nvidia/gpu-operator
+    chart_repo_url: https://helm.ngc.nvidia.com/nvidia
+    chart_version: v25.3.4
+    values:
+      driver:
+        enabled: false
+
+cx_k8s_app_manifests:
+  - https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.yaml
+
 cx_k8s_app_resources:
   - kind: Deployment
     spec:

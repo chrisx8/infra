@@ -13,25 +13,45 @@
   when: cx_k8s_app_state == 'absent'
   ansible.builtin.include_tasks: confirm_absent.yml
 
-- name: Set k8s manifests to {{ cx_k8s_app_state }}
+- name: Kubernetes resources
   delegate_to: localhost
-  loop: "{{ cx_k8s_app_manifests }}"
-  kubernetes.core.k8s:
-    context: "{{ cx_k8s_app_k8s_context }}"
-    namespace: "{{ cx_k8s_app_k8s_namespace }}"
-    src: "{{ item }}"
-    state: "{{ cx_k8s_app_state }}"
+  block:
+    - name: Create k8s namespace
+      kubernetes.core.k8s:
+        context: "{{ cx_k8s_app_k8s_context }}"
+        name: "{{ cx_k8s_app_k8s_namespace }}"
+        kind: Namespace
+        state: present
 
-- name: Set k8s resources to {{ cx_k8s_app_state }}
-  delegate_to: localhost
-  loop: "{{ cx_k8s_app_resources }}"
-  loop_control:
-    label: "{{ item.kind }} {{ item.metadata.name | default() }}"
-  kubernetes.core.k8s:
-    apply: true
-    context: "{{ cx_k8s_app_k8s_context }}"
-    # metadata in resource definition can override 'name' and 'namespace'
-    name: "{{ inventory_hostname_short }}"
-    namespace: "{{ cx_k8s_app_k8s_namespace }}"
-    resource_definition: "{{ item }}"
-    state: "{{ cx_k8s_app_state }}"
+    - name: Set Helm releases to {{ cx_k8s_app_state }}
+      loop: "{{ cx_k8s_app_helm_releases }}"
+      kubernetes.core.helm:
+        context: "{{ cx_k8s_app_k8s_context }}"
+        name: "{{ item.name }}"
+        chart_ref: "{{ item.chart_ref }}"
+        chart_repo_url: "{{ item.chart_repo_url | default(omit) }}"
+        chart_version: "{{ item.chart_version }}"
+        release_namespace: "{{ cx_k8s_app_k8s_namespace }}"
+        release_values: "{{ ('values' in item) | ternary(item['values'], {}) }}"
+        state: "{{ cx_k8s_app_state }}"
+
+    - name: Set k8s manifests to {{ cx_k8s_app_state }}
+      loop: "{{ cx_k8s_app_manifests }}"
+      kubernetes.core.k8s:
+        context: "{{ cx_k8s_app_k8s_context }}"
+        namespace: "{{ cx_k8s_app_k8s_namespace }}"
+        src: "{{ item }}"
+        state: "{{ cx_k8s_app_state }}"
+
+    - name: Set k8s resources to {{ cx_k8s_app_state }}
+      loop: "{{ cx_k8s_app_resources }}"
+      loop_control:
+        label: "{{ item.kind }} {{ item.metadata.name | default() }}"
+      kubernetes.core.k8s:
+        apply: true
+        context: "{{ cx_k8s_app_k8s_context }}"
+        # metadata in resource definition can override 'name' and 'namespace'
+        name: "{{ inventory_hostname_short }}"
+        namespace: "{{ cx_k8s_app_k8s_namespace }}"
+        resource_definition: "{{ item }}"
+        state: "{{ cx_k8s_app_state }}"
