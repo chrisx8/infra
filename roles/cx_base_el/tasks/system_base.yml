@@ -6,7 +6,6 @@
       - command-not-found
       - firewalld
       - NetworkManager-team
-      - open-iscsi
       - open-vm-tools
       - plymouth
       - postfix

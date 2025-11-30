@@ -12,12 +12,24 @@
     name: firewalld
     state: absent
 
-- name: Install iptables + nfs utils
+- name: Install iptables + storage utils
   ansible.builtin.dnf:
     name:
       - iptables-nft
+      - iscsi-initiator-utils
+      - lsscsi
       - nfs-utils
+      - sg3_utils
     state: present
+
+- name: Enable and start iSCSI units
+  loop:
+    - iscsid.socket
+    - iscsi.service
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
 
 - name: Download k3s install script
   ansible.builtin.get_url:
