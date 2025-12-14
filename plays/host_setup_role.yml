@@ -19,6 +19,16 @@
   roles:
     - cx_k3s_node
 
+- name: Deploy Pi-hole
+  hosts: cx_pihole
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+  roles:
+    - cx_pihole
+
 - name: Deploy PostgreSQL
   hosts: cx_postgresql
   become: true

@@ -1,0 +1,10 @@
+---
+- name: Remove stub /etc/resolv.conf
+  ansible.builtin.file:
+    name: /etc/resolv.conf
+    state: absent
+
+- name: Restart NetworkManager
+  ansible.builtin.systemd:
+    name: NetworkManager
+    state: restarted

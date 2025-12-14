@@ -2,63 +2,49 @@
 - name: Verify requirements
   ansible.builtin.assert:
     that:
-      - ansible_facts.distribution == 'CentOS'
-      - ansible_facts.distribution_release == 'Stream'
       - ansible_facts.distribution_major_version|int >= 8
+      - ansible_facts.os_family == 'RedHat'
+      - cx_pihole_config | type_debug == 'str'
+      - cx_pihole_config | length > 0
 
-- name: Disable SELinux
-  failed_when: false
-  ansible.posix.selinux:
-    state: disabled
-
-- name: Disable systemd-resolved
-  failed_when: false
-  ansible.builtin.systemd:
+- name: Remove systemd-resolved
+  notify:
+    - Remove stub /etc/resolv.conf
+    - Restart NetworkManager
+  ansible.builtin.dnf:
     name: systemd-resolved
-    enabled: false
-    state: stopped
-
-- name: Remove stub /etc/resolv.conf
-  ansible.builtin.file:
-    name: /etc/resolv.conf
     state: absent
 
-- name: Restart NetworkManager
-  ansible.builtin.systemd:
-    name: NetworkManager
-    state: restarted
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Create Pi-hole config dir
   ansible.builtin.file:
     name: /etc/pihole
-    mode: "0755"
+    mode: "0775"
     state: directory
 
-- name: Copy Pi-hole setup config
-  ansible.builtin.template:
-    src: setupVars.conf.j2
-    dest: /etc/pihole/setupVars.conf
-    mode: "0644"
+- name: Copy pihole.toml
+  ansible.builtin.copy:
+    content: "{{ cx_pihole_config }}"
+    dest: /etc/pihole/pihole.toml
+    mode: "0640"
 
-- name: Download Pi-hole install script
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/pi-hole/pi-hole/master/automated%20install/basic-install.sh
-    dest: /tmp/pihole-basic-install.sh
-    mode: "0750"
-
-- name: Run Pi-hole install script
-  changed_when: true
-  ansible.builtin.command:
-    cmd: /tmp/pihole-basic-install.sh --unattended
-
-- name: Delete Pi-hole install script
-  ansible.builtin.file:
-    path: /tmp/pihole-basic-install.sh
-    state: absent
-
-- name: Add cron job for daily Gravity update
-  ansible.builtin.cron:
-    name: Update Pi-hole Gravity lists daily
-    job: /usr/local/bin/pihole -g
-    special_time: daily
-    state: present
+- name: Install Pi-hole
+  block:
+    - name: Download Pi-hole install script
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/pi-hole/pi-hole/master/automated%20install/basic-install.sh
+        dest: /tmp/pihole-basic-install.sh
+        mode: "0750"
+    - name: Run Pi-hole install script
+      changed_when: true
+      environment:
+        PIHOLE_SELINUX: "{{ cx_pihole_allow_selinux | ternary('true', omit) }}"
+      ansible.builtin.command:
+        cmd: /tmp/pihole-basic-install.sh --unattended
+  always:
+    - name: Delete Pi-hole install script
+      ansible.builtin.file:
+        path: /tmp/pihole-basic-install.sh
+        state: absent
