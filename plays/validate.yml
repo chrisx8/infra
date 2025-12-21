@@ -28,14 +28,22 @@
           - ansible_host | length > 1
 
 - name: Validate k8s apps
-  hosts: cx_k8s_app
+  hosts: cx_k8s_app:!cx_k8s_app_cluster
   connection: local
   tasks:
-    - name: Assert that ansible_host is set correctly
+    - name: Determine expected values
+      ansible.builtin.set_fact:
+        _expected_group: cx_k8s_app_{{ cx_k8s_app_k8s_namespace }}
+        _expected_name_suffix: .{{ cx_k8s_app_k8s_namespace }}.k8s
+    - name: Assert inventory hostname
       ansible.builtin.assert:
         that:
-          - ansible_host is match(".+\.k8s")
-          - inventory_hostname is match(".+\.k8s")
+          - ansible_host.endswith(_expected_name_suffix)
+          - inventory_hostname.endswith(_expected_name_suffix)
+    - name: Assert grouping by k8s namespace
+      ansible.builtin.assert:
+        that:
+          - inventory_hostname in groups[_expected_group]
 
 - name: Validate container apps
   hosts: cx_container_app
