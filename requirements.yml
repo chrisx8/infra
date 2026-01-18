@@ -4,4 +4,7 @@ collections:
   - community.general
   - community.postgresql
   - containers.podman
-  - kubernetes.core
+  # - kubernetes.core
+  # TODO: Remove when next release drops
+  - name: https://github.com/ansible-collections/kubernetes.core
+    type: git
