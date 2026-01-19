@@ -52,17 +52,37 @@
     path: /etc/sudoers.d/01-ansible
     state: present
 
-- name: Disable systemd-coredump storage
-  ansible.builtin.blockinfile:
-    block: Storage=none
-    path: /etc/systemd/coredump.conf
-    state: present
+- name: Configure systemd (EL 10)
+  when: ansible_facts.distribution_major_version == '10'
+  block:
+    - name: Place systemd-coredump config
+      ansible.builtin.copy:
+        content: |
+          [Coredump]
+          Storage=none
+        dest: /etc/systemd/coredump.conf
+        mode: "0644"
+    - name: Place systemd-journald config
+      ansible.builtin.copy:
+        content: |
+          [Journal]
+          SystemMaxUse=100M
+        dest: /etc/systemd/journald.conf
+        mode: "0644"
 
-- name: Set systemd-journald storage limit
-  ansible.builtin.blockinfile:
-    block: SystemMaxUse=100M
-    path: /etc/systemd/journald.conf
-    state: present
+- name: Configure systemd (EL 9)
+  when: ansible_facts.distribution_major_version == '9'
+  block:
+    - name: Disable systemd-coredump storage
+      ansible.builtin.blockinfile:
+        block: Storage=none
+        path: /etc/systemd/coredump.conf
+        state: present
+    - name: Set systemd-journald storage limit
+      ansible.builtin.blockinfile:
+        block: SystemMaxUse=100M
+        path: /etc/systemd/journald.conf
+        state: present
 
 - name: Set default text editor
   ansible.builtin.blockinfile:
