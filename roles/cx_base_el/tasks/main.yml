@@ -15,6 +15,9 @@
 - name: Configure bare-metal system
   when: ansible_facts.virtualization_role == 'host'
   ansible.builtin.include_tasks: system_host.yml
+- name: Configure NVIDIA drivers
+  when: cx_base_el_nvidia_version | length > 0
+  ansible.builtin.include_tasks: nvidia.yml
 
 - name: Reboot
   when: not cx_base_el_skip_reboot

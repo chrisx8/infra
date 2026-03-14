@@ -1,0 +1,27 @@
+---
+- name: Add NVIDIA repo
+  ansible.builtin.yum_repository:
+    name: nvidia-cuda
+    description: NVIDIA CUDA
+    baseurl: https://developer.download.nvidia.com/compute/cuda/repos/rhel$releasever/$basearch
+    gpgkey: https://developer.download.nvidia.com/compute/cuda/repos/rhel$releasever/$basearch/CDF6BA43.pub
+    gpgcheck: true
+    repo_gpgcheck: true
+    state: present
+
+- name: Install NVIDIA CUDA driver packages
+  ansible.builtin.dnf:
+    name:
+      - nvidia-driver-cuda-{{ cx_base_el_nvidia_version }}
+      - kmod-nvidia-latest-dkms-{{ cx_base_el_nvidia_version }}
+    state: present
+
+- name: Install dnf versionlock plugin
+  ansible.builtin.dnf:
+    name: python3-dnf-plugin-versionlock
+    state: present
+
+- name: Lock NVIDIA package version
+  community.general.dnf_versionlock:
+    name: "*nvidia-*-{{ cx_base_el_nvidia_version }}"
+    state: present

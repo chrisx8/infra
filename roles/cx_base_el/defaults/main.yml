@@ -1,4 +1,8 @@
 ---
+# Version of NVIDIA CUDA driver to install, e.g. "580.126.20"
+# Leave blank to skip NVIDIA driver installation
+cx_base_el_nvidia_version: ""
+
 # Skip host reboot after setup completes
 cx_base_el_skip_reboot: false
 
