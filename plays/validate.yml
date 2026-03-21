@@ -45,6 +45,16 @@
         that:
           - inventory_hostname in groups[_expected_group]
 
+- name: Validate k8s cluster resources
+  hosts: cx_k8s_app_cluster
+  connection: local
+  tasks:
+    - name: Assert inventory hostname
+      ansible.builtin.assert:
+        that:
+          - ansible_host.endswith(".k8s")
+          - inventory_hostname.endswith(".k8s")
+
 - name: Validate container apps
   hosts: cx_container_app
   connection: local
