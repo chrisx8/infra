@@ -1,0 +1,10 @@
+[project]
+name = "chrisx8-infra"
+version = "1.0.0"
+requires-python = "~=3.14.0"
+dependencies = [
+    "ansible-core~=2.20.0",
+    "ansible-lint~=26.4.0",
+    "kubernetes~=35.0",
+    "yamllint~=1.35",
+]

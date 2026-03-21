@@ -36,7 +36,7 @@ source ./activate -u
 
 Dependencies are declared in various places:
 
-- Python dependencies are pinned by minor versions, declared in `requirements.txt`
+- Python dependencies are pinned by minor versions, declared in `pyproject.toml`
   - Re-run setup after updating dependency pins
 - Pre-commit hooks are pinned by exact versions, declared in `.pre-commit-config.yaml`
   - Update by running `prek autoupdate`

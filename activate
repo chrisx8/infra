@@ -3,18 +3,11 @@ if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
     echo " Bootstrapping Ansible virtualenv"
     echo "*********************************************************************"
 
-    if [ -d .venv ]; then
-        echo "## Using existing virtualenv at .venv"
-    else
-        echo "## Creating virtualenv at .venv"
-        uv venv --python 3.14
-    fi
+    echo "## Building virtualenv with uv"
+    uv sync --upgrade
 
     # shellcheck source=/dev/null
     source .venv/bin/activate
-
-    echo "## Installing Python packages with uv"
-    uv pip install -U -r requirements.txt
 
     echo "## Installing Ansible collections"
     ansible-galaxy collection install -U -r requirements.yml
