@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "christian-kohler.path-intellisense",
+    "DavidAnson.vscode-markdownlint",
     "redhat.ansible",
     "redhat.vscode-yaml",
     "streetsidesoftware.code-spell-checker",
