@@ -33,7 +33,7 @@
   tasks:
     - name: Determine expected values
       ansible.builtin.set_fact:
-        _expected_group: cx_k8s_app_{{ cx_k8s_app_k8s_namespace }}
+        _expected_group: cx_k8s_app_{{ cx_k8s_app_k8s_namespace | replace("-", "_") }}
         _expected_name_suffix: .{{ cx_k8s_app_k8s_namespace }}.k8s
     - name: Assert inventory hostname
       ansible.builtin.assert:
