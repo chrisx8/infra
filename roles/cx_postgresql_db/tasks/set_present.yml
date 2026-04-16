@@ -1,14 +1,14 @@
 ---
+- name: Create user
+  community.postgresql.postgresql_user:
+    name: "{{ cx_postgresql_db_name }}"
+    password: "{{ cx_postgresql_db_password }}"
+    state: present
+
 - name: Create database
   community.postgresql.postgresql_db:
     name: "{{ cx_postgresql_db_name }}"
-    state: present
-
-- name: Create user
-  community.postgresql.postgresql_user:
-    login_db: "{{ cx_postgresql_db_name }}"
-    name: "{{ cx_postgresql_db_name }}"
-    password: "{{ cx_postgresql_db_password }}"
+    owner: "{{ cx_postgresql_db_name }}"
     state: present
 
 - name: Grant all privileges on public schema
@@ -18,3 +18,10 @@
     objs: public
     privs: ALL
     role: "{{ cx_postgresql_db_name }}"
+
+- name: Add extensions to database
+  loop: "{{ cx_postgresql_db_extensions }}"
+  community.postgresql.postgresql_ext:
+    name: "{{ item }}"
+    login_db: "{{ cx_postgresql_db_name }}"
+    state: present

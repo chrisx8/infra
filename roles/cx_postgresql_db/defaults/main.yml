@@ -1,2 +1,3 @@
 ---
+cx_postgresql_db_extensions: []
 cx_postgresql_db_state: present
