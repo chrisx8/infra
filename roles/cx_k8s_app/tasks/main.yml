@@ -25,6 +25,8 @@
 
     - name: Set Helm releases to {{ cx_k8s_app_state }}
       loop: "{{ cx_k8s_app_helm_releases }}"
+      loop_control:
+        label: "{{ item.name }}"
       kubernetes.core.helm:
         context: "{{ cx_k8s_app_k8s_context }}"
         name: "{{ item.name }}"
@@ -46,7 +48,8 @@
     - name: Set k8s resources to {{ cx_k8s_app_state }}
       loop: "{{ cx_k8s_app_resources }}"
       loop_control:
-        label: "{{ item.kind }} {{ item.metadata.name | default() }}"
+        label: "{{ item.kind }} {{ item.metadata.name |
+          default(inventory_hostname_short) }}"
       kubernetes.core.k8s:
         apply: true
         context: "{{ cx_k8s_app_k8s_context }}"

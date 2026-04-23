@@ -9,16 +9,6 @@
   ansible.builtin.command:
     cmd: /tmp/get_k3s.sh
 
-- name: Deploy custom manifests for k3s server components
-  loop_control:
-    label: "{{ item | basename }}"
-  with_fileglob:
-    - "{{ role_path }}/files/server_manifests/*.yaml"
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
-    mode: "0640"
-
 - name: Restart k3s server with systemd
   ansible.builtin.systemd:
     name: k3s.service
