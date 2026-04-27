@@ -17,6 +17,7 @@
   delegate_to: localhost
   block:
     - name: Create k8s namespace
+      when: cx_k8s_app_state == 'present'
       kubernetes.core.k8s:
         context: "{{ cx_k8s_app_k8s_context }}"
         name: "{{ cx_k8s_app_k8s_namespace }}"
