@@ -1,0 +1,66 @@
+---
+- name: Verify requirements
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.os_family == "RedHat"
+      - ansible_facts.distribution != "Fedora"
+      - ansible_facts.distribution_major_version|int >= 9
+
+- name: Add 1Password repo
+  ansible.builtin.yum_repository:
+    name: 1password
+    description: 1Password Stable Channel
+    baseurl: https://downloads.1password.com/linux/rpm/stable/$basearch
+    gpgcheck: true
+    gpgkey: https://downloads.1password.com/linux/keys/1password.asc
+    repo_gpgcheck: true
+    state: present
+
+- name: Add GitHub CLI repo
+  ansible.builtin.yum_repository:
+    name: gh-cli
+    description: packages for the GitHub CLI
+    baseurl: https://cli.github.com/packages/rpm
+    gpgcheck: true
+    gpgkey: https://cli.github.com/packages/githubcli-archive-keyring.asc
+    repo_gpgcheck: true
+    state: present
+
+- name: Add Kubernetes repo
+  ansible.builtin.yum_repository:
+    name: kubernetes
+    description: Kubernetes
+    baseurl: https://pkgs.k8s.io/core:/stable:/{{ cx_admin_node_k8s_version }}/rpm/
+    gpgcheck: true
+    gpgkey: https://pkgs.k8s.io/core:/stable:/{{ cx_admin_node_k8s_version }}/rpm/repodata/repomd.xml.key
+    repo_gpgcheck: true
+    state: present
+
+- name: Add kubecolor repo
+  ansible.builtin.yum_repository:
+    name: kubecolor
+    description: packages for kubecolor
+    baseurl: https://kubecolor.github.io/packages/rpm
+    gpgcheck: true
+    gpgkey: https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x62acb02733c915f1
+    repo_gpgcheck: true
+    state: present
+
+- name: Install packages
+  ansible.builtin.dnf:
+    name:
+      - 1password-cli
+      - bat
+      - fzf
+      - gdu
+      - gh
+      - git
+      - helm
+      - k9s
+      - kubectl
+      - kubecolor
+      - make
+      - sqlite
+      - zsh
+    update_cache: true
+    state: present

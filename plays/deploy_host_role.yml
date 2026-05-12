@@ -1,4 +1,14 @@
 ---
+- name: Deploy admin nodes
+  hosts: cx_admin_node
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+  roles:
+    - cx_admin_node
+
 - name: Deploy container hosts
   hosts: cx_container_runtime
   become: true

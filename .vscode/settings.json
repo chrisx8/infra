@@ -2,6 +2,8 @@
   "ansible.python.activationScript": ".venv/bin/activate",
   "cSpell.spellCheckOnlyWorkspaceFiles": true,
   "files.associations": {
-    "*.yml": "ansible"
+    "plays/*.yml": "ansible",
+    "roles/*/handlers/*.yml": "ansible",
+    "roles/*/tasks/*.yml": "ansible"
   }
 }
