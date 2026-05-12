@@ -23,6 +23,12 @@
     update_cache: true
     state: present
 
+- name: Install Tailscale web server service
+  ansible.builtin.copy:
+    src: tailscale-web.service
+    dest: /etc/systemd/system/tailscale-web.service
+    mode: "0644"
+
 - name: Enable IP forwarding
   with_dict:
     net.ipv4.ip_forward: 1
@@ -37,6 +43,13 @@
 - name: Enable and start tailscaled
   ansible.builtin.systemd:
     name: tailscaled.service
+    enabled: true
+    state: started
+
+- name: Enable and start Tailscale web server
+  ansible.builtin.systemd:
+    name: tailscale-web.service
+    daemon_reload: true
     enabled: true
     state: started
 
