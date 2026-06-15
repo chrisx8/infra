@@ -16,16 +16,6 @@
     repo_gpgcheck: true
     state: present
 
-- name: Add GitHub CLI repo
-  ansible.builtin.yum_repository:
-    name: gh-cli
-    description: packages for the GitHub CLI
-    baseurl: https://cli.github.com/packages/rpm
-    gpgcheck: true
-    gpgkey: https://cli.github.com/packages/githubcli-archive-keyring.asc
-    repo_gpgcheck: true
-    state: present
-
 - name: Add Kubernetes repo
   ansible.builtin.yum_repository:
     name: kubernetes
@@ -53,8 +43,7 @@
       - bat
       - fzf
       - gdu
-      - gh
-      - git
+      - git-core
       - helm
       - k9s
       - kubectl
