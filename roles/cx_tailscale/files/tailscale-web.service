@@ -4,7 +4,7 @@ After=tailscaled.service
 
 [Service]
 Type=exec
-ExecStart=/usr/bin/bash -c 'exec tailscale web --readonly --listen "$(ip route get 1.1.1.1 | awk \'{print $7; exit}\'):8088"'
+ExecStart=/usr/bin/tailscale web --readonly --listen 0.0.0.0:8088
 
 [Install]
 WantedBy=multi-user.target

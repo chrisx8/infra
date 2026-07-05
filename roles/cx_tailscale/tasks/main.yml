@@ -4,8 +4,10 @@
     that:
       - ansible_facts.distribution != 'Fedora'
       - ansible_facts.os_family == 'RedHat'
-      - cx_tailscale_auth_key is undefined or cx_tailscale_auth_key.startswith('tskey-auth-')
       - cx_tailscale_args | type_debug == 'list'
+      - cx_tailscale_auth_key is undefined or cx_tailscale_auth_key.startswith('tskey-auth-')
+      - cx_tailscale_relay_server_port is undefined
+        or (cx_tailscale_relay_server_port | type_debug == 'int' and 1 <= cx_tailscale_relay_server_port <= 65535)
 
 - name: Add Tailscale repo
   ansible.builtin.yum_repository:
@@ -66,3 +68,9 @@
     cmd: tailscale up
       {% if cx_tailscale_auth_key is defined %}--auth-key={{ cx_tailscale_auth_key }}{% endif %}
       {{ cx_tailscale_args | map('quote') | join(' ') }}
+
+- name: Configure Tailscale Peer Relay
+  changed_when: true
+  ansible.builtin.command:
+    cmd: tailscale set
+      --relay-server-port={{ cx_tailscale_relay_server_port | default('') }}
