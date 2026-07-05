@@ -29,6 +29,13 @@
     dest: /etc/systemd/system/tailscale-web.service
     mode: "0644"
 
+- name: Install testing tools
+  ansible.builtin.dnf:
+    name:
+      - iperf3
+      - mtr
+    state: present
+
 - name: Enable IP forwarding
   with_dict:
     net.ipv4.ip_forward: 1

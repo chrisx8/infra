@@ -45,10 +45,12 @@
       - gdu
       - git-core
       - helm
+      - iperf3
       - k9s
       - kubectl
       - kubecolor
       - make
+      - mtr
       - sqlite
       - zsh
     update_cache: true
