@@ -34,12 +34,12 @@
     - name: Determine expected values
       ansible.builtin.set_fact:
         _expected_group: cx_k8s_app_{{ cx_k8s_app_k8s_namespace | replace("-", "_") }}
-        _expected_name_suffix: .{{ cx_k8s_app_k8s_namespace }}.k8s
+        _expected_name: "{{ inventory_hostname_short }}.{{ cx_k8s_app_k8s_namespace }}.k8s"
     - name: Assert inventory hostname
       ansible.builtin.assert:
         that:
-          - ansible_host.endswith(_expected_name_suffix)
-          - inventory_hostname.endswith(_expected_name_suffix)
+          - ansible_host == _expected_name
+          - inventory_hostname == _expected_name
     - name: Assert grouping by k8s namespace
       ansible.builtin.assert:
         that:
@@ -49,11 +49,19 @@
   hosts: cx_k8s_app_cluster
   connection: local
   tasks:
+    - name: Determine expected values
+      ansible.builtin.set_fact:
+        _expected_name: "{{ inventory_hostname_short }}.k8s"
     - name: Assert inventory hostname
       ansible.builtin.assert:
         that:
-          - ansible_host.endswith(".k8s")
-          - inventory_hostname.endswith(".k8s")
+          - ansible_host == _expected_name
+          - inventory_hostname == _expected_name
+    - name: Assert namespace is declared
+      ansible.builtin.assert:
+        that:
+          - cx_k8s_app_k8s_namespace | length > 0
+          - cx_k8s_app_k8s_namespace != 'k8s'
 
 - name: Validate container apps
   hosts: cx_container_app
