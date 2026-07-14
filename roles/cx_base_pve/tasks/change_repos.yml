@@ -4,6 +4,14 @@
     path: /etc/apt/sources.list
     state: absent
 
+- name: Remove enterprise repos
+  loop:
+    - ceph.sources
+    - pve-enterprise.sources
+  ansible.builtin.file:
+    path: /etc/apt/sources.list.d/{{ item }}
+    state: absent
+
 - name: Configure apt repos
   loop:
     - debian.sources
