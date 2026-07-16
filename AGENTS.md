@@ -39,10 +39,10 @@ Hook order: generic hygiene (shellcheck, forbid-binary, etc.) -> yamllint -> ans
 
 ## Playbooks
 
-- `deploy_host_os.yml` - base OS config for EL and Proxmox hosts
-- `deploy_host_role.yml` - host-level services (k3s, Podman, Pi-hole, PostgreSQL, Tailscale, etc.)
+- `deploy_os.yml` - base OS config for EL and Proxmox hosts
+- `deploy_host_<service>.yml` - deploy host-level service (admin, container_runtime, k3s, pihole, postgresql, tailscale)
 - `deploy_app.yml` / `decom_app.yml` - deploy / remove container/K8s apps
-- `upgrade_host_os.yml` - OS package upgrades
+- `upgrade_os.yml` - OS package upgrades
 - `validate.yml` - inventory validation (pre-commit hook)
 
 ## App architecture

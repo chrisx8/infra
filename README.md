@@ -48,14 +48,14 @@ Activate the virtualenv first, then run a playbook from `plays/`:
 ansible-playbook plays/<playbook>.yml
 ```
 
-| Playbook               | Purpose                                                                      |
-| ---------------------- | ---------------------------------------------------------------------------- |
-| `deploy_host_os.yml`   | Base OS config for EL and Proxmox VE hosts                                   |
-| `deploy_host_role.yml` | Host-level services, such as k3s, Podman, Pi-hole, PostgreSQL, and Tailscale |
-| `deploy_app.yml`       | Deploy container and k8s apps, with optional PostgreSQL database             |
-| `decom_app.yml`        | Remove container and k8s apps                                                |
-| `upgrade_host_os.yml`  | OS package upgrades                                                          |
-| `validate.yml`         | Inventory validation (also runs as a pre-commit hook)                        |
+| Playbook                    | Purpose                                                                                  |
+| --------------------------- | ---------------------------------------------------------------------------------------- |
+| `deploy_os.yml`             | Base OS config for EL and Proxmox VE hosts                                               |
+| `deploy_host_<service>.yml` | Deploy host-level service (admin, container_runtime, k3s, pihole, postgresql, tailscale) |
+| `deploy_app.yml`            | Deploy container and k8s apps, with optional PostgreSQL database                         |
+| `decom_app.yml`             | Remove container and k8s apps                                                            |
+| `upgrade_os.yml`            | OS package upgrades                                                                      |
+| `validate.yml`              | Inventory validation (also runs as a pre-commit hook)                                    |
 
 ### Lint
 

@@ -1,0 +1,10 @@
+---
+- name: Deploy Tailscale
+  hosts: cx_tailscale
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+  roles:
+    - cx_tailscale

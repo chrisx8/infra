@@ -1,0 +1,10 @@
+---
+- name: Deploy container hosts
+  hosts: cx_container_runtime
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+  roles:
+    - cx_container_runtime
