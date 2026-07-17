@@ -4,7 +4,7 @@
   loop: "{{ _systemd_units }}"
   ansible.builtin.systemd:
     name: "{{ item }}"
-    enabled: true
+    enabled: false
     scope: "{{ _systemd_scope }}"
     state: stopped
 

@@ -12,8 +12,10 @@ if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
     echo "## Installing Ansible collections"
     ansible-galaxy collection install -U -r requirements.yml
 
-    echo "## Installing pre-commit hooks"
-    prek install --install-hooks --overwrite
+    if [ -z "$CI" ]; then
+        echo "## Installing pre-commit hooks"
+        prek install --install-hooks --overwrite
+    fi
 
     if [ -z "$CI" ] && [ ! -d inventory ]; then
         echo "## Cloning inventory repo"

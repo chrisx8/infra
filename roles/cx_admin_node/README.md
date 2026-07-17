@@ -6,7 +6,7 @@ This role deploys packages on Ansible infrastructure admin hosts.
 
 | Variable                    | Description                                 | Required            |
 | --------------------------- | ------------------------------------------- | ------------------- |
-| `cx_admin_node_k8s_version` | Kubernetes version for kubectl installation | No, default `v1.34` |
+| `cx_admin_node_k8s_version` | Kubernetes version for kubectl installation | No, default `v1.36` |
 
 ## Required facts
 

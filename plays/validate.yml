@@ -67,8 +67,11 @@
   hosts: cx_container_app
   connection: local
   tasks:
-    - name: Assert that ansible_host is set correctly
+    - name: Determine expected values
+      ansible.builtin.set_fact:
+        _expected_name: "{{ inventory_hostname_short }}.container"
+    - name: Assert inventory hostname and target
       ansible.builtin.assert:
         that:
-          - ansible_host is not match(".+\.container")
-          - inventory_hostname is match(".+\.container")
+          - ansible_host != _expected_name
+          - inventory_hostname == _expected_name

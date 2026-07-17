@@ -1,6 +1,16 @@
 ---
-- name: Deploy k3s nodes
-  hosts: cx_k3s_node_agents:cx_k3s_node_servers
+- name: Deploy k3s server nodes
+  hosts: cx_k3s_node_servers
+  become: true
+  gather_facts: true
+  gather_subset:
+    - "!min"
+    - distribution
+  roles:
+    - cx_k3s_node
+
+- name: Deploy k3s agent nodes
+  hosts: cx_k3s_node_agents
   become: true
   gather_facts: true
   gather_subset:

@@ -21,10 +21,8 @@ jobs:
           activate-environment: true
       - name: Set up Python virtualenv
         run: |
-          uv tool install prek
           source ./activate -u
       - name: Run lint checks
+        uses: j178/prek-action@v2
         env:
           SKIP: validate
-        run: |
-          prek run --all-files --verbose
