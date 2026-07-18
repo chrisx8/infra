@@ -21,6 +21,7 @@
 - name: Install standard packages
   ansible.builtin.dnf:
     name:
+      - acl
       - bind-utils
       - cronie
       - curl
