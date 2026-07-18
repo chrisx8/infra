@@ -52,6 +52,7 @@
       - make
       - mtr
       - sqlite
+      - tmux
       - zsh
     update_cache: true
     state: present
