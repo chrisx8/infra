@@ -1,7 +1,16 @@
+# shellcheck shell=bash
+# resolve this script's directory, works with bash or zsh
+# shellcheck disable=SC2296
+_dir="$(CDPATH='' cd -- "$(dirname -- "${BASH_SOURCE[0]:-${(%):-%x}}")" && pwd)"
+
 if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
     echo "*********************************************************************"
     echo " Bootstrapping Ansible virtualenv"
     echo "*********************************************************************"
+
+    if [ "$(pwd)" != "$_dir" ]; then
+        pushd "$_dir" >/dev/null || exit 1
+    fi
 
     echo "## Building virtualenv with uv"
     uv sync --upgrade
@@ -31,6 +40,8 @@ if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
         git pull
         popd >/dev/null || exit
     fi
+
+    popd >/dev/null || true
 fi
 
 if [ "$*" = "" ] || [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
@@ -39,12 +50,13 @@ if [ "$*" = "" ] || [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
     echo "***********************************************************************"
 
     # shellcheck source=/dev/null
-    source .venv/bin/activate
+    source "$_dir/.venv/bin/activate"
 
-    ANSIBLE_CONFIG="$(readlink -f ansible.cfg)"
+    ANSIBLE_CONFIG="$(readlink -f "$_dir/ansible.cfg")"
     export ANSIBLE_CONFIG
 else
     echo "usage: source $0 [-u|--bootstrap]" >&2
 fi
 
+unset _dir
 # vim: ft=sh
