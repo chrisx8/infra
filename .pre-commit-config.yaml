@@ -29,6 +29,10 @@ repos:
     hooks:
       - id: forbid-binary
       - id: shellcheck
+      - id: shellcheck
+        name: Test activate script with shellcheck
+        files: ^activate$
+        types: [text]
   - repo: local
     hooks:
       - id: yamllint

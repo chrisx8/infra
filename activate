@@ -1,36 +1,42 @@
+# shellcheck shell=bash
+# resolve this script's directory, works with bash or zsh
+# shellcheck disable=SC2296
+_dir="$(CDPATH='' cd -- "$(dirname -- "${BASH_SOURCE[0]:-${(%):-%x}}")" && pwd)"
+
 if [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
     echo "*********************************************************************"
     echo " Bootstrapping Ansible virtualenv"
     echo "*********************************************************************"
+    (
+        cd "$_dir" || exit 1
 
-    echo "## Building virtualenv with uv"
-    uv sync --upgrade
+        echo "## Building virtualenv with uv"
+        uv sync --upgrade
 
-    # shellcheck source=/dev/null
-    source .venv/bin/activate
+        # shellcheck source=/dev/null
+        source .venv/bin/activate
 
-    echo "## Installing Ansible collections"
-    ansible-galaxy collection install -U -r requirements.yml
+        echo "## Installing Ansible collections"
+        ansible-galaxy collection install -U -r requirements.yml
 
-    if [ -z "$CI" ]; then
-        echo "## Installing pre-commit hooks"
-        prek install --install-hooks --overwrite
-    fi
+        if [ -z "$CI" ]; then
+            echo "## Installing pre-commit hooks"
+            prek install --install-hooks --overwrite
+        fi
 
-    if [ -z "$CI" ] && [ ! -d inventory ]; then
-        echo "## Cloning inventory repo"
-        git clone https://github.com/chrisx8/infra-inventory.git inventory
+        if [ -z "$CI" ] && [ ! -d inventory ]; then
+            echo "## Cloning inventory repo"
+            git clone https://github.com/chrisx8/infra-inventory.git inventory
 
-        echo "## Installing pre-commit hooks for inventory repo"
-        pushd inventory >/dev/null || exit 1
-        prek install --install-hooks --overwrite
-        popd >/dev/null || exit
-    elif [ -d inventory ]; then
-        echo "## Pulling inventory repo"
-        pushd inventory >/dev/null || exit 1
-        git pull
-        popd >/dev/null || exit
-    fi
+            echo "## Installing pre-commit hooks for inventory repo"
+            cd inventory || exit 1
+            prek install --install-hooks --overwrite
+        elif [ -d inventory ]; then
+            echo "## Pulling inventory repo"
+            cd inventory || exit 1
+            git pull
+        fi
+    ) || return 1
 fi
 
 if [ "$*" = "" ] || [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
@@ -39,12 +45,17 @@ if [ "$*" = "" ] || [ "$*" = "-u" ] || [ "$*" = "--bootstrap" ]; then
     echo "***********************************************************************"
 
     # shellcheck source=/dev/null
-    source .venv/bin/activate
+    source "$_dir/.venv/bin/activate"
 
-    ANSIBLE_CONFIG="$(readlink -f ansible.cfg)"
+    ANSIBLE_CONFIG="$_dir/ansible.cfg"
     export ANSIBLE_CONFIG
+
+    if [ "$(uname -s)" = "Darwin" ]; then
+        export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=yes
+    fi
 else
-    echo "usage: source $0 [-u|--bootstrap]" >&2
+    echo "usage: source activate [-u|--bootstrap]" >&2
 fi
 
+unset _dir
 # vim: ft=sh
