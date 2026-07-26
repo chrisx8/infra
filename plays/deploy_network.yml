@@ -1,0 +1,5 @@
+---
+- name: Configure FortiGate
+  hosts: cx_fortigate
+  roles:
+    - cx_fortigate

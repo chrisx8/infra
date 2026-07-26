@@ -75,3 +75,25 @@
         that:
           - ansible_host != _expected_name
           - inventory_hostname == _expected_name
+
+- name: Validate FortiGate hosts
+  hosts: cx_fortigate
+  connection: local
+  vars:
+    ansible_connection: local
+  tasks:
+    - name: Assert that ansible_host is set correctly
+      ansible.builtin.assert:
+        that:
+          - ansible_host != 'localhost'
+          - ansible_host | length > 1
+    - name: Assert that API credentials are configured
+      ansible.builtin.assert:
+        that:
+          - ansible_httpapi_session_key is defined
+          - ansible_httpapi_session_key is mapping
+          - "'access_token' in ansible_httpapi_session_key"
+    - name: Verify cx_fortigate role inputs
+      ansible.builtin.import_role:
+        name: cx_fortigate
+        tasks_from: verify.yml

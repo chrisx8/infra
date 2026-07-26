@@ -1,0 +1,57 @@
+---
+- name: Look up DHCP server for interface
+  check_mode: false
+  loop: "{{ cx_fortigate_dhcp_reservations.keys() }}"
+  loop_control:
+    loop_var: interface
+  register: _dhcp_servers # noqa: var-naming[no-role-prefix]
+  fortinet.fortios.fortios_configuration_fact:
+    vdom: "{{ cx_fortigate_vdom }}"
+    selector: system.dhcp_server
+    filters:
+      - interface=={{ interface }}
+      - server-type==regular
+
+- name: Verify exactly 1 DHCP server exists on interface
+  loop: "{{ _dhcp_servers.results }}"
+  loop_control:
+    label: "{{ item.interface }}"
+  ansible.builtin.assert:
+    quiet: "{{ cx_fortigate_quiet_assert }}"
+    that:
+      - item.meta.results | length == 1
+    fail_msg: >-
+      Expected exactly 1 regular DHCP server on interface {{ item.interface }} in
+      vdom {{ cx_fortigate_vdom }}, found {{ item.meta.results | length }}
+
+- name: Update DHCP reservations
+  loop: "{{ _dhcp_servers.results }}"
+  loop_control:
+    label: "{{ item.interface }}"
+  vars:
+    _existing_reserved: "{{ item.meta.results[0]['reserved-address'] | default([]) }}"
+    # Keep ids stable across runs: reuse each MAC's existing id on the device, allocate fresh
+    # ids above the current max for new MAC.
+    _reserved_json: >- # noqa: var-naming[no-role-prefix]
+      {% set mac_ids = {} -%}
+      {% for r in _existing_reserved if r.mac is defined -%}
+      {{ mac_ids.update({r.mac | lower: r.id}) or '' -}}
+      {% endfor -%}
+      {% set ns = namespace(next_id=((_existing_reserved | map(attribute='id') | list) + [0]) | max + 1) -%}
+      {% set entries = [] -%}
+      {% for e in cx_fortigate_dhcp_reservations[item.interface] -%}
+      {% set mac = e.mac | lower -%}
+      {% if mac in mac_ids -%}
+      {{ entries.append(e | combine({'id': mac_ids[mac], 'type': 'mac', 'mac': mac})) or '' -}}
+      {% else -%}
+      {{ entries.append(e | combine({'id': ns.next_id, 'type': 'mac', 'mac': mac})) or '' -}}
+      {% set ns.next_id = ns.next_id + 1 -%}
+      {% endif -%}
+      {% endfor -%}
+      {{ entries | to_json }}
+  fortinet.fortios.fortios_system_dhcp_server:
+    vdom: "{{ cx_fortigate_vdom }}"
+    system_dhcp_server:
+      id: "{{ item.meta.results[0].id }}"
+      reserved_address: "{{ _reserved_json | from_json }}"
+    state: present

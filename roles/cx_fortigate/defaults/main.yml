@@ -1,0 +1,25 @@
+---
+# Use the FortiOS REST API over HTTPS
+ansible_connection: ansible.netcommon.httpapi
+ansible_httpapi_use_ssl: true # noqa: var-naming[no-role-prefix]
+ansible_httpapi_port: 443 # noqa: var-naming[no-role-prefix]
+
+# Always connecting to FortiOS
+ansible_network_os: fortinet.fortios.fortios # noqa: var-naming[no-role-prefix]
+
+# Suppress assert output when verbosity is low
+cx_fortigate_quiet_assert: "{{ ansible_verbosity < 2 }}"
+
+# DHCP reservations, keyed by interface name. Each entry uses API field names (description, mac, ip).
+# See vars/sample.yml for an example.
+# Entries on the firewall but not listed here will be removed.
+cx_fortigate_dhcp_reservations: {}
+
+# SD-WAN health checks, a list of entries using fortios_system_sdwan health_check field names
+# (name, addr_mode, server, interval, failtime, recoverytime, sla, ...).
+# See vars/sample.yml for an example.
+# Entries on the firewall but not listed here will be removed.
+cx_fortigate_sdwan_health_checks: []
+
+# FortiOS virtual domain to manage
+cx_fortigate_vdom: root

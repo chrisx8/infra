@@ -1,0 +1,11 @@
+---
+- name: Verify inputs
+  ansible.builtin.import_tasks: verify.yml
+
+- name: Configure DHCP
+  when: cx_fortigate_dhcp_reservations | length > 0
+  ansible.builtin.include_tasks: dhcp.yml
+
+- name: Configure SD-WAN
+  when: cx_fortigate_sdwan_health_checks | length > 0
+  ansible.builtin.include_tasks: sdwan.yml

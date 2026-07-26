@@ -41,6 +41,7 @@ Hook order: generic hygiene (shellcheck, forbid-binary, etc.) -> yamllint -> ans
 
 - `deploy_os.yml` - base OS config for EL and Proxmox hosts
 - `deploy_host_<service>.yml` - deploy host-level service (admin, container_runtime, k3s, pihole, postgresql, tailscale)
+- `deploy_network.yml` - configure network devices (FortiGate)
 - `deploy_app.yml` / `decom_app.yml` - deploy / remove container/K8s apps
 - `upgrade_os.yml` - OS package upgrades
 - `validate.yml` - inventory validation (pre-commit hook)
@@ -58,7 +59,7 @@ Hook order: generic hygiene (shellcheck, forbid-binary, etc.) -> yamllint -> ans
 Defined in the inventory repo but group names are hard-coded in playbooks here:
 
 - `hosts_el` / `hosts_pve` - base OS groups (Enterprise Linux, Proxmox VE)
-- `cx_<role>` - one group per host role (`cx_admin_node`, `cx_container_runtime`, `cx_pihole`, `cx_postgresql`, `cx_tailscale`)
+- `cx_<role>` - one group per host role (`cx_admin_node`, `cx_container_runtime`, `cx_fortigate`, `cx_pihole`, `cx_postgresql`, `cx_tailscale`)
 - `cx_k3s_node_servers` / `cx_k3s_node_agents` - k3s controllers / workers
 - `cx_container_app`, `cx_k8s_app`, `cx_k8s_app_cluster` - app groups
 - `cx_k8s_app_<namespace>` - k8s apps grouped by namespace, dashes replaced with underscores (asserted by `validate.yml`)

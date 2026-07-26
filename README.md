@@ -52,6 +52,7 @@ ansible-playbook plays/<playbook>.yml
 | --------------------------- | ---------------------------------------------------------------------------------------- |
 | `deploy_os.yml`             | Base OS config for EL and Proxmox VE hosts                                               |
 | `deploy_host_<service>.yml` | Deploy host-level service (admin, container_runtime, k3s, pihole, postgresql, tailscale) |
+| `deploy_network.yml`        | Configure network devices (FortiGate)                                                    |
 | `deploy_app.yml`            | Deploy container and k8s apps, with optional PostgreSQL database                         |
 | `decom_app.yml`             | Remove container and k8s apps                                                            |
 | `upgrade_os.yml`            | OS package upgrades                                                                      |

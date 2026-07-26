@@ -1,0 +1,31 @@
+---
+- name: Verify requirements
+  ansible.builtin.assert:
+    quiet: "{{ cx_fortigate_quiet_assert }}"
+    that:
+      - cx_fortigate_dhcp_reservations | type_debug == 'dict'
+      - cx_fortigate_sdwan_health_checks | type_debug == 'list'
+      - cx_fortigate_vdom | length > 0
+
+- name: Verify DHCP reservation entries
+  loop: "{{ cx_fortigate_dhcp_reservations | dict2items | subelements('value') }}"
+  loop_control:
+    label: "{{ item.0.key }}/{{ item.1.description | default() }}"
+  ansible.builtin.assert:
+    quiet: "{{ cx_fortigate_quiet_assert }}"
+    that:
+      - item.1.description is string
+      - item.1.ip is string
+      - item.1.mac is string
+
+- name: Verify SD-WAN health check entries
+  loop: "{{ cx_fortigate_sdwan_health_checks }}"
+  loop_control:
+    label: "{{ item.name | default() }}"
+  ansible.builtin.assert:
+    quiet: "{{ cx_fortigate_quiet_assert }}"
+    that:
+      - item.name is string
+      - item.name | length > 0
+      - item.server | type_debug == 'list'
+      - item.server | length > 0

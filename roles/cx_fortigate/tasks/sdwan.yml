@@ -1,0 +1,6 @@
+---
+- name: Update SD-WAN health checks
+  fortinet.fortios.fortios_system_sdwan:
+    vdom: "{{ cx_fortigate_vdom }}"
+    system_sdwan:
+      health_check: "{{ cx_fortigate_sdwan_health_checks }}"
