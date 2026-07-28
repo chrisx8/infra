@@ -1,7 +1,12 @@
 ---
 collections:
-  - ansible.posix
-  - community.general
-  - community.postgresql
-  - containers.podman
-  - kubernetes.core
+  - name: ansible.posix
+    version: ">=2.2.2,<2.3.0"
+  - name: community.general
+    version: ">=13.2.0,<13.3.0"
+  - name: community.postgresql
+    version: ">=4.2.0,<4.3.0"
+  - name: containers.podman
+    version: ">=1.20.2,<1.21.0"
+  - name: kubernetes.core
+    version: ">=6.5.0,<6.6.0"

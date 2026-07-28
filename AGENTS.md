@@ -31,7 +31,7 @@ Hook order: generic hygiene (shellcheck, forbid-binary, etc.) -> yamllint -> ans
 
 - `gathering = explicit`: plays needing facts declare `gather_facts: true` and explicit `gather_subset`; otherwise omit `gather_facts`
 - `inject_facts_as_vars = false`: use `{{ ansible_facts['...'] }}`, never auto-injected vars like `ansible_os_distribution`
-- Collections via `ansible-galaxy`, declared in `requirements.yml`
+- Collections via `ansible-galaxy`, declared and pinned by minor version in `requirements.yml`
 - Roles in `roles/`, all named `cx_*`. Read a role's `README.md` before modifying it; keep its tables (variables,
   required facts, system requirements) in sync with changes, and "Required facts" in sync with the `gather_subset`
   of the playbooks that call the role

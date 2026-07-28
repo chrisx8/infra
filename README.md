@@ -73,7 +73,8 @@ Dependencies are declared in various places:
   - Re-run setup after updating dependency pins
 - Pre-commit hooks are pinned by exact versions, declared in `.pre-commit-config.yaml`
   - Update by running `prek autoupdate`
-- Ansible collections are unpinned, declared in `requirements.yml`
+- Ansible collections are pinned by minor versions, declared in `requirements.yml`
+  - Re-run setup after updating dependency pins
 
 ## License
 
