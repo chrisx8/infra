@@ -13,6 +13,6 @@
       Type "{{ _confirm_expected }}" to continue
 
 - name: Fail if not confirmed
-  when: _confirm.user_input != _confirm_expected
+  when: _confirm['user_input'] != _confirm_expected
   ansible.builtin.fail:
     msg: TASK NOT CONFIRMED

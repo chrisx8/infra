@@ -24,18 +24,16 @@
         kind: Namespace
         state: present
 
-    - name: Set Helm releases to {{ cx_k8s_app_state }}
-      loop: "{{ cx_k8s_app_helm_releases }}"
-      loop_control:
-        label: "{{ item.name }}"
+    - name: Set Helm release to {{ cx_k8s_app_state }}
+      when: cx_k8s_app_helm_release | length > 0
       kubernetes.core.helm:
         context: "{{ cx_k8s_app_k8s_context }}"
-        name: "{{ item.name }}"
-        chart_ref: "{{ item.chart_ref }}"
-        chart_repo_url: "{{ item.chart_repo_url | default(omit) }}"
-        chart_version: "{{ item.chart_version }}"
+        name: "{{ cx_k8s_app_helm_release['name'] | default(inventory_hostname_short) }}"
+        chart_ref: "{{ cx_k8s_app_helm_release['chart_ref'] }}"
+        chart_repo_url: "{{ cx_k8s_app_helm_release['chart_repo_url'] | default(omit) }}"
+        chart_version: "{{ cx_k8s_app_helm_release['chart_version'] }}"
         release_namespace: "{{ cx_k8s_app_k8s_namespace }}"
-        release_values: "{{ ('values' in item) | ternary(item['values'], {}) }}"
+        release_values: "{{ ('values' in cx_k8s_app_helm_release) | ternary(cx_k8s_app_helm_release['values'], omit) }}"
         state: "{{ cx_k8s_app_state }}"
 
     - name: Set k8s manifests to {{ cx_k8s_app_state }}
@@ -49,8 +47,7 @@
     - name: Set k8s resources to {{ cx_k8s_app_state }}
       loop: "{{ cx_k8s_app_resources }}"
       loop_control:
-        label: "{{ item.kind }} {{ item.metadata.name |
-          default(inventory_hostname_short) }}"
+        label: "{{ item['kind'] }} {{ item['metadata']['name'] | default(inventory_hostname_short) }}"
       kubernetes.core.k8s:
         apply: true
         context: "{{ cx_k8s_app_k8s_context }}"
