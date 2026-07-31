@@ -5,12 +5,8 @@
       - ansible_facts.distribution_major_version|int >= 8
       - ansible_facts.os_family == 'RedHat'
 
-- name: Validate cx_container_app vars
-  ansible.builtin.assert:
-    that:
-      - cx_container_app_state in ('present', 'absent')
-      - cx_container_app_image | length > 0
-      - cx_container_app_user | length > 0
+- name: Verify inputs
+  ansible.builtin.import_tasks: verify.yml
 
 - name: Confirm resource removal
   run_once: true
