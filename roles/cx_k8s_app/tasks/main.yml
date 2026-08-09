@@ -34,6 +34,7 @@
         chart_version: "{{ cx_k8s_app_helm_release['chart_version'] }}"
         release_namespace: "{{ cx_k8s_app_k8s_namespace }}"
         release_values: "{{ ('values' in cx_k8s_app_helm_release) | ternary(cx_k8s_app_helm_release['values'], omit) }}"
+        skip_crds: "{{ cx_k8s_app_helm_release['skip_crds'] | default(false) }}"
         state: "{{ cx_k8s_app_state }}"
 
     - name: Set k8s manifests to {{ cx_k8s_app_state }}

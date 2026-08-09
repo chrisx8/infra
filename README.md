@@ -1,6 +1,6 @@
 # chrisx8/infra
 
-This repo is an Ansible monorepo for my self-hosted Linux environment.
+This is an Ansible monorepo for my homelab Linux environment.
 
 ## Usage
 

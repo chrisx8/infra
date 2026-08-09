@@ -13,7 +13,23 @@ This role is a generic role for deploying workflows to Kubernetes clusters.
 | `cx_k8s_app_resources`     | List of Kubernetes resource definitions, noop if not defined           | No       |
 | `cx_k8s_app_state`         | State of k8s resources, `present` or `absent`. Default `present`.      | No       |
 
+`cx_k8s_app_helm_release` keys:
+
+| Key              | Description                                                   | Required                               |
+| ---------------- | ------------------------------------------------------------- | -------------------------------------- |
+| `chart_ref`      | Chart reference: repo chart name, OCI URL, local path, or URL | **Yes**                                |
+| `chart_version`  | Pinned chart version                                          | **Yes**                                |
+| `chart_repo_url` | Chart repository URL. Omit for OCI references and local paths | No                                     |
+| `name`           | Helm release name                                             | No, default `inventory_hostname_short` |
+| `skip_crds`      | Skip installing the CRDs bundled in the chart                 | No, default `false`                    |
+| `values`         | Chart values, passed to the release as-is                     | No                                     |
+
 Other than creating the namespace, this role performs no action if none of `cx_k8s_app_helm_release`, `cx_k8s_app_manifests`, or `cx_k8s_app_resources` is defined.
+
+Important notes:
+
+- Set `cx_k8s_app_helm_release.name` when the release name has to differ from the host's short name. This is only needed to keep instances distinguishable.
+- Set `skip_crds: true` when another release manages the chart's CRDs.
 
 Sample: [vars/sample.yml](vars/sample.yml)
 
