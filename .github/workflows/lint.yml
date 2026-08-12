@@ -23,6 +23,6 @@ jobs:
         run: |
           source ./activate -u
       - name: Run lint checks
-        uses: j178/prek-action@v2
+        uses: j178/prek-action@v2.0.6
         env:
           SKIP: validate
