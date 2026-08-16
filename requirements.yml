@@ -1,11 +1,11 @@
 ---
 collections:
   - name: ansible.posix
-    version: ">=2.2.2,<2.3.0"
+    version: ">=2.2.2,<3.0.0"
   - name: community.general
-    version: ">=13.3.0,<13.4.0"
+    version: ">=13.3.0,<14.0.0"
   - name: community.postgresql
-    version: ">=4.2.0,<4.3.0"
+    version: ">=4.2.0,<5.0.0"
   - name: containers.podman
     version: ">=1.20.2,<1.21.0"
   - name: fortinet.fortios
