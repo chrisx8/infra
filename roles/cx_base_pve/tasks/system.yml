@@ -20,7 +20,7 @@
 
 - name: Set systemd-journald storage limit
   ansible.builtin.blockinfile:
-    block: SystemMaxUse=100M
+    block: SystemMaxUse=1G
     path: /etc/systemd/journald.conf
     state: present
 
@@ -29,13 +29,3 @@
     block: EDITOR=vim
     path: /etc/environment
     state: present
-
-- name: Set GRUB timeout
-  ansible.builtin.lineinfile:
-    path: /etc/default/grub
-    regexp: ^GRUB_TIMEOUT
-    line: GRUB_TIMEOUT=2
-
-- name: Update GRUB config
-  ansible.builtin.command: update-grub2
-  changed_when: true

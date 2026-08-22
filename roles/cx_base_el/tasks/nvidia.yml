@@ -9,6 +9,11 @@
     repo_gpgcheck: true
     state: present
 
+- name: Remove NVIDIA package version locks
+  community.general.dnf_versionlock:
+    name: "*nvidia-*"
+    state: absent
+
 - name: Install NVIDIA CUDA driver packages
   ansible.builtin.dnf:
     name:
