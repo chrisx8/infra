@@ -1,0 +1,37 @@
+---
+# Need to pre-configure connections without DNS or MTU because those triggers
+# unconditional activation, which would fail when creating fresh connections
+- name: Configure NetworkManager connections without DNS/MTU
+  community.general.nmcli:
+  args: >-
+    {{
+      (
+        item.value
+        | dict2items
+        | rejectattr('key', 'in', ['dns4', 'dns6', 'mtu'])
+        | items2dict
+      )
+      | combine({
+        'conn_name': item.key,
+        'ifname': item.key,
+        'state': 'present'
+      })
+    }}
+  loop: "{{ cx_base_el_network_interfaces | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+
+- name: Configure NetworkManager connections
+  community.general.nmcli:
+  args: >-
+    {{
+      item.value | combine({
+        'conn_name': item.key,
+        'ifname': item.key,
+        'state': 'present',
+        'conn_reload': true
+      })
+    }}
+  loop: "{{ cx_base_el_network_interfaces | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"

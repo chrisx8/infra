@@ -26,6 +26,10 @@
         that:
           - ansible_host != 'localhost'
           - ansible_host | length > 1
+    - name: Verify cx_base_el role inputs
+      ansible.builtin.import_role:
+        name: cx_base_el
+        tasks_from: verify.yml
 
 - name: Validate k8s apps
   hosts: cx_k8s_app:!cx_k8s_app_cluster

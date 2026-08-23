@@ -3,6 +3,9 @@
 # Leave blank to skip NVIDIA driver installation
 cx_base_el_nvidia_version: ""
 
+# NetworkManager connection profiles keyed by interface name
+cx_base_el_network_interfaces: {}
+
 # Skip host reboot after setup completes
 cx_base_el_skip_reboot: false
 

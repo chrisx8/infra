@@ -1,4 +1,7 @@
 ---
+- name: Verify role inputs
+  ansible.builtin.import_tasks: verify.yml
+
 - name: Verify system
   ansible.builtin.assert:
     that:
@@ -18,6 +21,9 @@
 - name: Configure NVIDIA drivers
   when: cx_base_el_nvidia_version | length > 0
   ansible.builtin.include_tasks: nvidia.yml
+- name: Configure NetworkManager connections
+  when: cx_base_el_network_interfaces | length > 0
+  ansible.builtin.include_tasks: network.yml
 
 - name: Reboot
   when: not cx_base_el_skip_reboot

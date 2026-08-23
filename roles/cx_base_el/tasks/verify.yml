@@ -1,0 +1,18 @@
+---
+- name: Validate network interfaces mapping
+  ansible.builtin.assert:
+    that:
+      - cx_base_el_network_interfaces | type_debug == 'dict'
+
+- name: Validate network interface options
+  loop: "{{ cx_base_el_network_interfaces | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  ansible.builtin.assert:
+    that:
+      - item.value is mapping
+      - "'type' in item.value"
+      - "'conn_name' not in item.value"
+      - "'conn_reload' not in item.value"
+      - "'ifname' not in item.value"
+      - "'state' not in item.value"
