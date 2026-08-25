@@ -19,18 +19,15 @@
     repo_gpgcheck: true
     state: present
 
-- name: Install Tailscale
-  ansible.builtin.dnf:
-    name: tailscale
-    update_cache: true
-    state: present
-
-- name: Install extra tools
+- name: Install packages
   ansible.builtin.dnf:
     name:
       - ethtool
       - iperf3
+      - kernel-modules-extra
       - mtr
+      - tailscale
+    update_cache: true
     state: present
 
 - name: Install supporting services
@@ -59,7 +56,8 @@
     - tailscale-web.service
     - tailscaled.service
   ansible.builtin.systemd:
-    name: tailscaled.service
+    name: "{{ item }}"
+    daemon_reload: true
     enabled: true
     state: started
 
