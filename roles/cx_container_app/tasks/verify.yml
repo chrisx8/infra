@@ -1,0 +1,7 @@
+---
+- name: Verify requirements
+  ansible.builtin.assert:
+    that:
+      - cx_container_app_state in ('present', 'absent')
+      - cx_container_app_image | length > 0
+      - cx_container_app_user | length > 0

@@ -1,16 +1,10 @@
 ---
-- name: Verify requirements
-  ansible.builtin.assert:
-    that:
-      - cx_k8s_app_k8s_context | length > 0
-      - cx_k8s_app_k8s_namespace | length > 0
-      - cx_k8s_app_manifests | type_debug == 'list'
-      - cx_k8s_app_resources | type_debug == 'list'
-      - cx_k8s_app_state in ('present', 'absent')
+- name: Verify inputs
+  ansible.builtin.import_tasks: verify.yml
 
 - name: Confirm resource removal
   run_once: true
-  when: cx_k8s_app_state == 'absent'
+  when: not ansible_check_mode and cx_k8s_app_state == 'absent'
   ansible.builtin.include_tasks: confirm_absent.yml
 
 - name: Kubernetes resources

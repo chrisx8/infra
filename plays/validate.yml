@@ -48,6 +48,10 @@
       ansible.builtin.assert:
         that:
           - inventory_hostname in groups[_expected_group]
+    - name: Verify cx_k8s_app role inputs
+      ansible.builtin.import_role:
+        name: cx_k8s_app
+        tasks_from: verify.yml
 
 - name: Validate k8s cluster resources
   hosts: cx_k8s_app_cluster
@@ -61,11 +65,10 @@
         that:
           - ansible_host == _expected_name
           - inventory_hostname == _expected_name
-    - name: Assert namespace is declared
-      ansible.builtin.assert:
-        that:
-          - cx_k8s_app_k8s_namespace | length > 0
-          - cx_k8s_app_k8s_namespace != 'k8s'
+    - name: Verify cx_k8s_app role inputs
+      ansible.builtin.import_role:
+        name: cx_k8s_app
+        tasks_from: verify.yml
 
 - name: Validate container apps
   hosts: cx_container_app
@@ -79,6 +82,10 @@
         that:
           - ansible_host != _expected_name
           - inventory_hostname == _expected_name
+    - name: Verify cx_container_app role inputs
+      ansible.builtin.import_role:
+        name: cx_container_app
+        tasks_from: verify.yml
 
 - name: Validate FortiGate hosts
   hosts: cx_fortigate
