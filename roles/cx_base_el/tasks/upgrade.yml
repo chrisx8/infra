@@ -11,6 +11,7 @@
 
 # Reports CHANGED if host needs reboot, OK otherwise
 - name: Check if host needs reboot
+  check_mode: false
   changed_when: _reboot_check.rc == 1
   failed_when: _reboot_check.rc not in (0, 1)
   register: _reboot_check # noqa: var-naming[no-role-prefix]
