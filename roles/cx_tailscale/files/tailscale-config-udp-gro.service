@@ -1,5 +1,7 @@
 [Unit]
 Description=Configure UDP GRO on default interface
+Requires=NetworkManager-wait-online.service
+After=NetworkManager-wait-online.service
 Before=tailscaled.service
 
 [Service]
