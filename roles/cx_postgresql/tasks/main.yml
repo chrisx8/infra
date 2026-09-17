@@ -25,7 +25,7 @@
     name:
       - postgresql{{ cx_postgresql_version }}-contrib
       - postgresql{{ cx_postgresql_version }}-server
-      - python3-psycopg2
+      - python3-psycopg3
     state: present
 
 - name: Configure PostgreSQL

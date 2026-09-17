@@ -5,10 +5,10 @@ collections:
   - name: community.general
     version: ">=13.3.0,<14.0.0"
   - name: community.postgresql
-    version: ">=4.2.0,<5.0.0"
+    version: ">=5.0.0,<6.0.0"
   - name: containers.podman
     version: ">=1.20.2,<1.21.0"
   - name: fortinet.fortios
-    version: ">=2.5.1,<2.6.0"
+    version: ">=2.6.0,<2.7.0"
   - name: kubernetes.core
-    version: ">=6.5.0,<6.6.0"
+    version: ">=6.6.0,<6.7.0"
