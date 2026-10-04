@@ -5,8 +5,5 @@ cx_k8s_app_state: present
 # Helm release to deploy
 cx_k8s_app_helm_release: {}
 
-# List of URLs of Kubernetes manifests to apply
-cx_k8s_app_manifests: []
-
 # List of Kubernetes resource definitions
 cx_k8s_app_resources: []
