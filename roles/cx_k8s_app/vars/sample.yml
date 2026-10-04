@@ -11,9 +11,6 @@ cx_k8s_app_helm_release:
     driver:
       enabled: false
 
-cx_k8s_app_manifests:
-  - https://github.com/cert-manager/cert-manager/releases/download/v1.19.1/cert-manager.yaml
-
 cx_k8s_app_resources:
   - kind: Deployment
     spec:

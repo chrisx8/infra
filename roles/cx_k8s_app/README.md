@@ -9,7 +9,6 @@ This role is a generic role for deploying workflows to Kubernetes clusters.
 | `cx_k8s_app_k8s_context`   | Name of target Context in local kubeconfig                             | **Yes**  |
 | `cx_k8s_app_k8s_namespace` | Kubernetes namespace to deploy to, will be created if it doesn't exist | **Yes**  |
 | `cx_k8s_app_helm_release`  | Helm release definition, noop if not defined                           | No       |
-| `cx_k8s_app_manifests`     | List of URLs of Kubernetes manifests, noop if not defined              | No       |
 | `cx_k8s_app_resources`     | List of Kubernetes resource definitions, noop if not defined           | No       |
 | `cx_k8s_app_state`         | State of k8s resources, `present` or `absent`. Default `present`.      | No       |
 
@@ -24,7 +23,7 @@ This role is a generic role for deploying workflows to Kubernetes clusters.
 | `skip_crds`      | Skip installing the CRDs bundled in the chart                 | No, default `false`                    |
 | `values`         | Chart values, passed to the release as-is                     | No                                     |
 
-Other than creating the namespace, this role performs no action if none of `cx_k8s_app_helm_release`, `cx_k8s_app_manifests`, or `cx_k8s_app_resources` is defined.
+Other than creating the namespace, this role performs no action if none of `cx_k8s_app_helm_release` or `cx_k8s_app_resources` is defined.
 
 Important notes:
 

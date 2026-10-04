@@ -31,14 +31,6 @@
         skip_crds: "{{ cx_k8s_app_helm_release['skip_crds'] | default(false) }}"
         state: "{{ cx_k8s_app_state }}"
 
-    - name: Set k8s manifests to {{ cx_k8s_app_state }}
-      loop: "{{ cx_k8s_app_manifests }}"
-      kubernetes.core.k8s:
-        context: "{{ cx_k8s_app_k8s_context }}"
-        namespace: "{{ cx_k8s_app_k8s_namespace }}"
-        src: "{{ item }}"
-        state: "{{ cx_k8s_app_state }}"
-
     - name: Set k8s resources to {{ cx_k8s_app_state }}
       loop: "{{ cx_k8s_app_resources }}"
       loop_control:
