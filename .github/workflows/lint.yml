@@ -12,17 +12,17 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@v7.0.1
       - name: Install Python
-        uses: actions/setup-python@v7.0.0
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: "3.14"
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.3.0
+        uses: astral-sh/setup-uv@v10.3.2
         with:
           activate-environment: true
       - name: Set up Python virtualenv
         run: |
           source ./activate -u
       - name: Run lint checks
-        uses: j178/prek-action@v3.0.2
+        uses: j178/prek-action@v3.1.0
         env:
           SKIP: validate
