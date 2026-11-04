@@ -39,18 +39,26 @@
 - name: Install packages
   ansible.builtin.dnf:
     name:
+      # Ansible
       - 1password-cli
+      - gcc
+      - python3.14
+      # AppImage
+      - fuse
+      # Dev tools
+      - git-core
+      - iperf3
+      - make
+      - mtr
+      # Kubernetes
+      - helm
+      - k9s
+      - kubecolor
+      - kubectl
+      # Shell env
       - bat
       - fzf
       - gdu
-      - git-core
-      - helm
-      - iperf3
-      - k9s
-      - kubectl
-      - kubecolor
-      - make
-      - mtr
       - sqlite
       - tmux
       - zsh
