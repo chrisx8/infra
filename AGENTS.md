@@ -35,7 +35,7 @@ Hook order: generic hygiene (shellcheck, forbid-binary, etc.) -> yamllint -> ans
 - Roles in `roles/`, all named `cx_*`. Read a role's `README.md` before modifying it; keep its tables (variables,
   required facts, system requirements) in sync with changes, and "Required facts" in sync with the `gather_subset`
   of the playbooks that call the role
-- Python 3.14, `uv` for dependencies (`exclude-newer = "P3D"` in `pyproject.toml`)
+- Python 3.15, `uv` for dependencies (`exclude-newer = "P3D"` in `pyproject.toml`)
 
 ## Playbooks
 

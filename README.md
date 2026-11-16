@@ -8,7 +8,7 @@ This is an Ansible monorepo for my homelab Linux environment.
 
 Install the following packages:
 
-- Python **3.14**
+- Python **3.15**
 - [**prek**](https://github.com/j178/prek)
 - [**uv**](https://github.com/astral-sh/uv)
 
