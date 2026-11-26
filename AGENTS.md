@@ -50,8 +50,8 @@ Hook order: generic hygiene (shellcheck, forbid-binary, etc.) -> yamllint -> ans
 
 - **Container apps** (`cx_container_app`): hostnames end in `.container`; Podman-based on `cx_container_runtime` hosts
 - **K8s apps** (`cx_k8s_app`): hostname format `appname.namespace.k8s`, namespace derived from hostname; deployed via
-  Helm/manifests/resources, delegated to `localhost` (kubeconfig, no SSH). Optional PostgreSQL: set
-  `cx_postgresql_db_name` in `host_vars`; `deploy_app.yml` creates it via `cx_postgresql_db_host`
+  Helm/manifests/resources, delegated to `localhost` (kubeconfig, no SSH). For PostgreSQL, declare CloudNativePG
+  (CNPG) `DatabaseRole` and `Database` resources in the app's `cx_k8s_app_resources`.
 - **Cluster-scoped k8s apps** (`cx_k8s_app_cluster`): hostname format `appname.k8s`, declare `cx_k8s_app_k8s_namespace` explicitly
 
 ## Inventory groups

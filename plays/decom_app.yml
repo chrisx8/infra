@@ -5,24 +5,14 @@
   gather_subset:
     - "!min"
     - distribution
-  tasks:
-    - name: Remove container app
-      ansible.builtin.import_role:
-        name: cx_container_app
+  roles:
+    - cx_container_app
   vars:
     cx_container_app_state: absent
 
 - name: Remove k8s apps
   hosts: cx_k8s_app
-  tasks:
-    - name: Remove k8s resources
-      ansible.builtin.import_role:
-        name: cx_k8s_app
-    - name: Remove PostgreSQL resources
-      delegate_to: "{{ cx_postgresql_db_host }}"
-      when: cx_postgresql_db_name is defined
-      ansible.builtin.import_role:
-        name: cx_postgresql_db
+  roles:
+    - cx_k8s_app
   vars:
     cx_k8s_app_state: absent
-    cx_postgresql_db_state: absent
