@@ -16,9 +16,11 @@ jobs:
         with:
           python-version: "3.15"
       - name: Install uv
-        uses: astral-sh/setup-uv@v10.3.3
+        uses: astral-sh/setup-uv@v10.4.0
         with:
           activate-environment: true
+          require-checksums: true
+          version: latest-known
       - name: Set up Python virtualenv
         run: |
           source ./activate -u
@@ -26,3 +28,5 @@ jobs:
         uses: j178/prek-action@v3.1.1
         env:
           SKIP: validate
+        with:
+          prek-version: latest-known
